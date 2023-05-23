@@ -1,0 +1,1 @@
+call PayrollConsole LogTrail SimplePayroll

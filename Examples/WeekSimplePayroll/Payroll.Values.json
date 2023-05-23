@@ -1,0 +1,203 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "WeekSimplePayroll",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "WeekSimplePayroll.Derived",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "AHV",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN",
+                    "value": "0.05125",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-23T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Unfallversicherung",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz",
+                    "value": "0.5",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Wochenlohn",
+                "values": [
+                  {
+                    "caseFieldName": "Wochenlohn",
+                    "value": "1000",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "end": "2020-12-31T00:00:00.0Z",
+                    "created": "2017-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Wochenlohn",
+                "values": [
+                  {
+                    "caseFieldName": "Wochenlohn",
+                    "value": "1175",
+                    "start": "2019-02-12T00:00:00.0Z",
+                    "created": "2019-02-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2018-12-31T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.6",
+                    "start": "2019-02-14T00:00:00.0Z",
+                    "created": "2019-01-31T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-02-15T00:00:00.0Z",
+                    "created": "2019-02-22T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Abteilung",
+                "values": [
+                  {
+                    "caseFieldName": "Abteilung",
+                    "value": "ABC",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2018-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Abteilung",
+                "values": [
+                  {
+                    "caseFieldName": "Abteilung",
+                    "value": "DEF",
+                    "start": "2019-02-13T00:00:00.0Z",
+                    "created": "2019-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "99999",
+                    "start": "2019-01-28T00:00:00.0Z",
+                    "created": "2010-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WeekSimpleDivision",
+              "reason": "Week Payroll Import",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "5000",
+                    "start": "2019-02-18T00:00:00.0Z",
+                    "created": "2010-02-14T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

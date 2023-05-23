@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="04/14/2023 16:29:45" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Regulations" ReferenceName="Data.Regulations" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Identifier" DataType="System.String"/>
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="Version" DataType="System.Int32"/>
+      <Column Name="Owneer" DataType="System.String"/>
+      <Column Name="Description" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text5" Left="-151.2" Width="718.2" Height="28.35" Text="Regulations" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="39.8" Width="718.2" Height="28.35">
+      <TextObject Name="Text2" Width="189" Height="18.9" Text="Name" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="226.8" Width="340.2" Height="18.9" Text="Description" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="70.15" Width="718.2" Height="18.9" DataSource="Regulations">
+      <TextObject Name="Text14" Width="189" Height="18.9" Text="[Regulations.Name]" Font="Arial, 10pt"/>
+      <TextObject Name="Text15" Left="226.8" Width="340.2" Height="18.9" Text="[Regulations.Description]" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="91.05" Width="718.2" Height="28.35">
+      <TextObject Name="Text12" Top="9.45" Width="122.85" Height="18.9" Text="[Date]" Font="Arial, 8pt"/>
+      <TextObject Name="Text13" Left="453.6" Top="9.45" Width="113.4" Height="18.9" Text="[PageNofM]" HorzAlign="Right" Font="Arial, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

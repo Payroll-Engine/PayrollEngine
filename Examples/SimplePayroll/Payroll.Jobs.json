@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "SimplePayroll",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "SimplePayrollPayrun1.Feb19",
+          "payrunName": "SimplePayrollPayrun1",
+          "payrollName": "SimplePayroll.Derived1",
+          "userIdentifier": "peter.schmid@foo.com",
+          "clusterSetCaseValue": "Legal",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2020-03-31T00:00:00.0Z",
+          "reason": "Demo Payrun",
+          "logLevel": "Verbose",
+          "attributes": {
+            "Type": "Type1"
+          }
+        },
+        {
+          "name": "SimplePayrollPayrun2.Feb19",
+          "payrunName": "SimplePayrollPayrun2",
+          "payrollName": "SimplePayroll.Derived2",
+          "userIdentifier": "peter.schmid@foo.com",
+          "clusterSetCaseValue": "Legal",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2020-03-31T00:00:00.0Z",
+          "reason": "Demo Payrun",
+          "logLevel": "Verbose",
+          "attributes": {
+            "Type": "Type2"
+          }
+        }
+      ]
+    }
+  ]
+}

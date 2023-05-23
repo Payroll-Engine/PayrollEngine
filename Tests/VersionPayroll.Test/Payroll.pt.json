@@ -1,0 +1,165 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "VersionPayroll.Test",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestVersionDivision",
+          "culture": "de-CH",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "VersionPayroll.Test",
+          "version": 1,
+          "description": "Test version 1 payroll",
+          "created": "2018-12-22T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "1000",
+              "created": "2018-12-22T00:00:00.0Z"
+            }
+          ]
+        },
+        {
+          "name": "VersionPayroll.Test",
+          "version": 2,
+          "description": "Test version 2 payroll",
+          "validFrom": "2019-02-01T00:00:00.0Z",
+          "created": "2019-01-17T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "2000",
+              "created": "2019-01-17T00:00:00.0Z"
+            }
+          ]
+        },
+        {
+          "name": "VersionPayroll.Test",
+          "version": 3,
+          "description": "Test version 3 payroll",
+          "validFrom": "2019-03-01T00:00:00.0Z",
+          "created": "2019-02-21T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "3000",
+              "created": "2019-02-21T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TestVersionDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "VersionPayroll.Test",
+          "divisionName": "TestVersionDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "VersionPayroll.Test"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "VersionPayroll.Test",
+          "name": "TestVersionPayrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "VersionPayroll.Test.Jan19",
+          "payrunName": "TestVersionPayrun",
+          "payrollName": "VersionPayroll.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-01-28T00:00:00.0Z",
+          "reason": "Test Version Payroll"
+        },
+        {
+          "name": "VersionPayroll.Test.Feb19",
+          "payrunName": "TestVersionPayrun",
+          "payrollName": "VersionPayroll.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-26T00:00:00.0Z",
+          "reason": "Test Version Payroll"
+        },
+        {
+          "name": "VersionPayroll.Test.Mrz19",
+          "payrunName": "TestVersionPayrun",
+          "payrollName": "VersionPayroll.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-03-01T00:00:00.0Z",
+          "evaluationDate": "2019-03-24T00:00:00.0Z",
+          "reason": "Test Version Payroll"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "VersionPayroll.Test.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "VersionPayroll.Test.Feb19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "VersionPayroll.Test.Mrz19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

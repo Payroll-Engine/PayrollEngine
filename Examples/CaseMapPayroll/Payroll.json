@@ -1,0 +1,230 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "CaseMapPayroll",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "language": "English",
+          "supervisor": true,
+          "attributes": {
+            "StartupPayroll": "CaseMapPayroll",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        }
+      ],
+      "divisions": [
+        {
+          "name": "CaseMapDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "CaseMapDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "CaseMapPayroll",
+          "description": "Case Map payroll",
+          "cases": [
+            {
+              "name": "CaseMap",
+              "nameLocalizations": {
+                "en": "Case Map EN",
+                "de": "Case Map DE",
+                "fr": "Case Map FR",
+                "it": "Case Map IT"
+              },
+              "description": "Case Map Description",
+              "descriptionLocalizations": {
+                "en": "Case Map Description EN",
+                "de": "Case Map Description DE",
+                "fr": "Case Map Description FR",
+                "it": "Case Map Description IT"
+              },
+              "caseType": "Employee",
+              "defaultReason": "Change Case Map",
+              "defaultReasonLocalizations": {
+                "en": "Change Case Map EN",
+                "de": "Change Case Map DE",
+                "fr": "Change Case Map FR",
+                "it": "Change Case Map IT"
+              },
+              "fields": [
+                {
+                  "name": "CaseMap.Name",
+                  "nameLocalizations": {
+                    "en": "Case Map Name EN",
+                    "de": "Case Map Name DE",
+                    "fr": "Case Map Name FR",
+                    "it": "Case Map Name IT"
+                  },
+                  "description": "Change Case Map Name",
+                  "descriptionLocalizations": {
+                    "en": "Change Case Map Name EN",
+                    "de": "Change Case Map Name DE",
+                    "fr": "Change Case Map Name FR",
+                    "it": "Change Case Map Name IT"
+                  },
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseMapChild1",
+              "description": "Case Map Child 1 Description",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "CaseMapChild1.Name",
+                  "description": "Change Case Map Child 1 Name",
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseMapChild1.1",
+              "description": "Case Map Child 1.1 Description",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "CaseMapChild1.1.Name",
+                  "description": "Change Case Map Child 1.1 Name",
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseMapChild1.2",
+              "description": "Case Map Child 1.2 Description",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "CaseMapChild1.2.Name",
+                  "description": "Change Case Map Child 1.2 Name",
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseMapChild2",
+              "description": "Case Map Child 2 Description",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "CaseMapChild2.Name",
+                  "description": "Change Case Map Child 2 Name",
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseMapChild2.1",
+              "description": "Case Map Child 2.1 Description",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "CaseMapChild2.1.Name",
+                  "description": "Change Case Map Child 2.1 Name",
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseMapChild2.2",
+              "description": "Case Map Child 2.2 Description",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "CaseMapChild2.2.Name",
+                  "description": "Change Case Map Child 2.2 Name",
+                  "valueType": "String",
+                  "defaultStart": "today",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "caseRelations": [
+            {
+              "sourceCaseName": "CaseMap",
+              "targetCaseName": "CaseMapChild1"
+            },
+            {
+              "sourceCaseName": "CaseMapChild1",
+              "targetCaseName": "CaseMapChild1.1"
+            },
+            {
+              "sourceCaseName": "CaseMapChild1",
+              "targetCaseName": "CaseMapChild1.2"
+            },
+            {
+              "sourceCaseName": "CaseMap",
+              "targetCaseName": "CaseMapChild2"
+            },
+            {
+              "sourceCaseName": "CaseMapChild2",
+              "targetCaseName": "CaseMapChild2.1"
+            },
+            {
+              "sourceCaseName": "CaseMapChild2",
+              "targetCaseName": "CaseMapChild2.2"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "CaseMapPayroll",
+          "description": "Case Map payroll",
+          "divisionName": "CaseMapDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "CaseMapPayroll"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "CaseMapPayroll",
+          "name": "CaseMapPayrollPayrun1",
+          "defaultReason": "Run CaseMap payrun"
+        }
+      ]
+    }
+  ]
+}

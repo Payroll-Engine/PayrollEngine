@@ -1,0 +1,100 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "CaseTest",
+      "calendar": {
+        "firstMonthOfYear": "January",
+        "averageMonthDays": 30,
+        "averageWorkDays": 21.75,
+        "calculationMode": "MonthCalendarDay",
+        "calendarWeekRule": "FirstFourDayWeek",
+        "firstDayOfWeek": "Monday",
+        "workingDays": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Wednesday",
+          "Friday"
+        ]
+      },
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "CaseTestDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "CaseTestDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "CaseTest",
+          "description": "The base of all payrolls",
+          "cases": [
+            {
+              "name": "AHV Local",
+              "caseType": "National",
+              "defaultReason": "Change AHV AN Local",
+              "fields": [
+                {
+                  "name": "AHV AN Local",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "defaultReason": "Change Monatslohn",
+              "availableExpression": "false",
+              "buildExpression": "var monatslohn = GetValue<decimal?>(\"Monatslohn\"); SetValue(\"Sonderabzug\", monatslohn.HasValue && monatslohn > 5000M ? monatslohn * 0.085M : 0); return true",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod"
+                },
+                {
+                  "name": "Sonderabzug",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "CaseTestPayroll",
+          "divisionName": "CaseTestDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "CaseTest"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

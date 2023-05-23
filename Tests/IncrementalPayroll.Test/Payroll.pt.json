@@ -1,0 +1,112 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "IncrementalPayroll.Test",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestIncrementalDivision",
+          "culture": "de-CH",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "IncrementalPayroll.Test",
+          "description": "Test incremental payroll",
+          "created": "2018-12-22T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "1000",
+              "created": "2018-12-22T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TestIncrementalDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "IncrementalPayroll.Test",
+          "divisionName": "TestIncrementalDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "IncrementalPayroll.Test"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "IncrementalPayroll.Test",
+          "name": "TestIncrementalPayrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "IncrementalPayroll.Test.Full.Jan19",
+          "payrunName": "TestIncrementalPayrun",
+          "payrollName": "IncrementalPayroll.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "jobResult": "Full",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-01-28T00:00:00.0Z",
+          "reason": "Test Full Payroll"
+        },
+        {
+          "name": "IncrementalPayroll.Test.Inc.Jan19",
+          "payrunName": "TestIncrementalPayrun",
+          "payrollName": "IncrementalPayroll.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "jobResult": "Incremental",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-01-29T00:00:00.0Z",
+          "reason": "Test Increment Payroll"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "IncrementalPayroll.Test.Full.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "IncrementalPayroll.Test.Inc.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+          ]
+        }
+      ]
+    }
+  ]
+}

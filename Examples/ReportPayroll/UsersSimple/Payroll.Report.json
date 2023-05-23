@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Payroll.Report",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "UsersSimple",
+              "nameLocalizations": {
+                "en": "Start Query Report EN",
+                "de": "Start Query Report DE",
+                "fr": "Start Query Report FR",
+                "it": "Start Query Report IT"
+              },
+              "buildExpression": "SetParameter(\"Users.TenantId\", TenantId);",
+              "startExpression": "SetQuery(\"Users\", \"QueryUsers\"); return null;",
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "language": "German",
+                  "contentFile": "Report.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

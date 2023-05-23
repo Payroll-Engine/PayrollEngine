@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="04/15/2023 09:13:19" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Users" ReferenceName="Data.Users" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Identifier" DataType="System.String"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="Culture" DataType="System.String"/>
+      <Column Name="Language" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text5" Top="9.45" Width="567" Height="28.35" Text="Users" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="40.09" Width="718.2" Height="18.9">
+      <TextObject Name="Text2" Width="151.2" Height="18.9" Border.Lines="All" Border.Color="105, 105, 105" Fill.Color="245, 245, 245" Text="User Id" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="151.2" Width="189" Height="18.9" Border.Lines="All" Border.Color="105, 105, 105" Fill.Color="245, 245, 245" Text="First name" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="340.2" Width="226.8" Height="18.9" Border.Lines="All" Border.Color="105, 105, 105" Fill.Color="245, 245, 245" Text="Last name" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="61.27" Width="718.2" Height="18.9" DataSource="Users">
+      <TextObject Name="Text15" Width="151.2" Height="18.9" Border.Lines="All" Border.Color="105, 105, 105" Border.Width="0.5" Text="[Users.Identifier]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="151.2" Width="189" Height="18.9" Border.Lines="All" Border.Color="105, 105, 105" Border.Width="0.5" Text="[Users.FirstName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text17" Left="340.2" Width="226.8" Height="18.9" Border.Lines="All" Border.Color="105, 105, 105" Border.Width="0.5" Text="[Users.LastName]" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="82.46" Width="718.2" Height="28.35">
+      <TextObject Name="Text12" Top="9.45" Width="122.85" Height="18.9" Text="[Date]" Font="Arial, 8pt"/>
+      <TextObject Name="Text13" Left="453.6" Top="9.45" Width="113.4" Height="18.9" Text="[PageNofM]" HorzAlign="Right" Font="Arial, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

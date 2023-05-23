@@ -1,0 +1,900 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "RetroPayroll",
+      "created": "2018-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "RetroDivision",
+          "culture": "de-CH",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "RetroDivision"
+          ],
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "RetroPayroll",
+          "description": "The retro payroll",
+          "created": "2018-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "defaultReason": "Change Monatslohn",
+              "created": "2018-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Beschäftigungsgrad",
+              "caseType": "Employee",
+              "defaultReason": "Change Beschäftigungsgrad",
+              "created": "2018-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Beschäftigungsgrad",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Bonus",
+              "caseType": "Employee",
+              "defaultReason": "Change Bonus",
+              "created": "2018-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Bonus",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Diff",
+              "valueExpression": "GetWageTypeRetroResultSum(101)",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Bonus",
+              "valueExpression": "CaseValue[\"Bonus\"]",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "Diff Bonus",
+              "valueExpression": "GetWageTypeRetroResultSum(103)",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "Job attribute provider",
+              "valueExpression": "if (IsRetroPayrun) return 0; SetPayrunJobAttribute(\"RetroWage\", WageType[101]); return WageType[101]",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 106,
+              "name": "Job attribute consumer",
+              "valueExpression": "return IsRetroPayrun ? GetPayrunJobAttribute<decimal>(\"RetroWage\") : 0",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "RetroPayroll",
+          "divisionName": "RetroDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "RetroPayroll"
+            }
+          ],
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypeRetro": "Retro",
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [
+                "Legal"
+              ]
+            },
+            {
+              "name": "Retro",
+              "includeClusters": [
+                "Retro"
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "1",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "end": "2019-02-14T00:00:00.0Z",
+                    "created": "2019-02-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-05-01T00:00:00.0Z",
+                    "end": "2019-05-31T00:00:00.0Z",
+                    "created": "2019-02-15T18:22:46.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5000",
+                    "start": "2018-10-01T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "6000",
+                    "start": "2018-11-10T00:00:00.0Z",
+                    "created": "2019-02-13T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5500",
+                    "start": "2019-02-10T00:00:00.0Z",
+                    "created": "2019-05-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "10000",
+                    "start": "2019-01-10T00:00:00.0Z",
+                    "created": "2019-05-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "10000",
+                    "start": "2019-03-01T00:00:00.0Z",
+                    "end": "2019-04-15T00:00:00.0Z",
+                    "created": "2019-05-05T00:00:01.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "0",
+                    "start": "2019-03-01T00:00:00.0Z",
+                    "end": "2019-04-15T00:00:00.0Z",
+                    "created": "2019-06-04T00:00:01.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5000",
+                    "start": "2019-03-01T00:00:00.0Z",
+                    "end": "2019-04-15T00:00:00.0Z",
+                    "created": "2019-06-04T00:00:02.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "7000",
+                    "start": "2019-04-01T00:00:00.0Z",
+                    "created": "2019-06-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "0",
+                    "start": "2019-05-01T00:00:00.0Z",
+                    "created": "2019-06-28T00:00:00.1Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "RetroPayroll",
+          "name": "RetroPayrollPayrun",
+          "culture": "de-CH",
+          "defaultReason": "Run Retro payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "RetroPayrollPayrun.Oct18",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2018-10-01T00:00:00.0Z",
+          "evaluationDate": "2018-10-28T00:00:00.0Z",
+          "reason": "Retro Payrun Oct 18"
+        },
+        {
+          "name": "RetroPayrollPayrun.Nov18",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2018-11-01T00:00:00.0Z",
+          "evaluationDate": "2018-11-28T00:00:00.0Z",
+          "reason": "Retro Payrun Nov 18"
+        },
+        {
+          "name": "RetroPayrollPayrun.Dec18",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2018-12-01T00:00:00.0Z",
+          "evaluationDate": "2018-12-28T00:00:00.0Z",
+          "reason": "Retro Payrun Dec 18"
+        },
+        {
+          "name": "RetroPayrollPayrun.Jan19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-01-28T00:00:00.0Z",
+          "reason": "Retro Payrun Jan 19"
+        },
+        {
+          "name": "RetroPayrollPayrun.Feb19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-28T00:00:00.0Z",
+          "reason": "Retro Payrun Feb 19"
+        },
+        {
+          "name": "RetroPayrollPayrun.Mar19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-03-01T00:00:00.0Z",
+          "evaluationDate": "2019-03-28T00:00:00.0Z",
+          "reason": "Retro Payrun Mar 19"
+        },
+        {
+          "name": "RetroPayrollPayrun.Apr19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-04-01T00:00:00.0Z",
+          "evaluationDate": "2019-04-28T00:00:00.0Z",
+          "reason": "Retro Payrun Apr 19"
+        },
+        {
+          "name": "RetroPayrollPayrun.May19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-05-01T00:00:00.0Z",
+          "evaluationDate": "2019-05-28T00:00:00.0Z",
+          "reason": "Retro Payrun May 19"
+        },
+        {
+          "name": "RetroPayrollPayrun.Jun19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-06-01T00:00:00.0Z",
+          "evaluationDate": "2019-06-28T00:00:00.0Z",
+          "reason": "Retro Payrun Jun 19"
+        },
+        {
+          "name": "RetroPayrollPayrun.Jul19",
+          "payrunName": "RetroPayrollPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-07-01T00:00:00.0Z",
+          "evaluationDate": "2019-07-28T00:00:00.0Z",
+          "reason": "Retro Payrun Jul 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "RetroPayrollPayrun.Oct18",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Nov18",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Dec18",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Feb19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 4500
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": -300
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Feb19",
+          "retroPeriodStart": "2018-11-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5700
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 4500
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Feb19",
+          "retroPeriodStart": "2018-12-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 6000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 4500
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Feb19",
+          "retroPeriodStart": "2019-01-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 4500
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Mar19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 6000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Apr19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 6000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.May19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2750
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 5455.36
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 10000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.May19",
+          "retroPeriodStart": "2019-01-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 103,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 2750
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.May19",
+          "retroPeriodStart": "2019-02-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 4205.357
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 2750
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.May19",
+          "retroPeriodStart": "2019-03-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 2750
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.May19",
+          "retroPeriodStart": "2019-04-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 7750
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 2750
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jun19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 7000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": -5000
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jun19",
+          "retroPeriodStart": "2019-03-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 7000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jun19",
+          "retroPeriodStart": "2019-04-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 7000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 7000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jun19",
+          "retroPeriodStart": "2019-05-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3500
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 7000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jul19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": -10500
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jul19",
+          "retroPeriodStart": "2019-05-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrollPayrun.Jul19",
+          "retroPeriodStart": "2019-06-01T00:00:00.0Z",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

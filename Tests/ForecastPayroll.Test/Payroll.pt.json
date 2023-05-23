@@ -1,0 +1,170 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "ForecastPayroll",
+      "created": "2018-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "ForecastDivision",
+          "culture": "de-CH",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "ForecastDivision"
+          ],
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "ForecastPayroll",
+          "description": "The Forecast payroll",
+          "created": "2018-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "defaultReason": "Change Monatslohn",
+              "created": "2018-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "CaseValue[\"Monatslohn\"] + GetWageTypeRetroResultSum(101)",
+              "created": "2018-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "ForecastPayroll",
+          "divisionName": "ForecastDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "ForecastPayroll"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "ForecastDivision",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "reason": "Change Monatslohn",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5000",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "ForecastDivision",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "reason": "Forecast Monatslohn",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "6000",
+                    "start": "2022-01-01T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "ForecastPayroll",
+          "name": "ForecastPayrollPayrun",
+          "culture": "de-CH",
+          "defaultReason": "Run Forecast payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "ForecastPayrollPayrun.Jan21",
+          "payrunName": "ForecastPayrollPayrun",
+          "payrollName": "ForecastPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "forecast": "Forecast2022",
+          "jobStatus": "Complete",
+          "periodStart": "2021-01-01T00:00:00.0Z",
+          "evaluationDate": "2020-12-28T00:00:00.0Z",
+          "reason": "Forecast Payrun Jan 22"
+        },
+        {
+          "name": "ForecastPayrollPayrun.Jan22",
+          "payrunName": "ForecastPayrollPayrun",
+          "payrollName": "ForecastPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "forecast": "Forecast2022",
+          "jobStatus": "Complete",
+          "evaluationDate": "2020-12-28T00:00:00.0Z",
+          "periodStart": "2022-01-01T00:00:00.0Z",
+          "reason": "Forecast Payrun Jan 22"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "ForecastPayrollPayrun.Jan21",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "ForecastPayrollPayrun.Jan22",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 6000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

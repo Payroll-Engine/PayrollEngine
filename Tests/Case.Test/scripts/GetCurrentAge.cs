@@ -1,0 +1,1 @@
+protected int GetCurrentAge(DateTime? dateTime) => dateTime.HasValue ? System.DateTime.UtcNow.Year - dateTime.Value.Year : 0;

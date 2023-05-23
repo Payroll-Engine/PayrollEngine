@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="05/16/2023 15:22:18" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Employees" ReferenceName="Data.Employees" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Identifier" DataType="System.String"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="Language" DataType="System.String"/>
+      <Column Name="Culture" DataType="System.String"/>
+      <Column Name="Divisions" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="CaseValues" ReferenceName="Data.CaseValues" DataType="System.Int32" Enabled="true">
+      <Column Name="EmployeeId" DataType="System.Int32"/>
+      <Column Name="Monatslohn" DataType="System.Decimal"/>
+      <Column Name="EmploymentLevel" DataType="System.String"/>
+      <Column Name="Geburtsdatum" DataType="System.String"/>
+      <Column Name="Location" DataType="System.String"/>
+    </TableDataSource>
+    <Relation Name="EmployeeCaseValueRelation" ParentDataSource="Employees" ChildDataSource="CaseValues" ParentColumns="Id" ChildColumns="EmployeeId" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15" OtherPageSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="37.8">
+      <TextObject Name="Text5" Width="718.2" Height="28.35" Text="Employee Case Values" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="40.47" Width="1047.06" Height="28.35">
+      <TextObject Name="Text2" Width="264.6" Height="18.9" Text="Employee Id" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="302.4" Width="151.2" Height="18.9" Text="Monthly wage" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="491.4" Width="151.2" Height="18.9" Text="Employment level" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text8" Left="680.4" Width="151.2" Height="18.9" Text="Birth date" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="869.4" Width="151.2" Height="18.9" Text="Location" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="71.48" Width="1047.06" DataSource="Employees">
+      <DataBand Name="Data2" Top="74.15" Width="1047.06" Height="18.9" DataSource="CaseValues">
+        <TextObject Name="Text11" Left="869.4" Width="151.2" Height="18.9" Text="[CaseValues.Location]" Font="Arial, 10pt"/>
+        <TextObject Name="Text3" Left="302.4" Width="151.2" Height="18.9" Text="[FormatCurrency([CaseValues.Monatslohn]	)]" Font="Arial, 10pt"/>
+        <TextObject Name="Text7" Left="491.4" Width="151.2" Height="18.9" Text="[CaseValues.EmploymentLevel]" Font="Arial, 10pt"/>
+        <TextObject Name="Text9" Left="680.4" Width="151.2" Height="18.9" Text="[CaseValues.Geburtsdatum]" Font="Arial, 10pt"/>
+        <TextObject Name="Text1" Width="264.6" Height="18.9" Text="[Employees.Identifier]" Font="Arial, 10pt"/>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="95.72" Width="1047.06" Height="28.35">
+      <TextObject Name="Text12" Top="9.45" Width="122.85" Height="18.9" Text="[Date]" Font="Arial, 8pt"/>
+      <TextObject Name="Text13" Left="869.4" Top="9.45" Width="151.2" Height="18.9" Text="[Page#] of [TotalPages#]" HorzAlign="Right" Font="Arial, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

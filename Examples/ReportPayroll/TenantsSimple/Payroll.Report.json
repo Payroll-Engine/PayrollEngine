@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Payroll.Report",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "TenantsSimple",
+              "attributeMode": "Table",
+              "nameLocalizations": {
+                "en": "Static Query Report EN",
+                "de": "Static Query Report DE",
+                "fr": "Static Query Report FR",
+                "it": "Static Query Report IT"
+              },
+              "queries": {
+                "Tenants": "QueryTenants"
+              },
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "language": "German",
+                  "contentFile": "Report.frx",
+                  "attributes": {
+                    "input.attachmentExtensions": ".frx"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

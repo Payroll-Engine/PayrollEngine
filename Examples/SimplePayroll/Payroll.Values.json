@@ -1,0 +1,338 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "SimplePayroll",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "SimplePayroll.Derived1",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "SimpleDivision1",
+              "case": {
+                "caseName": "AHV",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN",
+                    "value": "0.05125",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-23T00:00:00.0Z",
+                    "documents": [
+                      {
+                        "name": "Ahv.txt",
+                        "contentType": "text/plain",
+                        "contentFile": "docs/ahv.txt"
+                      },
+                      {
+                        "name": "Manual.docx",
+                        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        "contentFile": "docs/Manual.docx"
+                      },
+                      {
+                        "name": "Manual.pdf",
+                        "contentType": "application/pdf",
+                        "contentFile": "docs/Manual.pdf"
+                      },
+                      {
+                        "name": "Data.xlsx",
+                        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "contentFile": "docs/Data.xlsx"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "SimpleDivision1",
+              "case": {
+                "caseName": "AHV Local",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN Local",
+                    "value": "0.04",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-23T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "case": {
+                "caseName": "Unfallversicherung",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz",
+                    "value": "0.1",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "SimpleDivision1",
+              "case": {
+                "caseName": "Unfallversicherung Local",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz Local",
+                    "value": "0.4",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Location",
+              "case": {
+                "caseName": "Location",
+                "values": [
+                  {
+                    "caseFieldName": "Location",
+                    "value": "Zürich",
+                    "attributes": {
+                      "Category": "Task"
+                    },
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ],
+                "relatedCases": [
+                  {
+                    "caseName": "Monatslohn",
+                    "values": [
+                      {
+                        "caseFieldName": "Monatslohn",
+                        "value": "6000",
+                        "start": "2019-02-10T00:00:00.0Z",
+                        "created": "2019-02-05T00:00:00.0Z"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Monatslohn",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5000",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "end": "2020-12-31T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Monatslohn",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "6000",
+                    "start": "2019-02-10T00:00:00.0Z",
+                    "created": "2019-02-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Abteilung",
+              "case": {
+                "caseName": "Abteilung",
+                "values": [
+                  {
+                    "caseFieldName": "Abteilung",
+                    "value": "ABC",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2018-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Abteilung",
+              "case": {
+                "caseName": "Abteilung",
+                "values": [
+                  {
+                    "caseFieldName": "Abteilung",
+                    "value": "DEF",
+                    "start": "2019-02-15T00:00:00.0Z",
+                    "created": "2019-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Beschäftigungsgrad",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2018-12-31T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Beschäftigungsgrad",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.6",
+                    "start": "2019-02-20T00:00:00.0Z",
+                    "created": "2019-01-31T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Change Beschäftigungsgrad",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-02-24T00:00:00.0Z",
+                    "created": "2019-02-22T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Krankheitsmeldung 1",
+              "case": {
+                "caseName": "Krankheit",
+                "values": [
+                  {
+                    "caseFieldName": "Krankheit",
+                    "value": "1",
+                    "start": "2019-02-04T00:00:00.0Z",
+                    "end": "2019-02-07T00:00:00.0Z",
+                    "created": "2018-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "SimpleDivision1",
+              "reason": "Krankheitsmeldung 2",
+              "case": {
+                "caseName": "Krankheit",
+                "values": [
+                  {
+                    "caseFieldName": "Krankheit",
+                    "value": "0.5",
+                    "start": "2019-02-16T00:00:00.0Z",
+                    "end": "2019-02-21T00:00:00.0Z",
+                    "created": "2018-12-02T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "mario.nunez@foo.com",
+              "divisionName": "SimpleDivision2",
+              "reason": "Change Bonus",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "99999",
+                    "start": "2019-01-28T00:00:00.0Z",
+                    "created": "2010-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "mario.nunez@foo.com",
+              "divisionName": "SimpleDivision2",
+              "reason": "Change Bonus",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "5000",
+                    "start": "2019-04-01T00:00:00.0Z",
+                    "created": "2010-02-14T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "mario.nunez@foo.com",
+              "divisionName": "SimpleDivision2",
+              "reason": "Change Geburtsdatum",
+              "case": {
+                "caseName": "Geburtsdatum",
+                "values": [
+                  {
+                    "caseFieldName": "Geburtsdatum",
+                    "value": "1969-06-18T00:00:00.0Z",
+                    "created": "2018-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

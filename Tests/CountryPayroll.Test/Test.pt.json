@@ -1,0 +1,397 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "CountryPayroll.Test",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDivision",
+          "culture": "de-CH",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "CountryPayroll.Test",
+          "description": "The testing payroll",
+          "created": "2019-01-01T00:00:00.0Z",
+          "scripts": [
+            {
+              "name": "FunctionRegister",
+              "functionTypes": [
+                "All"
+              ],
+              "valueFile": "scripts\\FunctionRegister.cs"
+            },
+            {
+              "name": "CountryFunction",
+              "functionTypes": [
+                "All"
+              ],
+              "valueFile": "scripts\\CountryFunction.cs"
+            },
+            {
+              "name": "CountryPayrollFunction",
+              "functionTypes": [
+                "Payroll"
+              ],
+              "valueFile": "scripts\\CountryPayrollFunction.cs"
+            }
+          ],
+              "cases": [
+            {
+              "name": "AHV",
+              "caseType": "National",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "AHV AN",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Unfallversicherung",
+              "caseType": "Company",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "NBU Satz",
+                  "valueType": "Percent",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Beschäftigungsgrad",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Beschäftigungsgrad",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "AHV Basis",
+              "collectType": "Sum",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "collectors": [
+                "AHV Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "name": "MonatslohnCountry",
+              "valueExpression": "return Country.CurrentMonthWage;",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TestDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "CountryPayroll.Test.Derived",
+          "divisionName": "TestDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "CountryPayroll.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "AHV",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN",
+                    "value": "0.05125",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-23T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "AHV",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN",
+                    "value": "0.05275",
+                    "start": "2020-01-01T00:00:00.0Z",
+                    "created": "2018-12-23T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Unfallversicherung",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz",
+                    "value": "0.5",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Unfallversicherung",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz",
+                    "value": "0.05",
+                    "start": "2019-03-01T00:00:00.0Z",
+                    "created": "2018-02-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5000",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "end": "2020-12-31T00:00:00.0Z",
+                    "created": "2017-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "6000",
+                    "start": "2019-02-10T00:00:00.0Z",
+                    "created": "2019-02-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2018-12-31T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.6",
+                    "start": "2019-02-20T00:00:00.0Z",
+                    "created": "2019-01-31T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Beschäftigungsgrad",
+                "values": [
+                  {
+                    "caseFieldName": "Beschäftigungsgrad",
+                    "value": "0.5",
+                    "start": "2019-02-24T00:00:00.0Z",
+                    "created": "2019-02-22T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "CountryPayroll.Test.Derived",
+          "name": "CountryPayroll.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "CountryPayroll.TestPayrun1.Jan19",
+          "payrunName": "CountryPayroll.TestPayrun1",
+          "payrollName": "CountryPayroll.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        },
+        {
+          "name": "CountryPayroll.TestPayrun1.Feb19",
+          "payrunName": "CountryPayroll.TestPayrun1",
+          "payrollName": "CountryPayroll.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-03-01T00:00:00.0Z",
+          "reason": "Demo Payrun Feb 19"
+        },
+        {
+          "name": "CountryPayroll.TestPayrun1.Mrz19",
+          "payrunName": "CountryPayroll.TestPayrun1",
+          "payrollName": "CountryPayroll.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-03-01T00:00:00.0Z",
+          "evaluationDate": "2019-04-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mrz 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "CountryPayroll.TestPayrun1.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2500
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "value": 2500
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Basis",
+              "value": 2500
+            }
+          ]
+        },
+        {
+          "payrunJobName": "CountryPayroll.TestPayrun1.Feb19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2925
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "value": 2925
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Basis",
+              "value": 2925
+            }
+          ]
+        },
+        {
+          "payrunJobName": "CountryPayroll.TestPayrun1.Mrz19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Basis",
+              "value": 3000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

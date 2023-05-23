@@ -1,0 +1,182 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "WeekSimplePayroll",
+      "calendarCalculationMode": "WeekCalendarDay",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "supervisor": true,
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "WeekSimpleDivision",
+          "culture": "de-CH",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "WeekSimpleDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "WeekSimplePayroll",
+          "description": "The base of all payrolls",
+          "created": "2019-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "AHV",
+              "caseType": "National",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "AHV AN",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Unfallversicherung",
+              "caseType": "Company",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "NBU Satz",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Wochenlohn",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Wochenlohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Beschäftigungsgrad",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Beschäftigungsgrad",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Abteilung",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Abteilung",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Bonus",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Bonus",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "AHV Basis",
+              "collectType": "Sum",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Wochenlohn",
+              "valueExpression": "var values = GetCaseValues(\"Wochenlohn\", \"Beschäftigungsgrad\"); return values[\"Wochenlohn\"] * values[\"Beschäftigungsgrad\"]",
+              "collectors": [
+                "AHV Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Bonus",
+              "valueExpression": "CaseValue[\"Bonus\"]",
+              "collectors": [
+                "AHV Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "AHV AN Abzug",
+              "valueExpression": "Collector[\"AHV Basis\"] * CaseValue[\"AHV AN\"]",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "NBU Abzug",
+              "valueExpression": "Collector[\"AHV Basis\"] * CaseValue[\"NBU Satz\"]",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "WeekSimplePayroll.Derived",
+          "divisionName": "WeekSimpleDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "WeekSimplePayroll"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "WeekSimplePayroll.Derived",
+          "name": "WeekSimplePayrollPayrun1"
+        }
+      ]
+    }
+  ]
+}

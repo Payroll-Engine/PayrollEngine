@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="Employees">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Employee" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" type="xs:int"/>
+              <xs:element name="Status" type="xs:int"/>
+              <xs:element name="Created" type="xs:dateTime"/>
+              <xs:element name="Updated" type="xs:dateTime"/>
+              <xs:element name="TenantId" type="xs:int"/>
+              <xs:element name="Identifier" type="xs:string"/>
+              <xs:element name="FirstName" type="xs:string"/>
+              <xs:element name="LastName" type="xs:string"/>
+              <xs:element name="Language" type="xs:int"/>
+              <xs:element name="Divisions" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

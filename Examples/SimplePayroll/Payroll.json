@@ -1,0 +1,1263 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "SimplePayroll",
+      "calendar": {
+        "firstMonthOfYear": "January",
+        "averageMonthDays": 30,
+        "averageWorkDays": 21.75,
+        "calculationMode": "MonthCalendarDay",
+        "calendarWeekRule": "FirstFourDayWeek",
+        "firstDayOfWeek": "Monday",
+        "workingDays": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Wednesday",
+          "Friday"
+        ]
+      },
+      "attributes": {
+        "ErpId": "3CDBE5C7-A317-4942-8070-7CBC04A5BB70",
+        "grid.TenantsGrid": "[{\"Attribute\":\"ErpId\",\"Header\":\"Erp Id\",\"ValueType\":\"String\"}]",
+        "grid.DivisionsGrid": "[{\"Attribute\":\"ErpId\",\"Header\":\"Erp Id\",\"ValueType\":\"String\"}]",
+        "grid.UsersGrid": "[{\"Attribute\":\"ErpId\",\"Header\":\"Erp Id\",\"ValueType\":\"String\"}]",
+        "grid.TasksGrid": "[{\"Attribute\":\"ErpId\",\"Header\":\"Erp Id\",\"ValueType\":\"String\"}]",
+        "grid.EmployeesGrid": "[{\"Attribute\":\"ErpId\",\"Header\":\"Erp Id\",\"ValueType\":\"String\"}]",
+        "grid.PayrollResultsGrid": "[{\"Attribute\":\"textAttribute\",\"Header\":\"Text-Attr\",\"ValueType\":\"String\"}, {\"Attribute\":\"dateAttribute\",\"Header\":\"Date-Attr\",\"ValueType\":\"DateTime\"}, {\"Attribute\":\"numAttribute\",\"Header\":\"Num-Attr\",\"ValueType\":\"Decimal\"}]",
+        "grid.PayrunJobsGrid": "[{\"Attribute\":\"JobStart\",\"Header\":\"MyJobStart\",\"ValueType\":\"DateTime\"}]",
+        "grid.PayrollPayrunJobsGrid": "[{\"Attribute\":\"JobEnd\",\"Header\":\"MyJobEnd\",\"ValueType\":\"DateTime\"}]"
+      },
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "culture": "de-CH",
+          "supervisor": true,
+          "attributes": {
+            "ErpId": "C52F4DB2-A677-4BFC-9E5C-A4713A2532F5",
+            "StartupPayroll": "SimplePayroll.Derived1",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        },
+        {
+          "identifier": "maria.hofer@foo.com",
+          "firstName": "Mario",
+          "lastName": "Hofer",
+          "culture": "de-CH",
+          "attributes": {
+            "ErpId": "F350B5AA-157F-453C-8380-3F28AD86791B",
+            "StartupPayroll": "SimplePayroll.Derived1",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        },
+        {
+          "identifier": "lucia.schmid@foo.com",
+          "firstName": "Lucia",
+          "lastName": "Schmid",
+          "culture": "de-CH",
+          "attributes": {
+            "ErpId": "F9D93914-0B1D-4140-8162-1229736B587A",
+            "StartupPayroll": "SimplePayroll.Derived1",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        },
+        {
+          "identifier": "josef.müller@foo.com",
+          "firstName": "Josef",
+          "lastName": "Müller",
+          "culture": "de-CH",
+          "attributes": {
+            "ErpId": "3BB41DBE-2340-48A2-AC89-475CF138613F",
+            "StartupPayroll": "SimplePayroll.Derived1",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        },
+        {
+          "identifier": "peter.staufer@foo.com",
+          "firstName": "Peter",
+          "lastName": "Staufer",
+          "culture": "de-CH",
+          "attributes": {
+            "ErpId": "3ADD71E6-2D2C-41F8-900C-51A11593590A",
+            "StartupPayroll": "SimplePayroll.Derived1",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        },
+        {
+          "identifier": "eva.bauer@foo.com",
+          "firstName": "Eva",
+          "lastName": "Bauer",
+          "culture": "de-CH",
+          "attributes": {
+            "ErpId": "AB28440A-6D32-4B67-8820-1049D9CB98BC",
+            "StartupPayroll": "SimplePayroll.Derived1",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        }
+      ],
+      "divisions": [
+        {
+          "name": "SimpleDivision1",
+          "culture": "de-CH",
+          "attributes": {
+            "ErpId": "ED6D51AC-50FB-443E-8EB4-2E1D7783C3A8"
+          }
+        },
+        {
+          "name": "SimpleDivision2",
+          "culture": "de-DE",
+          "attributes": {
+            "ErpId": "223D4E84-9B57-4111-BEA6-115DF2C11429"
+          }
+        }
+      ],
+      "tasks": [
+        {
+          "name": "MyTaskName",
+          "category": "MyTaskCategory",
+          "instruction": "Setup new employees see <a href=\"http://www.google.comh\">Google</a>",
+          "scheduledUserIdentifier": "peter.schmid@foo.com",
+          "scheduled": "2019-06-12T00:00:00.0Z",
+          "attributes": {
+            "ErpId": "2993DB89-26E8-44B1-8AB1-EC4A853D347A"
+          }
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "SimpleDivision1",
+            "SimpleDivision2"
+          ],
+          "attributes": {
+            "ErpId": "F37D1B9B-944F-44FA-BF4C-61F4EE502205"
+          }
+        },
+        {
+          "identifier": "mario.nunez@foo.com",
+          "firstName": "Mario",
+          "lastName": "Nuñez",
+          "divisions": [
+            "SimpleDivision2"
+          ],
+          "attributes": {
+            "ErpId": "35B95A71-EB20-462E-A9DD-59B3D79F2589"
+          }
+        },
+        {
+          "identifier": "old.omployee@foo.com",
+          "firstName": "Old",
+          "lastName": "Employee",
+          "divisions": [
+            "SimpleDivision1",
+            "SimpleDivision2"
+          ],
+          "attributes": {
+            "ErpId": "1AEB2B04-356C-4E49-B5CA-8300FBFDBAC3"
+          }
+        }
+      ],
+      "regulations": [
+        {
+          "name": "SimplePayroll",
+          "description": "The base of all payrolls",
+          "clusters": [
+            "Onboarding",
+            "Legal"
+          ],
+          "scripts": [
+            {
+              "name": "GetCurrentAge",
+              "functionTypes": [
+                "CaseAvailable",
+                "CaseBuild",
+                "WageTypeValue"
+              ],
+              "valueFile": "scripts\\GetCurrentAge.cs"
+            },
+            {
+              "name": "GetSickDaysCount",
+              "functionTypes": [
+                "WageTypeValue"
+              ],
+              "valueFile": "scripts\\GetSickDaysCount.cs"
+            },
+            {
+              "name": "MyTool",
+              "functionTypes": [
+                "CaseAvailable",
+                "CaseBuild",
+                "WageTypeValue"
+              ],
+              "value": "using System; public static class MyTool { public static int GetCurrentAge(DateTime? dateTime) => dateTime.HasValue ? System.DateTime.UtcNow.Year - dateTime.Value.Year : 0; }"
+            }
+          ],
+          "cases": [
+            {
+              "name": "Employee Profile",
+              "description": "Employee Profile Test",
+              "caseType": "Employee",
+              "defaultReason": "Test Employee Profile",
+              "clusters": [
+                "Onboarding"
+              ],
+              "fields": [
+                {
+                  "name": "ProfilePicture",
+                  "description": "Profile Picture Description",
+                  "valueType": "None",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.attachment": "Optional",
+                    "input.attachmentExtensions": ".jpg,.png"
+                  }
+                },
+                {
+                  "name": "EmployeeDocuments",
+                  "description": "Attach Employee Documents",
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.attachment": "Mandatory"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Money Values",
+              "description": "Money Values Test",
+              "caseType": "Employee",
+              "defaultReason": "Test money values",
+              "fields": [
+                {
+                  "name": "Money",
+                  "description": "Money Description",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "key": "CE012",
+                  "order": 310
+                },
+                {
+                  "name": "Money BiH",
+                  "description": "Money BiH Description [culture=bs-Latn-BA]",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "order": 315,
+                  "attributes": {
+                    "input.culture": "bs-Latn-BA"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "AHV",
+              "caseType": "National",
+              "defaultReason": "Change AHV AN",
+              "validateExpression": "AddTask(\"AhvTask\", \"My instructions\", Date.Now.AddMonths(1), \"My category\", new() { { \"ErpId\", Guid.NewGuid() } }); return true;",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "AHV AN",
+                  "valueType": "Percent",
+                  "valueScope": "Global",
+                  "timeType": "Period",
+                  "tags": [
+                    "MyTag1",
+                    "MyTag2"
+                  ],
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "AHV Attr",
+                    "dateAttribute": "2019-05-04T07:45:00.0Z",
+                    "numAttribute": 500
+                  }
+                }
+              ]
+            },
+            {
+              "name": "AHV Local",
+              "caseType": "National",
+              "defaultReason": "Change AHV AN Local",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "AHV AN Local",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "AHV AN Attr",
+                    "dateAttribute": "2020-01-28T17:00:00.0Z",
+                    "numAttribute": 600
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Unfallversicherung",
+              "caseType": "Company",
+              "defaultReason": "Change Unfallversicherung",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "NBU Satz",
+                  "valueType": "Percent",
+                  "valueScope": "Global",
+                  "timeType": "ScaledPeriod",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "NBU Satz Attr",
+                    "dateAttribute": "2020-04-04T08:00:00.0Z",
+                    "numAttribute": 500
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Unfallversicherung Local",
+              "caseType": "Company",
+              "defaultReason": "Change Unfallversicherung Local",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "NBU Satz Local",
+                  "valueType": "Percent",
+                  "timeType": "ScaledPeriod",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Location",
+              "caseType": "Employee",
+              "defaultReason": "Change Location",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Location",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "key": "CE022",
+                  "lookupSettings": {
+                    "lookupName": "Location",
+                    "textFieldName": "name",
+                    "valueFieldName": "number"
+                  },
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "Location Attr",
+                    "dateAttribute": "2019-04-01T18:00:00.0Z",
+                    "numAttribute": 100
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Monatslohn",
+              "nameLocalizations": {
+                "en": "Monatslohn EN",
+                "de": "Monatslohn DE",
+                "fr": "Monatslohn FR",
+                "it": "Monatslohn IT"
+              },
+              "caseType": "Employee",
+              "cancellationType": "Case",
+              "defaultReason": "Change Monatslohn",
+              "validateExpression": "AddCaseValueTag(\"Monatslohn\", \"MyCaseValueTag\");",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "nameLocalizations": {
+                    "en": "Monatslohn EN",
+                    "de": "Monatslohn DE",
+                    "fr": "Monatslohn FR",
+                    "it": "Monatslohn IT"
+                  },
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "Monatslohn Attr",
+                    "dateAttribute": "2019-12-21T10:15:00.0Z",
+                    "numAttribute": 100
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Beschäftigungsgrad",
+              "caseType": "Employee",
+              "defaultReason": "Change Beschäftigungsgrad",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Beschäftigungsgrad",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "Beschäftigungsgrad Attr",
+                    "dateAttribute": "2019-11-17T12:25:00.0Z",
+                    "numAttribute": 200
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Abteilung",
+              "caseType": "Employee",
+              "defaultReason": "Change Abteilung",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Abteilung",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ],
+                  "valueAttributes": {
+                    "textAttribute": "Abteilung Attr",
+                    "dateAttribute": "2019-07-05T17:00:00.0Z",
+                    "numAttribute": 300
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Titel",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "availableExpression2": "CaseValue[\"Abteilung\"].HasValue",
+              "defaultReason": "Change Titel",
+              "created": "2020-12-28T00:00:00.0Z",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Titel",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "created": "2020-12-28T00:00:00.0Z",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Residental Area",
+              "caseType": "Employee",
+              "defaultReason": "Change residental area",
+              "created": "2021-01-18T00:00:00.0Z",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Residental Area",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "lookupSettings": {
+                    "lookupName": "ResidentalArea",
+                    "textFieldName": "name",
+                    "valueFieldName": "name"
+                  },
+                  "created": "2021-01-18T00:00:00.0Z",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Building Type",
+              "caseType": "Employee",
+              "availableExpression": "CaseValue[\"Residental Area\"].HasValue",
+              "defaultReason": "Change building type",
+              "created": "2021-01-18T00:00:00.0Z",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Building Type",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.multiLookup": true
+                  },
+                  "lookupSettings": {
+                    "lookupName": "BuildingType",
+                    "textFieldName": "name",
+                    "valueFieldName": "name"
+                  },
+                  "created": "2021-01-18T00:00:00.0Z",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Sozialversicherungsnummer",
+              "defaultReason": "Meldung Sozialversicherungsnummer",
+              "caseType": "Employee",
+              "order": 1,
+              "created": "2021-01-20T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Sozialversicherungsnummer",
+                  "valueType": "String",
+                  "valueScope": "Global",
+                  "timeType": "Timeless",
+                  "optional": true,
+                  "order": 60,
+                  "attributes": {
+                    "input.mask": "756.0000.0000.00"
+                  },
+                  "created": "2021-01-20T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "SlotParent",
+              "nameLocalizations": {
+                "en": "Slot Parent EN",
+                "de": "Slot Parent DE",
+                "fr": "Slot Parent FR",
+                "it": "Slot Parent IT"
+              },
+              "description": "Slot Parent",
+              "caseType": "Employee",
+              "defaultReason": "Change Slot Parent",
+              "fields": [
+                {
+                  "name": "ChildCount",
+                  "nameLocalizations": {
+                    "en": "Children Count EN",
+                    "de": "Children Count DE",
+                    "fr": "Children Count FR",
+                    "it": "Children Count IT"
+                  },
+                  "description": "The children count",
+                  "valueType": "Integer",
+                  "defaultStart": "today",
+                  "defaultValue": "0",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.minValue": 0,
+                    "input.maxValue": 3
+                  }
+                }
+              ]
+            },
+            {
+              "name": "SlotChild",
+              "nameLocalizations": {
+                "en": "Child EN",
+                "de": "Child DE",
+                "fr": "Child FR",
+                "it": "Child IT"
+              },
+              "description": "Slot Child",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "slots": [
+                {
+                  "name": "1",
+                  "nameLocalizations": {
+                    "en": "1 EN",
+                    "de": "1 DE",
+                    "fr": "1 FR",
+                    "it": "1 IT"
+                  }
+                },
+                {
+                  "name": "2",
+                  "nameLocalizations": {
+                    "en": "2 EN",
+                    "de": "2 DE",
+                    "fr": "2 FR",
+                    "it": "2 IT"
+                  }
+                },
+                {
+                  "name": "3",
+                  "nameLocalizations": {
+                    "en": "3 EN",
+                    "de": "3 DE",
+                    "fr": "3 FR",
+                    "it": "3 IT"
+                  }
+                }
+              ],
+              "fields": [
+                {
+                  "name": "ChildName",
+                  "nameLocalizations": {
+                    "en": "Child Name EN",
+                    "de": "Child Name DE",
+                    "fr": "Child Name FR",
+                    "it": "Child Name IT"
+                  },
+                  "description": "The child name",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                },
+                {
+                  "name": "Child.Birthdate",
+                  "nameLocalizations": {
+                    "en": "Child Birthdate EN",
+                    "de": "Child Birthdate DE",
+                    "fr": "Child Birthdate FR",
+                    "it": "Child Birthdate IT"
+                  },
+                  "description": "The child birth date",
+                  "valueType": "Date",
+                  "defaultStart": "today",
+                  "defaultValue": "2019-01-01T00:00:00.0Z",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "SlotChildChild",
+              "nameLocalizations": {
+                "en": "Child Child EN",
+                "de": "Child Child DE",
+                "fr": "Child Child FR",
+                "it": "Child Child IT"
+              },
+              "description": "Slot Child Child",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "slots": [
+                {
+                  "name": "A",
+                  "nameLocalizations": {
+                    "en": "A EN",
+                    "de": "A DE",
+                    "fr": "A FR",
+                    "it": "A IT"
+                  }
+                },
+                {
+                  "name": "B",
+                  "nameLocalizations": {
+                    "en": "B EN",
+                    "de": "B DE",
+                    "fr": "B FR",
+                    "it": "B IT"
+                  }
+                }
+              ],
+              "fields": [
+                {
+                  "name": "ChildChildName",
+                  "nameLocalizations": {
+                    "en": "Child Child Name EN",
+                    "de": "Child Child Name DE",
+                    "fr": "Child Child Name FR",
+                    "it": "Child Child Name IT"
+                  },
+                  "description": "The child name",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "Bonus",
+              "caseType": "Employee",
+              "defaultReason": "Change Bonus",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Bonus",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "attributes": {
+                    "input.valueLabel": {
+                      "en": "Money in local currency",
+                      "de": "Geld in lokaler Währung",
+                      "fr": "FR Money Text",
+                      "it": "IT Money Text"
+                    }
+                  },
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Geburtsdatum",
+              "caseType": "Employee",
+              "defaultReason": "Change Geburtsdatum",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Geburtsdatum",
+                  "valueType": "Date",
+                  "valueScope": "Global",
+                  "timeType": "Timeless",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Krankheit",
+              "caseType": "Employee",
+              "defaultReason": "Neue Krankheitsmeldung",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "Krankheit",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "WebAdresse",
+              "caseType": "Employee",
+              "defaultReason": "Neue Webadresse",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ],
+              "fields": [
+                {
+                  "name": "WebAdresse",
+                  "valueType": "WebResource",
+                  "timeType": "Period",
+                  "defaultValue": "https://www.ason.ch",
+                  "clusters": [
+                    "Onboarding",
+                    "Legal"
+                  ]
+                }
+              ]
+            }
+          ],
+          "caseRelations": [
+            {
+              "sourceCaseName": "Abteilung",
+              "targetCaseName": "Titel"
+            },
+            {
+              "sourceCaseName": "Residental Area",
+              "targetCaseName": "Building Type",
+              "created": "2021-01-18T00:00:00.0Z",
+              "buildExpression": "(string)SourceValue[\"Residental Area\"] == \"City\""
+            },
+            {
+              "sourceCaseName": "SlotParent",
+              "targetCaseName": "SlotChild",
+              "targetCaseSlot": "1",
+              "buildExpression": "SourceValueIsWithin(\"ChildCount\", 1, 3)",
+              "order": 1
+            },
+            {
+              "sourceCaseName": "SlotParent",
+              "targetCaseName": "SlotChild",
+              "targetCaseSlot": "2",
+              "buildExpression": "SourceValueIsWithin(\"ChildCount\", 2, 3)",
+              "order": 2
+            },
+            {
+              "sourceCaseName": "SlotParent",
+              "targetCaseName": "SlotChild",
+              "targetCaseSlot": "3",
+              "buildExpression": "SourceValueIsWithin(\"ChildCount\", 3, 3)",
+              "order": 3
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "1",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "1.A",
+              "targetCaseSlotLocalizations": {
+                "en": "1.A EN",
+                "de": "1.A DE",
+                "fr": "1.A FR",
+                "it": "1.A IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "1",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "1.B",
+              "targetCaseSlotLocalizations": {
+                "en": "1.B EN",
+                "de": "1.B DE",
+                "fr": "1.B FR",
+                "it": "1.B IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "2",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "2.A",
+              "targetCaseSlotLocalizations": {
+                "en": "2.A EN",
+                "de": "2.A DE",
+                "fr": "2.A FR",
+                "it": "2.A IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "2",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "2.B",
+              "targetCaseSlotLocalizations": {
+                "en": "2.B EN",
+                "de": "2.B DE",
+                "fr": "2.B FR",
+                "it": "2.B IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "3",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "3.A",
+              "targetCaseSlotLocalizations": {
+                "en": "3.A EN",
+                "de": "3.A DE",
+                "fr": "3.A FR",
+                "it": "3.A IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "3",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "3.B",
+              "targetCaseSlotLocalizations": {
+                "en": "3.B EN",
+                "de": "3.B DE",
+                "fr": "3.B FR",
+                "it": "3.B IT"
+              }
+            }
+          ],
+          "collectors": [
+            {
+              "name": "AHV Basis",
+              "collectType": "Sum",
+              "endExpression": "ResultAttribute[\"Canton\"] = \"AG\"; ResultAttribute[\"Tari\"] = \"A0N\"; AddCustomResult(CollectorName, 2200, CycleStart, PeriodEnd); ; SetResultTags(new[] { \"MyColKey\" });"
+            },
+            {
+              "name": "Credit",
+              "collectType": "Sum"
+            },
+            {
+              "name": "Debit",
+              "collectType": "Sum"
+            },
+            {
+              "name": "Mindestlohn monatlich",
+              "collectType": "Sum",
+              "endExpression": "SetValues( new decimal[] { 36000m / 12 } );"
+            },
+            {
+              "name": "Höchstlohn monatlich",
+              "collectType": "Sum",
+              "startExpression": "SetValues( new decimal[] { 80000m / 12 } );"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "collectors": [
+                "AHV Basis"
+              ],
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "name": "Monatslohn.Credit",
+              "periodValues": true,
+              "valueExpression": "WageType[101] * 0.05M",
+              "resultExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); Attribute[\"myValue\"] = (values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]).ValueAs<decimal>().RoundTwentieth()",
+              "collectors": [
+                "Credit"
+              ],
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "name": "Monatslohn.Debit",
+              "valueExpression": "decimal.Negate(WageType[101.1M])",
+              "resultExpression": "Attribute[\"textAttribute\"] = \"My text 1\"; Attribute[\"dateAttribute\"] = \"2019-03-22T15:30:00.0Z\"; Attribute[\"numAttribute\"] = 75.85;",
+              "collectors": [
+                "Debit"
+              ],
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 101.5,
+              "name": "Monatslohn.WorkDay",
+              "periodValues": true,
+              "calendarCalculationMode": "MonthAverageWorkDay",
+              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Bonus",
+              "valueExpression": "Collector[\"Höchstlohn monatlich\"]",
+              "collectors": [
+                "AHV Basis"
+              ]
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "AHV AN Abzug",
+              "valueExpression": "Collector[\"AHV Basis\"] * CaseValue[\"AHV AN\"]",
+              "resultExpression": "AddCustomResult(\"Monatslohn\", 128M, CycleStart, CycleEnd);"
+            },
+            {
+              "wageTypeNumber": 106.1,
+              "name": "Alterszulage local",
+              "valueExpression": "this.GetCurrentAge(CaseValue[\"Geburtsdatum\"]) > 50 ? CaseValue[\"Monatslohn\"] * 0.075M : CaseValue[\"Monatslohn\"] * 0.025M"
+            },
+            {
+              "wageTypeNumber": 106.2,
+              "name": "Alterszulage local static",
+              "valueExpression": "return this.GetSickDaysCount();"
+            },
+            {
+              "wageTypeNumber": 106.3,
+              "name": "Alterszulage global",
+              "valueExpression": "MyTool.GetCurrentAge(CaseValue[\"Geburtsdatum\"]) > 50 ? CaseValue[\"Monatslohn\"] * 0.075M : CaseValue[\"Monatslohn\"] * 0.025M"
+            },
+            {
+              "wageTypeNumber": 107,
+              "name": "Krankheitstage",
+              "valueExpression": "CaseValue[\"Krankheit\"].TotalDaysByValue()"
+            },
+            {
+              "wageTypeNumber": 108,
+              "name": "Location",
+              "valueExpression": "SetResultTags(new[] { \"LookupTag1\", \"LookupTag2\" }); return 0",
+              "clusters": [
+                "Onboarding",
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 109,
+              "name": "Maximallohn",
+              "valueExpression": "Collector[\"Höchstlohn monatlich\"]"
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "OrtBonus",
+              "valueExpression": "\"Zürich\".Equals((GetLookup<Dictionary<string,object>>(\"Location\", \"8000\"))[\"name\"]) ? 250M : 0"
+            },
+            {
+              "wageTypeNumber": 111,
+              "name": "RuntimeValue",
+              "valueExpression": "SetPayrunRuntimeValue(\"Runtime1\", \"GlobalRuntimeValue\"); SetEmployeeRuntimeValue(\"Runtime1\", \"LocalRuntimeValue\"); return HasPayrunRuntimeValue(\"Runtime1\") ? 1M : 0"
+            },
+            {
+              "wageTypeNumber": 112,
+              "name": "Logs",
+              "valueExpression": "LogVerbose(\"MyVerboseLog\"); LogDebug(\"MyDebugLog\");  LogInformation(\"MyInformationLog\");  LogWarning(\"MyWarningLog\");  LogError(\"MyErrorLog\");  LogFatal(\"MyFatalLog\"); return 0"
+            }
+          ],
+          "reports": [
+            {
+              "name": "WageTypesReport",
+              "description": "Wage types report",
+              "queries": {
+                "Regulations": "QueryRegulations"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                },
+                {
+                  "name": "RegulationId",
+                  "valueType": "Integer",
+                  "parameterType": "RegulationId",
+                  "mandatory": true,
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                },
+                {
+                  "name": "Regulations.Filter",
+                  "value": "Id eq $RegulationId$",
+                  "valueType": "Integer",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "SimplePayroll.Derived1",
+          "divisionName": "SimpleDivision1",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "SimplePayroll"
+            }
+          ],
+          "_clusterSetCollector": "Legal",
+          "_clusterSetWageType": "Legal",
+          "clusterSetCaseValue": "Legal",
+          "clusterSetWageTypePeriod": "Legal",
+          "clusterSets": [
+            {
+              "name": "Onboarding",
+              "includeClusters": [
+                "Onboarding"
+              ]
+            },
+            {
+              "name": "Legal",
+              "includeClusters": [
+                "Legal"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SimplePayroll.Derived2",
+          "divisionName": "SimpleDivision2",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "SimplePayroll"
+            }
+          ],
+          "clusterSetCaseValue": "Onboarding",
+          "_clusterSetCollector": "Legal",
+          "_clusterSetWageType": "Legal",
+          "clusterSets": [
+            {
+              "name": "Onboarding",
+              "includeClusters": [
+                "Onboarding"
+              ]
+            },
+            {
+              "name": "Legal",
+              "includeClusters": [
+                "Legal"
+              ]
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "SimplePayrollPayrun1",
+          "payrollName": "SimplePayroll.Derived1",
+          "culture": "de-CH",
+          "defaultReason": "Run simple payrun 1",
+          "startExpression": "SetPayrunJobAttribute(\"JobStart\", Date.Now.ToString(\"s\")); return true",
+          "endExpression": "SetPayrunJobAttribute(\"RuntimeValuesEmployees\", string.Join(',', GetRuntimeValuesEmployees()));",
+          "employeeAvailableExpression": "return !string.Equals(EmployeeIdentifier, \"old.omployee@foo.com\")",
+          "calendar": {
+            "firstMonthOfYear": "January",
+            "averageMonthDays": 30,
+            "averageWorkDays": 21.75,
+            "calendarWeekRule": "FirstFourDayWeek",
+            "firstDayOfWeek": "Monday",
+            "workingDays": [
+              "Monday",
+              "Tuesday",
+              "Thursday",
+              "Wednesday",
+              "Friday"
+            ]
+          },
+          "payrunParameters": [
+            {
+              "name": "StringParam",
+              "valueType": "String",
+              "mandatory": true
+            },
+            {
+              "name": "IntParam",
+              "valueType": "Integer",
+              "mandatory": true
+            },
+            {
+              "name": "DecimalParam",
+              "valueType": "Decimal",
+              "mandatory": true
+            },
+            {
+              "name": "BoolParam",
+              "valueType": "Boolean",
+              "mandatory": true
+            },
+            {
+              "name": "DateParam",
+              "valueType": "Date",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "name": "SimplePayrollPayrun2",
+          "payrollName": "SimplePayroll.Derived2",
+          "culture": "de-DE",
+          "defaultReason": "Run simple payrun 2",
+          "endExpression": "SetPayrunJobAttribute(\"JobEnd\", Date.Now.ToString(\"s\")); return",
+          "employeeAvailableExpression": "return !string.Equals(EmployeeIdentifier, \"old.omployee@foo.com\")",
+          "calendar": {
+            "firstMonthOfYear": "January",
+            "averageMonthDays": 30,
+            "averageWorkDays": 21.75,
+            "calendarWeekRule": "FirstFourDayWeek",
+            "firstDayOfWeek": "Monday",
+            "workingDays": [
+              "Monday",
+              "Tuesday",
+              "Thursday",
+              "Wednesday",
+              "Friday"
+            ]
+          }
+        },
+        {
+          "name": "SimplePayrollPayrun3",
+          "payrollName": "SimplePayroll.Derived1",
+          "culture": "de-DE",
+          "defaultReason": "Run simple payrun 3",
+          "calendar": {
+            "firstMonthOfYear": "January",
+            "averageMonthDays": 30,
+            "averageWorkDays": 21.75,
+            "calendarWeekRule": "FirstFourDayWeek",
+            "firstDayOfWeek": "Monday",
+            "workingDays": [
+              "Monday",
+              "Tuesday",
+              "Thursday",
+              "Wednesday",
+              "Friday"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

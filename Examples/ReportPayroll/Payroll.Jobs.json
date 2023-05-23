@@ -1,0 +1,81 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "Payroll.ReportPayrun1.Jan19",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        },
+        {
+          "name": "Payroll.ReportPayrun1.Feb19",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-03-01T00:00:00.0Z",
+          "reason": "Demo Payrun Feb 19"
+        },
+        {
+          "name": "Payroll.ReportPayrun1.Mrz19",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-03-01T00:00:00.0Z",
+          "evaluationDate": "2019-04-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mrz 19"
+        },
+        {
+          "name": "Payroll.ReportPayrun1.Apr19",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-04-01T00:00:00.0Z",
+          "evaluationDate": "2019-05-01T00:00:00.0Z",
+          "reason": "Demo Payrun Apr 19"
+        },
+        {
+          "name": "Payroll.ReportPayrun1.Mai19",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-05-01T00:00:00.0Z",
+          "evaluationDate": "2019-06-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mai 19"
+        },
+        {
+          "name": "Payroll.ReportPayrun1.Dez19",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-12-01T00:00:00.0Z",
+          "evaluationDate": "2020-01-01T00:00:00.0Z",
+          "reason": "Demo Payrun Dez 19"
+        },
+        {
+          "name": "Payroll.ReportPayrun1.Jan20",
+          "payrunName": "Payroll.ReportPayrun1",
+          "payrollName": "Payroll.Report",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2020-01-01T00:00:00.0Z",
+          "evaluationDate": "2020-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 20"
+        }
+      ]
+    }
+  ]
+}

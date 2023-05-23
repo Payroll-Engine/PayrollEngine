@@ -1,0 +1,543 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimeTracking.Test",
+      "calendar": {
+        "firstMonthOfYear": "January",
+        "averageMonthDays": 30,
+        "averageWorkDays": 21.75,
+        "calculationMode": "MonthCalendarDay",
+        "calendarWeekRule": "FirstFourDayWeek",
+        "firstDayOfWeek": "Monday",
+        "workingDays": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Wednesday",
+          "Friday"
+        ]
+      },
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "TimeTracking.Test",
+          "description": "The TimeTracking testing payroll",
+          "cases": [
+            {
+              "name": "Hourly Rates",
+              "description": "Hourly Rates",
+              "caseType": "Company",
+              "defaultReason": "Change Hourly Rate",
+              "fields": [
+                {
+                  "name": "Hourly Rate",
+                  "description": "Hourly Rate",
+                  "valueType": "Decimal",
+                  "timeType": "Period"
+                },
+                {
+                  "name": "Sunday Hourly Rate",
+                  "description": "Sunday Hourly Rate",
+                  "valueType": "Decimal",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "Working Time",
+              "description": "Working Time",
+              "caseType": "Employee",
+              "defaultReason": "Change Working Time",
+              "fields": [
+                {
+                  "name": "Working Time",
+                  "description": "Working Time",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "endMandatory": true
+                }
+              ]
+            },
+            {
+              "name": "Cost Center",
+              "description": "Cost Center",
+              "caseType": "Employee",
+              "defaultReason": "Change Cost Center",
+              "fields": [
+                {
+                  "name": "Cost Center",
+                  "description": "Cost Center",
+                  "valueType": "Integer",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "scripts": [
+            {
+              "name": "GetRate",
+              "functionTypes": [
+                "WageTypeValue"
+              ],
+              "valueFile": "GetRate.cs"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Working Rate",
+              "valueExpressionComment": "Add custom result with the period rate and the cost center as result tag",
+              "valueExpression": "var totalRate = 0M; foreach (var valuePeriod in GetPeriodRawCaseValues(\"Working Time\").GroupByValue()) { var rate = valuePeriod.Sum(value => this.GetRate(value.Period())); AddCustomResult(valuePeriod.Key, rate, new[] { CaseValue[\"Cost Center\"]?.Value?.ToString() }); totalRate += rate; } return totalRate;"
+            },
+            {
+              "wageTypeNumber": 101,
+              "name": "Cost Center Rate",
+              "valueExpressionComment": "Get consolidated wage type 100 by cost center",
+              "valueExpression": "return GetWageTypeCustomResults(new(100, CycleStart, PeriodEnd, PayrunJobStatus.Legal) { Tag = CaseValue[\"Cost Center\"]?.Value?.ToString() }).Sum();"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Cost Center",
+              "valueExpressionComment": "Get cost center",
+              "valueExpression": "return GetRawCaseValue(\"Cost Center\", PeriodEnd)?.Value.Value;"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Previous Month Cost Center",
+              "valueExpressionComment": "Get previous month cost center",
+              "valueExpression": "return GetRawCaseValue(\"Cost Center\", PreviousPeriod.End)?.Value.Value;"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "divisions": [
+            "TestDivision"
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "TimeTracking.Test",
+          "divisionName": "TestDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "TimeTracking.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Hourly Rates",
+                "values": [
+                  {
+                    "caseFieldName": "Hourly Rate",
+                    "value": "45",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Sunday Hourly Rate",
+                    "value": "55",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Cost Center",
+                "values": [
+                  {
+                    "caseFieldName": "Cost Center",
+                    "value": "1",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-01-05T10:00:00.0Z",
+                    "end": "2019-01-05T12:00:00.0Z",
+                    "value": "Internal",
+                    "created": "2019-01-15T12:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-01-05T14:00:00.0Z",
+                    "end": "2019-01-05T18:00:00.0Z",
+                    "value": "External",
+                    "created": "2019-01-15T18:22:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-01-06T11:00:00.0Z",
+                    "end": "2019-01-06T15:30:00.0Z",
+                    "value": "External",
+                    "created": "2019-01-15T18:25:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-02-06T14:00:00.0Z",
+                    "end": "2019-02-06T17:00:00.0Z",
+                    "value": "External",
+                    "created": "2019-02-06T17:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Cost Center",
+                "values": [
+                  {
+                    "caseFieldName": "Cost Center",
+                    "value": "2",
+                    "start": "2019-03-01T00:00:00.0Z",
+                    "created": "2019-03-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-03-06T14:00:00.0Z",
+                    "end": "2019-03-06T17:00:00.0Z",
+                    "value": "External",
+                    "created": "2019-03-06T17:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-04-06T14:00:00.0Z",
+                    "end": "2019-04-06T17:00:00.0Z",
+                    "value": "External",
+                    "created": "2019-04-06T17:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "case": {
+                "caseName": "Working Time",
+                "values": [
+                  {
+                    "caseFieldName": "Working Time",
+                    "start": "2019-05-06T14:00:00.0Z",
+                    "end": "2019-05-06T17:00:00.0Z",
+                    "value": "External",
+                    "created": "2019-05-06T17:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "TimeTracking.Test",
+          "name": "TimeTracking.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "TimeTracking.TestPayrun1.Jan19",
+          "payrunName": "TimeTracking.TestPayrun1",
+          "payrollName": "TimeTracking.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T08:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        },
+        {
+          "name": "TimeTracking.TestPayrun1.Feb19",
+          "payrunName": "TimeTracking.TestPayrun1",
+          "payrollName": "TimeTracking.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-03-01T08:00:00.0Z",
+          "reason": "Demo Payrun Feb 19"
+        },
+        {
+          "name": "TimeTracking.TestPayrun1.Mar19",
+          "payrunName": "TimeTracking.TestPayrun1",
+          "payrollName": "TimeTracking.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-03-01T00:00:00.0Z",
+          "evaluationDate": "2019-04-01T08:00:00.0Z",
+          "reason": "Demo Payrun Mar 19"
+        },
+        {
+          "name": "TimeTracking.TestPayrun1.Apr19",
+          "payrunName": "TimeTracking.TestPayrun1",
+          "payrollName": "TimeTracking.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-04-01T00:00:00.0Z",
+          "evaluationDate": "2019-05-01T08:00:00.0Z",
+          "reason": "Demo Payrun Apr 19"
+        },
+        {
+          "name": "TimeTracking.TestPayrun1.Mai19",
+          "payrunName": "TimeTracking.TestPayrun1",
+          "payrollName": "TimeTracking.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-05-01T00:00:00.0Z",
+          "evaluationDate": "2019-06-01T08:00:00.0Z",
+          "reason": "Demo Payrun Mai 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "TimeTracking.TestPayrun1.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 517.5,
+              "customResults": [
+                {
+                  "source": "Internal",
+                  "key": "1",
+                  "value": 90
+                },
+                {
+                  "source": "External",
+                  "key": "1",
+                  "value": 427.5
+                }
+              ]
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 0,
+              "customResults": []
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 1
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 1
+            }
+          ]
+        },
+        {
+          "payrunJobName": "TimeTracking.TestPayrun1.Feb19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 135,
+              "customResults": [
+                {
+                  "source": "External",
+                  "key": "1",
+                  "value": 135
+                }
+              ]
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 517.5,
+              "customResults": []
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 1
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 1
+            }
+          ]
+        },
+        {
+          "payrunJobName": "TimeTracking.TestPayrun1.Mar19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 135,
+              "customResults": [
+                {
+                  "source": "External",
+                  "key": "2",
+                  "value": 135
+                }
+              ]
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 0,
+              "customResults": []
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 2
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 1
+            }
+          ]
+        },
+        {
+          "payrunJobName": "TimeTracking.TestPayrun1.Apr19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 135,
+              "customResults": [
+                {
+                  "source": "External",
+                  "key": "2",
+                  "value": 135
+                }
+              ]
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 135,
+              "customResults": []
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 2
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "payrunJobName": "TimeTracking.TestPayrun1.Mai19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 135,
+              "customResults": [
+                {
+                  "source": "External",
+                  "key": "2",
+                  "value": 135
+                }
+              ]
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 270,
+              "customResults": []
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 2
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 2
+           }
+          ]
+        }
+      ]
+    }
+  ]
+}

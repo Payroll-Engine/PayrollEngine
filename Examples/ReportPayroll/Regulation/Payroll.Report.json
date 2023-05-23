@@ -1,0 +1,84 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Payroll.Report",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "Regulation",
+              "nameLocalizations": {
+                "en": "Regulation Report EN",
+                "de": "Regulation Report DE",
+                "fr": "Regulation Report FR",
+                "it": "Regulation Report IT"
+              },
+              "category": "Regulations",
+              "queries": {
+                "Regulations": "QueryRegulations",
+                "Collectors": "QueryCollectors",
+                "WageTypes": "QueryWageTypes"
+              },
+              "relations": [
+                {
+                  "name": "RegulationCollectors",
+                  "parentTable": "Regulations",
+                  "childTable": "Collectors",
+                  "childColumn": "RegulationId"
+                },
+                {
+                  "name": "RegulationWageTypes",
+                  "parentTable": "Regulations",
+                  "childTable": "WageTypes",
+                  "childColumn": "RegulationId"
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                },
+                {
+                  "name": "RegulationId",
+                  "nameLocalizations": {
+                    "en": "Regulation EN",
+                    "de": "Regulation DE",
+                    "fr": "Regulation FR",
+                    "it": "Regulation IT"
+                  },
+                  "valueType": "Integer",
+                  "parameterType": "RegulationId",
+                  "mandatory": true
+                },
+                {
+                  "name": "Regulations.Filter",
+                  "value": "Id eq $RegulationId$",
+                  "valueType": "String",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                }
+              ],
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "language": "German",
+                  "contentFile": "Report.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

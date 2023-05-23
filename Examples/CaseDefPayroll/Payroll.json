@@ -1,0 +1,1629 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "CaseDefPayroll",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "language": "German",
+          "supervisor": true,
+          "attributes": {
+            "StartupPayroll": "CaseDefPayroll.Derived",
+            "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        }
+      ],
+      "divisions": [
+        {
+          "name": "CaseDefDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "CaseDefDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "CaseDefPayroll",
+          "description": "Case Definition payroll",
+          "lookups": [
+            {
+              "name": "Location",
+              "nameLocalizations": {
+                "it": "Locatione"
+              },
+              "values": [
+                {
+                  "key": "8000",
+                  "rangeValue": 3,
+                  "valueObject": {
+                    "number": "8000",
+                    "name": "Zuerich"
+                  },
+                  "valueObjectLocalizations": {
+                    "it": {
+                      "number": "8000",
+                      "name": "Zurigo"
+                    }
+                  }
+                },
+                {
+                  "key": "9464",
+                  "rangeValue": 2,
+                  "valueObject": {
+                    "number": "9464",
+                    "name": "Ruethi"
+                  },
+                  "valueObjectLocalizations": {
+                    "it": {
+                      "number": "9464",
+                      "name": "Ruethio"
+                    }
+                  }
+                },
+                {
+                  "key": "9470",
+                  "rangeValue": 1,
+                  "valueObject": {
+                    "number": "9470",
+                    "name": "Buchs SG"
+                  },
+                  "valueObjectLocalizations": {
+                    "it": {
+                      "number": "9470",
+                      "name": "Buchso"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Commission",
+              "values": [
+                {
+                  "key": "0",
+                  "rangeValue": 0,
+                  "valueObject": {
+                    "factor": 0.1
+                  }
+                },
+                {
+                  "key": "100",
+                  "rangeValue": 100,
+                  "valueObject": {
+                    "factor": 0.2
+                  }
+                },
+                {
+                  "key": "1000",
+                  "rangeValue": 1000,
+                  "valueObject": {
+                    "factor": 0.3
+                  }
+                }
+              ]
+            },
+            {
+              "name": "SimpleLookupValues",
+              "created": "2021-01-18T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "200",
+                  "rangeValue": 1,
+                  "valueObject": {
+                    "name": "Item 1"
+                  }
+                },
+                {
+                  "key": "201",
+                  "rangeValue": 2,
+                  "valueObject": {
+                    "name": "Item 2"
+                  }
+                },
+                {
+                  "key": "202",
+                  "rangeValue": 3,
+                  "valueObject": {
+                    "name": "Item 3"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "MultiLookupValues",
+              "created": "2021-01-18T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "300",
+                  "rangeValue": 1,
+                  "valueObject": {
+                    "name": "Object 1"
+                  }
+                },
+                {
+                  "key": "301",
+                  "rangeValue": 2,
+                  "valueObject": {
+                    "name": "Object 2"
+                  }
+                },
+                {
+                  "key": "302",
+                  "rangeValue": 3,
+                  "valueObject": {
+                    "name": "Object 3"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "System.Actions",
+              "values": [
+                {
+                  "key": "InvalidEmail",
+                  "value": "(0) with invalid E-Mail (1)",
+                  "valueLocalizations": {
+                    "en": "(0) with invalid E-Mail (1) EN",
+                    "de": "(0) with invalid E-Mail (1) DE",
+                    "fr": "(0) with invalid E-Mail (1) FR",
+                    "it": "(0) with invalid E-Mail (1) IT"
+                  }
+                }
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "name": "SlotParent",
+              "nameLocalizations": {
+                "en": "Slot Parent EN",
+                "de": "Slot Parent DE",
+                "fr": "Slot Parent FR",
+                "it": "Slot Parent IT"
+              },
+              "description": "Slot Parent",
+              "caseType": "Employee",
+              "defaultReason": "Change Slot Parent",
+              "fields": [
+                {
+                  "name": "ChildCount",
+                  "nameLocalizations": {
+                    "en": "Children Count EN",
+                    "de": "Children Count DE",
+                    "fr": "Children Count FR",
+                    "it": "Children Count IT"
+                  },
+                  "description": "The children count",
+                  "valueType": "Integer",
+                  "defaultStart": "today",
+                  "defaultValue": "0",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.minValue": 0,
+                    "input.maxValue": 3
+                  }
+                }
+              ]
+            },
+            {
+              "name": "SlotChild",
+              "nameLocalizations": {
+                "en": "Child EN",
+                "de": "Child DE",
+                "fr": "Child FR",
+                "it": "Child IT"
+              },
+              "description": "Slot Child",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "slots": [
+                {
+                  "name": "1",
+                  "nameLocalizations": {
+                    "en": "1 EN",
+                    "de": "1 DE",
+                    "fr": "1 FR",
+                    "it": "1 IT"
+                  }
+                },
+                {
+                  "name": "2",
+                  "nameLocalizations": {
+                    "en": "2 EN",
+                    "de": "2 DE",
+                    "fr": "2 FR",
+                    "it": "2 IT"
+                  }
+                },
+                {
+                  "name": "3",
+                  "nameLocalizations": {
+                    "en": "3 EN",
+                    "de": "3 DE",
+                    "fr": "3 FR",
+                    "it": "3 IT"
+                  }
+                }
+              ],
+              "fields": [
+                {
+                  "name": "ChildName",
+                  "nameLocalizations": {
+                    "en": "Child Name EN",
+                    "de": "Child Name DE",
+                    "fr": "Child Name FR",
+                    "it": "Child Name IT"
+                  },
+                  "description": "The child name",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                },
+                {
+                  "name": "Child.Birthdate",
+                  "nameLocalizations": {
+                    "en": "Child Birthdate EN",
+                    "de": "Child Birthdate DE",
+                    "fr": "Child Birthdate FR",
+                    "it": "Child Birthdate IT"
+                  },
+                  "description": "The child birth date",
+                  "valueType": "Date",
+                  "defaultStart": "today",
+                  "defaultValue": "2019-01-01T00:00:00.0Z",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "SlotChildChild",
+              "nameLocalizations": {
+                "en": "Child Child EN",
+                "de": "Child Child DE",
+                "fr": "Child Child FR",
+                "it": "Child Child IT"
+              },
+              "description": "Slot Child Child",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "slots": [
+                {
+                  "name": "A",
+                  "nameLocalizations": {
+                    "en": "A EN",
+                    "de": "A DE",
+                    "fr": "A FR",
+                    "it": "A IT"
+                  }
+                },
+                {
+                  "name": "B",
+                  "nameLocalizations": {
+                    "en": "B EN",
+                    "de": "B DE",
+                    "fr": "B FR",
+                    "it": "B IT"
+                  }
+                }
+              ],
+              "fields": [
+                {
+                  "name": "ChildChildName",
+                  "nameLocalizations": {
+                    "en": "Child Child Name EN",
+                    "de": "Child Child Name DE",
+                    "fr": "Child Child Name FR",
+                    "it": "Child Child Name IT"
+                  },
+                  "description": "The child name",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "All Value Types",
+              "description": "All Value Types Description",
+              "caseType": "Employee",
+              "defaultReason": "Test all value types",
+              "fields": [
+                {
+                  "name": "String",
+                  "description": "String Description (optional) [defaultStart=today]",
+                  "valueType": "String",
+                  "timeType": "Moment",
+                  "defaultStart": "today",
+                  "optional": true,
+                  "order": 30
+                },
+                {
+                  "name": "ReadOnlyString",
+                  "description": "ReadOnlyString Description (optional) [readOnly=true, defaultValue=Non modifiable]",
+                  "valueType": "String",
+                  "timeType": "Moment",
+                  "defaultValue": "Non modifiable",
+                  "order": 32,
+                  "attributes": {
+                    "input.readOnly": true
+                  }
+                },
+                {
+                  "name": "MaskedString",
+                  "description": "MaskedString Description [defaultStart=tomorrow, mask=000-000-0000]",
+                  "valueType": "String",
+                  "timeType": "Moment",
+                  "defaultStart": "tomorrow",
+                  "order": 35,
+                  "attributes": {
+                    "input.mask": "000-000-0000"
+                  },
+                  "defaultValue": "123-456-7890"
+                },
+                {
+                  "name": "MultiLineString",
+                  "description": "MultiLineString Description with <b>markup</b> [defaultStart=+7days, multiLine=true, maxLength=22]<br />Example link to <a href=\"https://www.w3schools.com/html/html_intro.asp\">HTML Introduction</a>",
+                  "valueType": "String",
+                  "timeType": "Moment",
+                  "defaultStart": "offset:7d",
+                  "order": 40,
+                  "attributes": {
+                    "input.showDescription": true,
+                    "input.lineCount": 5,
+                    "input.maxLength": 22
+                  }
+                },
+                {
+                  "name": "LookupString",
+                  "description": "LookupString Description [defaultStart=today, defaultEnd=+1year]",
+                  "valueType": "String",
+                  "lookupSettings": {
+                    "lookupName": "Location",
+                    "valueFieldName": "number",
+                    "textFieldName": "name"
+                  },
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "defaultEnd": "offset:1y",
+                  "order": 20,
+                  "attributes": {
+                    "input.multiLookup": true
+                  }
+                },
+                {
+                  "name": "LookupDecimal",
+                  "description": "LookupDecimal Description",
+                  "valueType": "Money",
+                  "lookupSettings": {
+                    "lookupName": "Commission"
+                  },
+                  "timeType": "Period",
+                  "order": 23
+                },
+                {
+                  "name": "ExpressionString",
+                  "description": "ExpressionString Description [defaultStart=1.10.2020]",
+                  "valueType": "String",
+                  "timeType": "ScaledPeriod",
+                  "defaultStart": "2020-10-01T00:00:00.0Z",
+                  "order": 10
+                },
+                {
+                  "name": "Date",
+                  "description": "Date Description [defaultValue=tomorrow, minValue=today, maxValue=+7days]",
+                  "valueType": "Date",
+                  "timeType": "ScaledPeriod",
+                  "defaultValue": "tomorrow",
+                  "order": 100,
+                  "attributes": {
+                    "input.minValue": "today",
+                    "input.maxValue": "offset:7d"
+                  }
+                },
+                {
+                  "name": "DateMonth",
+                  "description": "DateMonth Description [datePickerStart=month, datePickerEnd=year, datePicker=month]",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "order": 105,
+                  "attributes": {
+                    "input.datePicker": "month",
+                    "input.datePickerStart": "month",
+                    "input.datePickerEnd": "year"
+                  }
+                },
+                {
+                  "name": "DateTime",
+                  "description": "DateTime Description [minValue=tomorrow, maxValue=30.12.2055]",
+                  "valueType": "DateTime",
+                  "timeType": "Timeless",
+                  "order": 110,
+                  "attributes": {
+                    "input.minValue": "tomorrow",
+                    "input.maxValue": "2055-12-30T18:25:37.0Z"
+                  }
+                },
+                {
+                  "name": "Integer",
+                  "description": "Integer Description [defaultStart=+9months, defaultValue=20, stepValue=10]",
+                  "valueType": "Integer",
+                  "timeType": "Moment",
+                  "defaultStart": "offset:9m",
+                  "defaultValue": "20",
+                  "order": 200,
+                  "attributes": {
+                    "input.stepValue": 10
+                  }
+                },
+                {
+                  "name": "Decimal",
+                  "description": "Decimal Description",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "order": 300
+                },
+                {
+                  "name": "Money",
+                  "description": "Money Description",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "order": 310
+                },
+                {
+                  "name": "Money CH",
+                  "description": "Money CH Description [culture=de-CH]",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "order": 314,
+                  "attributes": {
+                    "input.culture": "de-CH"
+                  }
+                },
+                {
+                  "name": "Money DE",
+                  "description": "Money DE Description [culture=de-DE]",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "order": 315,
+                  "attributes": {
+                    "input.culture": "de-DE"
+                  }
+                },
+                {
+                  "name": "Percent",
+                  "description": "Percent Description",
+                  "valueType": "Percent",
+                  "timeType": "ScaledPeriod",
+                  "order": 320
+                },
+                {
+                  "name": "Boolean",
+                  "description": "Boolean Description",
+                  "valueType": "Boolean",
+                  "timeType": "ScaledPeriod",
+                  "order": 360
+                },
+                {
+                  "name": "BooleanCheckBox",
+                  "description": "BooleanCheckBox Description [check=true]",
+                  "valueType": "Boolean",
+                  "timeType": "ScaledPeriod",
+                  "order": 365,
+                  "attributes": {
+                    "input.check": true
+                  }
+                },
+                {
+                  "name": "None",
+                  "description": "None Description",
+                  "valueType": "None",
+                  "timeType": "ScaledPeriod",
+                  "order": 370
+                }
+              ]
+            },
+            {
+              "name": "All Value Types Mandatory",
+              "description": "All Value Types Mandatory Description",
+              "caseType": "Employee",
+              "defaultReason": "Test all mandatory value types",
+              "fields": [
+                {
+                  "name": "MandatoryString",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryLookupString",
+                  "valueType": "String",
+                  "lookupSettings": {
+                    "lookupName": "Location",
+                    "valueFieldName": "number",
+                    "textFieldName": "name"
+                  },
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryLookupDecimal",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "lookupSettings": {
+                    "lookupName": "Commission"
+                  },
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryDate",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryDateTime",
+                  "valueType": "DateTime",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryInteger",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryDecimal",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryMoney",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryPercent",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryBoolean",
+                  "description": "Boolean Description",
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatorySwitch",
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                },
+                {
+                  "name": "MandatoryCheckBox",
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.check": true
+                  }
+                },
+                {
+                  "name": "MandatoryNone",
+                  "valueType": "None",
+                  "timeType": "ScaledPeriod",
+                  "valueMandatory": true
+                }
+              ]
+            },
+            {
+              "name": "All Time Types",
+              "description": "All Time Types Description",
+              "caseType": "Employee",
+              "defaultReason": "Test all time types",
+              "fields": [
+                {
+                  "name": "Money.Moment",
+                  "description": "Money.Moment Description",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "attributes": {
+                    "input.startPickerType": "DateTimePicker"
+                  }
+                },
+                {
+                  "name": "Money.Period",
+                  "description": "Money.Period Description",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.startPickerType": "DateTimePicker",
+                    "input.endPickerType": "DateTimePicker"
+                  }
+                },
+                {
+                  "name": "Money.ClosedPeriod",
+                  "description": "Money.ClosedPeriod Description",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "endMandatory": true
+                },
+                {
+                  "name": "Money.ClosedPeriod.Mandatory",
+                  "description": "Money.ClosedPeriod.Mandatory Description",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "endMandatory": true
+                },
+                {
+                  "name": "Money.ScaledPeriod",
+                  "description": "Money.ScaledPeriod Description",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod"
+                },
+                {
+                  "name": "Money.ClosedScaledPeriod",
+                  "description": "Money.ClosedScaledPeriod Description",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "endMandatory": true
+                },
+                {
+                  "name": "Money.Timeless",
+                  "description": "Money.Timeless Description",
+                  "valueType": "Money",
+                  "timeType": "Timeless"
+                }
+              ]
+            },
+            {
+              "name": "Lists",
+              "description": "Different custom lists",
+              "caseType": "Employee",
+              "defaultReason": "Test lists",
+              "fields": [
+                {
+                  "name": "StringList",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"Item 1\", \"Item 2\", \"Item 3\"]",
+                    "input.listSelection": "Item 2"
+                  }
+                },
+                {
+                  "name": "StringAliasList",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"Item 1\", \"Item 2\", \"Item 3\"]",
+                    "input.listValues": "[\"Value 1\", \"Value 2\", \"Value 3\"]",
+                    "input.listSelection": "Value 2"
+                  }
+                },
+                {
+                  "name": "IntegerList",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[10, 20, 30]",
+                    "input.listSelection": 20
+                  }
+                },
+                {
+                  "name": "IntegerAliasList",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"Small\", \"Medium\", \"Large\"]",
+                    "input.listValues": "[1, 5, 10]",
+                    "input.listSelection": 10
+                  }
+                },
+                {
+                  "name": "DecimalList",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[1.0, 1.5, 2.0, 2.5, 3.0]",
+                    "input.listSelection": 2.5
+                  }
+                },
+                {
+                  "name": "BooleanList",
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"Enabled\", \"Disabled\"]",
+                    "input.listValues": "[true, false]",
+                    "input.listSelection": false
+                  }
+                },
+                {
+                  "name": "DateList",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"2023-06-21T00:00:00.0Z\", \"2023-07-18T00:00:00.0Z\", \"2023-11-22T00:00:00.0Z\"]",
+                    "input.listSelection": "2023-07-18T00:00:00.0Z"
+                  }
+                },
+                {
+                  "name": "DateAliasList",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"First date\", \"Second date\", \"Third date\"]",
+                    "input.listValues": "[\"2023-07-18T18:00:00.0Z\", \"2023-08-22T13:00:00.0Z\", \"2023-10-07T09:30:00.0Z\"]",
+                    "input.listSelection": "2023-10-07T09:30:00.0Z"
+                  }
+                },
+                {
+                  "name": "DateTimeList",
+                  "valueType": "DateTime",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.list": "[\"2023-07-18T18:00:00.0Z\", \"2023-08-22T13:00:00.0Z\", \"2023-10-07T09:30:00.0Z\"]",
+                    "input.listSelection": "2023-08-22T13:00:00.0Z"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "ValueNone",
+              "description": "ValueNone Description",
+              "caseType": "Employee",
+              "defaultReason": "Test value type none",
+              "fields": [
+                {
+                  "name": "ValueNone",
+                  "description": "ValueNone Description",
+                  "valueType": "None"
+                }
+              ]
+            },
+            {
+              "name": "Conditions.Base",
+              "description": "Single Value Description (100+ for option)",
+              "caseType": "Employee",
+              "cancellationType": "Case",
+              "defaultReason": "Test related case with conditions",
+              "buildExpression": "var value = PayrollValue[\"Conditions.Base\"]; FieldAvailable(\"Conditions.BaseOption\", value.HasValue && (int)value > 100); return true",
+              "fields": [
+                {
+                  "name": "Conditions.Base",
+                  "description": "Conditions.Base Description",
+                  "valueType": "Integer",
+                  "timeType": "ScaledPeriod",
+                  "defaultStart": "today",
+                  "defaultValue": "0"
+                },
+                {
+                  "name": "Conditions.BaseOption",
+                  "description": "Conditions.BaseOption Description",
+                  "valueType": "Boolean",
+                  "optional": true,
+                  "timeType": "ScaledPeriod"
+                }
+              ]
+            },
+            {
+              "name": "Conditions.Double",
+              "description": "Doubles the value",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "validateExpression": "var value = PayrollValue[\"Conditions.Double\"]; if (value.HasValue && (int)value % 2 != 0) AddIssue(\"Conditions.Double\", \"Only odd values allowed\");",
+              "fields": [
+                {
+                  "name": "Conditions.Double",
+                  "description": "Conditions.Double Description",
+                  "valueType": "Integer",
+                  "timeType": "ScaledPeriod",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "Conditions.Positive",
+              "description": "On positive base value",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "Conditions.Positive",
+                  "description": "Conditions.Positive Description",
+                  "valueType": "Integer",
+                  "timeType": "ScaledPeriod",
+                  "defaultStart": "today",
+                  "defaultValue": "22"
+                },
+                {
+                  "name": "Conditions.PositivePlus",
+                  "description": "Conditions.PositivePlus Description",
+                  "valueType": "Integer",
+                  "optional": true,
+                  "timeType": "ScaledPeriod"
+                }
+              ]
+            },
+            {
+              "name": "Conditions.SecondLevel",
+              "description": "Condition on second related case level: Conditions.Double > 100",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "Conditions.SecondLevel",
+                  "description": "Conditions.SecondLevel Description",
+                  "valueType": "Integer",
+                  "timeType": "ScaledPeriod",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "Lohn",
+              "description": "Monatslohn",
+              "caseType": "Employee",
+              "defaultReason": "Test Monatslohn",
+              "fields": [
+                {
+                  "name": "Lohn",
+                  "description": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "Zulage",
+              "description": "Monatslohn Zulage [10% bei Lohn grösser 5'000]",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "Zulage",
+                  "description": "Monatslohn Zulage",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "Sonderzulage",
+              "description": "Zulage zur Monatszulage [20% bei Zulage grösser 1'000]",
+              "caseType": "Employee",
+              "availableExpression": "false",
+              "fields": [
+                {
+                  "name": "Sonderzulage",
+                  "description": "Zulage zur Monatszulage",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "Optional",
+              "description": "Optional",
+              "caseType": "Employee",
+              "defaultReason": "Test Optional",
+              "fields": [
+                {
+                  "name": "Optional",
+                  "description": "Optional",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "optional": true
+                }
+              ]
+            },
+            {
+              "name": "Toggle",
+              "description": "Toggle",
+              "caseType": "Employee",
+              "defaultReason": "Switch Toggle",
+              "buildExpression": "var toggle = GetValue<bool?>(\"Toggle\"); FieldAvailable(\"ToggleReasonOn\", toggle.HasValue && toggle == true); FieldAvailable(\"ToggleReasonOff\",toggle.HasValue && toggle == false);",
+              "fields": [
+                {
+                  "name": "Toggle",
+                  "description": "Toggle",
+                  "valueType": "Boolean",
+                  "defaultValue": "false",
+                  "timeType": "Period"
+                },
+                {
+                  "name": "ToggleReasonOn",
+                  "description": "Toggle Reason On",
+                  "valueType": "Boolean",
+                  "timeType": "Period"
+                },
+                {
+                  "name": "ToggleReasonOff",
+                  "description": "Toggle Reason Off",
+                  "valueType": "Boolean",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "Simple Lookups",
+              "caseType": "Employee",
+              "defaultReason": "Test Simple Lookups",
+              "created": "2021-01-18T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Simple Lookups",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "lookupSettings": {
+                    "lookupName": "SimpleLookupValues",
+                    "textFieldName": "name",
+                    "valueFieldName": "name"
+                  },
+                  "created": "2021-01-18T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Multi Lookups",
+              "caseType": "Employee",
+              "defaultReason": "Test Multi Lookups",
+              "fields": [
+                {
+                  "name": "Multi Lookups",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.multiLookup": true
+                  },
+                  "lookupSettings": {
+                    "lookupName": "MultiLookupValues",
+                    "textFieldName": "name",
+                    "valueFieldName": "name"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "BaseCase",
+              "caseType": "Employee",
+              "defaultReason": "Test Base Case",
+              "fields": [
+                {
+                  "name": "Base Case Field",
+                  "valueType": "String",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "BaseExtensionCase",
+              "caseType": "Employee",
+              "baseCase": "BaseCase",
+              "defaultReason": "Test Extension Base Case",
+              "fields": [
+                {
+                  "name": "Extension Case Field",
+                  "valueType": "String",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseFieldDateTypeMonth",
+              "caseType": "Employee",
+              "defaultReason": "Test Case Field Date Type Month",
+              "fields": [
+                {
+                  "name": "CaseFieldDateTypeMonth",
+                  "startDateType": "Month",
+                  "endDateType": "Month",
+                  "valueType": "String",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseFieldDateTypeYear",
+              "caseType": "Employee",
+              "defaultReason": "Test Case Field Date Type Year",
+              "fields": [
+                {
+                  "name": "CaseFieldDateTypeYear",
+                  "startDateType": "Year",
+                  "endDateType": "Year",
+                  "valueType": "String",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "StartPickerEndPicker",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "DateTimePickerField",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.startPicker": "DateTimePicker",
+                    "input.endPicker": "DateTimePicker"
+                  }
+                },
+                {
+                  "name": "DatePickerField",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.startPicker": "DatePicker",
+                    "input.endPicker": "DatePicker"
+                  }
+                },
+                {
+                  "name": "DatePickerMixedField",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.startPicker": "DatePicker",
+                    "input.endPicker": "DateTimePicker"
+                  }
+                },
+                {
+                  "name": "DefaultPicker",
+                  "valueType": "String",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "WeekDayAndMonth",
+              "caseType": "Employee",
+              "defaultReason": "Test WeekDayAndMonth",
+              "fields": [
+                {
+                  "name": "DayOfWeek Field",
+                  "valueType": "Weekday",
+                  "timeType": "Period"
+                },
+                {
+                  "name": "Month Field",
+                  "valueType": "Month",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "LabelAndHelp",
+              "caseType": "Employee",
+              "defaultReason": "Test WeekDayAndMonth",
+              "fields": [
+                {
+                  "name": "LabelAndHelp",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "endMandatory": true,
+                  "attributes": {
+                    "input.endPickerType": "DateTimePicker",
+                    "input.startLabel": "My start",
+                    "input.startLabel.de": "Mein Start",
+                    "input.startHelp": "My start help",
+                    "input.startHelp.de": "Meine Starthilfe",
+                    "input.startRequired": "Please enter the start date",
+                    "input.startRequired.de": "Bitte das Startdatum eingeben",
+                    "input.endLabel": "My end",
+                    "input.endLabel.de": "Mein Ende",
+                    "input.endHelp": "My end help",
+                    "input.endHelp.de": "Meine Endhilfe",
+                    "input.endRequired": "Please enter the end date",
+                    "input.endRequired.de": "Bitte das Enddatum eingeben",
+                    "input.valueLabel": "My weekday",
+                    "input.valueLabel.de": "Mein Wochentag",
+                    "input.valueHelp": "My value help",
+                    "input.valueHelp.de": "Meine Wertehilfe",
+                    "input.valueRequired": "Please enter my weekday",
+                    "input.valueRequired.de": "Bitte meinen Wochentag eingeben",
+                    "input.valueAdornment": "M",
+                    "input.help": "Please enter a value",
+                    "input.help.de": "Bitte einen Wert eingeben"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "CaseFieldBuild",
+              "caseType": "Employee",
+              "buildExpression": "var avail = FieldAvailable(\"TestCaseField.Optional\"); InitValue(\"TestCaseField.Mandatory\", avail ? 1 : -1); return true;",
+              "defaultReason": "Test CaseFieldBuild",
+              "fields": [
+                {
+                  "name": "TestCaseField.Mandatory",
+                  "valueType": "Integer",
+                  "timeType": "Period"
+                },
+                {
+                  "name": "TestCaseField.Optional",
+                  "valueType": "Integer",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "CaseFieldBooleanAction",
+              "caseType": "Employee",
+              "defaultReason": "Test CaseFieldBooleaAction",
+              "buildExpression": "true",
+              "fields": [
+                {
+                  "name": "BooleanAction",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "Input.SetEndMonthPicker",
+                    "'IsTrue(#BooleanAction.Start.IsFirstDayOfMonth) ? SetFieldValue(#BooleanAction, 1) : SetFieldValue(#BooleanAction, 2)",
+                    "'IsTrue(#BooleanAction.Start.IsFirstDayOfMonth) ? Input.DisableValue : Input.EnableValue",
+                    "IsTrue(#BooleanAction.Start.IsFirstDayOfMonth) ? SetFieldValue(#BooleanAction, 1); Input.DisableValue : SetFieldValue(#BooleanAction, 2); Input.EnableValue"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CaseActionPeriod",
+              "caseType": "Employee",
+              "defaultReason": "Test CaseActionPeriod",
+              "buildExpression": "true",
+              "fields": [
+                {
+                  "name": "PeriodAction",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "Input.SetStartTimePicker",
+                    "Input.SetEndTimePicker",
+                    "Input.DisableValue",
+                    "SetValue(#PeriodAction.Period.TotalDays)"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CaseActionLookup",
+              "caseType": "Employee",
+              "defaultReason": "Test CaseActionLookup",
+              "buildExpression": "true",
+              "fields": [
+                {
+                  "name": "LookupAction",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "SetValue($SimpleLookupValues.Lookup.String(202,name))"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CaseActionRangeLookup",
+              "caseType": "Employee",
+              "defaultReason": "Test CaseActionRangeLookup",
+              "buildExpression": "true",
+              "fields": [
+                {
+                  "name": "RangeLookupAction",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "SetValue($SimpleLookupValues.RangeLookup.String(2.5,name))"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CaseFieldAction",
+              "caseType": "Employee",
+              "defaultReason": "Test CaseFieldAction",
+              "buildExpression": "true",
+              "validateExpression": "true",
+              "fields": [
+                {
+                  "name": "Action.CaseFieldActionAttribute",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "SetFieldValue(#Action.CaseFieldActionAttribute, #Action.CaseFieldActionAttribute.FieldAttribute.String(ErpKey))"
+                  ],
+                  "attributes": {
+                    "ErpKey": "FG56787"
+                  }
+                },
+                {
+                  "name": "Action.CaseValueActionAttribute",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "SetFieldValue(#Action.CaseValueActionAttribute, #Action.CaseValueActionAttribute.ValueAttribute.String(ErpDivision))",
+                    "SetValueAttribute(MyErpKey, #Action.CaseFieldActionAttribute.Value)"
+                  ],
+                  "valueAttributes": {
+                    "ErpDivision": "D495"
+                  }
+                },
+                {
+                  "name": "ActionMethodAdd",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "buildActions": [
+                    "SetFieldValue(#ActionMethodAddTarget, #ActionMethodAddTarget.Start.AddPeriod(#ActionMethodAdd.Start, #ActionMethodAdd.Value))",
+                    "'SetFieldEnd(#ActionMethodAddTarget, tomorrow)"
+                  ]
+                },
+                {
+                  "name": "ActionMethodAddTarget",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                },
+                {
+                  "name": "ConditionalTrigger",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultValue": "8",
+                  "defaultStart": "today",
+                  "defaultEnd": "today",
+                  "buildActions": [
+                    "'SetFieldValue(#ConditionalResult, 10)",
+                    "'ValueLessThan(0) ? SetFieldValue(#ConditionalResult, -1) : SetFieldValue(#ConditionalResult, 1)",
+                    "ValueLessThan(0) ? SetFieldValue(#ConditionalResult, -1) : ValueGreaterEqualThan(10) ? SetFieldValue(#ConditionalResult, 10) : SetFieldValue(#ConditionalResult, 1)",
+                    "'ValueGreaterEqualThan(0) ? ValueGreaterEqualThan(10) ? SetFieldValue(#ConditionalResult, 10) : SetFieldValue(#ConditionalResult, 1) : SetFieldValue(#ConditionalResult, -1)"
+                  ],
+                  "validateActions": [
+                    "'StartEqual(#ConditionalOperator.End) ? ValueLessThan(10) : ValueLessThan(100)",
+                    "StartEqual(#ConditionalOperator.End) ? ValueLessThan(10) : ValueLessThan(100)",
+                    "'StartEqual(#ConditionalOperator.End) ? : ValueLessThan(100)",
+                    "'StartEqual(#ConditionalOperator.End) ? ValueLessThan(10) :"
+                  ]
+                },
+                {
+                  "name": "ConditionalResult",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                },
+                {
+                  "name": "ConditionalOperator",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultValue": "5",
+                  "defaultStart": "today",
+                  "defaultEnd": "today",
+                  "validateActions": [
+                    "StartEqual(#ConditionalOperator.End) ? ValueLessThan(10) : ValueLessThan(100)"
+                  ]
+                },
+                {
+                  "name": "MinValue",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "defaultValue": "2000",
+                  "buildActions": [
+                    "MyNamespace.MinLimit(900)",
+                    "MinLimit(1000)"
+                  ],
+                  "validateActions": [
+                    "ValueGreaterThan(1500)",
+                    "ValueLessThan(#MaxValue)"
+                  ]
+                },
+                {
+                  "name": "MaxValue",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "defaultValue": "5000",
+                  "validateActions": [
+                    "ValueLessThan(8000)",
+                    "ValueGreaterThan(#MinValue)"
+                  ]
+                },
+                {
+                  "name": "Email",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "defaultValue": "test@foo.com",
+                  "defaultStart": "today",
+                  "validateActions": [
+                    "Email"
+                  ]
+                },
+                {
+                  "name": "Period",
+                  "valueType": "Date",
+                  "timeType": "Period",
+                  "defaultValue": "offset:+2d",
+                  "defaultStart": "today",
+                  "defaultEnd": "offset:+7d",
+                  "validateActions": [
+                    "ValueGreaterThan(#Period.Start)",
+                    "ValueLessThan(#Period.End)",
+                    "ValueGreaterThan(@Period?)"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CaseAvailableActionOn",
+              "caseType": "Employee",
+              "defaultReason": "Test CaseAvailableActionOn",
+              "availableActions": [
+                "CaseValueNotEqual(@CaseAvailableToggle.Value?, 1)",
+                "'CaseValueGreaterThan(@CaseAvailableToggle.Value?, 0) ? CaseValueNotEqual(@CaseAvailableToggle.Value?, 1) : CaseValueNotEqual(@CaseAvailableToggle.Value?, 0)"
+              ],
+              "fields": [
+                {
+                  "name": "CaseAvailableToggle",
+                  "description": "Toggle: on=1, off=any other value",
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "defaultStart": "today"
+                }
+              ]
+            },
+            {
+              "name": "CaseAvailableActionOff",
+              "caseType": "Employee",
+              "baseCaseFields": [
+                {
+                  "name": "CaseAvailableToggle"
+                }
+              ],
+              "defaultReason": "Test CaseAvailableActionOff",
+              "availableActions": [
+                "CaseValueEqual(@CaseAvailableToggle.Value, 1)"
+              ]
+            },
+            {
+              "name": "MoneyCulture",
+              "description": "Money with culture",
+              "caseType": "Employee",
+              "defaultReason": "Test money with culture",
+              "fields": [
+                {
+                  "name": "MoneyWithCutlure",
+                  "description": "MoneyWithCutlure",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.culture": "de-DE"
+                  },
+                  "valueAttributes": {
+                    "input.culture": "de-DE"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "AVeryLongCaseName",
+              "nameLocalizations": {
+                "de": "Ein sehr sehr langer Case Name der nicht aufhören möchte"
+              },
+              "description": "A very long case description",
+              "descriptionLocalizations": {
+                "de": "Ein sehr sehr langer Case Beschreibung der nicht aufhören möchte"
+              },
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "AVeryLongCaseFieldName",
+                  "description": "A very long case field description",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "defaultStart": "today",
+                  "attributes": {
+                    "input.culture": "de-DE"
+                  },
+                  "valueAttributes": {
+                    "input.culture": "de-DE"
+                  }
+                }
+              ]
+            }
+          ],
+          "scripts": [
+            {
+              "name": "MyCaseBuildActions",
+              "functionTypes": [
+                "CaseBuild"
+              ],
+              "valueFile": "scripts/MyCaseBuildActions.cs"
+            }
+          ],
+          "caseRelations": [
+            {
+              "sourceCaseName": "SlotParent",
+              "targetCaseName": "SlotChild",
+              "targetCaseSlot": "1",
+              "buildExpression": "SourceValueIsWithin(\"ChildCount\", 1, 3)",
+              "order": 1
+            },
+            {
+              "sourceCaseName": "SlotParent",
+              "targetCaseName": "SlotChild",
+              "targetCaseSlot": "2",
+              "buildExpression": "SourceValueIsWithin(\"ChildCount\", 2, 3)",
+              "order": 2
+            },
+            {
+              "sourceCaseName": "SlotParent",
+              "targetCaseName": "SlotChild",
+              "targetCaseSlot": "3",
+              "buildExpression": "SourceValueIsWithin(\"ChildCount\", 3, 3)",
+              "order": 3
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "1",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "1.A",
+              "targetCaseSlotLocalizations": {
+                "en": "1.A EN",
+                "de": "1.A DE",
+                "fr": "1.A FR",
+                "it": "1.A IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "1",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "1.B",
+              "targetCaseSlotLocalizations": {
+                "en": "1.B EN",
+                "de": "1.B DE",
+                "fr": "1.B FR",
+                "it": "1.B IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "2",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "2.A",
+              "targetCaseSlotLocalizations": {
+                "en": "2.A EN",
+                "de": "2.A DE",
+                "fr": "2.A FR",
+                "it": "2.A IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "2",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "2.B",
+              "targetCaseSlotLocalizations": {
+                "en": "2.B EN",
+                "de": "2.B DE",
+                "fr": "2.B FR",
+                "it": "2.B IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "3",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "3.A",
+              "targetCaseSlotLocalizations": {
+                "en": "3.A EN",
+                "de": "3.A DE",
+                "fr": "3.A FR",
+                "it": "3.A IT"
+              }
+            },
+            {
+              "sourceCaseName": "SlotChild",
+              "sourceCaseSlot": "3",
+              "targetCaseName": "SlotChildChild",
+              "targetCaseSlot": "3.B",
+              "targetCaseSlotLocalizations": {
+                "en": "3.B EN",
+                "de": "3.B DE",
+                "fr": "3.B FR",
+                "it": "3.B IT"
+              }
+            },
+            {
+              "sourceCaseName": "All Value Types",
+              "targetCaseName": "All Time Types"
+            },
+            {
+              "sourceCaseName": "Conditions.Base",
+              "targetCaseName": "Conditions.Double",
+              "buildExpression": "TargetValue[\"Conditions.Double\"] =  (int)SourceValue[\"Conditions.Base\"] * 2; return true",
+              "validateExpression": "bool valid = (int)TargetValue[\"Conditions.Double\"] % (int)SourceValue[\"Conditions.Base\"] == 0; if (!valid) AddIssue(\"Invalid target double value\"); return valid"
+            },
+            {
+              "sourceCaseName": "Conditions.Base",
+              "targetCaseName": "Conditions.Positive",
+              "buildExpression": "var baseValue = SourcePayrollValue[\"Conditions.Base\"]; TargetFieldAvailable(\"Conditions.PositivePlus\", (int)baseValue > 100); CopyEnd(\"Conditions.Base\", \"Conditions.Positive\");  CopyStart(\"Conditions.Base\", \"Conditions.Positive\"); return baseValue.HasValue && (int)baseValue > 0"
+            },
+            {
+              "sourceCaseName": "Conditions.Double",
+              "targetCaseName": "Conditions.SecondLevel",
+              "buildExpression": "var baseValue = SourcePayrollValue[\"Conditions.Double\"]; return baseValue.HasValue && (int)baseValue > 100"
+            },
+            {
+              "sourceCaseName": "Lohn",
+              "targetCaseName": "Zulage",
+              "buildExpression": "TargetValue[\"Zulage\"] = TargetPayrollValue[\"Zulage\"].HasValue ?(decimal)SourceValue[\"Lohn\"] * 0.1M : 0; return true"
+            },
+            {
+              "sourceCaseName": "Simple Lookups",
+              "targetCaseName": "Multi Lookups"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "CaseDefPayroll.Derived",
+          "description": "Case Definition derived payroll",
+          "divisionName": "CaseDefDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "CaseDefPayroll"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "CaseDefPayroll.Derived",
+          "name": "CaseDefPayrollPayrun1",
+          "defaultReason": "Run CaseDef payrun"
+        }
+      ]
+    }
+  ]
+}

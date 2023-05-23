@@ -1,0 +1,2 @@
+call PayrollConsole RegulationRebuild Payroll.Report Payroll.Report Report
+pause

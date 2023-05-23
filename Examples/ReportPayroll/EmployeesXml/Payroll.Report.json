@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Payroll.Report",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "EmployeesXml",
+              "description": "Employees XML report",
+              "queries": {
+                "Employees": "QueryEmployees"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                }
+              ],
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "language": "German",
+                  "contentFile": "Employees.xsl",
+                  "schemaFile": "Employees.xsd"
+                },
+                {
+                  "name": "DefaultEnglish",
+                  "language": "English",
+                  "contentFile": "Employees.xsl",
+                  "schemaFile": "Employees.xsd"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

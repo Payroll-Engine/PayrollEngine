@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="04/15/2023 10:22:38" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Employees" ReferenceName="Data.Employees" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Identifier" DataType="System.String"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="Language" DataType="System.String"/>
+      <Column Name="Culture" DataType="System.String"/>
+      <Column Name="Divisions" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="WageTypeResults" ReferenceName="Data.WageTypeResults" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="EmployeeId" DataType="System.Int32"/>
+      <Column Name="WageTypeId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="WageTypeName" DataType="System.String"/>
+      <Column Name="WageTypeNumber" DataType="System.Decimal"/>
+      <Column Name="Start" DataType="System.DateTime"/>
+      <Column Name="End" DataType="System.DateTime"/>
+      <Column Name="Tags" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+      <Column Name="M1" DataType="System.Decimal"/>
+      <Column Name="M2" DataType="System.Decimal"/>
+      <Column Name="M3" DataType="System.Decimal"/>
+      <Column Name="M4" DataType="System.Decimal"/>
+      <Column Name="M5" DataType="System.Decimal"/>
+      <Column Name="M6" DataType="System.Decimal"/>
+      <Column Name="M7" DataType="System.Decimal"/>
+      <Column Name="M8" DataType="System.Decimal"/>
+      <Column Name="M9" DataType="System.Decimal"/>
+      <Column Name="M10" DataType="System.Decimal"/>
+      <Column Name="M11" DataType="System.Decimal"/>
+      <Column Name="M12" DataType="System.Decimal"/>
+      <Column Name="Total" DataType="System.Decimal"/>
+    </TableDataSource>
+    <TableDataSource Name="CollectorResults" ReferenceName="Data.CollectorResults" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="EmployeeId" DataType="System.Int32"/>
+      <Column Name="CollectorId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="CollectorName" DataType="System.String"/>
+      <Column Name="Start" DataType="System.DateTime"/>
+      <Column Name="End" DataType="System.DateTime"/>
+      <Column Name="Tags" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+      <Column Name="M1" DataType="System.Decimal"/>
+      <Column Name="M2" DataType="System.Decimal"/>
+      <Column Name="M3" DataType="System.Decimal"/>
+      <Column Name="M4" DataType="System.Decimal"/>
+      <Column Name="M5" DataType="System.Decimal"/>
+      <Column Name="M6" DataType="System.Decimal"/>
+      <Column Name="M7" DataType="System.Decimal"/>
+      <Column Name="M8" DataType="System.Decimal"/>
+      <Column Name="M9" DataType="System.Decimal"/>
+      <Column Name="M10" DataType="System.Decimal"/>
+      <Column Name="M11" DataType="System.Decimal"/>
+      <Column Name="M12" DataType="System.Decimal"/>
+      <Column Name="Total" DataType="System.Decimal"/>
+    </TableDataSource>
+    <Relation Name="EmployeeCollectorResults" ParentDataSource="Employees" ChildDataSource="CollectorResults" ParentColumns="Id" ChildColumns="EmployeeId" Enabled="true"/>
+    <Relation Name="EmployeeWageTypeResults" ParentDataSource="Employees" ChildDataSource="WageTypeResults" ParentColumns="Id" ChildColumns="EmployeeId" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="37.8">
+      <TextObject Name="Text5" Left="18.9" Width="1001.7" Height="28.35" Text="Employee Cumulative Journal" HorzAlign="Center" VertAlign="Center" Font="Bahnschrift, 14pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="40.47" Width="1047.06" Height="9.45"/>
+    <DataBand Name="Data1" Top="52.58" Width="1047.06" Height="75.6" CanGrow="true" DataSource="Employees">
+      <TextObject Name="Text18" Top="18.9" Width="756" Height="37.8" Text="[Employees.FirstName] [Employees.LastName]" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text19" Left="756" Top="18.9" Width="264.6" Height="37.8" Text="[Employees.Identifier]" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text2" Left="245.7" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Jan" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text3" Left="302.4" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Feb" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text4" Left="359.1" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Mar" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text6" Left="415.8" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Apr" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text7" Left="472.5" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="May" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text8" Left="529.2" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Jun" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text9" Left="585.9" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Jul" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text10" Left="642.6" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Aug" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text11" Left="699.3" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Sep" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text14" Left="756" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Oct" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text15" Left="812.7" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Nov" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text16" Left="869.4" Top="56.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Dec" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text33" Left="926.1" Top="56.7" Width="94.5" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Total" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text47" Top="56.7" Width="245.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Fill.Color="245, 245, 245" Text="Wage type" VertAlign="Center" Font="Arial, 8pt"/>
+      <DataBand Name="Data3" Top="130.85" Width="1047.06" Height="18.9" DataSource="WageTypeResults">
+        <TextObject Name="Text17" Width="245.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="Wage Type: [FormatNumber([WageTypeResults.WageTypeNumber], 0)] - [WageTypeResults.WageTypeName]" VertAlign="Center" Font="Arial, 7pt"/>
+        <TextObject Name="Text20" Left="245.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M1]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text21" Left="302.4" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M2]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text22" Left="359.1" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M3]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text23" Left="415.8" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M4]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text24" Left="472.5" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M5]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text25" Left="529.2" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M6]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text26" Left="585.9" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M7]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text27" Left="642.6" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M8]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text28" Left="699.3" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M9]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text29" Left="756" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M10]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text30" Left="812.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M11]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text31" Left="869.4" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.M12]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text32" Left="926.1" Width="94.5" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[WageTypeResults.Total]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <DataBand Name="Data2" Top="152.42" Width="1047.06" Height="18.9" DataSource="CollectorResults">
+        <TextObject Name="Text1" Width="245.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="Collector: [CollectorResults.CollectorName]" VertAlign="Center" Font="Arial, 7pt"/>
+        <TextObject Name="Text34" Left="245.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M1]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text35" Left="302.4" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M2]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text36" Left="359.1" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M3]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text37" Left="415.8" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M4]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text38" Left="472.5" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M5]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text39" Left="529.2" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M6]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text40" Left="585.9" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M7]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text41" Left="642.6" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M8]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text42" Left="699.3" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M9]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text43" Left="756" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M10]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text44" Left="812.7" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M11]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text45" Left="869.4" Width="56.7" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.M12]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text46" Left="926.1" Width="94.5" Height="18.9" Border.Lines="All" Border.Color="DimGray" Border.Width="0.5" Text="[CollectorResults.Total]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 7pt" Trimming="EllipsisCharacter"/>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="173.98" Width="1047.06" Height="28.35">
+      <TextObject Name="Text12" Top="9.45" Width="122.85" Height="18.9" Text="[Date]" Font="Arial, 8pt"/>
+      <TextObject Name="Text13" Left="907.2" Top="9.45" Width="113.4" Height="18.9" Text="[PageNofM]" HorzAlign="Right" Font="Arial, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

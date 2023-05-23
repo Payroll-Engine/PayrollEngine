@@ -1,0 +1,21 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "WeekSimplePayroll",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "WeekSimplePayrollPayrun1.Feb19",
+          "payrunName": "WeekSimplePayrollPayrun1",
+          "payrollName": "WeekSimplePayroll.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-11T00:00:00.0Z",
+          "evaluationDate": "2019-03-01T00:00:00.0Z",
+          "reason": "Demo Payrun"
+        }
+      ]
+    }
+  ]
+}

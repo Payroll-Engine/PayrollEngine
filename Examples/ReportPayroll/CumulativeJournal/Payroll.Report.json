@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Payroll.Report",
+          "updateMode": "NoUpdate",
+           "reports": [
+            {
+              "name": "CumulativeJournal",
+              "description": "Cumulative year journal",
+              "endExpressionFile": "Script.cs",
+              "queries": {
+                "Employees": "QueryEmployees"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                },
+                {
+                  "name": "Year",
+                  "valueType": "Year",
+                  "mandatory": true,
+                  "attributes": {
+                    "input.minvalue": 1990
+                  }
+                },
+                {
+                  "name": "Employees.Filter",
+                  "nameLocalizations": {
+                    "en": "Employees",
+                    "de": "Mitarbeiter",
+                    "fr": "Employees [FR]",
+                    "it": "Employees [IT]"
+                  },
+                  "description": "Employees name filter",
+                  "descriptionLocalizations": {
+                    "en": "Employees name filter",
+                    "de": "Mitarbeiter Namensfitler ",
+                    "fr": "Employees name filter [FR]",
+                    "it": "Employees name filter [IT]"
+                  }
+                }
+              ],
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "language": "German",
+                  "contentFile": "Report.frx"
+                },
+                {
+                  "name": "DefaultEnglish",
+                  "language": "English",
+                  "contentFile": "Report.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

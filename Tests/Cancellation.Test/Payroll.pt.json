@@ -1,0 +1,406 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Cancellation.Test",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Cancellation.Test",
+          "description": "The cancellation testing payroll",
+          "cases": [
+            {
+              "name": "Cancellation Types",
+              "description": "Cancellation Types",
+              "caseType": "Employee",
+              "cancellationType": "Case",
+              "defaultReason": "Test cancellation types",
+              "fields": [
+                {
+                  "name": "Integer Keep",
+                  "description": "Integer Cancellation=Keep",
+                  "valueType": "Integer",
+                  "timeType": "Moment",
+                  "cancellationMode": "Keep"
+                },
+                {
+                  "name": "Integer Reset",
+                  "description": "Integer Cancellation=Reset",
+                  "valueType": "Integer",
+                  "timeType": "Moment",
+                  "cancellationMode": "Reset"
+                },
+                {
+                  "name": "Integer Invert",
+                  "description": "Integer Cancellation=Invert",
+                  "valueType": "Integer",
+                  "timeType": "Moment",
+                  "cancellationMode": "Invert"
+                },
+                {
+                  "name": "Integer Previous",
+                  "description": "Integer Cancellation=Previous",
+                  "valueType": "Integer",
+                  "timeType": "Moment",
+                  "cancellationMode": "Previous"
+                },
+                {
+                  "name": "Decimal Keep",
+                  "description": "Decimal Cancellation=Keep",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "cancellationMode": "Keep"
+                },
+                {
+                  "name": "Decimal Reset",
+                  "description": "Decimal Cancellation=Reset",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "cancellationMode": "Reset"
+                },
+                {
+                  "name": "Decimal Invert",
+                  "description": "Decimal Cancellation=Invert",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "cancellationMode": "Invert"
+                },
+                {
+                  "name": "Decimal Previous",
+                  "description": "Decimal Cancellation=Previous",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "cancellationMode": "Previous"
+                },
+                {
+                  "name": "Boolean Keep",
+                  "description": "Boolean Cancellation=Keep",
+                  "valueType": "Boolean",
+                  "timeType": "Moment",
+                  "cancellationMode": "Keep"
+                },
+                {
+                  "name": "Boolean Reset",
+                  "description": "Boolean Cancellation=Reset",
+                  "valueType": "Boolean",
+                  "timeType": "Moment",
+                  "cancellationMode": "Reset"
+                },
+                {
+                  "name": "Boolean Invert",
+                  "description": "Boolean Cancellation=Invert",
+                  "valueType": "Boolean",
+                  "timeType": "Moment",
+                  "cancellationMode": "Invert"
+                },
+                {
+                  "name": "Boolean Previous",
+                  "description": "Boolean Cancellation=Previous",
+                  "valueType": "Boolean",
+                  "timeType": "Moment",
+                  "cancellationMode": "Previous"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101.1,
+              "name": "Integer Keep",
+              "valueExpression": "(int)GetCaseValue(\"Integer Keep\")"
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "name": "Integer Reset",
+              "valueExpression": "(int)GetCaseValue(\"Integer Reset\")"
+            },
+            {
+              "wageTypeNumber": 101.3,
+              "name": "Integer Invert",
+              "valueExpression": "(int)GetCaseValue(\"Integer Invert\")"
+            },
+            {
+              "wageTypeNumber": 101.4,
+              "name": "Integer Previous",
+              "valueExpression": "(int)GetCaseValue(\"Integer Previous\")"
+            },
+            {
+              "wageTypeNumber": 102.1,
+              "name": "Decimal Keep",
+              "valueExpression": "(decimal)GetCaseValue(\"Decimal Keep\")"
+            },
+            {
+              "wageTypeNumber": 102.2,
+              "name": "Decimal Reset",
+              "valueExpression": "(decimal)GetCaseValue(\"Decimal Reset\")"
+            },
+            {
+              "wageTypeNumber": 102.3,
+              "name": "Decimal Invert",
+              "valueExpression": "(decimal)GetCaseValue(\"Decimal Invert\")"
+            },
+            {
+              "wageTypeNumber": 102.4,
+              "name": "Decimal Previous",
+              "valueExpression": "(decimal)GetCaseValue(\"Decimal Previous\")"
+            },
+            {
+              "wageTypeNumber": 103.1,
+              "name": "Boolean Keep",
+              "valueExpression": "(bool)GetCaseValue(\"Boolean Keep\") ? 210 : 215"
+            },
+            {
+              "wageTypeNumber": 103.2,
+              "name": "Boolean Reset",
+              "valueExpression": "(bool)GetCaseValue(\"Boolean Reset\") ? 220 : 225"
+            },
+            {
+              "wageTypeNumber": 103.3,
+              "name": "Boolean Invert",
+              "valueExpression": "(bool)GetCaseValue(\"Boolean Invert\") ? 230 : 235"
+            },
+            {
+              "wageTypeNumber": 103.4,
+              "name": "Boolean Previous",
+              "valueExpression": "(bool)GetCaseValue(\"Boolean Previous\") ? 330 : 335"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "divisions": [
+            "TestDivision"
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Cancellation.Test.Derived",
+          "divisionName": "TestDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Cancellation.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2018-12-01T17:31:00.0Z",
+              "case": {
+                "caseName": "Cancellation Types",
+                "values": [
+                  {
+                    "caseFieldName": "Integer Previous",
+                    "value": "4",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Decimal Previous",
+                    "value": "13",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Boolean Previous",
+                    "value": "true",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-01-01T18:25:00.0Z",
+              "case": {
+                "caseName": "Cancellation Types",
+                "values": [
+                  {
+                    "caseFieldName": "Integer Keep",
+                    "value": "10",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Integer Reset",
+                    "value": "20",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Integer Invert",
+                    "value": "30",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Integer Previous",
+                    "value": "40",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Decimal Keep",
+                    "value": "110",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Decimal Reset",
+                    "value": "120",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Decimal Invert",
+                    "value": "130",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Decimal Previous",
+                    "value": "130",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Boolean Keep",
+                    "value": "true",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Boolean Reset",
+                    "value": "true",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Boolean Invert",
+                    "value": "false",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Boolean Previous",
+                    "value": "false",
+                    "start": "2019-01-05T00:00:00.0Z",
+                    "created": "2019-01-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "cancellationCreated": "2019-01-01T18:25:00.0Z",
+              "case": {
+                "caseName": "Cancellation Types"
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Cancellation.Test.Derived",
+          "name": "Cancellation.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Cancellation.TestPayrun1.Jan19",
+          "payrunName": "Cancellation.TestPayrun1",
+          "payrollName": "Cancellation.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Cancellation.TestPayrun1.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101.1,
+              "value": 10
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 101.3,
+              "value": -30
+            },
+            {
+              "wageTypeNumber": 101.4,
+              "value": 4
+            },
+            {
+              "wageTypeNumber": 102.1,
+              "value": 110
+            },
+            {
+              "wageTypeNumber": 102.2,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 102.3,
+              "value": -130
+            },
+            {
+              "wageTypeNumber": 102.4,
+              "value": 13
+            },
+            {
+              "wageTypeNumber": 103.1,
+              "value": 210
+            },
+            {
+              "wageTypeNumber": 103.2,
+              "value": 225
+            },
+            {
+              "wageTypeNumber": 103.3,
+              "value": 230
+            },
+            {
+              "wageTypeNumber": 103.4,
+              "value": 330
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

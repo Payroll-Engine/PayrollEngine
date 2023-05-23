@@ -1,0 +1,163 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "RetroManualPayroll",
+      "created": "2018-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "RetroManualDivision",
+          "culture": "de-CH",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "RetroManualDivision"
+          ],
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "RetroManualPayroll",
+          "description": "The manual retro payroll",
+          "created": "2018-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "defaultReason": "Change Monatslohn",
+              "created": "2018-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Monatslohn",
+              "valueExpression": "ScheduleRetroPayrun(PeriodStart.SubtractMonths(1), new[] { \"Retro1\" }); ScheduleRetroPayrun(PeriodStart.SubtractMonths(2), new[] { \"Retro2\" }); return GetCaseValue(\"Monatslohn\");",
+              "created": "2018-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "name": "Monatslohn.Retro1",
+              "valueExpression": "return IsRetroPayrun && FirstCyclePeriod ? 500m : null",
+              "created": "2018-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "name": "Monatslohn.Retro1Test",
+              "valueExpression": "return GetWageTypeResults(new(101.1m, PeriodStart.SubtractMonths(1), PeriodEnd) { Tag = \"Retro1\" }).Sum()",
+              "created": "2018-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.1,
+              "name": "Monatslohn.Retro2",
+              "valueExpression": "return IsRetroPayrun && LastCyclePeriod ? 1000m : null",
+              "created": "2018-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.2,
+              "name": "Monatslohn.Retro2Test",
+              "valueExpression": "return GetWageTypeResults(new(102.1m, PeriodStart.SubtractMonths(2), PeriodEnd) { Tag = \"Retro2\" }).Sum()",
+              "created": "2018-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "RetroManualPayroll",
+          "divisionName": "RetroManualDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "RetroManualPayroll"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "RetroManualDivision",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5000",
+                    "start": "2018-10-01T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "RetroManualPayroll",
+          "name": "RetroManualPayrollPayrun",
+          "culture": "de-CH",
+          "defaultReason": "Run Manual retro payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "RetroManualPayrollPayrun.Feb19",
+          "payrunName": "RetroManualPayrollPayrun",
+          "payrollName": "RetroManualPayroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "retroPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-28T00:00:00.0Z",
+          "reason": "Manual retro payrun Feb 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "RetroManualPayrollPayrun.Feb19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "value": 500
+            },
+            {
+              "wageTypeNumber": 102.2,
+              "value": 1000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

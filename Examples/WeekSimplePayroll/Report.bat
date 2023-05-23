@@ -1,0 +1,2 @@
+call PayrollConsole PayrollResults WeekSimplePayroll 1
+pause

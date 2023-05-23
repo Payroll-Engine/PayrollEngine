@@ -1,0 +1,1 @@
+call PayrollConsole TenantDelete WeekSimplePayroll /trydelete

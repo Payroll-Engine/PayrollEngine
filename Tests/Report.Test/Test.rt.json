@@ -1,0 +1,77 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.ReportTest.schema.json",
+  "testName": "EmployeeTest",
+  "tenantIdentifier": "ReportTest",
+  "userIdentifier": "peter.schmid@foo.com",
+  "regulationName": "ReportTest",
+  "customTestFiles": [
+    "EmployeeTest.cs"
+  ],
+  "buildTests": [
+    {
+      "testName": "EmployeesReportBuildTest",
+      "testDescription": "Test build employee report",
+      "reportName": "EmployeesReport",
+      "input": {
+        "userIdentifier": "peter.schmid@foo.com",
+        "language": "German"
+      },
+      "output": [
+        {
+          "name": "EmployeeType",
+          "valueType": "Integer",
+          "value": "2"
+        }
+      ]
+    }
+  ],
+  "executeTests": [
+    {
+      "testName": "EmployeesReportExecuteTest",
+      "testDescription": "Test employee report executed result",
+      "reportName": "EmployeesReport",
+      "input": {
+        "userIdentifier": "peter.schmid@foo.com",
+        "language": "German"
+      },
+      "output": {
+        "name": "EmployeesReport",
+        "tables": [
+          {
+            "name": "Employees",
+            "rows": [
+              {
+                "values": [
+                  "2",
+                  "braunger.margarete@logo.com",
+                  "Braunger",
+                  "Margarete",
+                  "English",
+                  "*",
+                  "null",
+                  "*",
+                  "*",
+                  "Active"
+                ]
+              },
+              {
+                "values": [
+                  "2",
+                  "frühling.Andreas@logo.com",
+                  "Frühling",
+                  "Andreas",
+                  "English",
+                  "*",
+                  "null",
+                  "*",
+                  "*",
+                  "Active"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

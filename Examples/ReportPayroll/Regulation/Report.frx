@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="04/14/2023 18:47:38" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Regulations" ReferenceName="Data.Regulations" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="Version" DataType="System.Int32"/>
+      <Column Name="Owner" DataType="System.String"/>
+      <Column Name="Description" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="Collectors" ReferenceName="Data.Collectors" DataType="System.Int32" Enabled="true">
+      <Column Name="RegulationId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="OverrideType" DataType="System.Int32"/>
+      <Column Name="ValueType" DataType="System.Int32"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="WageTypes" ReferenceName="Data.WageTypes" DataType="System.Int32" Enabled="true">
+      <Column Name="RegulationId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="WageTypeNumber" DataType="System.Decimal"/>
+      <Column Name="OverrideType" DataType="System.Int32"/>
+      <Column Name="ValueType" DataType="System.Int32"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+    <Relation Name="RegulationCollectors" ParentDataSource="Regulations" ChildDataSource="Collectors" ParentColumns="Id" ChildColumns="RegulationId" Enabled="true"/>
+    <Relation Name="RegulationWageTypes" ParentDataSource="Regulations" ChildDataSource="WageTypes" ParentColumns="Id" ChildColumns="RegulationId" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text5" Left="18.9" Width="548.1" Height="28.35" Text="Regulation" HorzAlign="Center" VertAlign="Center" Font="Bahnschrift, 14pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="40.09" Width="718.2" Height="18.9"/>
+    <DataBand Name="Data1" Top="61.27" Width="718.2" Height="47.25" CanGrow="true" DataSource="Regulations">
+      <TextObject Name="Text18" Left="18.9" Width="245.7" Height="18.9" Text="[Regulations.Name]" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text19" Left="472.5" Width="94.5" Height="18.9" Text="[Regulations.Owner]" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="18.9" Top="28.35" Width="548.1" Height="18.9" CanGrow="true" Text="[Regulations.Description]" Font="Arial, 10pt"/>
+      <DataBand Name="Data2" Top="110.81" Width="718.2" Height="18.9" DataSource="Collectors">
+        <TextObject Name="Text1" Left="18.9" Width="548.1" Height="18.9" Text="Collector: [Collectors.Name]" Font="Arial, 10pt"/>
+      </DataBand>
+      <DataBand Name="Data3" Top="131.99" Width="718.2" Height="18.9" DataSource="WageTypes">
+        <TextObject Name="Text17" Left="18.9" Width="548.1" Height="18.9" Text="Wage Type: [WageTypes.Name]" Font="Arial, 10pt"/>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="153.18" Width="718.2" Height="28.35">
+      <TextObject Name="Text12" Left="18.9" Top="9.45" Width="122.85" Height="18.9" Text="[Date]" Font="Arial, 8pt"/>
+      <TextObject Name="Text13" Left="453.6" Top="9.45" Width="113.4" Height="18.9" Text="[PageNofM]" HorzAlign="Right" Font="Arial, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

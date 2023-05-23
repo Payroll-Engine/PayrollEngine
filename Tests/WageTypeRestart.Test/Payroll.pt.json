@@ -1,0 +1,99 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "WageTypeRestart.Test",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "WageTypeRestart.Test",
+          "description": "The WageTypeRestart testing payroll",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "WageType100",
+              "valueExpression": "return ExecutionCount == 1 ? 1 : 0;"
+            },
+            {
+              "wageTypeNumber": 101,
+              "name": "WageType101",
+              "valueExpression": "if (ExecutionCount == 1) { RestartExecution(); return 0; } else return 1;"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "divisions": [
+            "TestDivision"
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "WageTypeRestart.Test.Derived",
+          "divisionName": "TestDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "WageTypeRestart.Test"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "WageTypeRestart.Test.Derived",
+          "name": "WageTypeRestart.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "WageTypeRestart.TestPayrun1.Jan19",
+          "payrunName": "WageTypeRestart.TestPayrun1",
+          "payrollName": "WageTypeRestart.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "WageTypeRestart.TestPayrun1.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

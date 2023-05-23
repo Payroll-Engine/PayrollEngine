@@ -1,0 +1,169 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "SimplePayroll",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "SimplePayroll",
+          "updateMode": "NoUpdate",
+          "lookups": [
+            {
+              "name": "Location",
+              "created": "2018-12-01T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "8000",
+                  "rangeValue": 3,
+                  "valueObject": {
+                    "number": "8000",
+                    "name": "Zürich"
+                  },
+                  "valueObjectLocalizations": {
+                    "it": {
+                      "number": "8000",
+                      "name": "Zurigo 22"
+                    }
+                  }
+                },
+                {
+                  "key": "9464",
+                  "rangeValue": 2,
+                  "valueObject": {
+                    "number": "9464",
+                    "name": "Ruethi"
+                  },
+                  "valueObjectLocalizations": {
+                    "it": {
+                      "number": "9464",
+                      "name": "Ruethio"
+                    }
+                  }
+                },
+                {
+                  "key": "9470",
+                  "rangeValue": 1,
+                  "valueObject": {
+                    "number": "9470",
+                    "name": "Buchs SG"
+                  },
+                  "valueObjectLocalizations": {
+                    "it": {
+                      "number": "9470",
+                      "name": "Buchso"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "ResidentalArea",
+              "created": "2021-01-18T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "200",
+                  "rangeValue": 1,
+                  "valueObject": {
+                    "name": "Urban"
+                  }
+                },
+                {
+                  "key": "201",
+                  "rangeValue": 2,
+                  "valueObject": {
+                    "name": "Sub Urban"
+                  }
+                },
+                {
+                  "key": "202",
+                  "rangeValue": 3,
+                  "valueObject": {
+                    "name": "City"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "BuildingType",
+              "created": "2021-01-18T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "300",
+                  "rangeValue": 1,
+                  "valueObject": {
+                    "name": "House"
+                  }
+                },
+                {
+                  "key": "301",
+                  "rangeValue": 2,
+                  "valueObject": {
+                    "name": "Flat"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Quellensteuer",
+              "created": "2018-12-01T00:00:00.0Z",
+              "values": [
+                {
+                  "keyValues": [
+                    "A",
+                    1,
+                    "BASEL",
+                    50,
+                    "Y"
+                  ],
+                  "valueObject": 0.04
+                },
+                {
+                  "keyValues": [
+                    "B",
+                    2,
+                    "BASEL",
+                    0,
+                    "Y"
+                  ],
+                  "valueObject": 0.05
+                },
+                {
+                  "keyValues": [
+                    "B",
+                    2,
+                    "BASEL",
+                    0,
+                    "N"
+                  ],
+                  "valueObject": 0.05
+                },
+                {
+                  "keyValues": [
+                    "B",
+                    2,
+                    "BASEL",
+                    50,
+                    "Y"
+                  ],
+                  "valueObject": 0.08
+                },
+                {
+                  "keyValues": [
+                    "C",
+                    2,
+                    "BASEL",
+                    50,
+                    "Y"
+                  ],
+                  "valueObject": 0.12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

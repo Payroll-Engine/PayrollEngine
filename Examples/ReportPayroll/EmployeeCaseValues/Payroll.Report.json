@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Payroll.Report",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Payroll.Report",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "EmployeeCaseValues",
+              "description": "Employee case values",
+              "buildExpressionFile": "Scripts.cs",
+              "startExpressionFile": "Scripts.cs",
+              "endExpressionFile": "Scripts.cs",
+              "queries": {
+                "Employees": "QueryEmployees"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                },
+                {
+                  "name": "PayrollId",
+                  "valueType": "Integer",
+                  "parameterType": "PayrollId",
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                },
+                {
+                  "name": "AllEmployees",
+                  "valueType": "Boolean",
+                  "value": "true",
+                  "nameLocalizations": {
+                    "en": "All Employees",
+                    "de": "Alle Mitarbeiter",
+                    "fr": "All Employees FR",
+                    "it": "All Employees IT"
+                  }
+                },
+                {
+                  "name": "EmployeeIdentifier",
+                  "valueType": "String",
+                  "mandatory": true,
+                  "nameLocalizations": {
+                    "en": "Employee",
+                    "de": "Mitarbeiter",
+                    "fr": "Employee FR",
+                    "it": "Employee IT"
+                  },
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                }
+              ],
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "language": "German",
+                  "contentFile": "Report.frx"
+                },
+                {
+                  "name": "DefaultEnglish",
+                  "language": "English",
+                  "contentFile": "Report.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

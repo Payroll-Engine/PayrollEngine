@@ -1,0 +1,305 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "DerivedPayroll.Test",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDerivedDivision",
+          "culture": "de-CH",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "DerivedPayroll.TestRoot",
+          "description": "Test derived payroll (base)",
+          "created": "2019-01-01T00:00:00.0Z",
+          "lookups": [
+            {
+              "name": "Factor",
+              "created": "2019-01-01T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "A",
+                  "value": "100"
+                },
+                {
+                  "key": "B",
+                  "value": "200"
+                }
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "AHV Basis",
+              "collectType": "Sum",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "collectors": [
+                "AHV Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Override",
+              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "LookupDerived",
+              "valueExpression": "GetLookup<decimal>(\"Factor\", \"A\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "LookupBase",
+              "valueExpression": "GetLookup<decimal>(\"Factor\", \"B\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "DerivedBaseValue",
+              "valueExpression": "2",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ]
+        },
+        {
+          "name": "DerivedPayroll.Test",
+          "parentPayrollName": "DerivedPayroll.TestRoot",
+          "description": "Test derived payroll (derived)",
+          "created": "2019-01-01T00:00:00.0Z",
+          "baseRegulations": [
+            "DerivedPayroll.TestRoot"
+          ],
+          "lookups": [
+            {
+              "name": "Factor",
+              "created": "2019-01-01T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "A",
+                  "value": "1000"
+                }
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "name": "Stundenlohn",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Stundenlohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "Company Collector",
+              "collectType": "Sum",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "collectors": [
+                "AHV Basis",
+                "Company Collector"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Override",
+              "overrideType": "Inactive",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "DerivedBaseValue",
+              "valueExpression": "null",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 106,
+              "name": "Stundenlohn",
+              "valueExpression": "CaseValue[\"Stundenlohn\"]",
+              "collectors": [
+                "Company Collector"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TestDerivedDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "DerivedPayroll.Test.Derived",
+          "divisionName": "TestDerivedDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "DerivedPayroll.TestRoot"
+            },
+            {
+              "level": 2,
+              "priority": 1,
+              "regulationName": "DerivedPayroll.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDerivedDivision",
+              "reason": "Simple Payroll Import",
+              "case": {
+                "caseName": "Monatslohn",
+                "values": [
+                  {
+                    "caseFieldName": "Monatslohn",
+                    "value": "5125",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TestDerivedDivision",
+              "reason": "Simple Payroll Import",
+              "case": {
+                "caseName": "Stundenlohn",
+                "values": [
+                  {
+                    "caseFieldName": "Stundenlohn",
+                    "value": "875",
+                    "start": "2019-01-01T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "DerivedPayroll.Test.Derived",
+          "name": "DerivedPayroll.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "DerivedPayroll.Test.Feb19",
+          "payrunName": "DerivedPayroll.TestPayrun1",
+          "payrollName": "DerivedPayroll.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2020-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "DerivedPayroll.Test.Feb19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5125
+            },
+            {
+              "wageTypeNumber": 102
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 200
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 2
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 875
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Basis",
+              "value": 5125
+            },
+            {
+              "collectorName": "Company Collector",
+              "value": 6000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

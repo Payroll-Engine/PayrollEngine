@@ -1,0 +1,441 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "Employee.Test",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDivision",
+          "culture": "de-CH",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TestDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        },
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "divisions": [
+            "TestDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Employee.Test",
+          "description": "The testing payroll",
+          "created": "2019-01-01T00:00:00.0Z",
+          "lookups": [
+            {
+              "name": "Quellensteuer",
+              "created": "2019-01-01T00:00:00.0Z",
+              "values": [
+                {
+                  "keyValues": [
+                    "A",
+                    1,
+                    "BASEL",
+                    50,
+                    "Y"
+                  ],
+                  "valueObject": 0.04
+                },
+                {
+                  "keyValues": [
+                    "B",
+                    2,
+                    "BASEL",
+                    0,
+                    "Y"
+                  ],
+                  "valueObject": 0.05
+                },
+                {
+                  "keyValues": [
+                    "B",
+                    2,
+                    "BASEL",
+                    0,
+                    "N"
+                  ],
+                  "valueObject": 0.05
+                },
+                {
+                  "keyValues": [
+                    "B",
+                    2,
+                    "BASEL",
+                    50,
+                    "Y"
+                  ],
+                  "valueObject": 0.08
+                },
+                {
+                  "keyValues": [
+                    "C",
+                    2,
+                    "BASEL",
+                    50,
+                    "Y"
+                  ],
+                  "valueObject": 0.12
+                }
+              ]
+            },
+            {
+              "name": "Sonderbonus",
+              "created": "2019-01-01T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "Bonus1",
+                  "rangeValue": 2000,
+                  "valueObject": 0.05
+                },
+                {
+                  "key": "Bonus2",
+                  "rangeValue": 3000,
+                  "valueObject": 0.03
+                }
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "name": "AHV",
+              "caseType": "National",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "AHV AN",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Unfallversicherung",
+              "caseType": "Company",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "NBU Satz",
+                  "valueType": "Percent",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Location",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Location",
+                  "valueType": "String",
+                  "lookupSettings": {
+                    "lookupName": "Location"
+                  },
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Monatslohn",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Monatslohn",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Beschäftigungsgrad",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Beschäftigungsgrad",
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Abteilung",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Abteilung",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Stundenlohn",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Stundenlohn",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Anzahl Stunden",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Anzahl Stunden",
+                  "valueType": "Hour",
+                  "timeType": "Moment",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Bonus",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Bonus",
+                  "valueType": "Money",
+                  "timeType": "Moment",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Geburtsdatum",
+              "caseType": "Employee",
+              "created": "2019-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Geburtsdatum",
+                  "valueType": "Date",
+                  "timeType": "Timeless",
+                  "created": "2019-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "AHV Basis",
+              "collectType": "Sum",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "name": "QST Basis",
+              "collectType": "Sum",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "name": "Credit",
+              "collectType": "Sum",
+              "resultName": "Credit",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "name": "Debit",
+              "collectType": "Sum",
+              "resultName": "Debit",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Monatslohn",
+              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "collectors": [
+                "AHV Basis",
+                "QST Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "name": "Monatslohn.Credit",
+              "valueExpression": "CaseValue[\"Monatslohn\"] * 0.05M",
+              "collectors": [
+                "Credit"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "name": "Monatslohn.Debit",
+              "valueExpression": "CaseValue[\"Monatslohn\"] * -0.05M",
+              "collectors": [
+                "Debit"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Stundenlohn",
+              "valueExpression": "var values = GetCaseValues(\"Anzahl Stunden\", \"Stundenlohn\"); return values[\"Anzahl Stunden\"] * values[\"Stundenlohn\"];",
+              "collectors": [
+                "AHV Basis",
+                "QST Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Bonus",
+              "valueExpression": "CaseValue[\"Bonus\"]",
+              "collectors": [
+                "AHV Basis",
+                "QST Basis"
+              ],
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 106,
+              "name": "Alterszulage",
+              "valueExpression": "CaseValue[\"Geburtsdatum\"].ValueAs<DateTime>().Age(PeriodEnd) >= 50 ? CaseValue[\"Monatslohn\"] * 0.075M : 0",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 199,
+              "name": "Lohndeckung",
+              "valueExpression": "var results = GetPeriodWageTypeResults(101, new PeriodResultQuery(1, PayrunJobStatus.Legal)); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 206,
+              "name": "Quellensteuer",
+              "valueExpression": "var lookup = GetLookup<decimal>(\"Quellensteuer\", new Key(\"B\", 2, CaseValue[\"Location\"].Value, CaseValue[\"Geburtsdatum\"].ValueAs<DateTime>().Age(PeriodStart) >= 50 ? 50 : 0, (decimal)CaseValue[\"Stundenlohn\"] > 70m ? \"Y\" : \"N\" )); return lookup != null ? Collector[\"QST Basis\"] * lookup : 0;",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 207,
+              "name": "Sonderbonus",
+              "valueExpression": "var lookup = GetRangeLookup<decimal>(\"Sonderbonus\", WageType[101]); return lookup != null ? WageType[101] * lookup : 0;",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Employee.Test",
+          "divisionName": "TestDivision",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Employee.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "AHV",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN",
+                    "value": "0.05125",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2017-12-23T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "AHV",
+                "values": [
+                  {
+                    "caseFieldName": "AHV AN",
+                    "value": "0.05275",
+                    "start": "2020-01-01T00:00:00.0Z",
+                    "created": "2018-12-23T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Unfallversicherung",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz",
+                    "value": "0.5",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "TestDivision",
+              "case": {
+                "caseName": "Unfallversicherung",
+                "values": [
+                  {
+                    "caseFieldName": "NBU Satz",
+                    "value": "0.05",
+                    "start": "2019-03-01T00:00:00.0Z",
+                    "created": "2018-02-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Employee.Test",
+          "name": "Employee.TestPayrun1"
+        }
+      ]
+    }
+  ]
+}

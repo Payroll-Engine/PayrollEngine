@@ -1,0 +1,120 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "ReportTest",
+      "calendar": {
+        "firstMonthOfYear": "January",
+        "averageMonthDays": 30,
+        "averageWorkDays": 21.75,
+        "calculationMode": "MonthCalendarDay",
+        "calendarWeekRule": "FirstFourDayWeek",
+        "firstDayOfWeek": "Monday",
+        "workingDays": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Wednesday",
+          "Friday"
+        ]
+      },
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "ReportTestDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "bachmann.christoph@logo.com",
+          "firstName": "Bachmann",
+          "lastName": "Christoph",
+          "attributes": {
+            "EmployeeType": 1
+          },
+          "divisions": [
+            "ReportTestDivision"
+          ]
+        },
+        {
+          "identifier": "braunger.margarete@logo.com",
+          "firstName": "Braunger",
+          "lastName": "Margarete",
+          "attributes": {
+            "EmployeeType": 2
+          },
+          "divisions": [
+            "ReportTestDivision"
+          ]
+        },
+        {
+          "identifier": "frühling.Andreas@logo.com",
+          "firstName": "Frühling",
+          "lastName": "Andreas",
+          "attributes": {
+            "EmployeeType": 2
+          },
+          "divisions": [
+            "ReportTestDivision"
+          ]
+        },
+        {
+          "identifier": "future.employee@logo.com",
+          "firstName": "Future",
+          "lastName": "Employee",
+          "attributes": {
+            "EmployeeType": 1
+          },
+          "divisions": [
+            "ReportTestDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "ReportTest",
+          "description": "The report test payroll",
+          "reports": [
+            {
+              "name": "EmployeesReport",
+              "description": "Mitarbeiter Daten",
+              "buildExpression": "SetParameter(\"EmployeeType\", 2); return true;",
+              "startExpressionFile": "EmployeeReportStartFunction.cs",
+              "endExpressionFile": "EmployeeReportEndFunction.cs",
+              "queries": {
+                "Employees": "QueryEmployees"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId"
+                },
+                {
+                  "name": "EmployeeType",
+                  "valueType": "Integer"
+                },
+                {
+                  "name": "Employees.Filter"
+                },
+                {
+                  "name": "Employees.OrderBy",
+                  "value": "Identifier"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
