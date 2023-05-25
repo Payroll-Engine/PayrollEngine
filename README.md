@@ -43,8 +43,8 @@ Neben der Quelloffenheit der PE (MIT), sind auch alle genutzten Fremdkomponenten
 ## Documents
 - Community Guidelines and [Software Enginnering](Documents/SoftwareEngineering.md)
 - White Paper
-- Repository Map<br /><br /><span style="max-width=: 300px"><img src="Documents/Images/PayrollEngineRepositoryMap_en.png" alt="Payroll Engine Repository Map"></span>
-- [Endpoints](Documents/PayrollRestServicesEndpoints.md)
+- Repository Map<br /><br /><span><img src="Documents/Images/PayrollEngineRepositoryMap_en.png" style="max-width: 70em" alt="Payroll Engine Repository Map"></span>
+- [API Endpoints](Documents/PayrollRestServicesEndpoints.md)
 ## Tutorials
 Client Development Tutorials: [README.md] in Repository *PayrollEngine.Client.Tutorials*
 ## Examples
