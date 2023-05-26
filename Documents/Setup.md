@@ -2,7 +2,7 @@
 The following steps describe the installation of the Payroll Engine on the local computer.
 The last step *Start Backend Service* is also necessary during operation.
 
-<br /><br />
+<br />
 
 # 1 System Rquirements
 The following software components are required to operate the Payroll Engine:
@@ -10,7 +10,7 @@ The following software components are required to operate the Payroll Engine:
 - Microsoft [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - Database: Microsoft SQL Server ([Free Express Version](https://www.microsoft.com/en-us/download/details.aspx?id=104781))
 
-<br /><br />
+<br />
 
 # 2 Clone Repositories
 The following repositories are to be cloned locally:
@@ -45,7 +45,7 @@ The following repositories are to be cloned locally:
 
 *TODO: Linux and MacOS instructions*
 
-<br /><br />
+<br />
 
 # 4 Setup Database
 The tools to setup the Payroll Engine database located in the ***\Database\\{Version}*** directory within the [Payroll Engine Backend Repository].
@@ -64,7 +64,7 @@ The default installation creates the database *PayrollEngine* using integrated s
 ```
 It is recommended to save the backend settings within your local [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets).
 
-<br /><br />
+<br />
 
 # 5 Build Applications
 The batch file ***PayrollEngine\Batches\Setup.bat*** is used to build the components and applications of the Payroll Engine.
@@ -73,7 +73,7 @@ The setup generates NuGets in the ***PayrollEngine\Packages*** folder and applic
 
 > It is recommended to register the folder ***PayrollEngine\Packages*** in Visual Studio as a [NuGet Package Source](https://learn.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio).
 
-<br /><br />
+<br />
 
 # 6 Start Backend Service
 The backend server is started with the batch ***PayrollEngine\Batches\Backend.Start.bat*** and a console window with the server log appears. With the batch ***PayrollEngine\Batches\Backend.Open.bat*** the Payroll Engine REST endpoints appear in the Swagger browser window.
@@ -83,7 +83,7 @@ The backend server is started with the batch ***PayrollEngine\Batches\Backend.St
 <br />
 *Congrats, you are ready to build regulations :=)*
 
-<br /><br />
+<br />
 
 # 7 Next steps
 The next steps are:

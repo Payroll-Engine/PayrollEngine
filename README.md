@@ -55,38 +55,20 @@ The Payroll Engine runs on Windows, Linux or MacOS. The [Setup Page](Documents/S
 <br/>
 
 # 3 Usage
-## Build Payroll Solutions
-- Setup Organisation
-## REST API Integration
-- [Endpoints](Documents/PayrollRestServicesEndpoints.md)
-- Swagger.json
-- Webhooks
+Folgende Anwendungsszenarien werden untestützt:
+- [Entiwcklung von Regulierungen](Documents/RegulationBuild.md)
+- [Integration der REST API](Documents/Integration.md)
+- [.NET Client Entwicklung](Documents/DotNetClients.md)
 
 <br/>
 
 # 4 Ressources
-## Documents
-- Technsiche Systembeschreibung - [Payroll Engine White Paper](Documents/PayrolEnginelWhitePaper_de.pdf)
-- Überischt der Payroll Engine Repositories - [Repository Map](Documents/PayrollEngineRepositoryMap.pdf")
-- Übersicht der REST Endpunkte - [API Endpoints](Documents/PayrollRestServicesEndpoints.md)
-- Community Guidelines and [Software Enginnering](Documents/SoftwareEngineering.md)
+| Resource                                                                  | Content                                   | Type           |
+|--|--|--|
+| [Payroll Engine White Paper](Documents/PayrolEnginelWhitePaper_de.pdf)    | Technsiche Systembeschreibung             | Manual         |
+| [Payrol Examples]()                                                       | Payroll Beispiele                         | JSON/C# files  |
+| [Payrol Tests]()                                                          | Payroll Tests                             | JSON/C# files  |
+| [Repository Map](Documents/PayrollEngineRepositoryMap.pdf")               | Überischt Payroll Engine Repositories     | Manual         |
+| [Software Enginnering](Documents/SoftwareEngineering.md)                  | Community Guidelines                      | Manual         |
+| [Client Development Tutorials](Documents/SoftwareEngineering.md)          | .NET Konsolenbeispiele                    | Repository     |
 
-## Tutorials
-Client Development Tutorials: [README.md] in Repository *PayrollEngine.Client.Tutorials*
-
-## Examples
-Local repository folder [Examples]
-
-## Tests
-Local repository folder [Tests]
-
-## Payroll Console
-Import/Export, Tests, Reports
-
-## Web Application
-Web Client with access to all engine features
-
-<br/>
-
-# License
-MIT
