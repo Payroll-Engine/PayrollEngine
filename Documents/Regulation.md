@@ -5,7 +5,7 @@ Regulierung sind ein Lösungsansatz um die Komplexität von Lohnsoftware durch A
   <img src="Images\PayrollRegulations.png" style="max-width: 500px" alt="Payroll Regulations">
 </p>
 
-> Durch den Vererbungsansatz sinkt mit jeder neuen Ebene die Komplexität, da sich die Auswahl der Features schichtend erhöht.
+> Die [Web Application](https://github.com/Payroll-Engine/PayrollEngine.WebApp.git) unterstützt das Editieren der Regulierung unter Berücksichtigung der Vererbungshierarchie.
 
 Regulierungen können zwischen Mandanten geteilt werdem, was Ressourcen schont und das Deployment stark vereinfacht. Mit der [Payroll Console](https://github.com/Payroll-Engine/PayrollEngine.PayrollConsole) lassen sich Regulierungen importieren, exportieren und testen.
 
@@ -14,15 +14,20 @@ Regulierungen können zwischen Mandanten geteilt werdem, was Ressourcen schont u
 ## Bestandteile der Regulation
 Die Regulierung besteht aus folgenden Objekten:
 
-| Object    | Description                            | Step    | Input                  | Output          |
+| Topic  |  Description                   | Objects                                    | Input                  | Output          |
 |--|--|--|--|--|
-| Case      | Daten- und Eingabemodell               | Input   | Case Change, Lookups   | Case Values     |
-| Wage      | Lohnabrechnung                         | Process | Case Values, Lookups   | Payroll Results |
-| Report    | Datenauswertung und Austausch          | Output  | Case Values, Payroll Results, Lookups | Document |
-| Lookup    | Fremddaten                             | Any     | Externe Quellen        | Lookup Tables   |
-| Script    | Geteilte Funktionalität                | Any     |                        | C# Code         |
+| Case   | Daten- und Eingabemodell      | Case<br />Case Field<br />Case Relation             | Case Change<br />Lookups   | Case Values     |
+| Wage   | Lohnabrechnung                | Collector<br />Wage Type                        | Case Values<br />Lookups   | Payroll Results |
+| Report | Datenauswertung und Austausch | Report<br />Report Parameter<br />Report Template   | Case Values<br />Payroll Results<br />Lookups | Document |
+| Lookup | Fremddaten                    | Lookup<br />Lookup Value                        | Externe Quellen        | Lookup Tables   |
+| Script | Geteilte Funktionalität       | Script                                      |                        | C# Code         |
 <br/>
-> Änderungen der Regulierung werden in einem Audit geführt.
+
+Ein Regulierungsobjekt besitzt folgende Eigneschaften:
+- Audit Trail der Modifikationen
+- Erweiterbar mit benutzerdefinierten Attributen
+- Zuordnung zu Clusters, Tag-Mechanismus zur Gruppierung und Filterung von Eingabe- und Lohnlaufdaten
+- Besitzt eine Identifikation, welcher als Schlüssel zur Überlagerung dient
 
 ## Reports
 Obwohl der Report Bestandteil der Regulierung ist, sind die Verantwortlichkeiten aufgeteilt:
@@ -46,25 +51,31 @@ Mit Actions wird die Dateneingabe ohne Progrmammierkentnisse gesteuert. Ein Acti
 > Die Regulierung kann in Scripts eigene Actions anbieten
 
 ## Functions
-Das Laufzeitverhalten wird durch Funktionen bestimmt:
+Das Laufzeitverhalten wird durch Funktionen bestimmt. Jedes Regulierungsobjekt bietet entsprechende Funktionen an, zum Beispiel das Object *Wage Type* die Funktion *Wage Type Value*. Mit C# Code (Script Expression) wird die Funktion vervollständigt.
+
+Verfügbare Funktionen: 
 <p>
   <img src="Images\Functions.png" style="max-width: 500px" alt="Payroll Regulations">
 </p>
 
-Mittels C# Script wird zu jedem Regulierungobjekt bestimmt, wie sich die Funktion verhält. So hat zum Beispiel das Object *Wage Type* die Funktion *Wage Type Value*, welchen den Wert der Lohnart berechnet.
+> Die Case und Report Funktionen unterstützen lokales Debugging.
 
 <br/>
 
-## Testing Regulations
+## Regulation Tests
 Zu jedem Verarbeitungsschritt, Case Management, Payrun und Report, bestehen autmatisierte Tests:
 <p>
   <img src="Images\PayrollTesting.png" style="max-width: 500px" alt="Payroll Regulations">
 </p>
 
+> Die Payrun Tests erfolgen über mehrere Lohnperioden und eigenen sich als Nachweis für Software-Zertifikation. 
+
+Die Steuerung der Tests erfolgt mit der [Payroll Console](https://github.com/Payroll-Engine/PayrollEngine.PayrollConsole). 
+
 <br/>
 
 ## Deployment
-- NuGet based version control for application binaries and business regulations
+Eine Regulierung besteht aus JSON, C# und Report Dateien, welche als [NuGet](https://www.nuget.org/) Packet verteilt werden. Mit diesem Tool werden die Regulierungen versioneirt und deren Abhängigkeiten aufgelöst.
 
 <br/>
 
