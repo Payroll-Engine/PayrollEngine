@@ -1,10 +1,11 @@
-<h3>Payroll Engine Setup</h3>
+<h1>Payroll Engine Setup</h1>
+
 The following steps describe the installation of the Payroll Engine on the local computer.
 The last step *Start Backend Service* is also necessary during operation.
 
 <br />
 
-# 1 System Rquirements
+## 1 System Rquirements
 The following software components are required to operate the Payroll Engine:
 - Operating system: Windows, Linux or MacOS
 - Microsoft [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
@@ -12,28 +13,29 @@ The following software components are required to operate the Payroll Engine:
 
 <br />
 
-# 2 Clone Repositories
+## 2 Clone Repositories
 The following repositories are to be cloned locally:
-| Repository                          | Inhalt                      | URL |
+| Repository                          | Content                     | URL |
 |--|--|--|
 | *PayrollEngine*                     | Main repository             | https://github.com/Payroll-Engine/PayrollEngine.git |
-| *PayrollEngine.Core*                | Core objects                | https://github.com/Payroll-Engine/PayrollEngine.Core.git |
+| *PayrollEngine.Core*                | Core payroll objects        | https://github.com/Payroll-Engine/PayrollEngine.Core.git |
 | *PayrollEngine.Serilog*             | System logger               | https://github.com/Payroll-Engine/PayrollEngine.Serilog.git |
-| *PayrollEngine.Document*            | Document merge              | https://github.com/Payroll-Engine/PayrollEngine.Document.git |
-| *PayrollEngine.Client.Core*         | Client core objects         | https://github.com/Payroll-Engine/PayrollEngine.Client.Core.git |
+| *PayrollEngine.Document*            | Document/Report generation  | https://github.com/Payroll-Engine/PayrollEngine.Document.git |
+| *PayrollEngine.Client.Core*         | Client core payroll objects | https://github.com/Payroll-Engine/PayrollEngine.Client.Core.git |
 | *PayrollEngine.Test*                | Client test library         | https://github.com/Payroll-Engine/PayrollEngine.Client.Test.git |
 | *PayrollEngine.Client.Scripting*    | Client scripting            | https://github.com/Payroll-Engine/PayrollEngine.Client.Scripting.git |
-| *PayrollEngine.Client.Services*     | Main blient services        | https://github.com/Payroll-Engine/PayrollEngine.Client.Services.git |
+| *PayrollEngine.Client.Services*     | Main client services        | https://github.com/Payroll-Engine/PayrollEngine.Client.Services.git |
 | *PayrollEngine.Backend*             | Backend server              | https://github.com/Payroll-Engine/PayrollEngine.Backend.git |
 | *PayrollEngine.PayrollConsole*      | Console application         | https://github.com/Payroll-Engine/PayrollEngine.PayrollConsole.git |
 | *PayrollEngine.WebApp*              | Web application             | https://github.com/Payroll-Engine/PayrollEngine.WebApp.git |
+<br/>
 
 > Local folder example:<br />Root folder: ***D:\PayrollEngine***<br />Main repo: ***D:\PayrollEngine\PayrollEngine***<br />...
 
 <br /><br />
 
-# 3 Setup System Environment
-## Windows
+## 3 Setup System Environment
+### Windows
 1.	Open the Windows *Control Panel*
 2.	Start *System > Edit environment variables for your account*
 3.	Fromn the group *User variables for..*
@@ -43,11 +45,11 @@ The following repositories are to be cloned locally:
 
     > Example: ***D:\PayrollEngine\PayrollEngine\Batches***
 
-*TODO: Linux and MacOS instructions*
+*ToDo: Linux and MacOS instructions*
 
 <br />
 
-# 4 Setup Database
+## 4 Setup Database
 The tools to setup the Payroll Engine database located in the ***\Database\\{Version}*** directory within the [Payroll Engine Backend Repository].
 
 | Source                   | Commands        |
@@ -62,11 +64,11 @@ The default installation creates the database *PayrollEngine* using integrated s
     "PayrollEngineDatabase": "server=localhost; database=PayrollEngine; Integrated Security=SSPI; Connection Timeout=1000"
 },
 ```
-It is recommended to save the backend settings within your local [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets).
+> It is recommended to save the backend settings within your local [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets).
 
 <br />
 
-# 5 Build Applications
+## 5 Build Applications
 The batch file ***PayrollEngine\Batches\Setup.bat*** is used to build the components and applications of the Payroll Engine.
 <br />
 The setup generates NuGets in the ***PayrollEngine\Packages*** folder and application binaries in the ***PayrollEngine\Bin*** folder.
@@ -75,7 +77,7 @@ The setup generates NuGets in the ***PayrollEngine\Packages*** folder and applic
 
 <br />
 
-# 6 Start Backend Service
+## 6 Start Backend Service
 The backend server is started with the batch ***PayrollEngine\Batches\Backend.Start.bat*** and a console window with the server log appears. With the batch ***PayrollEngine\Batches\Backend.Open.bat*** the Payroll Engine REST endpoints appear in the Swagger browser window.
 
 > The batch ***PayrollEngine\Batches\Test.Payruns.bat*** runs several engine tests. The tests are successful when the console window closes automatically.
@@ -85,7 +87,7 @@ The backend server is started with the batch ***PayrollEngine\Batches\Backend.St
 
 <br />
 
-# 7 Next steps
+## 7 Next steps
 The next steps are:
 - Introduction to the Payroll Engine (white paper)
 - Explore examples: Link

@@ -27,6 +27,6 @@
 "                      | tenants/:id/users/:id                   |                                               | User         | Get user                 |                    | Update user | Delete user |
 "                      | tenants/:id/users/:id/password          |                                               | string       |                          | Test user password <sup>1)</sup> | Update user password | |
 "                      | tenants/:id/users/:id/attributes/:an    |  (an: attribute name)                         | JSON         | Get tenant attribute     | Set user attribute | | Delete user attribute |
-
+<br/>
 
 <sup>1\)</sup> use of POST instead of GET according RFC7231 https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.1
