@@ -1,8 +1,12 @@
-<span style="font-size: 60px">Payroll Engine</span><br />
+<span style="font-size: 3.5em">Payroll Engine</span><br />
 <pspan>Open Global Payroll Engine</span><br /><br />
 
-# 1 Introduction
-Die Payroll Engine ist Backend-Dienst zur Entwicklung individueller Lohnlösungen für skalierbare und landesübergreifende Lohndienste. Die Engine fungiert als neutraler Lohnrechner, welcher durch Regulierung gesteuert wird.
+# Introduction
+Die Payroll Engine ist ein Backend-Dienst zur Entwicklung und Nutzung von branchen- und landesübergreifenden Lohndiensten. Die Engine fungiert als neutraler Lohnrechner, welcher zur Bestimmung der Löhne die Softwarekomponente *Regulierung* voraussetzt.
+
+Die Entwicklung von Regulierung erfolg von technisch versierten Lohnspezialisten. Für diese stellt die Engine verschiedene Anschauensbeispiele und Hilfsmittel zur Verfügung.
+
+Das Systemdesign der Payroll Engine (Domänen-Framework) führt eine strikte Trennung von den Basisdienten zur Payroll-Logik ein. Durch diese Entkoppelung muss die Engine selten geändert werden und das Business kan autonom Lösungen entwickeln. 
 
 **Automatisierung Lohnprozess**<br/>
 Im Fokus der Lösung steht die Automatisierung von Spezialfällen in der Lohnberechnung. Dank einem neuartigen Ansatz werden die lohnrelevanten Informationen vom HR/Mitarbeiter zum Zeitpunkt des Falles bestimmt. Änderungen können rückwirkendend sein und werden in der Zukunft berücksichtigt. 
@@ -37,12 +41,12 @@ Das Projekt kannst du entweder als neues Teammitglied oder mit [Spenden] unterst
 
 <br/>
 
-# 2 Setup Payroll Engine
+# Setup Payroll Engine
 The Payroll Engine runs on Windows, Linux or MacOS. The [Setup Page](Documents/Setup.md) page describes the installation steps.
 
 <br/>
 
-# 3 Usage
+# Usage
 Folgende Anwendungsszenarien werden untestützt:
 - [Entiwcklung von Regulierungen](Documents/RegulationBuild.md)
 - [Integration der REST API](Documents/Integration.md)
@@ -50,13 +54,15 @@ Folgende Anwendungsszenarien werden untestützt:
 
 <br/>
 
-# 4 Ressources
-| Resource                                                                  | Content                                   | Type           |
+# Ressources
+| Resource                                                                               | Content                                           | Type           |
 |--|--|--|
-| [Payroll Engine White Paper](Documents/PayrolEnginelWhitePaper.pdf)       | Technsiche Systembeschreibung             | Manual         |
-| [Payrol Examples]()                                                       | Payroll Beispiele                         | JSON/C# files  |
-| [Payrol Tests]()                                                          | Automatisierte Payroll Tests              | JSON/C# files  |
-| [Repository Map](Documents/PayrollEngineRepositoryMap.pdf)                | Überischt Payroll Engine Repositories     | Manual         |
-| [Software Enginnering](Documents/SoftwareEngineering.md)                  | Community Guidelines                      | Manual         |
-| [Client Development Tutorials](Documents/SoftwareEngineering.md)          | .NET Konsolenbeispiele                    | Repository     |
+| [Payroll Engine White Paper](Documents/PayrolEngineWhitePaper.pdf)                     | Technsiche Systembeschreibung                     | Document       |
+| [Repository Map](Documents/PayrollEngineRepositoryMap.pdf)                             | Überischt der Payroll Engine Repositories         | Manual         |
+| [REST API Endpoints](PayrollRestServicesEndpoints)                                     | Überischt der REST Endpunkte                      | Manual         |
+| [Payroll Examples](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Examples) | Payroll Beispiele                                 | JSON/C# files  |
+| [Payroll Tests](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Tests)       | Automatisierte Payroll Tests                      | JSON/C# files  |
+| [Client Tutorials](https://github.com/Payroll-Engine/PayrollEngine.Client.Tutorials)   | Tutorials for .NET client applications            | Repository     |
+| [Software Enginnering](Documents/SoftwareEngineering.md)                               | Community Guidelines                              | Manual         |
 <br/>
+
