@@ -59,7 +59,7 @@ Folgende Anwendungsszenarien werden untestützt:
 |--|--|--|
 | [Payroll Engine White Paper](Documents/PayrolEngineWhitePaper.pdf)                     | Technsiche Systembeschreibung                     | Document       |
 | [Repository Map](Documents/PayrollEngineRepositoryMap.pdf)                             | Überischt der Payroll Engine Repositories         | Manual         |
-| [REST API Endpoints](PayrollRestServicesEndpoints)                                     | Überischt der REST Endpunkte                      | Manual         |
+| [REST API Endpoints](PayrollRestServicesEndpoints.pdf)                                 | Überischt der REST Endpunkte                      | Manual         |
 | [Payroll Examples](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Examples) | Payroll Beispiele                                 | JSON/C# files  |
 | [Payroll Tests](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Tests)       | Automatisierte Payroll Tests                      | JSON/C# files  |
 | [Client Tutorials](https://github.com/Payroll-Engine/PayrollEngine.Client.Tutorials)   | Tutorials for .NET client applications            | Repository     |
