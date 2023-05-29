@@ -16,10 +16,10 @@ Die Regulierung besteht aus folgenden Objekten:
 
 | Topic  |  Description                   | Objects                                    | Input                  | Output          |
 |--|--|--|--|--|
-| Case   | Daten- und Eingabemodell      | Case<br />Case Field<br />Case Relation             | Case Change<br />Lookups   | Case Values     |
-| Wage   | Lohnabrechnung                | Collector<br />Wage Type                        | Case Values<br />Lookups   | Payroll Results |
+| Case   | Daten- und Eingabemodell      | Case<br />Case Field<br />Case Relation     | Case Change<br />Lookups   | Case Values     |
+| Wage   | Lohnabrechnung                | Collector<br />Wage Type                    | Case Values<br />Lookups   | Payroll Results |
 | Report | Datenauswertung und Austausch | Report<br />Report Parameter<br />Report Template   | Case Values<br />Payroll Results<br />Lookups | Document |
-| Lookup | Fremddaten                    | Lookup<br />Lookup Value                        | Externe Quellen        | Lookup Tables   |
+| Lookup | Fremddaten                    | Lookup<br />Lookup Value                    | Externe Quellen        | Lookup Tables   |
 | Script | Geteilte Funktionalität       | Script                                      |                        | C# Code         |
 <br/>
 

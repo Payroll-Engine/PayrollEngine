@@ -9,7 +9,7 @@ The last step *Start Backend Service* is also necessary during operation.
 The following software components are required to operate the Payroll Engine:
 - Operating system: Windows, Linux or MacOS
 - Microsoft [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
-- Database: Microsoft SQL Server ([Free Express Version](https://www.microsoft.com/en-us/download/details.aspx?id=104781))
+- Database: Microsoft SQL Server ([Express](https://www.microsoft.com/en-us/download/details.aspx?id=104781))
 
 <br />
 
@@ -77,8 +77,8 @@ The setup generates NuGets in the ***PayrollEngine\Packages*** folder and applic
 
 <br />
 
-## 6 Start Backend Service
-The backend server is started with the batch ***PayrollEngine\Batches\Backend.Start.bat*** and a console window with the server log appears. With the batch ***PayrollEngine\Batches\Backend.Open.bat*** the Payroll Engine REST endpoints appear in the Swagger browser window.
+## 6 Start Backend Server
+The backend server is started with the batch ***PayrollEngine\Batches\Backend.Server.bat*** and a console window with the server log appears. With the batch ***PayrollEngine\Batches\Backend.Swagger.bat*** the Payroll Engine REST endpoints appear in the Swagger browser window.
 
 > The batch ***PayrollEngine\Batches\Test.Payruns.bat*** runs several engine tests. The tests are successful when the console window closes automatically.
 
