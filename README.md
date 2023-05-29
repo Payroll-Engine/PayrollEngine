@@ -20,13 +20,13 @@ The Payroll Engine offers the following features:
 | Multi-Country                | Execute payroll in different countries    |
 | Multi-Tenancy                | Host multiple tenants                     |
 | Company Divisions            | Different payrolls within a company       |
-| Multi-Payrun                 | Run multiple payruns in a wage period     |
+| Multi-Payrun                 | Run multiple payruns in a payroll period  |
 | Forecasts                    | Future payroll simulation                 |
 | Case driven model            | Dynamic input workflow                    |
 | Time values                  | View and enter past/future data           |
 | Case Actions                 | No-Code case control                      |
 | [Regulations](Regulation.md) | Component based payroll layers            |
-| Automated Testing            | Payroll Tests over multiple wage periods  |
+| Automated Testing            | Payroll Tests over multiple periods       |
 | Embedded payroll             | Integration to your service through REST  |
 | Scripting API                | Programming the payroll runtime behaviour |
 | Open Source                  | Free for private and commercial use       |
@@ -67,7 +67,7 @@ Three steps are necessary to use the Payroll Engine:
 # Resources
 | Resource                                                                               | Content                                           | Type           |
 |--|--|--|
-| [Repository Map](Documents/PayrollEngineRepositoryMap.pdf)                             | Overview of the Payroll Engine repositories       | Document       |
+| [Payroll Engine GitHub Repositories](Documents/Repositories.md)                               | Overview of the Payroll Engine repositories       | Document       |
 | [REST API Endpoints](Documents/PayrollRestServicesEndpoints.pdf)                       | Overview of the REST endpoints                    | Document       |
 | [Payroll Examples](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Examples) | Payroll examples                                  | JSON/C# files  |
 | [Payroll Tests](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Tests)       | Automated Payroll Tests                           | JSON/C# files  |

@@ -14,7 +14,7 @@ The following software components are required to operate the Payroll Engine:
 <br />
 
 ## 2 Clone Repositories
-The following repositories are to be cloned locally:
+The following [system repositories](Repositories.md) are to be cloned locally:
 | Repository                          | Content                     | URL |
 |--|--|--|
 | *PayrollEngine*                     | Main repository             | https://github.com/Payroll-Engine/PayrollEngine.git |
@@ -80,14 +80,19 @@ The setup generates NuGets in the ***PayrollEngine\Packages*** folder and applic
 ## 6 Start Backend Server
 The backend server is started with the batch ***PayrollEngine\Batches\Backend.Server.bat*** and a console window with the server log appears. With the batch ***PayrollEngine\Batches\Backend.Swagger.bat*** the Payroll Engine REST endpoints appear in the Swagger browser window.
 
-> The batch ***PayrollEngine\Batches\Test.Payruns.bat*** runs several engine tests. The tests are successful when the console window closes automatically.
+> Im Batchmodus läuft das Backend auf dem [Kestrel](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel) web server. Im Gegensatz dazu verwendet Visual Studio [IIS Express](https://learn.microsoft.com/en-us/iis/extensions/introduction-to-iis-express/iis-express-overview).
+
+<br />
+
+## 7 Backend Tests
+The batch ***PayrollEngine\Batches\Test.Payruns.bat*** runs several engine tests. The tests are successful when the console window closes automatically.
 
 <br />
 *Congrats, you are ready to build regulations :=)*
 
 <br />
 
-## 7 Next steps
+## Next steps
 The next steps are:
 - Introduction to the Payroll Engine (white paper)
 - Explore examples: Link
