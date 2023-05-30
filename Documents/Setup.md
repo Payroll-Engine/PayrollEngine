@@ -88,14 +88,14 @@ The backend server is started with the batch ***PayrollEngine\Batches\Backend.Se
 The batch ***PayrollEngine\Batches\Test.Payruns.bat*** runs several engine tests. The tests are successful when the console window closes automatically.
 
 <br />
+
 *Congrats, you are ready to build regulations :=)*
 
 <br />
 
 ## Next steps
 The next steps are:
-- Introduction to the Payroll Engine (white paper)
-- Explore examples: Link
-- Develop regulation: Link
-- REST API Integration: Link
+- [Introduction to the Payroll Engine](PayrolEngineWhitePaper.pdf) (white paper)
+- [Explore examples](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Examples)
+- [Build a regulation](RegulationBuild.md)
 
