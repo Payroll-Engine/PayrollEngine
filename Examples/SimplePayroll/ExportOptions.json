@@ -1,0 +1,19 @@
+{
+    "Users": [],
+    "Divisions": [],
+    "Employees": [],
+    "Tasks": [],
+    "Webhooks": [],
+    "Regulations": [
+		"SimplePayroll"
+	],
+    "Payrolls": [],
+    "Payruns": [],
+    "PayrunJobs": [],
+    "ExportWebhookMessages": false,
+    "ExportGlobalCaseValues": false,
+    "ExportNationalCaseValues": false,
+    "ExportCompanyCaseValues": false,
+    "ExportEmployeeCaseValues": false,
+    "ExportPayrollResults":
+}

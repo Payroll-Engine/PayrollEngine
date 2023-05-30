@@ -1,0 +1,8 @@
+{
+	"TargetLoad": true,
+	"ScriptLoad": true,
+	"CaseDocumentLoad": true,
+	"ReportTemplateLoad": true,
+	"ReportSchemaLoad": true,
+	"LookupValidation": true
+}

@@ -1,1 +1,1 @@
-call PayrollConsole PayrollExport SimplePayroll ..\Exports\SimplePayroll.json
+call PayrollConsole PayrollExport SimplePayroll Exports\SimplePayroll_{timestamp}.json

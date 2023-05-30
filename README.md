@@ -15,7 +15,7 @@ Daraus resultieren folgende Vorteile:
 **Engine Features**<br/>
 The Payroll Engine offers the following features:
 
-| Feature                      | Description                               |
+| Feature                      |                                           |
 |--|--|
 | Multi-Country                | Execute payroll in different countries    |
 | Multi-Tenancy                | Host multiple tenants                     |
@@ -40,34 +40,22 @@ Read the [White Paper](Documents/PayrolEngineWhitePaper.pdf) for deeper insights
 
 <br/>
 
-# Application scenarios
-The Payroll Engine distinguishes between two application scenarios:
-|                                | Business developer                     |  Technical business developer         |
-|--|--|--|
-| Methodology                    | No-Code                                | Low-Code                              |
-| User skills                    |  - Payroll know-how<br />- Basic OO principles like [Inheritance](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming))<br />- Function scripting (Excel like)<br />| - Using [JSON](https://de.wikipedia.org/wiki/JavaScript_Object_Notation)<br /> - Intermediate [C#](https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/) knowledge<br />- [GitHub](https://github.com/) and [NuGet](https://www.nuget.org/) Management |
-| Building Reports <sup>1)</sup> | FastReport Designer ([Community Edition](https://fastreports.github.io/FastReport.Documentation/FastReportDesignerCommunityEdition.html)) | Microsoft [ADO.NET DataSets](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ado-net-datasets)   |
-| Engine tool                    | [Payroll Engine Web Application](https://github.com/Payroll-Engine/PayrollEngine.WebApp) | [Payroll Engine Console Application](https://github.com/Payroll-Engine/PayrollEngine.PayrollConsole)     |
-| Development tool               | *not required*                        | - Visual Studio ([Windows](https://visualstudio.microsoft.com/en/vs/community/), [MacOS](https://visualstudio.microsoft.com/vs/mac/))<br />- Visual Studio Code ([Windows/Linux/MacOS](https://code.visualstudio.com/))  |
-<br/>
-
-<sup>1)</sup> Requires Low-Code development<br/>
-<br/>
 
 # Using the Engine
 The Payroll Engine is a [.NET](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) based application and can be operated on Windows, Linux or MacOS. An SQL server database is required to store the backed data. 
 
-Three steps are necessary to use the Payroll Engine:
+Follow these steps to use the Payroll Engine:
 1. [Setup](Documents/Setup.md) the Payroll Engine system
 2. Build a payroll [Regulation](Documents/RegulationBuild.md)
-3. Manage the employee [Paroll](Documents/Payroll.md)
+3. Tenant [Onboarding](Documents/Onboarding.md)
+4. Manage the employee [Paroll](Documents/Payroll.md)
 
 <br/>
 
 # Resources
-| Resource                                                                               | Content                                           | Type           |
+| Resource                                                                               |                                                   | Type           |
 |--|--|--|
-| [Payroll Engine GitHub Repositories](Documents/Repositories.md)                               | Overview of the Payroll Engine repositories       | Document       |
+| [Payroll Engine GitHub Repositories](Documents/Repositories.md)                        | Overview of the Payroll Engine repositories       | Document       |
 | [REST API Endpoints](Documents/PayrollRestServicesEndpoints.pdf)                       | Overview of the REST endpoints                    | Document       |
 | [Payroll Examples](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Examples) | Payroll examples                                  | JSON/C# files  |
 | [Payroll Tests](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Tests)       | Automated Payroll Tests                           | JSON/C# files  |
