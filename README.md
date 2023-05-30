@@ -44,9 +44,9 @@ Read the [White Paper](Documents/PayrolEngineWhitePaper.pdf) for deeper insights
 The Payroll Engine is a [.NET](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) based application and can be operated on Windows, Linux or MacOS. An SQL server database is required to store the backed data. 
 
 Follow these steps to use the Payroll Engine:
-1. [Setup](Documents/Setup.md) the Payroll Engine system
-2. Build your own [Regulation](Documents/RegulationBuild.md)
-3. Tenant [Onboarding](Documents/Onboarding.md)
+1. [Setup](Documents/Setup.md) the Payroll Engine
+2. [Onboard](Documents/Onboarding.md) your company
+3. Build your own [Regulation](Documents/RegulationBuild.md)
 4. Processing the employee [Payroll](Documents/Payroll.md)
 
 <br/>

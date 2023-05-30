@@ -1,6 +1,6 @@
 # Payroll Engine Regulation Build
 
-## Regulation Builder
+## Regulation Builder User
 The Payroll Engine distinguishes between two application scenarios:
 |                                | Regulation Builder                     |  Regulation Developer         |
 |--|--|--|
