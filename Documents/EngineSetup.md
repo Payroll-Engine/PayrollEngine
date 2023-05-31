@@ -1,4 +1,4 @@
-<h1>Payroll Engine Installation</h1>
+<h1>Payroll Engine Setup</h1>
 
 The following steps describe the installation of the Payroll Engine on the local computer.
 The last step *Start Backend Service* is also necessary during operation.
@@ -41,7 +41,7 @@ The following [system repositories](Repositories.md) are to be cloned locally:
 3.	Fromn the group *User variables for..*
     - Existing: select existing Variable *Path* and start *Edit*
     - New: start *New..* and add the Variable *Path*
-4.	Add environment variable withe the *\Commands* folder of the backend repository<br />
+4.	Add environment variable withe the *\Commnands* folder of the backend repository<br />
 
     > Example: ***D:\PayrollEngine\PayrollEngine\Commands***
 

@@ -1,22 +1,22 @@
-# Payroll Engine Company Onboarding
+# Payroll Engine Company Setup
 
-Das Onboading kann auf verschiedene Weisen erfolgen:
+Die Firmen kann auf verschiedene Weisen eingerichtet werden:
 - Interaktiv in der Web Applikation
 - Im Konsolemodus mit mit der Payroll Console
 - Rest API Requests z.B. mit Postman
 
-Im folgenden wird das Onboarding mit der Konsolemodus beschrieben.
+Im folgenden wird das Setup mit der Konsolemodus beschrieben.
 
 ## Vorbereitung 
 - Der Payroll Backend Server ist gestartet [Setup](Setup.md)
 - Für das Onbaording in der Web Applikation
     -Laufender [Applikations-Server](https://github.com/Payroll-Engine/PayrollEngine.WebApp) werden 
 - Für das Onbaording mit der Konsoleapplikation
-    - Zugriff auf das Payroll Exchange [Json Schema](https://github.com/Payroll-Engine/PayrollEngine/blob/main/Schemas/PayrollEngine.Exchange.schema.json)
-    - Json Editor, z.B. [Visual Studio Code](https://code.visualstudio.com/)
+    - Zugriff auf das Payroll Exchange [JSON Schema](https://github.com/Payroll-Engine/PayrollEngine/blob/main/Schemas/PayrollEngine.Exchange.schema.json)
+    - JSON Editor, z.B. [Visual Studio Code](https://code.visualstudio.com/)
 
 Das Company Onboarding erfolgt in folgenden Schritten:
-| Step                   | Json lines | Web Application feature        | REST web method      |
+| Step                   | JSON lines | Web Application feature        | REST web method      |
 |--|--|--|--|
 | Add Tenant             | #04 - #05  | Tenants > Add                  | *CreateTenant*       |
 | Add User               | #06 - #13  | Users > Add                    | *CreateUser*         |
@@ -27,8 +27,8 @@ Das Company Onboarding erfolgt in folgenden Schritten:
 | Add Payrun             | #50 - #55  | Payruns > Add                  | *CreatePayrun*       |
 <br />
 
-## Company Json
-Zu kontrollierten Erfassung der Json Daten hilft das Json-Schema
+## Company JSON
+Zu konfortablen Erfassung der Firmendaten dient das JSON-Schema
 ```
 PayrollEngine.Exchange.schema.json
 ```

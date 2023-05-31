@@ -88,7 +88,7 @@ PayrollEngine\Commands\Backend.Swagger.cmd
 ```
 the Payroll Engine REST endpoints appear in the Swagger browser window.
 
-> Im Kommandomodus läuft das Backend auf dem [Kestrel](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel) web server. Im Gegensatz dazu verwendet Visual Studio [IIS Express](https://learn.microsoft.com/en-us/iis/extensions/introduction-to-iis-express/iis-express-overview).
+> Im Kommnadohmodus läuft das Backend auf dem [Kestrel](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel) web server. Im Gegensatz dazu verwendet Visual Studio [IIS Express](https://learn.microsoft.com/en-us/iis/extensions/introduction-to-iis-express/iis-express-overview).
 
 <br />
 
