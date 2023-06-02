@@ -1465,6 +1465,19 @@
                   }
                 }
               ]
+            },
+            {
+              "name": "OverrideInactive",
+              "description": "This case should not be selectable",
+              "caseType": "Employee",
+              "overrideType": "Inactive",
+              "fields": [
+                {
+                  "name": "OverrideInactive",
+                  "valueType": "Decimal",
+                  "timeType": "Period"
+                }
+              ]
             }
           ],
           "scripts": [

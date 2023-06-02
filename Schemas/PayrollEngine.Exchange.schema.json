@@ -3966,7 +3966,6 @@
           "description": "The case document client object",
           "required": [
             "name",
-            "content",
             "contentType"
           ],
           "properties": {
@@ -3976,9 +3975,11 @@
               "minLength": 1
             },
             "content": {
-              "type": "string",
-              "description": "The document content",
-              "minLength": 1
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The document content"
             },
             "contentFile": {
               "type": [

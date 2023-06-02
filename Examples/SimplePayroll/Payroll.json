@@ -207,7 +207,7 @@
           ],
           "cases": [
             {
-              "name": "Employee Profile",
+              "name": "EmployeeProfile",
               "description": "Employee Profile Test",
               "caseType": "Employee",
               "defaultReason": "Test Employee Profile",
