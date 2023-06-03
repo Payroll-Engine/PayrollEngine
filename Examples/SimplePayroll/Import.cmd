@@ -1,1 +1,1 @@
-call PayrollConsole PayrollImport Payroll.json
+call PayrollConsole PayrollImport Payroll.json optionsFileName:ImportOptions.json
