@@ -10,7 +10,7 @@
           "identifier": "peter.schmid@foo.com",
           "firstName": "Peter",
           "lastName": "Schmid",
-          "supervisor": true,
+          "userType": "Supervisor",
           "created": "2019-01-01T00:00:00.0Z"
         }
       ],

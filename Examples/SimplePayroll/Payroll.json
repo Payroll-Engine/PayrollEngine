@@ -36,7 +36,7 @@
           "firstName": "Peter",
           "lastName": "Schmid",
           "culture": "de-CH",
-          "supervisor": true,
+          "userType": "Supervisor",
           "attributes": {
             "ErpId": "C52F4DB2-A677-4BFC-9E5C-A4713A2532F5",
             "StartupPayroll": "SimplePayroll.Derived1",
@@ -101,6 +101,18 @@
             "ErpId": "AB28440A-6D32-4B67-8820-1049D9CB98BC",
             "StartupPayroll": "SimplePayroll.Derived1",
             "StartupEmployee": "višnja.müller@foo.com",
+            "StartupPage": "employeecases"
+          }
+        },
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "culture": "de-CH",
+          "userType": "Employee",
+          "attributes": {
+            "ErpId": "G35TB5AA-257R-4DFC-5886-ZF28FD86791B",
+            "StartupPayroll": "SimplePayroll.Derived1",
             "StartupPage": "employeecases"
           }
         }

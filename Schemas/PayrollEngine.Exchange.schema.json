@@ -275,9 +275,13 @@
                 }
               ]
             },
-            "supervisor": {
-              "type": "boolean",
-              "description": "Supervisor user"
+            "userType": {
+              "description": "The user type",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/UserType"
+                }
+              ]
             },
             "attributes": {
               "type": [
@@ -393,6 +397,20 @@
         "Uzbek",
         "Vietnamese",
         "Chinese"
+      ]
+    },
+    "UserType": {
+      "type": "string",
+      "description": "The type of the user",
+      "x-enumNames": [
+        "Regular",
+        "Employee",
+        "Supervisor"
+      ],
+      "enum": [
+        "Regular",
+        "Employee",
+        "Supervisor"
       ]
     },
     "Model": {

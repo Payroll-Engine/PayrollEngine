@@ -10,7 +10,7 @@
           "firstName": "Peter",
           "lastName": "Schmid",
           "language": "English",
-          "supervisor": true,
+          "userType": "Supervisor",
           "attributes": {
             "StartupPayroll": "CaseMapPayroll",
             "StartupEmployee": "višnja.müller@foo.com",

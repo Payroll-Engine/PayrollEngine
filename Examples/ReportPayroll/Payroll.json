@@ -9,7 +9,7 @@
           "identifier": "peter.schmid@foo.com",
           "firstName": "Peter",
           "lastName": "Schmid",
-          "supervisor": true
+          "userType": "Supervisor"
         }
       ],
       "divisions": [
