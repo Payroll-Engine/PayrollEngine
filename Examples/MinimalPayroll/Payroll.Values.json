@@ -1,0 +1,70 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "MinimalPayroll",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "MinimalPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "MinimalDivision",
+              "reason": "New entry",
+              "case": {
+                "caseName": "MonthlyWage",
+                "values": [
+                  {
+                    "caseFieldName": "MonthlyWage",
+                    "value": "5000.2735",
+                    "start": "2023-02-01T00:00:00.0Z",
+                    "created": "2023-01-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "MinimalDivision",
+              "reason": "Salary increase",
+              "case": {
+                "caseName": "MonthlyWage",
+                "values": [
+                  {
+                    "caseFieldName": "MonthlyWage",
+                    "value": "5500.3735",
+                    "start": "2023-06-01T00:00:00.0Z",
+                    "created": "2023-04-22T09:18:14.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "MinimalDivision",
+              "reason": "Project A",
+              "case": {
+                "caseName": "MonthlyWage",
+                "values": [
+                  {
+                    "caseFieldName": "MonthlyWage",
+                    "value": "6500.4735",
+                    "start": "2023-09-01T00:00:00.0Z",
+                    "end": "2023-01-31T00:00:00.0Z",
+                    "created": "2023-07-03T14:58:34.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

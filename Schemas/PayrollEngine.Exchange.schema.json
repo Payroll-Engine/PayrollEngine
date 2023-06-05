@@ -492,7 +492,8 @@
           "type": "object",
           "description": "The payroll division client object",
           "required": [
-            "name"
+            "name",
+            "culture"
           ],
           "properties": {
             "name": {
@@ -512,10 +513,7 @@
               }
             },
             "culture": {
-              "type": [
-                "null",
-                "string"
-              ],
+              "type": "string",
               "description": "The culture including the calendar, fallback for employee culture",
               "maxLength": 128,
               "minLength": 0
@@ -3766,7 +3764,6 @@
           "description": "The payroll layer client object",
           "required": [
             "level",
-            "priority",
             "regulationName"
           ],
           "properties": {
@@ -3777,7 +3774,7 @@
             },
             "priority": {
               "type": "integer",
-              "description": "The layer priority",
+              "description": "The layer priority (default: 1)",
               "format": "int32"
             },
             "regulationName": {
@@ -4585,16 +4582,6 @@
             }
           ]
         },
-        "workingDays": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "description": "The working days",
-          "items": {
-            "$ref": "#/definitions/DayOfWeek"
-          }
-        },
         "averageMonthDays": {
           "type": "number",
           "description": "Average month days",
@@ -4628,6 +4615,16 @@
               "$ref": "#/definitions/DayOfWeek"
             }
           ]
+        },
+        "workingDays": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The working days",
+          "items": {
+            "$ref": "#/definitions/DayOfWeek"
+          }
         }
       }
     },
@@ -4663,6 +4660,20 @@
         "December"
       ]
     },
+    "CalendarWeekRule": {
+      "type": "string",
+      "description": "Defines different rules for determining the first week of the year",
+      "x-enumNames": [
+        "FirstDay",
+        "FirstFullWeek",
+        "FirstFourDayWeek"
+      ],
+      "enum": [
+        "FirstDay",
+        "FirstFullWeek",
+        "FirstFourDayWeek"
+      ]
+    },
     "DayOfWeek": {
       "type": "string",
       "description": "Specifies the day of the week",
@@ -4683,20 +4694,6 @@
         "Thursday",
         "Friday",
         "Saturday"
-      ]
-    },
-    "CalendarWeekRule": {
-      "type": "string",
-      "description": "Defines different rules for determining the first week of the year",
-      "x-enumNames": [
-        "FirstDay",
-        "FirstFullWeek",
-        "FirstFourDayWeek"
-      ],
-      "enum": [
-        "FirstDay",
-        "FirstFullWeek",
-        "FirstFourDayWeek"
       ]
     },
     "PayrunParameter": {
@@ -5145,7 +5142,6 @@
       "required": [
         "name",
         "payrunName",
-        "payrollName",
         "userIdentifier",
         "periodStart",
         "reason"
@@ -5171,16 +5167,6 @@
         "payrunName": {
           "type": "string",
           "description": "The payrun name (immutable)",
-          "minLength": 1
-        },
-        "payrollId": {
-          "type": "integer",
-          "description": "The payroll id (immutable)",
-          "format": "int32"
-        },
-        "payrollName": {
-          "type": "string",
-          "description": "The payroll name (immutable)",
           "minLength": 1
         },
         "userId": {
@@ -6037,7 +6023,7 @@
               "minLength": 0
             },
             "calendar": {
-              "description": "The default/fallback calendar",
+              "description": "The tenant calendar, fallback is the default calendar",
               "oneOf": [
                 {
                   "type": "null"

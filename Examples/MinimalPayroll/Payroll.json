@@ -1,0 +1,105 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "MinimalPayroll",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "language": "German"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "MinimalDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "MinimalDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "MinimalRegulation",
+          "cases": [
+            {
+              "name": "MonthlyWage",
+              "nameLocalizations": {
+                "en": "Monthly wage",
+                "de": "Monatslohn"
+              },
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "MonthlyWage",
+                  "nameLocalizations": {
+                    "en": "Monthly wage",
+                    "de": "Monatslohn"
+                  },
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod"
+                }
+              ]
+            },
+            {
+              "name": "RiskBonus",
+              "nameLocalizations": {
+                "en": "Risk bonus",
+                "de": "Risikobonus"
+              },
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "RiskBonus",
+                  "nameLocalizations": {
+                    "en": "Risk bonus",
+                    "de": "Risikobonus"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Wage",
+              "nameLocalizations": {
+                "de": "Lohn"
+              },
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"RiskBonus\"); return (values[\"MonthlyWage\"] + (values[\"MonthlyWage\"] * values[\"RiskBonus\"])).ToDecimal(DecimalRounding.Twentieth);"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "MinimalPayroll",
+          "divisionName": "MinimalDivision",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "MinimalRegulation"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "MinimalPayrun",
+          "payrollName": "MinimalPayroll"
+        }
+      ]
+    }
+  ]
+}

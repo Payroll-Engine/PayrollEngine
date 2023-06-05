@@ -1,0 +1,47 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "MinimalPayroll",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "MinimalPayrunJob.Feb23",
+          "payrunName": "MinimalPayrun",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2023-02-01T00:00:00.0Z",
+          "evaluationDate": "2020-03-28T00:00:00.0Z",
+          "reason": "Payrun Februar 2023"
+        },
+        {
+          "name": "MinimalPayrunJob.Jun23",
+          "payrunName": "MinimalPayrun",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2023-06-01T00:00:00.0Z",
+          "evaluationDate": "2020-06-30T00:00:00.0Z",
+          "reason": "Payrun June 2023"
+        },
+        {
+          "name": "MinimalPayrunJob.Sep23",
+          "payrunName": "MinimalPayrun",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2023-09-01T00:00:00.0Z",
+          "evaluationDate": "2020-09-30T00:00:00.0Z",
+          "reason": "Payrun Septmeber 2023"
+        },
+        {
+          "name": "MinimalPayrunJob.Nov23",
+          "payrunName": "MinimalPayrun",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2023-11-01T00:00:00.0Z",
+          "evaluationDate": "2020-11-30T00:00:00.0Z",
+          "reason": "Payrun November 2023"
+        }
+      ]
+    }
+  ]
+}
