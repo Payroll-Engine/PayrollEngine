@@ -86,12 +86,7 @@
               "nameLocalizations": {
                 "de": "Lohn"
               },
-              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"RiskBonus\"); return (decimal)values[\"MonthlyWage\"] + (values[\"MonthlyWage\"] * values[\"RiskBonus\"]);"
-            },
-            {
-              "wageTypeNumber": 101,
-              "name": "Wage 1",
-              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"RiskBonus\"); return (values[\"MonthlyWage\"] * values[\"RiskBonus\"]).ToDecimal()"
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"RiskBonus\"); decimal baseWage = values[\"MonthlyWage\"]; return baseWage + (values[\"MonthlyWage\"] * values[\"RiskBonus\"]);"
             }
           ]
         }

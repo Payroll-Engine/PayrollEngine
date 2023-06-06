@@ -1281,6 +1281,14 @@
                 }
               ]
             },
+            "periodAggregation": {
+              "description": "The period aggregation type for Period",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/CaseFieldAggregationType"
+                }
+              ]
+            },
             "overrideType": {
               "description": "The override type",
               "oneOf": [
@@ -1465,6 +1473,20 @@
         "Day",
         "HalfDay",
         "Month"
+      ]
+    },
+    "CaseFieldAggregationType": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Summary",
+        "First",
+        "Last"
+      ],
+      "enum": [
+        "Summary",
+        "First",
+        "Last"
       ]
     },
     "OverrideType": {
