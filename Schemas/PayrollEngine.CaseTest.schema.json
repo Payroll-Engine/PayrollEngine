@@ -1480,13 +1480,13 @@
       "description": "",
       "x-enumNames": [
         "Summary",
-        "First",
-        "Last"
+        "Last",
+        "First"
       ],
       "enum": [
         "Summary",
-        "First",
-        "Last"
+        "Last",
+        "First"
       ]
     },
     "OverrideType": {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using PayrollEngine.Client.Scripting;
 using PayrollEngine.Client.Scripting.Runtime;
 using PayrollEngine.Client.Scripting.Report;
 using Date = PayrollEngine.Client.Scripting.Date;
-using System.Globalization;
-// ReSharper disable UnusedType.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 // ReSharper disable once CheckNamespace

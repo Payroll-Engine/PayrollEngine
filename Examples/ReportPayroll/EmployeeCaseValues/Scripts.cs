@@ -6,6 +6,7 @@ using System.Text.Json;
 using PayrollEngine.Client.Scripting;
 using PayrollEngine.Client.Scripting.Function;
 using PayrollEngine.Client.Scripting.Report;
+// ReSharper disable StringLiteralTypo
 
 // ReSharper disable once CheckNamespace
 namespace ReportPayroll.EmployeeCaseValues;

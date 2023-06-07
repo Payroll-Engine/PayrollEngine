@@ -1327,13 +1327,13 @@
       "description": "Aggregation type for a period case field Period",
       "x-enumNames": [
         "Summary",
-        "First",
-        "Last"
+        "Last",
+        "First"
       ],
       "enum": [
         "Summary",
-        "First",
-        "Last"
+        "Last",
+        "First"
       ]
     },
     "OverrideType": {
