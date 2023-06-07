@@ -1,0 +1,295 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Aggregation.Test",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "Aggregation.Division",
+          "culture": "de-CH"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Aggregation.Test",
+          "description": "The Aggregation testing payroll",
+          "cases": [
+            {
+              "name": "AggregationTypes",
+              "description": "Aggregation Types",
+              "caseType": "Employee",
+              "AggregationType": "Case",
+              "defaultReason": "Test Aggregation types",
+              "fields": [
+                {
+                  "name": "AggregationSummary",
+                  "description": "PeriodAggregation=Summary",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "periodAggregation": "Summary"
+                },
+                {
+                  "name": "AggregationLast",
+                  "description": "PeriodAggregation=Last",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "periodAggregation": "Last"
+                },
+                {
+                  "name": "AggregationFirst",
+                  "description": "PeriodAggregation=First",
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "periodAggregation": "First"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101.1,
+              "name": "AggregationSummary",
+              "valueExpression": "GetCaseValue(\"AggregationSummary\")"
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "name": "AggregationLast",
+              "valueExpression": "GetCaseValue(\"AggregationLast\")"
+            },
+            {
+              "wageTypeNumber": 101.3,
+              "name": "AggregationFirst",
+              "valueExpression": "GetCaseValue(\"AggregationFirst\")"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "divisions": [
+            "Aggregation.Division"
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Aggregation.Test.Derived",
+          "divisionName": "Aggregation.Division",
+          "calendarCalculationMode": "MonthCalendarDay",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Aggregation.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2018-12-01T17:31:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationSummary",
+                    "value": "5000",
+                    "start": "2019-01-04T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2018-12-02T17:31:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationSummary",
+                    "value": "6000",
+                    "start": "2019-01-14T00:00:00.0Z",
+                    "created": "2019-01-02T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2018-12-03T17:31:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationSummary",
+                    "value": "7000",
+                    "start": "2019-01-24T00:00:00.0Z",
+                    "created": "2019-01-03T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-01-01T18:25:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationLast",
+                    "value": "2000",
+                    "start": "2019-01-04T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-01-02T18:25:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationLast",
+                    "value": "3000",
+                    "start": "2019-01-14T00:00:00.0Z",
+                    "created": "2019-01-02T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-03-01T18:25:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationLast",
+                    "value": "4000",
+                    "start": "2019-01-24T00:00:00.0Z",
+                    "created": "2019-01-03T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-01-01T18:25:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationFirst",
+                    "value": "8000",
+                    "start": "2019-01-04T00:00:00.0Z",
+                    "created": "2019-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-02-01T18:25:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationFirst",
+                    "value": "9000",
+                    "start": "2019-01-14T00:00:00.0Z",
+                    "created": "2019-01-02T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "divisionName": "Aggregation.Division",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "created": "2019-01-03T18:25:00.0Z",
+              "case": {
+                "caseName": "AggregationTypes",
+                "values": [
+                  {
+                    "caseFieldName": "AggregationFirst",
+                    "value": "10000",
+                    "start": "2019-01-24T00:00:00.0Z",
+                    "created": "2019-01-03T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Aggregation.Test.Derived",
+          "name": "Aggregation.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Aggregation.TestPayrun1.Jan19",
+          "payrunName": "Aggregation.TestPayrun1",
+          "payrollName": "Aggregation.Test.Derived",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Aggregation.TestPayrun1.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101.1,
+              "value": 18000
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "value": 4000
+            },
+            {
+              "wageTypeNumber": 101.3,
+              "value": 8000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
