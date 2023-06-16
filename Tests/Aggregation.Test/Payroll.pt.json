@@ -86,7 +86,6 @@
         {
           "name": "Aggregation.Test.Derived",
           "divisionName": "Aggregation.Division",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

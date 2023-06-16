@@ -89,7 +89,6 @@
         {
           "name": "RetroManualPayroll",
           "divisionName": "RetroManualDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

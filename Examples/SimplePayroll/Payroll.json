@@ -4,21 +4,6 @@
   "tenants": [
     {
       "identifier": "SimplePayroll",
-      "calendar": {
-        "firstMonthOfYear": "January",
-        "averageMonthDays": 30,
-        "averageWorkDays": 21.75,
-        "calculationMode": "MonthCalendarDay",
-        "calendarWeekRule": "FirstFourDayWeek",
-        "firstDayOfWeek": "Monday",
-        "workingDays": [
-          "Monday",
-          "Tuesday",
-          "Thursday",
-          "Wednesday",
-          "Friday"
-        ]
-      },
       "attributes": {
         "ErpId": "3CDBE5C7-A317-4942-8070-7CBC04A5BB70",
         "grid.TenantsGrid": "[{\"Attribute\":\"ErpId\",\"Header\":\"Erp Id\",\"ValueType\":\"String\"}]",
@@ -1010,7 +995,7 @@
               "wageTypeNumber": 101.5,
               "name": "Monatslohn.WorkDay",
               "periodValues": true,
-              "calendarCalculationMode": "MonthAverageWorkDay",
+              "calendar": "MonthAverageWorkDay",
               "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]"
             },
             {
@@ -1119,7 +1104,6 @@
         {
           "name": "SimplePayroll.Derived1",
           "divisionName": "SimpleDivision1",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,
@@ -1149,7 +1133,7 @@
         {
           "name": "SimplePayroll.Derived2",
           "divisionName": "SimpleDivision2",
-          "calendarCalculationMode": "MonthCalendarDay",
+          "calendar": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

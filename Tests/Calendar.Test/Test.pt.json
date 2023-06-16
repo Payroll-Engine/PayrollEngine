@@ -1,0 +1,201 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2018-11-05T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Calendar.Test",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "calendars": [
+        {
+          "name": "YearlySalary",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "CalendarMonth",
+          "timeMap": "Cycle"
+        },
+        {
+          "name": "MonthlySalary",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "CalendarMonth",
+          "timeMap": "Period"
+        }
+      ],
+      "culture": "en-US",
+      "calendar": "YearlySalary",
+      "divisions": [
+        {
+          "name": "Calendar.Test",
+          "culture": "en-US"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Calendar.Test",
+          "description": "The testing payroll",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Salary",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "culture": "en-US",
+          "calendar": "YearlySalary",
+          "divisions": [
+            "Calendar.Test"
+          ]
+        },
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "culture": "de-CH",
+          "calendar": "MonthlySalary",
+          "divisions": [
+            "Calendar.Test"
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Calendar.Test",
+          "divisionName": "Calendar.Test",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "Calendar.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "Calendar.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "60000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "divisionName": "Calendar.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Calendar.Test",
+          "name": "Calendar.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Calendar.TestPayrun1.Jan19",
+          "payrunName": "Calendar.TestPayrun1",
+          "payrollName": "Calendar.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        },
+        {
+          "name": "Calendar.TestPayrun1.Dez19",
+          "payrunName": "Calendar.TestPayrun1",
+          "payrollName": "Calendar.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-12-01T00:00:00.0Z",
+          "evaluationDate": "2020-01-01T00:00:00.0Z",
+          "reason": "Demo Payrun Dez 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Calendar.TestPayrun1.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Calendar.TestPayrun1.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 4800
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Calendar.TestPayrun1.Dez19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Calendar.TestPayrun1.Dez19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 4800
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -144,7 +144,6 @@
         {
           "name": "RetroPayroll",
           "divisionName": "RetroDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

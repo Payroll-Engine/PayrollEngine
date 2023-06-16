@@ -357,7 +357,6 @@
         {
           "name": "Employee.Test",
           "divisionName": "TestDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

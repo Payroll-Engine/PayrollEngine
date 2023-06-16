@@ -454,7 +454,6 @@
         {
           "name": "Payroll.Test.Derived",
           "divisionName": "TestDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

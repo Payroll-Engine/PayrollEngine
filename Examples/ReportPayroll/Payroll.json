@@ -366,7 +366,6 @@
         {
           "name": "Payroll.Report",
           "divisionName": "Payroll.Report",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

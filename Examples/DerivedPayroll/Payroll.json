@@ -367,7 +367,6 @@
         {
           "name": "DerivedPayroll.Derived",
           "divisionName": "DerivedDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

@@ -49,7 +49,6 @@
         {
           "name": "WageTypeRestart.Test.Derived",
           "divisionName": "TestDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

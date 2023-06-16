@@ -80,7 +80,6 @@
         {
           "name": "VersionPayroll.Test",
           "divisionName": "TestVersionDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

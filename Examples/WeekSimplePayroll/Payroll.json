@@ -1,9 +1,8 @@
 {
-  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
       "identifier": "WeekSimplePayroll",
-      "calendarCalculationMode": "WeekCalendarDay",
       "created": "2019-01-01T00:00:00.0Z",
       "users": [
         {
@@ -14,6 +13,14 @@
           "created": "2019-01-01T00:00:00.0Z"
         }
       ],
+      "calendars": [
+        {
+          "name": "WeekCalendar",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "Week"
+        }
+      ],
+      "calendar": "WeekCalendar",
       "divisions": [
         {
           "name": "WeekSimpleDivision",
@@ -160,7 +167,7 @@
       ],
       "payrolls": [
         {
-          "name": "WeekSimplePayroll.Derived",
+          "name": "WeekSimplePayroll",
           "divisionName": "WeekSimpleDivision",
           "layers": [
             {
@@ -173,7 +180,7 @@
       ],
       "payruns": [
         {
-          "payrollName": "WeekSimplePayroll.Derived",
+          "payrollName": "WeekSimplePayroll",
           "name": "WeekSimplePayrollPayrun1"
         }
       ]

@@ -6,7 +6,7 @@
       "updateMode": "NoUpdate",
       "payrolls": [
         {
-          "name": "WeekSimplePayroll.Derived",
+          "name": "WeekSimplePayroll",
           "updateMode": "NoUpdate",
           "cases": [
             {

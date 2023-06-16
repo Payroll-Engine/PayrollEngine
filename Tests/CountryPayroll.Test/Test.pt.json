@@ -142,7 +142,6 @@
         {
           "name": "CountryPayroll.Test.Derived",
           "divisionName": "TestDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

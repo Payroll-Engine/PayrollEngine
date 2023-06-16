@@ -208,7 +208,6 @@
           "name": "CaseMapPayroll",
           "description": "Case Map payroll",
           "divisionName": "CaseMapDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

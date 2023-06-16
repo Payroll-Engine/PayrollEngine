@@ -85,7 +85,6 @@
         {
           "name": "CaseTestPayroll",
           "divisionName": "CaseTestDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

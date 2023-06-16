@@ -190,7 +190,6 @@
         {
           "name": "DerivedPayroll.Test.Derived",
           "divisionName": "TestDerivedDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

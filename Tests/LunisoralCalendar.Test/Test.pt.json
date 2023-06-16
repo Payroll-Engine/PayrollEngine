@@ -1,0 +1,201 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2018-11-05T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "LunisoralCalendar.Test",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "calendars": [
+        {
+          "name": "YearlySalary",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "LunisolarMonth",
+          "timeMap": "Cycle"
+        },
+        {
+          "name": "MonthlySalary",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "LunisolarMonth",
+          "timeMap": "Period"
+        }
+      ],
+      "culture": "en-US",
+      "calendar": "YearlySalary",
+      "divisions": [
+        {
+          "name": "LunisoralCalendar.Test",
+          "culture": "en-US"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "LunisoralCalendar.Test",
+          "description": "The testing payroll",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "ScaledPeriod"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Salary",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "culture": "en-US",
+          "calendar": "YearlySalary",
+          "divisions": [
+            "LunisoralCalendar.Test"
+          ]
+        },
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "culture": "de-CH",
+          "calendar": "MonthlySalary",
+          "divisions": [
+            "LunisoralCalendar.Test"
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "LunisoralCalendar.Test",
+          "divisionName": "LunisoralCalendar.Test",
+          "clusterSetCaseValue": "*",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "LunisoralCalendar.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "LunisoralCalendar.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "74100",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "divisionName": "LunisoralCalendar.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6200",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "LunisoralCalendar.Test",
+          "name": "LunisoralCalendar.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "LunisoralCalendar.TestPayrun1.Jan19",
+          "payrunName": "LunisoralCalendar.TestPayrun1",
+          "payrollName": "LunisoralCalendar.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        },
+        {
+          "name": "LunisoralCalendar.TestPayrun1.Dez19",
+          "payrunName": "LunisoralCalendar.TestPayrun1",
+          "payrollName": "LunisoralCalendar.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-12-01T00:00:00.0Z",
+          "evaluationDate": "2020-01-01T00:00:00.0Z",
+          "reason": "Demo Payrun Dez 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "LunisoralCalendar.TestPayrun1.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5700
+            }
+          ]
+        },
+        {
+          "payrunJobName": "LunisoralCalendar.TestPayrun1.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 6200
+            }
+          ]
+        },
+        {
+          "payrunJobName": "LunisoralCalendar.TestPayrun1.Dez19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5700
+            }
+          ]
+        },
+        {
+          "payrunJobName": "LunisoralCalendar.TestPayrun1.Dez19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 6200
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

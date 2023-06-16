@@ -1620,7 +1620,6 @@
           "name": "CaseDefPayroll.Derived",
           "description": "Case Definition derived payroll",
           "divisionName": "CaseDefDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

@@ -194,7 +194,6 @@
         {
           "name": "Cancellation.Test.Derived",
           "divisionName": "TestDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "clusterSetCaseValue": "*",
           "layers": [
             {

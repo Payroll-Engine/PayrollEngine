@@ -104,7 +104,6 @@
         {
           "name": "Namespace.Payroll",
           "divisionName": "Namespace.Division",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

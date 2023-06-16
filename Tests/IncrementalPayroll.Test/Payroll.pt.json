@@ -49,7 +49,6 @@
         {
           "name": "IncrementalPayroll.Test",
           "divisionName": "TestIncrementalDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,

@@ -53,6 +53,16 @@
                 "$ref": "#/definitions/User"
               }
             },
+            "calendars": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The tenant calendars",
+              "items": {
+                "$ref": "#/definitions/Calendar"
+              }
+            },
             "divisions": {
               "type": [
                 "array",
@@ -483,6 +493,267 @@
         "NoUpdate"
       ]
     },
+    "Calendar": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Model"
+        },
+        {
+          "type": "object",
+          "description": "The payroll calendar client object",
+          "required": [
+            "name",
+            "cycleTimeUnit",
+            "periodTimeUnit"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The division name",
+              "maxLength": 128,
+              "minLength": 0
+            },
+            "nameLocalizations": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "The localized division names",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "cycleTimeUnit": {
+              "description": "The cycle time unit",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/CalendarTimeUnit"
+                }
+              ]
+            },
+            "periodTimeUnit": {
+              "description": "The period time unit",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/CalendarTimeUnit"
+                }
+              ]
+            },
+            "timeMap": {
+              "description": "The time map",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/CalendarTimeMap"
+                }
+              ]
+            },
+            "firstMonthOfYear": {
+              "description": "The first month of a year",
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/Month"
+                }
+              ]
+            },
+            "monthDayCount": {
+              "type": [
+                "null",
+                "number"
+              ],
+              "description": "Override the effective month day count",
+              "format": "decimal"
+            },
+            "yearWeekRule": {
+              "description": "Override the calendar year start week rule",
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/CalendarWeekRule"
+                }
+              ]
+            },
+            "firstDayOfWeek": {
+              "description": "Override the calendar first day of week",
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/DayOfWeek"
+                }
+              ]
+            },
+            "weekMode": {
+              "description": "The week mode (default: week)",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/CalendarWeekMode"
+                }
+              ]
+            },
+            "workMonday": {
+              "type": "boolean",
+              "description": "Work on monday"
+            },
+            "workTuesday": {
+              "type": "boolean",
+              "description": "Work on tuesday"
+            },
+            "workWednesday": {
+              "type": "boolean",
+              "description": "Work on wednesday"
+            },
+            "workThursday": {
+              "type": "boolean",
+              "description": "Work on thursday"
+            },
+            "workFriday": {
+              "type": "boolean",
+              "description": "Work on friday"
+            },
+            "workSaturday": {
+              "type": "boolean",
+              "description": "Work on saturday"
+            },
+            "workSunday": {
+              "type": "boolean",
+              "description": "Work on sunday"
+            },
+            "attributes": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "Custom attributes",
+              "additionalProperties": {}
+            }
+          }
+        }
+      ]
+    },
+    "CalendarTimeUnit": {
+      "type": "string",
+      "description": "The calendar time unit",
+      "x-enumNames": [
+        "Year",
+        "SemiYear",
+        "Quarter",
+        "BiMonth",
+        "CalendarMonth",
+        "LunisolarMonth",
+        "SemiMonth",
+        "BiWeek",
+        "Week"
+      ],
+      "enum": [
+        "Year",
+        "SemiYear",
+        "Quarter",
+        "BiMonth",
+        "CalendarMonth",
+        "LunisolarMonth",
+        "SemiMonth",
+        "BiWeek",
+        "Week"
+      ]
+    },
+    "CalendarTimeMap": {
+      "type": "string",
+      "description": "The calendar time map",
+      "x-enumNames": [
+        "Period",
+        "Cycle"
+      ],
+      "enum": [
+        "Period",
+        "Cycle"
+      ]
+    },
+    "Month": {
+      "type": "string",
+      "description": "Enumeration with the year months",
+      "x-enumNames": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "enum": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
+    },
+    "CalendarWeekRule": {
+      "type": "string",
+      "description": "Defines different rules for determining the first week of the year",
+      "x-enumNames": [
+        "FirstDay",
+        "FirstFullWeek",
+        "FirstFourDayWeek"
+      ],
+      "enum": [
+        "FirstDay",
+        "FirstFullWeek",
+        "FirstFourDayWeek"
+      ]
+    },
+    "DayOfWeek": {
+      "type": "string",
+      "description": "Specifies the day of the week",
+      "x-enumNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "enum": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ]
+    },
+    "CalendarWeekMode": {
+      "type": "string",
+      "description": "The calendar week mode",
+      "x-enumNames": [
+        "Week",
+        "WorkWeek"
+      ],
+      "enum": [
+        "Week",
+        "WorkWeek"
+      ]
+    },
     "Division": {
       "allOf": [
         {
@@ -515,6 +786,15 @@
             "culture": {
               "type": "string",
               "description": "The culture including the calendar, fallback for employee culture",
+              "maxLength": 128,
+              "minLength": 0
+            },
+            "calendar": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The division calendar, fallback is the tenant calendar",
               "maxLength": 128,
               "minLength": 0
             },
@@ -1995,16 +2275,12 @@
                 }
               ]
             },
-            "calendarCalculationMode": {
-              "description": "The calendar calculation mode (default: tenant value)",
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/CalendarCalculationMode"
-                }
-              ]
+            "calendar": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The wage type calendar"
             },
             "collectors": {
               "type": [
@@ -2074,24 +2350,6 @@
             }
           }
         }
-      ]
-    },
-    "CalendarCalculationMode": {
-      "type": "string",
-      "description": "The calculation mode for case value",
-      "x-enumNames": [
-        "MonthCalendarDay",
-        "MonthAverageDay",
-        "MonthEffectiveWorkDay",
-        "MonthAverageWorkDay",
-        "WeekCalendarDay"
-      ],
-      "enum": [
-        "MonthCalendarDay",
-        "MonthAverageDay",
-        "MonthEffectiveWorkDay",
-        "MonthAverageWorkDay",
-        "WeekCalendarDay"
       ]
     },
     "Collector": {
@@ -3731,6 +3989,15 @@
               "maxLength": 128,
               "minLength": 0
             },
+            "calendar": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The employee calendar, fallback is the division calendar",
+              "maxLength": 128,
+              "minLength": 0
+            },
             "attributes": {
               "type": [
                 "null",
@@ -4091,14 +4358,6 @@
                 "string"
               ],
               "description": "The division name (client only)"
-            },
-            "calendarCalculationMode": {
-              "description": "The calendar calculation mode",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/CalendarCalculationMode"
-                }
-              ]
             },
             "countryName": {
               "description": "The country name (client only)",
@@ -4555,17 +4814,6 @@
                 }
               ]
             },
-            "calendar": {
-              "description": "The payrun calendar",
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/CalendarConfiguration"
-                }
-              ]
-            },
             "payrunParameters": {
               "type": [
                 "array",
@@ -4590,132 +4838,6 @@
       "enum": [
         "Anytime",
         "Cycle"
-      ]
-    },
-    "CalendarConfiguration": {
-      "type": "object",
-      "description": "Configuration for the payroll calendar",
-      "properties": {
-        "firstMonthOfYear": {
-          "description": "The first month of a year",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Month"
-            }
-          ]
-        },
-        "averageMonthDays": {
-          "type": "number",
-          "description": "Average month days",
-          "format": "decimal"
-        },
-        "averageWorkDays": {
-          "type": "number",
-          "description": "Average working days",
-          "format": "decimal"
-        },
-        "calculationMode": {
-          "description": "The calendar calculation mode",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/CalendarCalculationMode"
-            }
-          ]
-        },
-        "calendarWeekRule": {
-          "description": "Calendar week rule",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/CalendarWeekRule"
-            }
-          ]
-        },
-        "firstDayOfWeek": {
-          "description": "First day of week",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/DayOfWeek"
-            }
-          ]
-        },
-        "workingDays": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "description": "The working days",
-          "items": {
-            "$ref": "#/definitions/DayOfWeek"
-          }
-        }
-      }
-    },
-    "Month": {
-      "type": "string",
-      "description": "Enumeration with the year months",
-      "x-enumNames": [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ],
-      "enum": [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ]
-    },
-    "CalendarWeekRule": {
-      "type": "string",
-      "description": "Defines different rules for determining the first week of the year",
-      "x-enumNames": [
-        "FirstDay",
-        "FirstFullWeek",
-        "FirstFourDayWeek"
-      ],
-      "enum": [
-        "FirstDay",
-        "FirstFullWeek",
-        "FirstFourDayWeek"
-      ]
-    },
-    "DayOfWeek": {
-      "type": "string",
-      "description": "Specifies the day of the week",
-      "x-enumNames": [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "enum": [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
       ]
     },
     "PayrunParameter": {
@@ -5244,14 +5366,6 @@
           ],
           "description": "The forecast name (immutable)"
         },
-        "executionMode": {
-          "description": "The payrun job execution mode (immutable)",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/PayrunJobExecutionMode"
-            }
-          ]
-        },
         "retroPayMode": {
           "description": "The payrun retro pay mode (immutable)",
           "oneOf": [
@@ -5347,18 +5461,6 @@
           }
         }
       }
-    },
-    "PayrunJobExecutionMode": {
-      "type": "string",
-      "description": "The payrun job execution mode",
-      "x-enumNames": [
-        "Synchronous",
-        "Asynchronous"
-      ],
-      "enum": [
-        "Synchronous",
-        "Asynchronous"
-      ]
     },
     "LogLevel": {
       "type": "string",
@@ -6045,15 +6147,13 @@
               "minLength": 0
             },
             "calendar": {
+              "type": [
+                "null",
+                "string"
+              ],
               "description": "The tenant calendar, fallback is the default calendar",
-              "oneOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/CalendarConfiguration"
-                }
-              ]
+              "maxLength": 128,
+              "minLength": 0
             },
             "attributes": {
               "type": [

@@ -65,7 +65,6 @@
         {
           "name": "ForecastPayroll",
           "divisionName": "ForecastDivision",
-          "calendarCalculationMode": "MonthCalendarDay",
           "layers": [
             {
               "level": 1,
