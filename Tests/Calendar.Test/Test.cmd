@@ -1,2 +1,2 @@
 call PayrollConsole TenantDelete Calendar.Test /trydelete
-call PayrollConsole PayrunTest *.pt.json /keeptest
+call PayrollConsole PayrunTest *.pt.json

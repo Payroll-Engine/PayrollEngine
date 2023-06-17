@@ -3,7 +3,7 @@
   "createdObjectDate": "2018-11-05T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "LunisoralCalendar.Test",
+      "identifier": "WeekCalendar.Test",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -13,29 +13,35 @@
       ],
       "calendars": [
         {
-          "name": "YearlySalary",
+          "name": "WeekSalary",
           "cycleTimeUnit": "Year",
-          "periodTimeUnit": "LunisolarMonth",
+          "periodTimeUnit": "Week",
           "timeMap": "Cycle"
         },
         {
-          "name": "MonthlySalary",
+          "name": "BiWeekSalary",
           "cycleTimeUnit": "Year",
-          "periodTimeUnit": "LunisolarMonth",
-          "timeMap": "Period"
+          "periodTimeUnit": "BiWeek",
+          "timeMap": "Cycle"
         }
       ],
       "culture": "en-US",
-      "calendar": "YearlySalary",
+      "calendar": "WeekSalary",
       "divisions": [
         {
-          "name": "LunisoralCalendar.Test",
-          "culture": "en-US"
+          "name": "WeekCalendar.Week",
+          "culture": "en-US",
+          "calendar": "WeekSalary"
+        },
+        {
+          "name": "WeekCalendar.BiWeek",
+          "culture": "en-US",
+          "calendar": "BiWeekSalary"
         }
       ],
       "regulations": [
         {
-          "name": "LunisoralCalendar.Test",
+          "name": "WeekCalendar.Test",
           "description": "The testing payroll",
           "cases": [
             {
@@ -64,167 +70,165 @@
           "identifier": "višnja.müller@foo.com",
           "firstName": "Višnja",
           "lastName": "Müller",
-          "culture": "en-US",
-          "calendar": "YearlySalary",
           "divisions": [
-            "LunisoralCalendar.Test"
+            "WeekCalendar.Week"
           ]
         },
         {
           "identifier": "remo.meier@foo.com",
           "firstName": "Remo",
           "lastName": "Meier",
-          "culture": "de-CH",
-          "calendar": "MonthlySalary",
           "divisions": [
-            "LunisoralCalendar.Test"
+            "WeekCalendar.BiWeek"
           ]
         }
       ],
       "payrolls": [
         {
-          "name": "LunisoralCalendar.Test",
-          "divisionName": "LunisoralCalendar.Test",
+          "name": "WeekCalendar.Week",
+          "divisionName": "WeekCalendar.Week",
           "layers": [
             {
               "level": 1,
-              "regulationName": "LunisoralCalendar.Test"
+              "regulationName": "WeekCalendar.Test"
             }
           ],
           "cases": [
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
-              "divisionName": "LunisoralCalendar.Test",
+              "divisionName": "WeekCalendar.Week",
               "case": {
                 "caseName": "Salary",
                 "values": [
                   {
                     "caseFieldName": "Salary",
-                    "value": "74100",
+                    "value": "59800",
                     "start": "2018-11-05T00:00:00.0Z"
                   }
                 ]
               }
-            },
+            }
+          ]
+        },
+        {
+          "name": "WeekCalendar.BiWeek",
+          "divisionName": "WeekCalendar.BiWeek",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "WeekCalendar.Test"
+            }
+          ],
+          "cases": [
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "remo.meier@foo.com",
-              "divisionName": "LunisoralCalendar.Test",
+              "divisionName": "WeekCalendar.BiWeek",
               "case": {
                 "caseName": "Salary",
                 "values": [
                   {
                     "caseFieldName": "Salary",
-                    "value": "6200",
+                    "value": "59800",
                     "start": "2018-11-05T00:00:00.0Z"
                   }
                 ]
               }
-            },
-            {
-              "userIdentifier": "peter.schmid@foo.com",
-              "employeeIdentifier": "višnja.müller@foo.com",
-              "reason": "Salay increase",
-              "divisionName": "LunisoralCalendar.Test",
-              "case": {
-                "caseName": "Salary",
-                "values": [
-                  {
-                    "caseFieldName": "Salary",
-                    "value": "76700",
-                    "start": "2019-06-01T00:00:00.0Z",
-                    "created": "2019-03-05T00:00:00.0Z"
-                  }
-                ]
-              }
-            },
-            {
-              "userIdentifier": "peter.schmid@foo.com",
-              "employeeIdentifier": "remo.meier@foo.com",
-              "reason": "Salay increase",
-              "divisionName": "LunisoralCalendar.Test",
-              "case": {
-                "caseName": "Salary",
-                "values": [
-                  {
-                    "caseFieldName": "Salary",
-                    "value": "6400",
-                    "start": "2019-06-01T00:00:00.0Z",
-                    "created": "2019-03-05T00:00:00.0Z"
-                  }
-                ]
-              }
-}
+            }
           ]
         }
       ],
       "payruns": [
         {
-          "payrollName": "LunisoralCalendar.Test",
-          "name": "LunisoralCalendar.TestPayrun1"
+          "payrollName": "WeekCalendar.Week",
+          "name": "WeekCalendar.Week.Payrun"
+        },
+        {
+          "payrollName": "WeekCalendar.BiWeek",
+          "name": "WeekCalendar.BiWeek.Payrun"
         }
       ],
       "payrunJobInvocations": [
         {
-          "name": "LunisoralCalendar.TestPayrun1.Jan19",
-          "payrunName": "LunisoralCalendar.TestPayrun1",
-          "payrollName": "LunisoralCalendar.Test",
+          "name": "WeekCalendar.Week.Payrun.Jan19",
+          "payrunName": "WeekCalendar.Week.Payrun",
+          "payrollName": "WeekCalendar.Week",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-02-01T00:00:00.0Z",
-          "reason": "Demo Payrun Jan 19"
+          "reason": "Demo Payrun First Week Jan 19"
         },
         {
-          "name": "LunisoralCalendar.TestPayrun1.Dez19",
-          "payrunName": "LunisoralCalendar.TestPayrun1",
-          "payrollName": "LunisoralCalendar.Test",
+          "name": "WeekCalendar.Week.Payrun.Dez19",
+          "payrunName": "WeekCalendar.Week.Payrun",
+          "payrollName": "WeekCalendar.Week",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2019-12-01T00:00:00.0Z",
-          "evaluationDate": "2020-01-01T00:00:00.0Z",
-          "reason": "Demo Payrun Dez 19"
+          "periodStart": "2019-12-31T00:00:00.0Z",
+          "evaluationDate": "2020-01-15T00:00:00.0Z",
+          "reason": "Demo Payrun Last Week Dez 19"
+        },
+        {
+          "name": "WeekCalendar.BiWeek.Payrun.Jan19",
+          "payrunName": "WeekCalendar.BiWeek.Payrun",
+          "payrollName": "WeekCalendar.BiWeek",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun First BiWeek Jan 19"
+        },
+        {
+          "name": "WeekCalendar.BiWeek.Payrun.Dez19",
+          "payrunName": "WeekCalendar.BiWeek.Payrun",
+          "payrollName": "WeekCalendar.BiWeek",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-12-31T00:00:00.0Z",
+          "evaluationDate": "2020-01-15T00:00:00.0Z",
+          "reason": "Demo Payrun Last BiWeek Dez 19"
         }
       ],
       "payrollResults": [
         {
-          "payrunJobName": "LunisoralCalendar.TestPayrun1.Jan19",
+          "payrunJobName": "WeekCalendar.Week.Payrun.Jan19",
           "employeeIdentifier": "višnja.müller@foo.com",
           "wageTypeResults": [
             {
               "wageTypeNumber": 100,
-              "value": 5700
+              "value": 1150
             }
           ]
         },
         {
-          "payrunJobName": "LunisoralCalendar.TestPayrun1.Jan19",
-          "employeeIdentifier": "remo.meier@foo.com",
-          "wageTypeResults": [
-            {
-              "wageTypeNumber": 100,
-              "value": 6200
-            }
-          ]
-        },
-        {
-          "payrunJobName": "LunisoralCalendar.TestPayrun1.Dez19",
+          "payrunJobName": "WeekCalendar.Week.Payrun.Dez19",
           "employeeIdentifier": "višnja.müller@foo.com",
           "wageTypeResults": [
             {
               "wageTypeNumber": 100,
-              "value": 5900
+              "value": 1150
             }
           ]
         },
         {
-          "payrunJobName": "LunisoralCalendar.TestPayrun1.Dez19",
+          "payrunJobName": "WeekCalendar.BiWeek.Payrun.Jan19",
           "employeeIdentifier": "remo.meier@foo.com",
           "wageTypeResults": [
             {
               "wageTypeNumber": 100,
-              "value": 6400
+              "value": 2300
+            }
+          ]
+        },
+        {
+          "payrunJobName": "WeekCalendar.BiWeek.Payrun.Dez19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 2300
             }
           ]
         }

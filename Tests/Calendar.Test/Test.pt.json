@@ -85,7 +85,6 @@
         {
           "name": "Calendar.Test",
           "divisionName": "Calendar.Test",
-          "clusterSetCaseValue": "*",
           "layers": [
             {
               "level": 1,
@@ -119,6 +118,40 @@
                     "caseFieldName": "Salary",
                     "value": "4800",
                     "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "reason": "Salay increase",
+              "divisionName": "Calendar.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "63000",
+                    "start": "2019-06-01T00:00:00.0Z",
+                    "created": "2019-03-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "reason": "Salay increase",
+              "divisionName": "Calendar.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5200",
+                    "start": "2019-06-01T00:00:00.0Z",
+                    "created": "2019-03-05T00:00:00.0Z"
                   }
                 ]
               }
@@ -181,7 +214,7 @@
           "wageTypeResults": [
             {
               "wageTypeNumber": 100,
-              "value": 5000
+              "value": 5250
             }
           ]
         },
@@ -191,7 +224,7 @@
           "wageTypeResults": [
             {
               "wageTypeNumber": 100,
-              "value": 4800
+              "value": 5200
             }
           ]
         }
