@@ -45,7 +45,7 @@
                 {
                   "name": "Salary",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             }

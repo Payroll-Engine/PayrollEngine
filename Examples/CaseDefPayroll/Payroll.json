@@ -417,7 +417,7 @@
                   "name": "ExpressionString",
                   "description": "ExpressionString Description [defaultStart=1.10.2020]",
                   "valueType": "String",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "defaultStart": "2020-10-01T00:00:00.0Z",
                   "order": 10
                 },
@@ -425,7 +425,7 @@
                   "name": "Date",
                   "description": "Date Description [defaultValue=tomorrow, minValue=today, maxValue=+7days]",
                   "valueType": "Date",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "defaultValue": "tomorrow",
                   "order": 100,
                   "attributes": {
@@ -479,14 +479,14 @@
                   "name": "Money",
                   "description": "Money Description",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 310
                 },
                 {
                   "name": "Money CH",
                   "description": "Money CH Description [culture=de-CH]",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 314,
                   "attributes": {
                     "input.culture": "de-CH"
@@ -496,7 +496,7 @@
                   "name": "Money DE",
                   "description": "Money DE Description [culture=de-DE]",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 315,
                   "attributes": {
                     "input.culture": "de-DE"
@@ -506,21 +506,21 @@
                   "name": "Percent",
                   "description": "Percent Description",
                   "valueType": "Percent",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 320
                 },
                 {
                   "name": "Boolean",
                   "description": "Boolean Description",
                   "valueType": "Boolean",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 360
                 },
                 {
                   "name": "BooleanCheckBox",
                   "description": "BooleanCheckBox Description [check=true]",
                   "valueType": "Boolean",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 365,
                   "attributes": {
                     "input.check": true
@@ -530,7 +530,7 @@
                   "name": "None",
                   "description": "None Description",
                   "valueType": "None",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 370
                 }
               ]
@@ -628,7 +628,7 @@
                 {
                   "name": "MandatoryNone",
                   "valueType": "None",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "valueMandatory": true
                 }
               ]
@@ -674,16 +674,16 @@
                   "endMandatory": true
                 },
                 {
-                  "name": "Money.ScaledPeriod",
-                  "description": "Money.ScaledPeriod Description",
+                  "name": "Money.CalendarPeriod",
+                  "description": "Money.CalendarPeriod Description",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 },
                 {
-                  "name": "Money.ClosedScaledPeriod",
-                  "description": "Money.ClosedScaledPeriod Description",
+                  "name": "Money.ClosedCalendarPeriod",
+                  "description": "Money.ClosedCalendarPeriod Description",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "endMandatory": true
                 },
                 {
@@ -821,7 +821,7 @@
                   "name": "Conditions.Base",
                   "description": "Conditions.Base Description",
                   "valueType": "Integer",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "defaultStart": "today",
                   "defaultValue": "0"
                 },
@@ -830,7 +830,7 @@
                   "description": "Conditions.BaseOption Description",
                   "valueType": "Boolean",
                   "optional": true,
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
@@ -845,7 +845,7 @@
                   "name": "Conditions.Double",
                   "description": "Conditions.Double Description",
                   "valueType": "Integer",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "defaultStart": "today"
                 }
               ]
@@ -860,7 +860,7 @@
                   "name": "Conditions.Positive",
                   "description": "Conditions.Positive Description",
                   "valueType": "Integer",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "defaultStart": "today",
                   "defaultValue": "22"
                 },
@@ -869,7 +869,7 @@
                   "description": "Conditions.PositivePlus Description",
                   "valueType": "Integer",
                   "optional": true,
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
@@ -883,7 +883,7 @@
                   "name": "Conditions.SecondLevel",
                   "description": "Conditions.SecondLevel Description",
                   "valueType": "Integer",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "defaultStart": "today"
                 }
               ]

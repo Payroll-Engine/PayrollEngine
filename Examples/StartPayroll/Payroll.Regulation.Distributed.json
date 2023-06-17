@@ -3,7 +3,7 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "MinimalPayroll",
+      "identifier": "StartPayroll",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -14,8 +14,8 @@
       ],
       "divisions": [
         {
-          "name": "MinimalDivision",
-          "culture": "de-CH"
+          "name": "StartDivision",
+          "culture": "en-US"
         }
       ],
       "employees": [
@@ -24,7 +24,7 @@
           "firstName": "Mario",
           "lastName": "Nuñez",
           "divisions": [
-            "MinimalDivision"
+            "StartDivision"
           ]
         },        
         {
@@ -32,47 +32,31 @@
           "firstName": "Višnja",
           "lastName": "Müller",
           "divisions": [
-            "MinimalDivision"
+            "StartDivision"
           ]
         }
       ],
       "regulations": [
         {
-          "name": "MinimalRegulation",
+          "name": "StartRegulation",
           "cases": [
             {
-              "name": "MonthlyWage",
-              "nameLocalizations": {
-                "en": "Monthly wage",
-                "de": "Monatslohn"
-              },
+              "name": "Salary",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "MonthlyWage",
-                  "nameLocalizations": {
-                    "en": "Monthly wage",
-                    "de": "Monatslohn"
-                  },
+                  "name": "Salary",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
               "name": "RiskBonus",
-              "nameLocalizations": {
-                "en": "Risk bonus",
-                "de": "Risikobonus"
-              },
               "caseType": "Employee",
               "fields": [
                 {
                   "name": "RiskBonus",
-                  "nameLocalizations": {
-                    "en": "Risk bonus",
-                    "de": "Risikobonus"
-                  },
                   "valueType": "Decimal",
                   "timeType": "Period"
                 }
@@ -82,31 +66,28 @@
           "wageTypes": [
             {
               "wageTypeNumber": 100,
-              "name": "Wage",
-              "nameLocalizations": {
-                "de": "Lohn"
-              },
-              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"RiskBonus\"); decimal baseWage = values[\"MonthlyWage\"]; return baseWage + (values[\"MonthlyWage\"] * values[\"RiskBonus\"]);"
+              "name": "Salary",
+              "valueExpression": "var values = GetCaseValues(\"Salary\", \"RiskBonus\"); decimal baseSalary = values[\"Salary\"]; return baseSalary + (values[\"Salary\"] * values[\"RiskBonus\"]);"
             }
           ]
         }
       ],
       "payrolls": [
         {
-          "name": "MinimalPayroll",
-          "divisionName": "MinimalDivision",
+          "name": "StartPayroll",
+          "divisionName": "StartDivision",
           "layers": [
             {
               "level": 1,
-              "regulationName": "MinimalRegulation"
+              "regulationName": "StartRegulation"
             }
           ]
         }
       ],
       "payruns": [
         {
-          "name": "MinimalPayrun",
-          "payrollName": "MinimalPayroll"
+          "name": "StartPayrun",
+          "payrollName": "StartPayroll"
         }
       ]
     }

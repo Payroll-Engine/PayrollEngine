@@ -243,7 +243,7 @@
                   "name": "Money",
                   "description": "Money Description",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "key": "CE012",
                   "order": 310
                 },
@@ -251,7 +251,7 @@
                   "name": "Money BiH",
                   "description": "Money BiH Description [culture=bs-Latn-BA]",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "order": 315,
                   "attributes": {
                     "input.culture": "bs-Latn-BA"
@@ -328,7 +328,7 @@
                   "name": "NBU Satz",
                   "valueType": "Percent",
                   "valueScope": "Global",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "clusters": [
                     "Onboarding",
                     "Legal"
@@ -353,7 +353,7 @@
                 {
                   "name": "NBU Satz Local",
                   "valueType": "Percent",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "clusters": [
                     "Onboarding",
                     "Legal"
@@ -418,7 +418,7 @@
                     "it": "Monatslohn IT"
                   },
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "clusters": [
                     "Onboarding",
                     "Legal"

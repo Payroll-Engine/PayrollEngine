@@ -46,7 +46,7 @@
                 {
                   "name": "Namespace.AHV",
                   "valueType": "Decimal",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -59,7 +59,7 @@
                 {
                   "name": "Namespace.Monatsfaktor",
                   "valueType": "Decimal",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -78,7 +78,7 @@
                     "en": "Monatslohn Root"
                   },
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]

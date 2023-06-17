@@ -69,12 +69,12 @@
                 {
                   "name": "Monatslohn",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 },
                 {
                   "name": "Sonderabzug",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             }

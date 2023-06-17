@@ -51,7 +51,7 @@
                 {
                   "name": "AHV",
                   "valueType": "Decimal",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -64,7 +64,7 @@
                 {
                   "name": "Monatsfaktor",
                   "valueType": "Decimal",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -89,7 +89,7 @@
                     "en": "Monatslohn Root"
                   },
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "attributes": {
                     "BaseAttribute1": "MyValue1",
                     "BaseAttribute2": "MyValue2"
@@ -119,7 +119,7 @@
                 {
                   "name": "Grundeinkommen",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -186,7 +186,7 @@
                     "it": "Monatslohn Derivato"
                   },
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "attributes": {
                     "DerivedAttribute1": "MyDerivedValue1",
                     "DerivedAttribute2": "MyDerivedValue2",
@@ -204,7 +204,7 @@
                 {
                   "name": "Monatslohn Zusatz",
                   "valueType": "Decimal",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -251,7 +251,7 @@
                     "it": "Monatslohn Derivato"
                   },
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "attributes": {
                     "DerivedAttribute1": "MyDerivedValue3",
                     "DerivedAttribute2": "MyDerivedValue4",
@@ -262,7 +262,7 @@
                 {
                   "name": "Monatslohn Spez",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "optional": true,
                   "created": "2019-01-01T00:00:00.0Z"
                 }
@@ -277,7 +277,7 @@
                 {
                   "name": "AHV Zusatz",
                   "valueType": "Decimal",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -290,7 +290,7 @@
                 {
                   "name": "Kaderlohn",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "availableExpression": "(int)CaseValue[\"Kaderstufe\"] > 0;",
                   "created": "2019-01-01T00:00:00.0Z"
                 }

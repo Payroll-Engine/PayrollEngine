@@ -69,7 +69,7 @@
                 {
                   "name": "NBU Satz",
                   "valueType": "Percent",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]
@@ -82,7 +82,7 @@
                 {
                   "name": "Monatslohn",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod",
+                  "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
                 }
               ]

@@ -1579,13 +1579,13 @@
         "Timeless",
         "Moment",
         "Period",
-        "ScaledPeriod"
+        "CalendarPeriod"
       ],
       "enum": [
         "Timeless",
         "Moment",
         "Period",
-        "ScaledPeriod"
+        "CalendarPeriod"
       ]
     },
     "CaseFieldTimeUnit": {

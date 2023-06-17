@@ -151,7 +151,7 @@
                 {
                   "name": "NBU Satz",
                   "valueType": "Percent",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
@@ -162,7 +162,7 @@
                 {
                   "name": "KTG Satz",
                   "valueType": "Percent",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
@@ -187,7 +187,7 @@
                 {
                   "name": "Monatslohn",
                   "valueType": "Money",
-                  "timeType": "ScaledPeriod"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
