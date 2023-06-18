@@ -1,15 +1,10 @@
-===============================================================================
-Ason Payroll.Backend ODataQuery.txt
-===============================================================================
+# Payroll Engine OData Query
 
-Basic rules
------------
+## Basic rules
 - field/column name is not case sensitive
 - enum values resolved by case insesitive name
 
-
-Supported OData query features
-------------------------------
+## Supported OData query features
 - top
 - skip
 - select (only on db level)
@@ -37,8 +32,7 @@ Supported OData query features
     - time (datetime)
 
 
-Unsupported OData query features
---------------------------------
+## Unsupported OData query features
 - expand
 - search
 - filter
@@ -52,10 +46,7 @@ Unsupported OData query features
 - lambda operators
 
 
-Further information
--------------------
+## Further information
 - OData v4 - https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html
 - OData Getting Started Tutorial -  https://www.odata.org/getting-started/basic-tutorial
 - DynamicODataToSQL - https://github.com/DynamicODataToSQL/DynamicODataToSQL
-
---- EOF

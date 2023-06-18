@@ -33,6 +33,28 @@
           "culture": "en-US"
         }
       ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "culture": "en-US",
+          "calendar": "YearlySalary",
+          "divisions": [
+            "Calendar.Test"
+          ]
+        },
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "culture": "de-CH",
+          "calendar": "MonthlySalary",
+          "divisions": [
+            "Calendar.Test"
+          ]
+        }
+      ],
       "regulations": [
         {
           "name": "Calendar.Test",
@@ -56,28 +78,6 @@
               "name": "Salary",
               "valueExpression": "CaseValue[\"Salary\"]"
             }
-          ]
-        }
-      ],
-      "employees": [
-        {
-          "identifier": "višnja.müller@foo.com",
-          "firstName": "Višnja",
-          "lastName": "Müller",
-          "culture": "en-US",
-          "calendar": "YearlySalary",
-          "divisions": [
-            "Calendar.Test"
-          ]
-        },
-        {
-          "identifier": "remo.meier@foo.com",
-          "firstName": "Remo",
-          "lastName": "Meier",
-          "culture": "de-CH",
-          "calendar": "MonthlySalary",
-          "divisions": [
-            "Calendar.Test"
           ]
         }
       ],
