@@ -125,7 +125,7 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
-              "reason": "Salay increase",
+              "reason": "Salary increase",
               "divisionName": "Calendar.Test",
               "case": {
                 "caseName": "Salary",
@@ -142,7 +142,7 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "remo.meier@foo.com",
-              "reason": "Salay increase",
+              "reason": "Salary increase",
               "divisionName": "Calendar.Test",
               "case": {
                 "caseName": "Salary",
@@ -169,7 +169,6 @@
         {
           "name": "Calendar.TestPayrun1.Jan19",
           "payrunName": "Calendar.TestPayrun1",
-          "payrollName": "Calendar.Test",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
@@ -179,7 +178,6 @@
         {
           "name": "Calendar.TestPayrun1.Dez19",
           "payrunName": "Calendar.TestPayrun1",
-          "payrollName": "Calendar.Test",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2019-12-01T00:00:00.0Z",

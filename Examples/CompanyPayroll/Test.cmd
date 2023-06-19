@@ -1,1 +1,1 @@
-call PayrollConsole PayrunEmployeeTest *.et.json
+call PayrollConsole PayrunEmployeeTest *.et.json /showall
