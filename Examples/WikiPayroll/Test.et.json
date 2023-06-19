@@ -2,15 +2,15 @@
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
-      "identifier": "CompanyPayroll",
+      "identifier": "WikiTenant",
       "payrolls": [
         {
-          "name": "CompanyPayroll",
+          "name": "WikiPayroll",
           "cases": [
             {
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nuñez@foo.com",
-              "divisionName": "CompanyDivision",
+              "divisionName": "WikiDivision",
               "case": {
                 "caseName": "Salary",
                 "values": [
@@ -28,8 +28,8 @@
       ],
       "payrunJobInvocations": [
         {
-          "name": "CompanyPayrunJob.Jan23",
-          "payrunName": "CompanyPayrun",
+          "name": "WikiPayrunJob.Jan23",
+          "payrunName": "WikiPayrun",
           "userIdentifier": "lucy.smith@foo.com",
           "employeeIdentifiers": [
             "mario.nuñez@foo.com"
@@ -42,7 +42,7 @@
       ],
       "payrollResults": [
         {
-          "payrunJobName": "CompanyPayrunJob.Jan23",
+          "payrunJobName": "WikiPayrunJob.Jan23",
           "employeeIdentifier": "mario.nuñez@foo.com",
           "wageTypeResults": [
             {
