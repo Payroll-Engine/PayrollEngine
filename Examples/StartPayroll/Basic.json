@@ -3,7 +3,7 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "WikiTenant",
+      "identifier": "StartTenant",
       "culture": "en-US",
       "users": [
         {
@@ -15,7 +15,7 @@
       ],
       "divisions": [
         {
-          "name": "WikiDivision",
+          "name": "StartDivision",
           "culture": "en-US"
         }
       ],
@@ -25,13 +25,13 @@
           "firstName": "Mario",
           "lastName": "Nuñez",
           "divisions": [
-            "WikiDivision"
+            "StartDivision"
           ]
         }
       ],
       "regulations": [
         {
-          "name": "WikiRegulation",
+          "name": "StartRegulation",
           "cases": [
             {
               "name": "Salary",
@@ -56,20 +56,20 @@
       ],
       "payrolls": [
         {
-          "name": "WikiPayroll",
-          "divisionName": "WikiDivision",
+          "name": "StartPayroll",
+          "divisionName": "StartDivision",
           "layers": [
             {
               "level": 1,
-              "regulationName": "WikiRegulation"
+              "regulationName": "StartRegulation"
             }
           ]
         }
       ],
       "payruns": [
         {
-          "payrollName": "WikiPayroll",
-          "name": "WikiPayrun"
+          "name": "StartPayrun",
+          "payrollName": "StartPayroll"
         }
       ]
     }

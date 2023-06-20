@@ -1,0 +1,47 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "StartTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "CompanyRegulation",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Salary",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "StartPayroll",
+          "updateMode": "NoUpdate",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "CompanyRegulation"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
