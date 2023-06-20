@@ -24,6 +24,23 @@
                   }
                 ]
               }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "mario.nuñez@foo.com",
+              "divisionName": "StartDivision",
+              "reason": "Salary increase",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2023-07-01T00:00:00.0Z",
+                    "created": "2023-06-04T00:00:00.0Z"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -40,6 +57,18 @@
           "jobStatus": "Complete",
           "periodStart": "2023-01-01T00:00:00.0Z",
           "evaluationDate": "2023-02-01T00:00:00.0Z"
+        },
+        {
+          "name": "StartPayrunJob.Jul23",
+          "payrunName": "StartPayrun",
+          "userIdentifier": "lucy.smith@foo.com",
+          "employeeIdentifiers": [
+            "mario.nuñez@foo.com"
+          ],
+          "reason": "Test Payrun Jul 23",
+          "jobStatus": "Complete",
+          "periodStart": "2023-07-01T00:00:00.0Z",
+          "evaluationDate": "2023-08-01T00:00:00.0Z"
         }
       ],
       "payrollResults": [
@@ -50,6 +79,24 @@
             {
               "wageTypeNumber": 100,
               "value": 5000
+            },
+            {
+              "wageTypeNumber": 200,
+              "value": 45
+            }
+          ]
+        },
+        {
+          "payrunJobName": "StartPayrunJob.Jul23",
+          "employeeIdentifier": "mario.nuñez@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 6000
+            },
+            {
+              "wageTypeNumber": 200,
+              "value": 60
             }
           ]
         }

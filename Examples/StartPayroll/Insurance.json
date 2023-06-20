@@ -8,24 +8,36 @@
       "regulations": [
         {
           "name": "InsuranceRegulation",
-          "cases": [
+          "baseRegulations": [
+            "StartRegulation"
+          ],
+          "lookups": [
             {
-              "name": "Salary",
-              "caseType": "Employee",
-              "fields": [
+              "name": "InsuranceRate",
+              "values": [
                 {
-                  "name": "Salary",
-                  "valueType": "Money",
-                  "timeType": "CalendarPeriod"
+                  "key": "A",
+                  "rangeValue": 1,
+                  "value": "30"
+                },
+                {
+                  "key": "B",
+                  "rangeValue": 3000,
+                  "value": "45"
+                },
+                {
+                  "key": "C",
+                  "rangeValue": 6000,
+                  "value": "60"
                 }
               ]
             }
           ],
           "wageTypes": [
             {
-              "wageTypeNumber": 100,
-              "name": "Salary",
-              "valueExpression": "CaseValue[\"Salary\"]"
+              "wageTypeNumber": 200,
+              "name": "InsuranceRate",
+              "valueExpression": "GetRangeLookup<decimal>(\"InsuranceRate\", WageType[100])"
             }
           ]
         }
@@ -36,7 +48,7 @@
           "updateMode": "NoUpdate",
           "layers": [
             {
-              "level": 1,
+              "level": 2,
               "regulationName": "InsuranceRegulation"
             }
           ]

@@ -8,24 +8,27 @@
       "regulations": [
         {
           "name": "CompanyRegulation",
+          "baseRegulations": [
+            "InsuranceRegulation"
+          ],
           "cases": [
             {
-              "name": "Salary",
+              "name": "Benefit",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Salary",
+                  "name": "Benefit",
                   "valueType": "Money",
-                  "timeType": "CalendarPeriod"
+                  "timeType": "Moment"
                 }
               ]
             }
           ],
           "wageTypes": [
             {
-              "wageTypeNumber": 100,
-              "name": "Salary",
-              "valueExpression": "CaseValue[\"Salary\"]"
+              "wageTypeNumber": 300,
+              "name": "Benefit",
+              "valueExpression": "CaseValue[\"Benefit\"]"
             }
           ]
         }
@@ -36,7 +39,7 @@
           "updateMode": "NoUpdate",
           "layers": [
             {
-              "level": 1,
+              "level": 3,
               "regulationName": "CompanyRegulation"
             }
           ]

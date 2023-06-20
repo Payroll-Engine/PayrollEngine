@@ -24,6 +24,40 @@
                   }
                 ]
               }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "mario.nuñez@foo.com",
+              "divisionName": "StartDivision",
+              "reason": "Project A",
+              "case": {
+                "caseName": "Benefit",
+                "values": [
+                  {
+                    "caseFieldName": "Benefit",
+                    "value": "225",
+                    "start": "2023-01-14T00:00:00.0Z",
+                    "created": "2022-12-12T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "mario.nuñez@foo.com",
+              "divisionName": "StartDivision",
+              "reason": "Project B",
+              "case": {
+                "caseName": "Benefit",
+                "values": [
+                  {
+                    "caseFieldName": "Benefit",
+                    "value": "250",
+                    "start": "2023-01-26T00:00:00.0Z",
+                    "created": "2022-01-14T00:00:00.0Z"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -50,8 +84,16 @@
             {
               "wageTypeNumber": 100,
               "value": 5000
+            },
+            {
+              "wageTypeNumber": 200,
+              "value": 45
+            },
+            {
+              "wageTypeNumber": 300,
+              "value": 475
             }
-          ]
+         ]
         }
       ]
     }

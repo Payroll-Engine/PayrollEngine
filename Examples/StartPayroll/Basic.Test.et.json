@@ -1,59 +1,59 @@
-1{
-2  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
-3  "tenants": [
-4    {
-5      "identifier": "StartTenant",
-6      "updateMode": "NoUpdate",
-7      "payrolls": [
-8        {
-9          "name": "StartPayroll",
-10          "updateMode": "NoUpdate",
-11          "cases": [
-12            {
-13              "userIdentifier": "lucy.smith@foo.com",
-14              "employeeIdentifier": "mario.nuñez@foo.com",
-15              "divisionName": "StartDivision",
-16              "case": {
-17                "caseName": "Salary",
-18                "values": [
-19                  {
-20                    "caseFieldName": "Salary",
-21                    "value": "5000",
-22                    "start": "2023-01-01T00:00:00.0Z",
-23                    "created": "2022-11-04T00:00:00.0Z"
-24                  }
-25                ]
-26              }
-27            }
-28          ]
-29        }
-30      ],
-31      "payrunJobInvocations": [
-32        {
-33          "name": "StartPayrunJob.Jan23",
-34          "payrunName": "StartPayrun",
-35          "userIdentifier": "lucy.smith@foo.com",
-36          "employeeIdentifiers": [
-37            "mario.nuñez@foo.com"
-38          ],
-39          "reason": "Test Payrun Jan 23",
-40          "jobStatus": "Complete",
-41          "periodStart": "2023-01-01T00:00:00.0Z",
-42          "evaluationDate": "2023-02-01T00:00:00.0Z"
-43        }
-44      ],
-45      "payrollResults": [
-46        {
-47          "payrunJobName": "StartPayrunJob.Jan23",
-48          "employeeIdentifier": "mario.nuñez@foo.com",
-49          "wageTypeResults": [
-50            {
-51              "wageTypeNumber": 100,
-52              "value": 5000
-53            }
-54          ]
-55        }
-56      ]
-57    }
-58  ]
-59}
+{
+ "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+ "tenants": [
+   {
+     "identifier": "StartTenant",
+     "updateMode": "NoUpdate",
+     "payrolls": [
+       {
+         "name": "StartPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "mario.nuñez@foo.com",
+              "divisionName": "StartDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-11-04T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "StartPayrunJob.Jan23",
+          "payrunName": "StartPayrun",
+          "userIdentifier": "lucy.smith@foo.com",
+          "employeeIdentifiers": [
+            "mario.nuñez@foo.com"
+          ],
+          "reason": "Test Payrun Jan 23",
+          "jobStatus": "Complete",
+          "periodStart": "2023-01-01T00:00:00.0Z",
+          "evaluationDate": "2023-02-01T00:00:00.0Z"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "StartPayrunJob.Jan23",
+          "employeeIdentifier": "mario.nuñez@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
