@@ -2552,15 +2552,13 @@
         {
           "type": "object",
           "description": "Represents a value within a lookup",
-          "required": [
-            "key",
-            "value"
-          ],
           "properties": {
             "key": {
-              "type": "string",
-              "description": "The lookup key",
-              "minLength": 1
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The lookup key"
             },
             "keyValues": {
               "type": [
@@ -2571,9 +2569,11 @@
               "items": {}
             },
             "value": {
-              "type": "string",
-              "description": "The lookup value as JSON",
-              "minLength": 1
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The lookup value as JSON"
             },
             "valueObject": {
               "description": "The lookup value object",

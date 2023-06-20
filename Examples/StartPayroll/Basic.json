@@ -36,11 +36,19 @@
             {
               "name": "Salary",
               "caseType": "Employee",
+              "buildExpression": "true",
+              "validateExpression": "true",
               "fields": [
                 {
                   "name": "Salary",
                   "valueType": "Money",
-                  "timeType": "CalendarPeriod"
+                  "timeType": "CalendarPeriod",
+                  "buildActions": [
+                    "Limit(500, 25000)"
+                  ],
+                  "validateActions": [
+                    "ValueBetween(500, 25000)"
+                  ]
                 }
               ]
             }

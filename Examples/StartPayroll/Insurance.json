@@ -11,6 +11,7 @@
           "baseRegulations": [
             "StartRegulation"
           ],
+          "sharedRegulation": true,
           "lookups": [
             {
               "name": "InsuranceRate",
