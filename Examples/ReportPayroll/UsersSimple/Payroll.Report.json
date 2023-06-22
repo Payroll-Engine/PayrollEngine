@@ -18,6 +18,9 @@
                 "fr": "Start Query Report FR",
                 "it": "Start Query Report IT"
               },
+              "clusters": [
+                "User"
+              ],
               "buildExpression": "SetParameter(\"Users.TenantId\", TenantId);",
               "startExpression": "SetQuery(\"Users\", \"QueryUsers\"); return null;",
               "templates": [

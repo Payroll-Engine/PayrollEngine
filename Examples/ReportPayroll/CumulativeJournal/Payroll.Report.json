@@ -13,6 +13,11 @@
             {
               "name": "CumulativeJournal",
               "description": "Cumulative year journal",
+              "clusters": [
+                "Year",
+                "Employee",
+                "Pay"
+              ],
               "endExpressionFile": "Script.cs",
               "queries": {
                 "Employees": "QueryEmployees"

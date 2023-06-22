@@ -18,6 +18,9 @@
                 "fr": "End Query Report FR",
                 "it": "End Query Report IT"
               },
+              "clusters": [
+                "Regulation"
+              ],
               "endExpression": "ExecuteResultQuery(\"Regulations\", \"QueryRegulations\", new() { { \"TenantId\", TenantId.ToString() } });",
               "templates": [
                 {

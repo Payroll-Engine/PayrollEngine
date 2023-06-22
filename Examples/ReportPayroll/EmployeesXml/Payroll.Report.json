@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2019-01-01T00:00:00.0Z",
   "tenants": [
     {
@@ -13,6 +13,11 @@
             {
               "name": "EmployeesXml",
               "description": "Employees XML report",
+              "clusters": [
+                "Employee",
+                "CaseValue",
+                "XML"
+              ],
               "queries": {
                 "Employees": "QueryEmployees"
               },

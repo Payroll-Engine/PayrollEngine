@@ -19,6 +19,9 @@
                 "fr": "Static Query Report FR",
                 "it": "Static Query Report IT"
               },
+              "clusters": [
+                "Tenant"
+              ],
               "queries": {
                 "Tenants": "QueryTenants"
               },
