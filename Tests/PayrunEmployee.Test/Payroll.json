@@ -220,7 +220,7 @@
               "fields": [
                 {
                   "name": "Anzahl Stunden",
-                  "valueType": "Hour",
+                  "valueType": "Integer",
                   "timeType": "Moment",
                   "created": "2019-01-01T00:00:00.0Z"
                 }

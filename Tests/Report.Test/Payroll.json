@@ -4,21 +4,6 @@
   "tenants": [
     {
       "identifier": "ReportTest",
-      "calendar": {
-        "firstMonthOfYear": "January",
-        "averageMonthDays": 30,
-        "averageWorkDays": 21.75,
-        "calculationMode": "MonthCalendarDay",
-        "calendarWeekRule": "FirstFourDayWeek",
-        "firstDayOfWeek": "Monday",
-        "workingDays": [
-          "Monday",
-          "Tuesday",
-          "Thursday",
-          "Wednesday",
-          "Friday"
-        ]
-      },
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
