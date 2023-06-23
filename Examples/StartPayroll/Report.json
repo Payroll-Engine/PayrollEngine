@@ -18,7 +18,6 @@
               "parameters": [
                 {
                   "name": "TenantId",
-                  "valueType": "Integer",
                   "parameterType": "TenantId",
                   "attributes": {
                     "input.hidden": true
