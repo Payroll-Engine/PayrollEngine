@@ -277,14 +277,6 @@
               "maxLength": 128,
               "minLength": 0
             },
-            "language": {
-              "description": "The users language",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/Language"
-                }
-              ]
-            },
             "userType": {
               "description": "The user type",
               "oneOf": [
@@ -303,110 +295,6 @@
             }
           }
         }
-      ]
-    },
-    "Language": {
-      "type": "string",
-      "description": "The payroll languages",
-      "x-enumNames": [
-        "English",
-        "Afrikaans",
-        "Arabic",
-        "Azerbaijani",
-        "Belarusian",
-        "Bulgarian",
-        "Bosnian",
-        "Czech",
-        "Danish",
-        "German",
-        "Greek",
-        "Spanish",
-        "Estonian",
-        "Persian",
-        "Finnish",
-        "French",
-        "Irish",
-        "Hebrew",
-        "Hindi",
-        "Croatian",
-        "Hungarian",
-        "Armenian",
-        "Icelandic",
-        "Italian",
-        "Japanese",
-        "Georgian",
-        "Korean",
-        "Luxembourgish",
-        "Lithuanian",
-        "Latvian",
-        "Macedonian",
-        "Dutch",
-        "Norwegian",
-        "Polish",
-        "Portuguese",
-        "Romanian",
-        "Russian",
-        "Slovak",
-        "Slovenian",
-        "Albanian",
-        "Serbian",
-        "Swedish",
-        "Thai",
-        "Turkish",
-        "Ukrainian",
-        "Uzbek",
-        "Vietnamese",
-        "Chinese"
-      ],
-      "enum": [
-        "English",
-        "Afrikaans",
-        "Arabic",
-        "Azerbaijani",
-        "Belarusian",
-        "Bulgarian",
-        "Bosnian",
-        "Czech",
-        "Danish",
-        "German",
-        "Greek",
-        "Spanish",
-        "Estonian",
-        "Persian",
-        "Finnish",
-        "French",
-        "Irish",
-        "Hebrew",
-        "Hindi",
-        "Croatian",
-        "Hungarian",
-        "Armenian",
-        "Icelandic",
-        "Italian",
-        "Japanese",
-        "Georgian",
-        "Korean",
-        "Luxembourgish",
-        "Lithuanian",
-        "Latvian",
-        "Macedonian",
-        "Dutch",
-        "Norwegian",
-        "Polish",
-        "Portuguese",
-        "Romanian",
-        "Russian",
-        "Slovak",
-        "Slovenian",
-        "Albanian",
-        "Serbian",
-        "Swedish",
-        "Thai",
-        "Turkish",
-        "Ukrainian",
-        "Uzbek",
-        "Vietnamese",
-        "Chinese"
       ]
     },
     "UserType": {
@@ -2984,7 +2872,7 @@
           "description": "The payroll report template client object",
           "required": [
             "name",
-            "language"
+            "culture"
           ],
           "properties": {
             "name": {
@@ -2993,13 +2881,10 @@
               "maxLength": 128,
               "minLength": 0
             },
-            "language": {
-              "description": "The report language",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/Language"
-                }
-              ]
+            "culture": {
+              "type": "string",
+              "description": "The report culture",
+              "minLength": 1
             },
             "content": {
               "type": [
@@ -3974,14 +3859,6 @@
               "description": "The last name of the employee",
               "maxLength": 128,
               "minLength": 0
-            },
-            "language": {
-              "description": "The employees language",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/Language"
-                }
-              ]
             },
             "divisions": {
               "type": [
