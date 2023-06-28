@@ -3476,6 +3476,16 @@
                 "$ref": "#/definitions/CaseValue"
               }
             },
+            "ignoredValues": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The ignored case values",
+              "items": {
+                "$ref": "#/definitions/CaseValue"
+              }
+            },
             "issues": {
               "type": [
                 "array",
@@ -3708,9 +3718,7 @@
       "type": "object",
       "description": "Represents an issue from the case validation",
       "required": [
-        "issueType",
-        "caseName",
-        "message"
+        "issueType"
       ],
       "properties": {
         "issueType": {
@@ -3727,7 +3735,10 @@
           "format": "int32"
         },
         "caseName": {
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "description": "Gets the name of the case",
           "maxLength": 128,
           "minLength": 0
@@ -3857,9 +3868,11 @@
           }
         },
         "message": {
-          "type": "string",
-          "description": "Gets the validation message",
-          "minLength": 1
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The validation message"
         }
       }
     },
@@ -5938,9 +5951,7 @@
           "type": "object",
           "description": "The payrun result client object",
           "required": [
-            "source",
             "name",
-            "valueType",
             "value",
             "start",
             "end"
@@ -5952,9 +5963,11 @@
               "format": "int32"
             },
             "source": {
-              "type": "string",
-              "description": "The result source (immutable)",
-              "minLength": 1
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The result source (immutable)"
             },
             "name": {
               "type": "string",
