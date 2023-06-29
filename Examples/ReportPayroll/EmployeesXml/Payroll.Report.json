@@ -34,13 +34,13 @@
               "templates": [
                 {
                   "name": "DefaultGerman",
-                  "language": "German",
+                  "culture": "de",
                   "contentFile": "Employees.xsl",
                   "schemaFile": "Employees.xsd"
                 },
                 {
                   "name": "DefaultEnglish",
-                  "language": "English",
+                  "culture": "en",
                   "contentFile": "Employees.xsl",
                   "schemaFile": "Employees.xsd"
                 }

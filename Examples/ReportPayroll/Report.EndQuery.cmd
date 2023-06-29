@@ -1,2 +1,2 @@
-call PayrollConsole Report Payroll.Report peter.schmid@foo.com Payroll.Report ReportEndQuery /german /pdf
+call PayrollConsole Report Payroll.Report peter.schmid@foo.com Payroll.Report ReportEndQuery de-CH /pdf
 pause

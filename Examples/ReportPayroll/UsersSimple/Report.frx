@@ -10,7 +10,6 @@
       <Column Name="FirstName" DataType="System.String"/>
       <Column Name="LastName" DataType="System.String"/>
       <Column Name="Culture" DataType="System.String"/>
-      <Column Name="Language" DataType="System.String"/>
       <Column Name="Attributes" DataType="System.String"/>
     </TableDataSource>
   </Dictionary>

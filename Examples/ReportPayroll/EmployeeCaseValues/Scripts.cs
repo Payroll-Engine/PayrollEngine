@@ -29,7 +29,7 @@ public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.Repor
 
     [ReportBuildScript(
         reportName: "EmployeeCaseValues",
-        language: Language.German)]
+        culture: "de-CH")]
     public object ReportBuildScript()
     {
         var allParameter = "AllEmployees";
@@ -92,7 +92,7 @@ public class ReportStartFunction : PayrollEngine.Client.Scripting.Function.Repor
 
     [ReportStartScript(
         reportName: "EmployeeCaseValues",
-        language: Language.German)]
+        culture: "de-CH")]
     public object ReportStartScript()
     {
         if (HasParameter("EmployeeIdentifier"))
@@ -122,7 +122,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
 
     [ReportEndScript(
         reportName: "EmployeeCaseValues",
-        language: Language.German,
+        culture: "de-CH",
         parameters: "{ \"PayrollId\": \"Payroll.Report\" }")]
     public object ReportEndScript()
     {
@@ -161,7 +161,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
                 // lookup column
                 new("Location", "Location")
             },
-            Language);
+            Culture);
         AddTable(caseValuesTable);
 
         // employee to case value relation

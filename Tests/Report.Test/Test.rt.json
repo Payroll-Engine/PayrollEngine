@@ -14,7 +14,7 @@
       "reportName": "EmployeesReport",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
-        "language": "German"
+        "culture": "de-CH"
       },
       "output": [
         {
@@ -32,7 +32,7 @@
       "reportName": "EmployeesReport",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
-        "language": "German"
+        "culture": "de-CH"
       },
       "output": {
         "name": "EmployeesReport",

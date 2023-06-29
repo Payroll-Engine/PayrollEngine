@@ -9,7 +9,7 @@
           "identifier": "peter.schmid@foo.com",
           "firstName": "Peter",
           "lastName": "Schmid",
-          "language": "German",
+          "culture": "de-CH",
           "userType": "Supervisor",
           "attributes": {
             "StartupPayroll": "CaseDefPayroll.Derived",

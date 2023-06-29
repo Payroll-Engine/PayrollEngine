@@ -28,7 +28,7 @@
               "templates": [
                 {
                   "name": "DefaultGerman",
-                  "language": "German",
+                  "culture": "de",
                   "contentFile": "Report.frx",
                   "attributes": {
                     "input.attachmentExtensions": ".frx"

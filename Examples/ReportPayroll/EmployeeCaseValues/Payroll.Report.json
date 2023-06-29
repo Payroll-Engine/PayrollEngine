@@ -69,12 +69,12 @@
               "templates": [
                 {
                   "name": "DefaultGerman",
-                  "language": "German",
+                  "culture": "de",
                   "contentFile": "Report.frx"
                 },
                 {
                   "name": "DefaultEnglish",
-                  "language": "English",
+                  "culture": "en",
                   "contentFile": "Report.frx"
                 }
               ]

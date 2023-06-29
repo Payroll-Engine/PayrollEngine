@@ -9,8 +9,7 @@
         {
           "identifier": "lucy.smith@foo.com",
           "firstName": "Lucy",
-          "lastName": "Smith",
-          "language": "English"
+          "lastName": "Smith"
         }
       ],
       "divisions": [
