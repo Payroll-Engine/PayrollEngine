@@ -8,4 +8,4 @@ rem build payroll results
 call PayrollConsole PayrunEmployeeTest Basic.Test.et.json
 call PayrollConsole PayrunEmployeeTest Insurance.Test.et.json
 call PayrollConsole PayrunEmployeeTest Company.Test.et.json
-call PayrollConsole Report StartTenant lucy.smith@foo.com StartRegulation StartReport Report.Parameters.json /pdf /shellopen
+call PayrollConsole Report StartTenant lucy.smith@foo.com StartRegulation StartReport Report.Parameters.json en /pdf /shellopen

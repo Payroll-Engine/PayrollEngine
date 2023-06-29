@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="06/23/2023 15:23:19" ReportInfo.CreatorVersion="2023.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="06/29/2023 13:09:10" ReportInfo.CreatorVersion="2023.2.0.0">
   <Dictionary>
     <TableDataSource Name="Results" ReferenceName="Data.Results" DataType="System.Int32" Enabled="true">
       <Column Name="Id" DataType="System.Int32"/>
@@ -16,22 +16,22 @@
     </TableDataSource>
   </Dictionary>
   <ReportPage Name="StartPage" Watermark.Font="Arial, 60pt">
-    <ReportTitleBand Name="ReportTitle1" Width="720" Height="40">
-      <TextObject Name="Title" Top="10" Width="680" Height="20" Text="Payrun Job Results" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt"/>
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="40">
+      <TextObject Name="Title" Top="10" Width="680" Height="20" Text="Payrun Results" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt"/>
     </ReportTitleBand>
-    <PageHeaderBand Name="DataHeader" Top="43" Width="720" Height="20">
+    <PageHeaderBand Name="DataHeader" Top="42.67" Width="718.2" Height="20">
       <TextObject Name="PeriodTitle" Left="20" Width="95" Height="20" Text="Period" Font="Arial, 9pt"/>
       <TextObject Name="EmplyoeeTitle" Left="130" Width="245" Height="20" Text="Employee" Font="Arial, 9pt"/>
       <TextObject Name="KindTitle" Left="415" Width="130" Height="20" Text="Kind" Font="Arial, 9pt"/>
       <TextObject Name="ValueTitle" Left="570" Width="110" Height="20" Text="Value" HorzAlign="Right" Font="Arial, 9pt"/>
     </PageHeaderBand>
-    <DataBand Name="Data" Top="65.33" Width="720" Height="20" DataSource="Results">
+    <DataBand Name="Data" Top="65.33" Width="718.2" Height="20" DataSource="Results">
       <TextObject Name="Period" Left="20" Width="95" Height="20" Text="[Results.PeriodName]" Font="Arial, 9pt"/>
       <TextObject Name="Employee" Left="130" Width="245" Height="20" Text="[Results.EmployeeIdentifier]" Font="Arial, 9pt"/>
       <TextObject Name="Kind" Left="415" Width="130" Height="20" Text="[Results.KindName]" Font="Arial, 9pt"/>
-      <TextObject Name="Value" Left="570" Width="110" Height="20" Text="[Results.ResultNumericValue]" Format="Currency" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Value" Left="570" Width="110" Height="20" Text="[Results.ResultNumericValue]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.CurrencySymbol="$" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" Font="Arial, 9pt"/>
     </DataBand>
-    <PageFooterBand Name="PageFooter" Top="88" Width="720" Height="30">
+    <PageFooterBand Name="PageFooter" Top="88" Width="718.2" Height="30">
       <TextObject Name="Text12" Left="20" Top="10" Width="120" Height="20" Text="[Date]" Font="Arial, 9pt"/>
       <TextObject Name="Text13" Left="570" Top="10" Width="110" Height="20" Text="[PageNofM]" HorzAlign="Right" Font="Arial, 9pt"/>
     </PageFooterBand>

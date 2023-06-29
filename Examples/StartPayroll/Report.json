@@ -37,9 +37,14 @@
               ],
               "templates": [
                 {
-                  "name": "StartReportTemplate",
-                  "language": "English",
-                  "contentFile": "Report.frx"
+                  "name": "StartReportTemplate English",
+                  "contentFile": "Report.English.frx",
+                  "culture": "en"
+                },
+                {
+                  "name": "StartReportTemplate German",
+                  "contentFile": "Report.German.frx",
+                  "culture": "de"
                 }
               ]
             }
