@@ -273,7 +273,7 @@
                 "null",
                 "string"
               ],
-              "description": "The users culture",
+              "description": "The user culture name based on RFC 4646",
               "maxLength": 128,
               "minLength": 0
             },
@@ -673,7 +673,7 @@
             },
             "culture": {
               "type": "string",
-              "description": "The culture including the calendar, fallback for employee culture",
+              "description": "The division culture name based on RFC 4646 (fallback: tenant culture)",
               "maxLength": 128,
               "minLength": 0
             },
@@ -682,7 +682,7 @@
                 "null",
                 "string"
               ],
-              "description": "The division calendar, fallback is the tenant calendar",
+              "description": "The division calendar (fallback: tenant calendar)",
               "maxLength": 128,
               "minLength": 0
             },
@@ -2168,7 +2168,7 @@
                 "null",
                 "string"
               ],
-              "description": "The wage type calendar"
+              "description": "The wage type calendar (fallback: employee calendar)"
             },
             "collectors": {
               "type": [
@@ -3875,7 +3875,7 @@
                 "null",
                 "string"
               ],
-              "description": "The culture including the calendar, fallback is the division culture",
+              "description": "The employee culture name based on RFC 4646 (fallback: division culture)",
               "maxLength": 128,
               "minLength": 0
             },
@@ -3884,7 +3884,7 @@
                 "null",
                 "string"
               ],
-              "description": "The employee calendar, fallback is the division calendar",
+              "description": "The employee calendar (fallback: division calendar)",
               "maxLength": 128,
               "minLength": 0
             },
@@ -5852,7 +5852,7 @@
                 "null",
                 "string"
               ],
-              "description": "The culture including the calendar",
+              "description": "The tenant culture name based on RFC 4646 (fallback: system culture)",
               "maxLength": 128,
               "minLength": 0
             },
@@ -5861,7 +5861,7 @@
                 "null",
                 "string"
               ],
-              "description": "The tenant calendar, fallback is the default calendar",
+              "description": "The tenant calendar (fallback: default calendar)",
               "maxLength": 128,
               "minLength": 0
             },
