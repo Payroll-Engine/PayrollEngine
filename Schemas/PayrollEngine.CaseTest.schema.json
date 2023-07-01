@@ -1316,6 +1316,13 @@
                 }
               ]
             },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The case field culture name based on RFC 4646"
+            },
             "valueMandatory": {
               "type": "boolean",
               "description": "Mandatory case field value"
