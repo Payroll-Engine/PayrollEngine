@@ -397,7 +397,7 @@
           "properties": {
             "name": {
               "type": "string",
-              "description": "The division name",
+              "description": "The calendar name",
               "maxLength": 128,
               "minLength": 0
             },
@@ -406,13 +406,13 @@
                 "null",
                 "object"
               ],
-              "description": "The localized division names",
+              "description": "The localized calendar names",
               "additionalProperties": {
                 "type": "string"
               }
             },
             "cycleTimeUnit": {
-              "description": "The cycle time unit",
+              "description": "The cycle time unit (default: year)",
               "oneOf": [
                 {
                   "$ref": "#/definitions/CalendarTimeUnit"
@@ -420,7 +420,7 @@
               ]
             },
             "periodTimeUnit": {
-              "description": "The period time unit",
+              "description": "The period time unit (default: calendar month)",
               "oneOf": [
                 {
                   "$ref": "#/definitions/CalendarTimeUnit"
@@ -428,7 +428,7 @@
               ]
             },
             "timeMap": {
-              "description": "The time map",
+              "description": "The time map (default: period)",
               "oneOf": [
                 {
                   "$ref": "#/definitions/CalendarTimeMap"
@@ -436,7 +436,7 @@
               ]
             },
             "firstMonthOfYear": {
-              "description": "The first month of a year",
+              "description": "The first month of a year  (default: january)",
               "oneOf": [
                 {
                   "type": "null"
@@ -446,12 +446,12 @@
                 }
               ]
             },
-            "monthDayCount": {
+            "periodDayCount": {
               "type": [
                 "null",
                 "number"
               ],
-              "description": "Override the effective month day count",
+              "description": "Override the effective period day count",
               "format": "decimal"
             },
             "yearWeekRule": {
@@ -486,38 +486,38 @@
             },
             "workMonday": {
               "type": "boolean",
-              "description": "Work on monday"
+              "description": "Work on monday (default: true), used by WorkWeek "
             },
             "workTuesday": {
               "type": "boolean",
-              "description": "Work on tuesday"
+              "description": "Work on tuesday (default: true), used by WorkWeek "
             },
             "workWednesday": {
               "type": "boolean",
-              "description": "Work on wednesday"
+              "description": "Work on wednesday (default: true), used by WorkWeek "
             },
             "workThursday": {
               "type": "boolean",
-              "description": "Work on thursday"
+              "description": "Work on thursday (default: true), used by WorkWeek "
             },
             "workFriday": {
               "type": "boolean",
-              "description": "Work on friday"
+              "description": "Work on friday (default: true), used by WorkWeek "
             },
             "workSaturday": {
               "type": "boolean",
-              "description": "Work on saturday"
+              "description": "Work on saturday (default: false), used by WorkWeek "
             },
             "workSunday": {
               "type": "boolean",
-              "description": "Work on sunday"
+              "description": "Work on sunday (default: false), used by WorkWeek "
             },
             "attributes": {
               "type": [
                 "null",
                 "object"
               ],
-              "description": "Custom attributes",
+              "description": "Custom object attributes",
               "additionalProperties": {}
             }
           }
