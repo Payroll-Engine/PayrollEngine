@@ -221,7 +221,7 @@
     "ReportParameter": {
       "allOf": [
         {
-          "$ref": "#/definitions/Model"
+          "$ref": "#/definitions/ModelBase"
         },
         {
           "type": "object",
@@ -387,7 +387,7 @@
         "Inactive"
       ]
     },
-    "Model": {
+    "ModelBase": {
       "type": "object",
       "description": "Base for all Payroll models",
       "x-abstract": true,
