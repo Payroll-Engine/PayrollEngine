@@ -1,0 +1,61 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.CaseTest.schema.json",
+  "testName": "Test.UId",
+  "tenantIdentifier": "ActionTenant",
+  "userIdentifier": "lucy.smith@foo.com",
+  "employeeIdentifier": "mario.nuñez@foo.com",
+  "payrollName": "ActionPayroll",
+  "validateTests": [
+    {
+      "testName": "UId.Valid.999999996.Test",
+      "input": {
+        "userIdentifier": "lucy.smith@foo.com",
+        "employeeIdentifier": "mario.nuñez@foo.com",
+        "divisionName": "ActionDivision",
+        "case": {
+          "caseName": "UId",
+          "values": [
+            {
+              "caseFieldName": "UId",
+              "value": "999999996"
+            }
+          ]
+        }
+      },
+      "output": {
+        "values": [
+          {
+            "caseFieldName": "UId",
+            "value": "999999996"
+          }
+        ]
+      }
+    },
+    {
+      "testName": "UId.Invalid.999999997.Test",
+      "input": {
+        "userIdentifier": "lucy.smith@foo.com",
+        "employeeIdentifier": "mario.nuñez@foo.com",
+        "divisionName": "ActionDivision",
+        "case": {
+          "caseName": "UId",
+          "values": [
+            {
+              "caseFieldName": "UId",
+              "value": "999999997"
+            }
+          ]
+        }
+      },
+      "output": {
+        "issues": [
+          {
+            "caseFieldName": "UId",
+            "issueType" : "CaseInvalid",
+            "number": 400
+          }
+        ]
+      }
+    }
+  ]
+}

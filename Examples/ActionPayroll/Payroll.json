@@ -36,11 +36,9 @@
               "values": [
                 {
                   "key": "InvalidUId",
-                  "value": "(0) with invalid UID: (1)",
+                  "value": "(0) is invalid: (1)",
                   "valueLocalizations": {
-                    "de": "(0) mit ungültiger UID: (1)",
-                    "fr": "(0) avec un UID invalide: (1)",
-                    "it": "(0) con UID non valido: (1)"
+                    "de": "(0) ist ungültig: (1)"
                   }
                 }
               ]
@@ -61,7 +59,11 @@
                   "defaultStart": "today",
                   "validateActions": [
                     "MyActions.CheckUId"
-                  ]
+                  ],
+                  "attributes": {
+                    "input.valueMask": "CHE-000.000.000",
+                    "input.valueHelp": "Format CHE-123.456.789"
+                  }
                 }
               ]
             }
