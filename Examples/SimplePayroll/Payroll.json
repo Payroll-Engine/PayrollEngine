@@ -995,7 +995,6 @@
               "wageTypeNumber": 101.5,
               "name": "Monatslohn.WorkDay",
               "periodValues": true,
-              "calendar": "MonthAverageWorkDay",
               "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]"
             },
             {

@@ -1,0 +1,94 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "ActionTenant",
+      "users": [
+        {
+          "identifier": "lucy.smith@foo.com",
+          "firstName": "Lucy",
+          "lastName": "Smith",
+          "culture": "en-US"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "ActionDivision"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "mario.nuñez@foo.com",
+          "firstName": "Mario",
+          "lastName": "Nuñez",
+          "divisions": [
+            "ActionDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "ActionRegulation",
+          "lookups": [
+            {
+              "name": "MyActions.Actions",
+              "values": [
+                {
+                  "key": "InvalidUId",
+                  "value": "(0) with invalid UID: (1)",
+                  "valueLocalizations": {
+                    "de": "(0) mit ungültiger UID: (1)",
+                    "fr": "(0) avec un UID invalide: (1)",
+                    "it": "(0) con UID non valido: (1)"
+                  }
+                }
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "name": "UId",
+              "caseType": "Employee",
+              "defaultReason": "Test UId",
+              "validateExpression": "true",
+              "fields": [
+                {
+                  "name": "UId",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "defaultStart": "today",
+                  "validateActions": [
+                    "MyActions.CheckUId"
+                  ]
+                }
+              ]
+            }
+          ],
+          "scripts": [
+            {
+              "name": "MyActions",
+              "functionTypes": [
+                "CaseChange"
+              ],
+              "valueFile": "Scripts\\MyActions.cs"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "ActionPayroll",
+          "divisionName": "ActionDivision",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "ActionRegulation"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -26,12 +26,12 @@ public class MyCaseBuildActions : CaseChangeActionsBase
         var valueType = context.Function.GetValueType(context.CaseFieldName).ToActionValueType();
         if (valueType == ActionValueType.Integer)
         {
-            var maximumValue = NewActionValue<int?>(context, maximum);
+            var maximumValue = GetActionValue<int?>(context, maximum);
             if (maximumValue?.ResolvedValue == null || !maximumValue.IsFulfilled)
             {
                 return;
             }
-            var sourceValue = NewCaseFieldActionValue<int>(context);
+            var sourceValue = GetActionValue<int>(context);
             if (sourceValue != null && sourceValue.ResolvedValue > maximumValue.ResolvedValue)
             {
                 context.Function.SetValue(context.CaseFieldName, maximumValue.ResolvedValue);
@@ -39,12 +39,12 @@ public class MyCaseBuildActions : CaseChangeActionsBase
         }
         else if (valueType == ActionValueType.Decimal)
         {
-            var maximumValue = NewActionValue<decimal?>(context, maximum);
+            var maximumValue = GetActionValue<decimal?>(context, maximum);
             if (maximumValue?.ResolvedValue == null || !maximumValue.IsFulfilled)
             {
                 return;
             }
-            var sourceValue = NewCaseFieldActionValue<decimal>(context);
+            var sourceValue = GetActionValue<decimal>(context);
             if (sourceValue != null && sourceValue.ResolvedValue > maximumValue.ResolvedValue)
             {
                 context.Function.SetValue(context.CaseFieldName, maximumValue.ResolvedValue);
@@ -52,12 +52,12 @@ public class MyCaseBuildActions : CaseChangeActionsBase
         }
         else if (valueType == ActionValueType.DateTime)
         {
-            var maximumValue = NewActionValue<DateTime?>(context, maximum);
+            var maximumValue = GetActionValue<DateTime?>(context, maximum);
             if (maximumValue?.ResolvedValue == null || !maximumValue.IsFulfilled)
             {
                 return;
             }
-            var sourceValue = NewCaseFieldActionValue<DateTime>(context);
+            var sourceValue = GetActionValue<DateTime>(context);
             if (sourceValue != null && sourceValue.ResolvedValue != maximumValue.ResolvedValue)
             {
                 context.Function.SetValue(context.CaseFieldName, maximumValue.ResolvedValue);

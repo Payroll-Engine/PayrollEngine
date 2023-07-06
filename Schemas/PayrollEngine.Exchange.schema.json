@@ -651,8 +651,7 @@
           "type": "object",
           "description": "The payroll division client object",
           "required": [
-            "name",
-            "culture"
+            "name"
           ],
           "properties": {
             "name": {
@@ -672,7 +671,10 @@
               }
             },
             "culture": {
-              "type": "string",
+              "type": [
+                "null",
+                "string"
+              ],
               "description": "The division culture name based on RFC 4646 (fallback: tenant culture)",
               "maxLength": 128,
               "minLength": 0

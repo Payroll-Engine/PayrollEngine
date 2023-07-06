@@ -161,7 +161,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
                 // lookup column
                 new("Location", "Location")
             },
-            Culture);
+            UserCulture);
         AddTable(caseValuesTable);
 
         // employee to case value relation

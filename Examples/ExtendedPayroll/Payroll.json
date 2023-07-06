@@ -3,18 +3,19 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "StartTenant",
+      "identifier": "ExtendedTenant",
       "culture": "en-US",
       "users": [
         {
           "identifier": "lucy.smith@foo.com",
           "firstName": "Lucy",
-          "lastName": "Smith"
+          "lastName": "Smith",
+          "culture": "en-US"
         }
       ],
       "divisions": [
         {
-          "name": "StartDivision"
+          "name": "ExtendedDivision"
         }
       ],
       "employees": [
@@ -23,13 +24,13 @@
           "firstName": "Mario",
           "lastName": "Nuñez",
           "divisions": [
-            "StartDivision"
+            "ExtendedDivision"
           ]
         }
       ],
       "regulations": [
         {
-          "name": "StartRegulation",
+          "name": "ExtendedRegulation",
           "cases": [
             {
               "name": "Salary",
@@ -40,13 +41,7 @@
                 {
                   "name": "Salary",
                   "valueType": "Money",
-                  "timeType": "CalendarPeriod",
-                  "buildActions": [
-                    "Limit(500, 25000)"
-                  ],
-                  "validateActions": [
-                    "ValueBetween(500, 25000)"
-                  ]
+                  "timeType": "CalendarPeriod"
                 }
               ]
             }
@@ -55,27 +50,43 @@
             {
               "wageTypeNumber": 100,
               "name": "Salary",
-              "valueExpression": "CaseValue[\"Salary\"]"
+              "valueExpression": "MyRegulation.GetSalary()"
+            }
+          ],
+          "scripts": [
+            {
+              "name": "WageTypeValueFunction",
+              "functionTypes": [
+                "WageTypeValue"
+              ],
+              "valueFile": "Scripts\\WageTypeValueFunction.cs"
+            },
+            {
+              "name": "CompositeWageTypeValueFunction",
+              "functionTypes": [
+                "WageTypeValue"
+              ],
+              "valueFile": "Scripts\\CompositeWageTypeValueFunction.cs"
             }
           ]
         }
       ],
       "payrolls": [
         {
-          "name": "StartPayroll",
-          "divisionName": "StartDivision",
+          "name": "ExtendedPayroll",
+          "divisionName": "ExtendedDivision",
           "layers": [
             {
               "level": 1,
-              "regulationName": "StartRegulation"
+              "regulationName": "ExtendedRegulation"
             }
           ]
         }
       ],
       "payruns": [
         {
-          "name": "StartPayrun",
-          "payrollName": "StartPayroll"
+          "name": "ExtendedPayrun",
+          "payrollName": "ExtendedPayroll"
         }
       ]
     }
