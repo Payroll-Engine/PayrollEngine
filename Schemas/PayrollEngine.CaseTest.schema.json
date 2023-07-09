@@ -1737,6 +1737,10 @@
                 }
               ]
             },
+            "hidden": {
+              "type": "boolean",
+              "description": "Hidden case (default: false)"
+            },
             "availableExpression": {
               "type": [
                 "null",

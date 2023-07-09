@@ -797,6 +797,25 @@
               ]
             },
             {
+              "name": "HiddenCase",
+              "description": "This case should not be visible",
+              "caseType": "Employee",
+              "hidden": true,
+              "fields": [
+                {
+                  "name": "HiddenCaseField",
+                  "timeType": "Period",
+                  "valueType": "Integer"
+                }
+              ]
+            },
+            {
+              "name": "HiddenBaseCase",
+              "description": "This case uses a hidden base case",
+              "caseType": "Employee",
+              "baseCase": "HiddenCase"
+            },
+            {
               "name": "ValueNone",
               "description": "ValueNone Description",
               "caseType": "Employee",
