@@ -260,24 +260,19 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
-              "collectType": "Sum"
+              "name": "AHV Basis"
             },
             {
-              "name": "QST Basis",
-              "collectType": "Sum"
+              "name": "QST Basis"
             },
             {
-              "name": "Bruttolohn",
-              "collectType": "Sum"
+              "name": "Bruttolohn"
             },
             {
-              "name": "UVG Basis",
-              "collectType": "Sum"
+              "name": "UVG Basis"
             },
             {
-              "name": "KTG Basis",
-              "collectType": "Sum"
+              "name": "KTG Basis"
             }
           ],
           "wageTypes": [

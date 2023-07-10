@@ -13,6 +13,7 @@
             {
               "name": "StartReport",
               "queries": {
+                "Employees": "QueryEmployees",
                 "Results": "QueryPayrollResultValues"
               },
               "parameters": [

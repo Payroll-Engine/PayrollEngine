@@ -294,23 +294,19 @@
           "collectors": [
             {
               "name": "AHV Basis",
-              "collectType": "Sum",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "name": "QST Basis",
-              "collectType": "Sum",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "name": "Credit",
-              "collectType": "Sum",
               "resultName": "Credit",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "name": "Debit",
-              "collectType": "Sum",
               "resultName": "Debit",
               "created": "2019-01-01T00:00:00.0Z"
             }

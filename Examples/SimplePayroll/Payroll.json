@@ -932,25 +932,20 @@
           "collectors": [
             {
               "name": "AHV Basis",
-              "collectType": "Sum",
               "endExpression": "ResultAttribute[\"Canton\"] = \"AG\"; ResultAttribute[\"Tari\"] = \"A0N\"; AddCustomResult(CollectorName, 2200, CycleStart, PeriodEnd); ; SetResultTags(new[] { \"MyColKey\" });"
             },
             {
-              "name": "Credit",
-              "collectType": "Sum"
+              "name": "Credit"
             },
             {
-              "name": "Debit",
-              "collectType": "Sum"
+              "name": "Debit"
             },
             {
               "name": "Mindestlohn monatlich",
-              "collectType": "Sum",
               "endExpression": "SetValues( new decimal[] { 36000m / 12 } );"
             },
             {
               "name": "Höchstlohn monatlich",
-              "collectType": "Sum",
               "startExpression": "SetValues( new decimal[] { 80000m / 12 } );"
             }
           ],

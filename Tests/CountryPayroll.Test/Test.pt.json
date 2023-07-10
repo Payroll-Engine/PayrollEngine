@@ -104,7 +104,6 @@
           "collectors": [
             {
               "name": "AHV Basis",
-              "collectType": "Sum",
               "created": "2019-01-01T00:00:00.0Z"
             }
           ],

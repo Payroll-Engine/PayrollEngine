@@ -2262,8 +2262,7 @@
           "type": "object",
           "description": "The payroll collector client object",
           "required": [
-            "name",
-            "collectType"
+            "name"
           ],
           "properties": {
             "name": {
@@ -2283,7 +2282,7 @@
               }
             },
             "collectType": {
-              "description": "The collection type (immutable)",
+              "description": "The collection type (immutable, default: summary)",
               "oneOf": [
                 {
                   "$ref": "#/definitions/CollectType"
@@ -2408,17 +2407,19 @@
       "type": "string",
       "description": "The collect type",
       "x-enumNames": [
-        "Sum",
-        "Min",
-        "Max",
+        "Summary",
+        "Minimum",
+        "Maximum",
         "Average",
+        "Range",
         "Count"
       ],
       "enum": [
-        "Sum",
-        "Min",
-        "Max",
+        "Summary",
+        "Minimum",
+        "Maximum",
         "Average",
+        "Range",
         "Count"
       ]
     },

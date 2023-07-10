@@ -86,12 +86,12 @@
               "value": 5000
             },
             {
-              "wageTypeNumber": 200,
-              "value": 45
+              "wageTypeNumber": 100.1,
+              "value": 475
             },
             {
-              "wageTypeNumber": 300,
-              "value": 475
+              "wageTypeNumber": 200,
+              "value": 45
             }
          ]
         }

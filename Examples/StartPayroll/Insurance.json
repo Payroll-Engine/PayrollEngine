@@ -38,7 +38,10 @@
             {
               "wageTypeNumber": 200,
               "name": "InsuranceRate",
-              "valueExpression": "GetRangeLookup<decimal>(\"InsuranceRate\", WageType[100])"
+              "valueExpression": "GetRangeLookup<decimal>(\"InsuranceRate\", WageType[100])",
+              "collectors": [
+                "Deduction"
+              ]
             }
           ]
         }

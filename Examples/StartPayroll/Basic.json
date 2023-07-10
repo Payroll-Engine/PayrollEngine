@@ -51,11 +51,22 @@
               ]
             }
           ],
+          "collectors": [
+            {
+              "name": "Income"
+            },
+            {
+              "name": "Deduction"
+            }
+          ],
           "wageTypes": [
             {
               "wageTypeNumber": 100,
               "name": "Salary",
-              "valueExpression": "CaseValue[\"Salary\"]"
+              "valueExpression": "CaseValue[\"Salary\"]",
+              "collectors": [
+                "Income"
+              ]
             }
           ]
         }

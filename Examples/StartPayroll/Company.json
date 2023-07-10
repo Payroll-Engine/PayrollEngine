@@ -26,9 +26,12 @@
           ],
           "wageTypes": [
             {
-              "wageTypeNumber": 300,
+              "wageTypeNumber": 100.1,
               "name": "Benefit",
-              "valueExpression": "CaseValue[\"Benefit\"]"
+              "valueExpression": "CaseValue[\"Benefit\"]",
+              "collectors": [
+                "Income"
+              ]
             }
           ]
         }
