@@ -2281,13 +2281,17 @@
                 "type": "string"
               }
             },
-            "collectType": {
-              "description": "The collection type (immutable, default: summary)",
+            "collectMode": {
+              "description": "The collect mode (immutable, default: summary)",
               "oneOf": [
                 {
-                  "$ref": "#/definitions/CollectType"
+                  "$ref": "#/definitions/CollectMode"
                 }
               ]
+            },
+            "negated": {
+              "type": "boolean",
+              "description": "Negated collector result (immutable, default: false)"
             },
             "overrideType": {
               "description": "The override type",
@@ -2403,9 +2407,9 @@
         }
       ]
     },
-    "CollectType": {
+    "CollectMode": {
       "type": "string",
-      "description": "The collect type",
+      "description": "The collect mode",
       "x-enumNames": [
         "Summary",
         "Minimum",
@@ -5600,13 +5604,17 @@
                 "type": "string"
               }
             },
-            "collectType": {
-              "description": "The collection type (immutable)",
+            "collectMode": {
+              "description": "The collect mode (immutable)",
               "oneOf": [
                 {
-                  "$ref": "#/definitions/CollectType"
+                  "$ref": "#/definitions/CollectMode"
                 }
               ]
+            },
+            "negated": {
+              "type": "boolean",
+              "description": "Negated collector result (immutable)"
             },
             "valueType": {
               "description": "The value type (immutable)",

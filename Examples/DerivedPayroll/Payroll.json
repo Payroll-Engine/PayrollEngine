@@ -322,16 +322,13 @@
           "collectors": [
             {
               "name": "AHV Basis",
-              "collectType": "Sum",
               "endExpression": "ResultAttribute[\"Canton\"] = \"AG\"; ResultAttribute[\"Tari\"] = \"A0N\"; AddCustomResult(CollectorName, 2200, CycleStart, PeriodEnd); ; SetResultTags(new[] { \"MyColKey\" });"
             },
             {
-              "name": "Credit",
-              "collectType": "Sum"
+              "name": "Credit"
             },
             {
-              "name": "Debit",
-              "collectType": "Sum"
+              "name": "Debit"
             }
           ],
           "wageTypes": [

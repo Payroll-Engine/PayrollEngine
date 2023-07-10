@@ -308,6 +308,7 @@
             {
               "name": "Debit",
               "resultName": "Debit",
+              "negated": true,
               "created": "2019-01-01T00:00:00.0Z"
             }
           ],
@@ -336,7 +337,7 @@
             {
               "wageTypeNumber": 101.2,
               "name": "Monatslohn.Debit",
-              "valueExpression": "CaseValue[\"Monatslohn\"] * -0.05M",
+              "valueExpression": "CaseValue[\"Monatslohn\"] * 0.05M",
               "collectors": [
                 "Debit"
               ],

@@ -56,7 +56,8 @@
               "name": "Income"
             },
             {
-              "name": "Deduction"
+              "name": "Deduction",
+              "negated": true
             }
           ],
           "wageTypes": [

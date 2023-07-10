@@ -35,7 +35,7 @@
     <PageHeaderBand Name="DataHeader" Top="42.67" Width="718.2" Height="10"/>
     <DataBand Name="Employee" Top="55.33" Width="718.2" Height="65" DataSource="Employees">
       <TextObject Name="EmployeeTitle" Left="20" Top="35" Width="660" Height="30" Text="[Employees.FirstName] [Employees.LastName] ([Employees.Identifier])" Font="Arial, 12pt"/>
-      <DataBand Name="Result" Top="144.57" Width="718.2" Height="20" VisibleExpression="[Results.ResultNumericValue] &gt; 0" DataSource="Results">
+      <DataBand Name="Result" Top="144.57" Width="718.2" Height="20" VisibleExpression="[Results.ResultNumericValue] != 0" DataSource="Results">
         <TextObject Name="PeriodName" Left="20" Width="125" Height="20" Text="[Results.PeriodName]" Font="Arial, 10pt"/>
         <TextObject Name="ResultKind" Left="189" Width="189" Height="20" Text="[Results.KindName]" Font="Arial, 10pt"/>
         <TextObject Name="ResultValue" Left="530" Width="150" Height="20" Text="[Results.ResultNumericValue]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.CurrencySymbol="€" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" Font="Arial, 10pt"/>
@@ -50,6 +50,9 @@
           <TextObject Name="KindTitle" Left="189" Width="189" Height="15" Text="Art" Font="Arial, 8pt"/>
           <TextObject Name="ValueTitle" Left="530" Width="150" Height="15" Text="Wert" HorzAlign="Right" Font="Arial, 8pt"/>
         </DataHeaderBand>
+        <Sort>
+          <Sort Expression="[Results.ResultKind]" Descending="true"/>
+        </Sort>
       </DataBand>
     </DataBand>
     <PageFooterBand Name="PageFooter" Top="167.23" Width="718.2" Height="30">
