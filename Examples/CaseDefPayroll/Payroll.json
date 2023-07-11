@@ -1,15 +1,16 @@
 {
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
-  "createdObjectDate": "2019-01-01T00:00:00.0Z",
+  "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
       "identifier": "CaseDefPayroll",
+      "culture": "en-US",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
           "firstName": "Peter",
           "lastName": "Schmid",
-          "culture": "de-CH",
+          "culture": "en-US",
           "userType": "Supervisor",
           "attributes": {
             "StartupPayroll": "CaseDefPayroll.Derived",
@@ -20,8 +21,7 @@
       ],
       "divisions": [
         {
-          "name": "CaseDefDivision",
-          "culture": "de-CH"
+          "name": "CaseDefDivision"
         }
       ],
       "employees": [
@@ -117,7 +117,6 @@
             },
             {
               "name": "SimpleLookupValues",
-              "created": "2021-01-18T00:00:00.0Z",
               "values": [
                 {
                   "key": "200",
@@ -144,7 +143,6 @@
             },
             {
               "name": "MultiLookupValues",
-              "created": "2021-01-18T00:00:00.0Z",
               "values": [
                 {
                   "key": "300",
@@ -283,7 +281,6 @@
                   "description": "The child birth date",
                   "valueType": "Date",
                   "defaultStart": "today",
-                  "defaultValue": "2019-01-01T00:00:00.0Z",
                   "timeType": "Period"
                 }
               ]
@@ -415,10 +412,10 @@
                 },
                 {
                   "name": "ExpressionString",
-                  "description": "ExpressionString Description [defaultStart=1.10.2020]",
+                  "description": "ExpressionString Description [defaultStart=1.10.2023]",
                   "valueType": "String",
                   "timeType": "CalendarPeriod",
-                  "defaultStart": "2020-10-01T00:00:00.0Z",
+                  "defaultStart": "2023-10-01T00:00:00.0Z",
                   "order": 10
                 },
                 {
@@ -483,18 +480,18 @@
                   "order": 310
                 },
                 {
-                  "name": "Money CH",
-                  "description": "Money CH Description [culture=de-CH]",
+                  "name": "Money en-US",
+                  "description": "Money en-US Description [culture=en-US]",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "order": 314,
                   "attributes": {
-                    "input.culture": "de-CH"
+                    "input.culture": "en-US"
                   }
                 },
                 {
-                  "name": "Money DE",
-                  "description": "Money DE Description [culture=de-DE]",
+                  "name": "Money de-DE",
+                  "description": "Money de-DE Description [culture=de-DE]",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "order": 315,
@@ -769,8 +766,8 @@
                   "timeType": "Period",
                   "defaultStart": "today",
                   "attributes": {
-                    "input.list": "[\"2023-06-21T00:00:00.0Z\", \"2023-07-18T00:00:00.0Z\", \"2023-11-22T00:00:00.0Z\"]",
-                    "input.listSelection": "2023-07-18T00:00:00.0Z"
+                    "input.list": "[\"2024-06-21T00:00:00.0Z\", \"2024-07-18T00:00:00.0Z\", \"2024-11-22T00:00:00.0Z\"]",
+                    "input.listSelection": "2024-07-18T00:00:00.0Z"
                   }
                 },
                 {
@@ -780,8 +777,8 @@
                   "defaultStart": "today",
                   "attributes": {
                     "input.list": "[\"First date\", \"Second date\", \"Third date\"]",
-                    "input.listValues": "[\"2023-07-18T18:00:00.0Z\", \"2023-08-22T13:00:00.0Z\", \"2023-10-07T09:30:00.0Z\"]",
-                    "input.listSelection": "2023-10-07T09:30:00.0Z"
+                    "input.listValues": "[\"2024-07-18T18:00:00.0Z\", \"2024-08-22T13:00:00.0Z\", \"2024-10-07T09:30:00.0Z\"]",
+                    "input.listSelection": "2024-10-07T09:30:00.0Z"
                   }
                 },
                 {
@@ -790,8 +787,8 @@
                   "timeType": "Period",
                   "defaultStart": "today",
                   "attributes": {
-                    "input.list": "[\"2023-07-18T18:00:00.0Z\", \"2023-08-22T13:00:00.0Z\", \"2023-10-07T09:30:00.0Z\"]",
-                    "input.listSelection": "2023-08-22T13:00:00.0Z"
+                    "input.list": "[\"2024-07-18T18:00:00.0Z\", \"2024-08-22T13:00:00.0Z\", \"2024-10-07T09:30:00.0Z\"]",
+                    "input.listSelection": "2024-08-22T13:00:00.0Z"
                   }
                 }
               ]
@@ -999,7 +996,6 @@
               "name": "Simple Lookups",
               "caseType": "Employee",
               "defaultReason": "Test Simple Lookups",
-              "created": "2021-01-18T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Simple Lookups",
@@ -1009,8 +1005,7 @@
                     "lookupName": "SimpleLookupValues",
                     "textFieldName": "name",
                     "valueFieldName": "name"
-                  },
-                  "created": "2021-01-18T00:00:00.0Z"
+                  }
                 }
               ]
             },

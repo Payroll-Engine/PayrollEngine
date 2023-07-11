@@ -1,9 +1,10 @@
 {
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
       "identifier": "DerivedPayroll",
-      "created": "2019-01-01T00:00:00.0Z",
+      "culture": "en-US",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -11,9 +12,8 @@
           "culture": "it-IT",
           "lastName": "Schmid",
           "userType": "Supervisor",
-          "created": "2019-01-01T00:00:00.0Z",
           "attributes": {
-            "StartupPayroll" : "DerivedPayroll.Derived",
+            "StartupPayroll": "DerivedPayroll.Derived",
             "StartupEmployee": "višnja.müller@foo.com",
             "StartupPage": "regulation"
           }
@@ -21,9 +21,7 @@
       ],
       "divisions": [
         {
-          "name": "DerivedDivision",
-          "culture": "de-CH",
-          "created": "2019-01-01T00:00:00.0Z"
+          "name": "DerivedDivision"
         }
       ],
       "employees": [
@@ -33,39 +31,33 @@
           "lastName": "Müller",
           "divisions": [
             "DerivedDivision"
-          ],
-          "created": "2019-01-01T00:00:00.0Z"
+          ]
         }
       ],
       "regulations": [
         {
           "name": "DerivedPayrollRoot",
           "description": "The root root payroll",
-          "created": "2019-01-01T00:00:00.0Z",
           "cases": [
             {
               "name": "AHV",
               "caseType": "National",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "AHV",
                   "valueType": "Decimal",
-                  "timeType": "CalendarPeriod",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
               "name": "Monatsfaktor",
               "caseType": "Company",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Monatsfaktor",
                   "valueType": "Decimal",
-                  "timeType": "CalendarPeriod",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
@@ -76,7 +68,6 @@
               },
               "description": "Monatslohn Root",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "lookups": [
                 "a",
                 "b",
@@ -93,34 +84,29 @@
                   "attributes": {
                     "BaseAttribute1": "MyValue1",
                     "BaseAttribute2": "MyValue2"
-                  },
-                  "created": "2019-01-01T00:00:00.0Z"
+                  }
                 }
               ]
             },
             {
               "name": "Kaderstufe",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Kaderstufe",
                   "valueType": "Integer",
-                  "timeType": "Period",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "timeType": "Period"
                 }
               ]
             },
             {
               "name": "Grundeinkommen",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Grundeinkommen",
                   "valueType": "Money",
-                  "timeType": "CalendarPeriod",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             }
@@ -128,35 +114,30 @@
           "caseRelations": [
             {
               "sourceCaseName": "Monatslohn",
-              "targetCaseName": "Kaderstufe",
-              "created": "2019-01-01T00:00:00.0Z"
+              "targetCaseName": "Kaderstufe"
             },
             {
               "sourceCaseName": "Monatslohn",
               "targetCaseName": "Grundeinkommen",
-              "buildExpression": " var value = (decimal?)SourceValue[\"Monatslohn\"]; TargetValue[\"Grundeinkommen\"] = value.HasValue ? value.Value * 0.125M : 0; TargetStart[\"Grundeinkommen\"] = SourceStart[\"Monatslohn\"]?.AddMonths(3); TargetEnd[\"Grundeinkommen\"] = SourceEnd[\"Monatslohn\"]?.AddMonths(3)",
-              "created": "2019-01-01T00:00:00.0Z"
+              "buildExpression": " var value = (decimal?)SourceValue[\"Monatslohn\"]; TargetValue[\"Grundeinkommen\"] = value.HasValue ? value.Value * 0.125M : 0; TargetStart[\"Grundeinkommen\"] = SourceStart[\"Monatslohn\"]?.AddMonths(3); TargetEnd[\"Grundeinkommen\"] = SourceEnd[\"Monatslohn\"]?.AddMonths(3)"
             }
           ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
               "name": "Monatslohn 1",
-              "valueExpression": "CaseValue[\"Monatslohn\"]",
-              "created": "2019-01-01T00:00:00.0Z"
+              "valueExpression": "CaseValue[\"Monatslohn\"]"
             },
             {
               "wageTypeNumber": 102,
               "name": "Monatslohn 2",
               "valueExpression": "CaseValue[\"Monatslohn\"]",
-              "resultExpression": "Attribute[\"Name\"] = \"Test\"; Attribute[\"Value\"] = 100",
-              "created": "2019-01-01T00:00:00.0Z"
+              "resultExpression": "Attribute[\"Name\"] = \"Test\"; Attribute[\"Value\"] = 100"
             },
             {
               "wageTypeNumber": 103,
               "name": "Monatslohn 3",
-              "valueExpression": "/* #sealed */ return (decimal)CaseValue[\"Monatslohn\"];",
-              "created": "2019-01-01T00:00:00.0Z"
+              "valueExpression": "/* #sealed */ return (decimal)CaseValue[\"Monatslohn\"];"
             }
           ]
         },
@@ -164,7 +145,6 @@
           "name": "DerivedPayroll",
           "parentPayrollName": "DerivedPayrollRoot",
           "description": "The derived payroll",
-          "created": "2019-01-01T00:00:00.0Z",
           "baseRegulations": [
             "DerivedPayrollRoot"
           ],
@@ -177,7 +157,6 @@
               },
               "description": "Monatslohn Derived",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Monatslohn",
@@ -191,21 +170,18 @@
                     "DerivedAttribute1": "MyDerivedValue1",
                     "DerivedAttribute2": "MyDerivedValue2",
                     "BaseAttribute2": "MyOverideValue"
-                  },
-                  "created": "2019-01-01T00:00:00.0Z"
+                  }
                 }
               ]
             },
             {
               "name": "Monatslohn Zusatz",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Monatslohn Zusatz",
                   "valueType": "Decimal",
-                  "timeType": "CalendarPeriod",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             }
@@ -214,22 +190,19 @@
             {
               "wageTypeNumber": 102,
               "name": "Monatslohn 2",
-              "valueExpression": "null",
-              "created": "2019-01-01T00:00:00.0Z"
+              "valueExpression": "null"
             },
             {
               "wageTypeNumber": 104,
               "name": "Kaderlohn 1",
-              "valueExpression": "null",
-              "created": "2019-01-01T00:00:00.0Z"
+              "valueExpression": "null"
             }
           ]
-        },        
+        },
         {
           "name": "DerivedPayrollLeave",
           "parentPayrollName": "DerivedPayroll",
           "description": "The derived payroll leave",
-          "created": "2019-01-01T00:00:00.0Z",
           "baseRegulations": [
             "DerivedPayroll"
           ],
@@ -242,7 +215,6 @@
               },
               "description": "Monatslohn Leave",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Monatslohn",
@@ -256,50 +228,43 @@
                     "DerivedAttribute1": "MyDerivedValue3",
                     "DerivedAttribute2": "MyDerivedValue4",
                     "BaseAttribute2": "MyOverideValue"
-                  },
-                  "created": "2019-01-01T00:00:00.0Z"
+                  }
                 },
                 {
                   "name": "Monatslohn Spez",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
-                  "optional": true,
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "optional": true
                 }
               ]
             },
             {
               "name": "AHV Zusatz",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "availableExpression": "CaseValue[\"AHV\"].HasValue",
               "fields": [
                 {
                   "name": "AHV Zusatz",
                   "valueType": "Decimal",
-                  "timeType": "CalendarPeriod",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
               "name": "Kaderstufe",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
                   "name": "Kaderlohn",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
-                  "availableExpression": "(int)CaseValue[\"Kaderstufe\"] > 0;",
-                  "created": "2019-01-01T00:00:00.0Z"
+                  "availableExpression": "(int)CaseValue[\"Kaderstufe\"] > 0;"
                 }
               ]
             },
             {
               "name": "Kaderstufe & Grundeinkommen",
               "caseType": "Employee",
-              "created": "2019-01-01T00:00:00.0Z",
               "baseCaseFields": [
                 {
                   "name": "Kaderstufe",
@@ -315,8 +280,7 @@
           "caseRelations": [
             {
               "sourceCaseName": "Monatslohn Spez",
-              "targetCaseName": "Monatslohn",
-              "created": "2019-01-01T00:00:00.0Z"
+              "targetCaseName": "Monatslohn"
             }
           ],
           "collectors": [
@@ -336,20 +300,17 @@
               "wageTypeNumber": 102,
               "name": "Monatslohn 2",
               "valueExpression": "(decimal)CaseValue[\"Monatslohn\"] * 2",
-              "resultExpression": "Attribute[\"MyName\"] = \"MyTest\"; Attribute[\"Value\"] = 22;",
-              "created": "2019-01-01T00:00:00.0Z"
+              "resultExpression": "Attribute[\"MyName\"] = \"MyTest\"; Attribute[\"Value\"] = 22;"
             },
             {
               "wageTypeNumber": 103,
               "name": "Monatslohn 3",
-              "overrideType": "Inactive",
-              "created": "2019-01-01T00:00:00.0Z"
+              "overrideType": "Inactive"
             },
             {
               "wageTypeNumber": 104,
               "name": "Kaderlohn 1",
-              "valueExpression": "(int)CaseValue[\"Kaderstufe\"] > 0 ? CaseValue[\"Kaderlohn\"] : null",
-              "created": "2019-01-01T00:00:00.0Z"
+              "valueExpression": "(int)CaseValue[\"Kaderstufe\"] > 0 ? CaseValue[\"Kaderlohn\"] : null"
             }
           ],
           "scripts": [
