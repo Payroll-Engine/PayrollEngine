@@ -51,6 +51,16 @@
               "wageTypeNumber": 100,
               "value": 5000
             }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "Income",
+              "value": 500
+            },
+            {
+              "collectorName": "Deduction",
+              "value": 0
+            }
           ]
         }
       ]

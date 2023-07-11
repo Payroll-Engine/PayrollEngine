@@ -93,7 +93,17 @@
               "wageTypeNumber": 200,
               "value": 45
             }
-         ]
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "Income",
+              "value": 5475
+            },
+            {
+              "collectorName": "Deduction",
+              "value": -45
+            }
+          ]
         }
       ]
     }
