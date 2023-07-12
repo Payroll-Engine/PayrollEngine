@@ -337,6 +337,9 @@
               "description": "All Value Types Description",
               "caseType": "Employee",
               "defaultReason": "Test all value types",
+              "attributes": {
+                "input.icon": "Filled.Article"
+              },
               "fields": [
                 {
                   "name": "String",

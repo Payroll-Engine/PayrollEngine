@@ -522,7 +522,6 @@
                     "textFieldName": "name",
                     "valueFieldName": "name"
                   },
-                  "created": "2021-01-18T00:00:00.0Z",
                   "clusters": [
                     "Onboarding",
                     "Legal"

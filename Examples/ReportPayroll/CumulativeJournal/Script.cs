@@ -28,7 +28,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
     [ReportEndScript(
         reportName: "CumulativeJournal",
         culture: "de-CH",
-        parameters: "{ \"Year\": \"2021-01-01T00:00:00.0Z\" }")]
+        parameters: "{ \"Year\": \"2023\"}")]
     public object Execute()
     {
         // employees
@@ -122,17 +122,27 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
             RemoveTables("EmployeeWageTypeResults", "EmployeeCollectorResults", "EmployeeWageTypes", "EmployeeCollectors");
         }
 
-        // total value column
-        wageTypeResults.AddColumn<decimal>("Total", "M1 + M2 + M3 + M4 + M5 + M6 + M7 + M8 + M9 + M10 + M11 + M12");
-        collectorResults.AddColumn<decimal>("Total", "M1 + M2 + M3 + M4 + M5 + M6 + M7 + M8 + M9 + M10 + M11 + M12");
+        // wage type results sum
+        if (wageTypeResults != null && wageTypeResults.Rows.Count > 0)
+        {
+            wageTypeResults.AddColumn<decimal>("Total", "M1 + M2 + M3 + M4 + M5 + M6 + M7 + M8 + M9 + M10 + M11 + M12");
+            // remove empty rows
+            wageTypeResults.DeleteRows("Total = 0");
+            // report relations: results are related toward employee
+            AddRelation("EmployeeWageTypeResults", employees.TableName, wageTypeResults.TableName, "EmployeeId");
+        }
 
-        // remove empty rows
-        wageTypeResults.DeleteRows("Total = 0");
-        collectorResults.DeleteRows("Total = 0");
-
-        // report relations: results are related toward employee
-        AddRelation("EmployeeWageTypeResults", employees.TableName, wageTypeResults.TableName, "EmployeeId");
-        AddRelation("EmployeeCollectorResults", employees.TableName, collectorResults.TableName, "EmployeeId");
+        // collector results sum
+        if (collectorResults != null && collectorResults.Rows.Count > 0)
+        {
+            collectorResults.AddColumn<decimal>("Total", "M1 + M2 + M3 + M4 + M5 + M6 + M7 + M8 + M9 + M10 + M11 + M12");
+            // remove empty rows
+            collectorResults.DeleteRows("Total = 0");
+            // report relations: results are related toward employee
+            AddRelation("EmployeeCollectorResults", employees.TableName, collectorResults.TableName, "EmployeeId");
+        }
+        
+        AddReportLog($"Cumulative Journal Report: {wageTypeResults?.Rows.Count} wage types, {collectorResults?.Rows.Count} collectors");
 
         return null;
     }
