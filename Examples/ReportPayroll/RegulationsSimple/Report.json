@@ -3,20 +3,17 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "Payroll.Report",
+      "identifier": "Report.Tenant",
       "updateMode": "NoUpdate",
       "regulations": [
         {
-          "name": "Payroll.Report",
+          "name": "Report.Regulation",
           "updateMode": "NoUpdate",
           "reports": [
             {
               "name": "RegulationsSimple",
               "nameLocalizations": {
-                "en": "End Query Report EN",
-                "de": "End Query Report DE",
-                "fr": "End Query Report FR",
-                "it": "End Query Report IT"
+                "en": "Regulations Simple Report"
               },
               "clusters": [
                 "Regulation"

@@ -1,2 +1,1 @@
-call PayrollConsole Report StartTenant lucy.smith@foo.com StartRegulation StartReport Report.Parameters.json en /pdf /shellopen
-rem pause
+call PayrollConsole Report tenant:StartTenant user:lucy.smith@foo.com regulation:StartRegulation report:StartReport parameterFile:Report.Parameters.json culture:en /pdf /shellopen

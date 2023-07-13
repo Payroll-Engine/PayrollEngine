@@ -1,1 +1,1 @@
-call PayrollConsole TenantDelete Payroll.Report /trydelete
+call PayrollConsole TenantDelete Report.Tenant /trydelete

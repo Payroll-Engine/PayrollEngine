@@ -1,2 +1,1 @@
-call PayrollConsole Report Payroll.Report peter.schmid@foo.com Payroll.Report RegulationsSimple de-CH /pdf
-rem pause
+call PayrollConsole Report tenant:Report.Tenant user:peter.schmid@foo.com regulation:Report.Regulation report:RegulationsSimple culture:de-CH /pdf /shellopen

@@ -3,16 +3,18 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "Payroll.Report",
+      "identifier": "Report.Tenant",
       "updateMode": "NoUpdate",
       "regulations": [
         {
-          "name": "Payroll.Report",
+          "name": "Report.Regulation",
           "updateMode": "NoUpdate",
            "reports": [
             {
               "name": "CumulativeJournal",
-              "description": "Cumulative year journal",
+              "nameLocalizations": {
+                "en": "Cumulative journal Report"
+              },
               "clusters": [
                 "Year",
                 "Employee",
@@ -27,32 +29,24 @@
                   "name": "TenantId",
                   "valueType": "Integer",
                   "parameterType": "TenantId",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "hidden": true
                 },
                 {
-                  "name": "Year",
+                  "name": "JournalYear",
                   "valueType": "Year",
                   "mandatory": true,
                   "attributes": {
-                    "input.minvalue": 1990
+                    "input.minvalue": 2000
                   }
                 },
                 {
                   "name": "Employees.Filter",
                   "nameLocalizations": {
-                    "en": "Employees",
-                    "de": "Mitarbeiter",
-                    "fr": "Employees [FR]",
-                    "it": "Employees [IT]"
+                    "en": "Employees"
                   },
                   "description": "Employees name filter",
                   "descriptionLocalizations": {
-                    "en": "Employees name filter",
-                    "de": "Mitarbeiter Namensfitler ",
-                    "fr": "Employees name filter [FR]",
-                    "it": "Employees name filter [IT]"
+                    "en": "Employees name filter"
                   }
                 }
               ],

@@ -15,7 +15,8 @@
               <xs:element name="Identifier" type="xs:string"/>
               <xs:element name="FirstName" type="xs:string"/>
               <xs:element name="LastName" type="xs:string"/>
-              <xs:element name="Language" type="xs:int"/>
+              <xs:element name="Culture" type="xs:string"/>
+              <xs:element name="Calendar" type="xs:string"/>
               <xs:element name="Divisions" type="xs:string"/>
             </xs:sequence>
           </xs:complexType>

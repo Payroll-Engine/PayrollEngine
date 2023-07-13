@@ -3,16 +3,18 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "Payroll.Report",
+      "identifier": "Report.Tenant",
       "updateMode": "NoUpdate",
       "regulations": [
         {
-          "name": "Payroll.Report",
+          "name": "Report.Regulation",
           "updateMode": "NoUpdate",
           "reports": [
             {
               "name": "EmployeeCaseValues",
-              "description": "Employee case values",
+              "nameLocalizations": {
+                "en": "Employee Case Values Report"
+              },
               "clusters": [
                 "Employee",
                 "CaseValue"
@@ -28,41 +30,26 @@
                   "name": "TenantId",
                   "valueType": "Integer",
                   "parameterType": "TenantId",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "hidden": true
                 },
                 {
                   "name": "PayrollId",
-                  "valueType": "Integer",
-                  "parameterType": "PayrollId",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "valueType": "String",
+                  "parameterType": "PayrollId"
                 },
                 {
                   "name": "AllEmployees",
                   "valueType": "Boolean",
                   "value": "true",
                   "nameLocalizations": {
-                    "en": "All Employees",
-                    "de": "Alle Mitarbeiter",
-                    "fr": "All Employees FR",
-                    "it": "All Employees IT"
+                    "en": "All Employees"
                   }
                 },
                 {
                   "name": "EmployeeIdentifier",
                   "valueType": "String",
-                  "mandatory": true,
                   "nameLocalizations": {
-                    "en": "Employee",
-                    "de": "Mitarbeiter",
-                    "fr": "Employee FR",
-                    "it": "Employee IT"
-                  },
-                  "attributes": {
-                    "input.hidden": true
+                    "en": "Employee"
                   }
                 }
               ],

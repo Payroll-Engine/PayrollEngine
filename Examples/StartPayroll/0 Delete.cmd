@@ -1,1 +1,1 @@
-call PayrollConsole TenantDelete StartTenant /trydelete
+call PayrollConsole TenantDelete tenant:StartTenant /trydelete

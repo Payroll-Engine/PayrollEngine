@@ -12,9 +12,9 @@ using PayrollEngine.Client.Scripting.Report;
 namespace ReportPayroll.EmployeeCaseValues;
 
 [ReportBuildFunction(
-    tenantIdentifier: "Payroll.Report",
+    tenantIdentifier: "Report.Tenant",
     userIdentifier: "peter.schmid@foo.com",
-    regulationName: "Payroll.Report")]
+    regulationName: "Report.Regulation")]
 public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.ReportBuildFunction
 {
     public ReportBuildFunction(IReportBuildRuntime runtime) :
@@ -55,7 +55,7 @@ public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.Repor
                 list.Add($"{employee["FirstName"]} {employee["LastName"]}");
                 listValues.Add(employee["Identifier"].ToString());
             }
-            SetParameterAttribute(employeeParameter, "input.list", 
+            SetParameterAttribute(employeeParameter, "input.list",
                 JsonSerializer.Serialize(list));
             SetParameterAttribute(employeeParameter, "input.listValues",
                 JsonSerializer.Serialize(listValues));
@@ -66,18 +66,17 @@ public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.Repor
                 SetParameterAttribute(employeeParameter, "input.listSelection", listValues.First());
             }
         }
-
-        // employee selection
-        SetParameterAttribute(employeeParameter, "input.hidden", allEmployees);
+        // parameter visibility
+        SetParameterHidden(employeeParameter, allEmployees);
 
         return null;
     }
 }
 
 [ReportStartFunction(
-    tenantIdentifier: "Payroll.Report",
+    tenantIdentifier: "Report.Tenant",
     userIdentifier: "peter.schmid@foo.com",
-    regulationName: "Payroll.Report")]
+    regulationName: "Report.Regulation")]
 public class ReportStartFunction : PayrollEngine.Client.Scripting.Function.ReportStartFunction
 {
     public ReportStartFunction(IReportStartRuntime runtime) :
@@ -105,9 +104,9 @@ public class ReportStartFunction : PayrollEngine.Client.Scripting.Function.Repor
 }
 
 [ReportEndFunction(
-    tenantIdentifier: "Payroll.Report",
+    tenantIdentifier: "Report.Tenant",
     userIdentifier: "peter.schmid@foo.com",
-    regulationName: "Payroll.Report")]
+    regulationName: "Report.Regulation")]
 public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportEndFunction
 {
     public ReportEndFunction(IReportEndRuntime runtime) :
@@ -123,7 +122,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
     [ReportEndScript(
         reportName: "EmployeeCaseValues",
         culture: "de-CH",
-        parameters: "{ \"PayrollId\": \"Payroll.Report\" }")]
+        parameters: "{ \"PayrollId\": \"Report.Payroll\" }")]
     public object ReportEndScript()
     {
         // payroll
@@ -150,14 +149,24 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
         }
         var employeeIds = employees.GetValues<int>("Id");
 
+        // query parameters
+        var parameters = new Dictionary<string, string>
+        {
+            {"TenantId", TenantId.ToString()},
+            {"PayrollId", payrollId.ToString()},
+            // fallback culture
+            {"Culture", UserCulture},
+            {"LookupNames", JsonSerializer.Serialize(new[] { "Location" })}
+        };
+
         // employee case values
         var caseValuesTable = ExecuteEmployeeTimeCaseValueQuery("CaseValues", payrollId.Value, employeeIds,
             new CaseValueColumn[]
             {
                 // simple columns
-                new("Monatslohn"),
+                new("MonthlyWage"),
                 new("EmploymentLevel"),
-                new("Geburtsdatum"),
+                new("BirthDate"),
                 // lookup column
                 new("Location", "Location")
             },

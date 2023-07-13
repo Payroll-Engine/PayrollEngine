@@ -638,6 +638,9 @@
               "description": "All Time Types Description",
               "caseType": "Employee",
               "defaultReason": "Test all time types",
+              "attributes": {
+                "input.icon": "Filled.AccessTime"
+              },
               "fields": [
                 {
                   "name": "Money.Moment",

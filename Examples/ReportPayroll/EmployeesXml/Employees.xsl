@@ -32,9 +32,12 @@
           <LastName>
             <xsl:value-of select="LastName" />
           </LastName>
-          <Language>
-            <xsl:value-of select="Language" />
-          </Language>
+          <Culture>
+            <xsl:value-of select="Culture" />
+          </Culture>
+          <Calendar>
+            <xsl:value-of select="Calendar" />
+          </Calendar>
           <Divisions>
             <xsl:value-of select="Divisions" />
           </Divisions>

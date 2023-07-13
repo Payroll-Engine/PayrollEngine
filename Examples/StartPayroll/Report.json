@@ -20,9 +20,7 @@
                 {
                   "name": "TenantId",
                   "parameterType": "TenantId",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "hidden": true
                 },
                 {
                   "name": "PayrunJobName",
@@ -31,9 +29,7 @@
                 {
                   "name": "Results.Filter",
                   "value": "jobName eq '$PayrunJobName$'",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "hidden": true
                 }
               ],
               "templates": [

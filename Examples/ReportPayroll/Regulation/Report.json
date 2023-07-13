@@ -3,20 +3,17 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "Payroll.Report",
+      "identifier": "Report.Tenant",
       "updateMode": "NoUpdate",
       "regulations": [
         {
-          "name": "Payroll.Report",
+          "name": "Report.Regulation",
           "updateMode": "NoUpdate",
           "reports": [
             {
               "name": "Regulation",
               "nameLocalizations": {
-                "en": "Regulation Report EN",
-                "de": "Regulation Report DE",
-                "fr": "Regulation Report FR",
-                "it": "Regulation Report IT"
+                "en": "Regulation Report"
               },
               "category": "Regulations",
               "clusters": [
@@ -48,19 +45,14 @@
                   "name": "TenantId",
                   "valueType": "Integer",
                   "parameterType": "TenantId",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "hidden": true
                 },
                 {
                   "name": "RegulationId",
                   "nameLocalizations": {
-                    "en": "Regulation EN",
-                    "de": "Regulation DE",
-                    "fr": "Regulation FR",
-                    "it": "Regulation IT"
+                    "en": "Regulation"
                   },
-                  "valueType": "Integer",
+                  "valueType": "String",
                   "parameterType": "RegulationId",
                   "mandatory": true
                 },
@@ -68,9 +60,7 @@
                   "name": "Regulations.Filter",
                   "value": "Id eq $RegulationId$",
                   "valueType": "String",
-                  "attributes": {
-                    "input.hidden": true
-                  }
+                  "hidden": true
                 }
               ],
               "templates": [

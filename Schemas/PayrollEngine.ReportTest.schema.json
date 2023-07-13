@@ -267,6 +267,10 @@
               "type": "boolean",
               "description": "The parameter mandatory state"
             },
+            "hidden": {
+              "type": "boolean",
+              "description": "Hidden parameter"
+            },
             "value": {
               "type": [
                 "null",

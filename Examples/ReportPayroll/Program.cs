@@ -9,11 +9,12 @@ namespace ReportPayroll;
 /// <summary>Scripting development tutorial program</summary>
 internal class Program : ConsoleProgram<Program>
 {
-    private static ReportType currentReport = ReportType.EmployeeCaseValues;
+    private static ReportType currentReport = ReportType.EmployeeCaseValueEnd;
     private enum ReportType
     {
-        EmployeeCaseValues,
-        CumulativeJournal
+        EmployeeCaseValueBuild,
+        EmployeeCaseValueEnd,
+        CumulativeJournalEnd
     }
 
     /// <summary>The script configuration</summary>
@@ -25,22 +26,29 @@ internal class Program : ConsoleProgram<Program>
     {
         switch (currentReport)
         {
-            case ReportType.EmployeeCaseValues:
-                EmployeeCaseValueReport();
+            case ReportType.EmployeeCaseValueBuild:
+                EmployeeCaseValueReportBuild();
                 break;
-            case ReportType.CumulativeJournal:
-                CumulativeJournalReport();
+            case ReportType.EmployeeCaseValueEnd:
+                EmployeeCaseValueReportEnd();
+                break;
+            case ReportType.CumulativeJournalEnd:
+                CumulativeJournalReportEnd();
                 break;
         }
         //CumulativeJournalReport();
         return Tasks.Task.CompletedTask;
     }
 
-    private void EmployeeCaseValueReport() =>
+    private void EmployeeCaseValueReportBuild() =>
+        new ReportBuildFunctionInvoker<EmployeeCaseValues.ReportBuildFunction>(
+            HttpClient, ScriptConfiguration).Build("EmployeeCaseValues");
+
+    private void EmployeeCaseValueReportEnd() =>
         new ReportEndFunctionInvoker<EmployeeCaseValues.ReportEndFunction>(
             HttpClient, ScriptConfiguration).End("EmployeeCaseValues");
 
-    private void CumulativeJournalReport() =>
+    private void CumulativeJournalReportEnd() =>
         new ReportEndFunctionInvoker<CumulativeJournal.ReportEndFunction>(
             HttpClient, ScriptConfiguration).End("CumulativeJournal");
 
@@ -48,7 +56,9 @@ internal class Program : ConsoleProgram<Program>
     static async Tasks.Task Main()
     {
         // change the working report
-        currentReport = ReportType.CumulativeJournal;
+        //currentReport = ReportType.EmployeeCaseValueBuild;
+        //currentReport = ReportType.EmployeeCaseValueEnd;
+        currentReport = ReportType.CumulativeJournalEnd;
         
         Log.SetLogger(new PayrollLog());
         using var program = new Program();

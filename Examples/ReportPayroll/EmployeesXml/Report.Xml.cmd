@@ -1,2 +1,2 @@
-call PayrollConsole Report Payroll.Report peter.schmid@foo.com Payroll.Report EmployeesXml de-CH /xml
-rem pause
+call PayrollConsole Report tenant:Report.Tenant user:peter.schmid@foo.com regulation:Report.Regulation report:EmployeesXml culture:de-CH /xml /shellopen /wait
+

@@ -1,2 +1,2 @@
 @echo off
-call PayrollConsole PayrollImport Payroll.Report.json
+call PayrollConsole PayrollImport Report.json

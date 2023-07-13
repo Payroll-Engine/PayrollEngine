@@ -5,11 +5,11 @@ using PayrollEngine.Client.Scripting.Runtime;
 namespace ReportPayroll.WageTypes;
 
 [WageTypeValueFunction(
-    tenantIdentifier: "Payroll.Report",
+    tenantIdentifier: "Report.Tenant",
     userIdentifier: "peter.schmid@foo.com",
     employeeIdentifier: "višnja.müller@foo.com",
-    payrollName: "Payroll.Report",
-    regulationName: "Payroll.Report")]
+    payrollName: "Report.Payroll",
+    regulationName: "Report.Regulation")]
 public class WageTypeValueFunction : PayrollEngine.Client.Scripting.Function.WageTypeValueFunction
 {
     public WageTypeValueFunction(IWageTypeValueRuntime runtime) :
@@ -26,7 +26,7 @@ public class WageTypeValueFunction : PayrollEngine.Client.Scripting.Function.Wag
         wageTypeNumber: "101")]
     public object Execute()
     {
-        var values = GetCaseValues("Monatslohn", "EmploymentLevel");
-        return values["Monatslohn"] * values["EmploymentLevel"];
+        var values = GetCaseValues("MonthlyWage", "EmploymentLevel");
+        return values["MonthlyWage"] * values["EmploymentLevel"];
     }
 }

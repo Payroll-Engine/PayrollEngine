@@ -3,8 +3,13 @@
   "createdObjectDate": "2023-01-01T00:00:00.0Z",
   "tenants": [
     {
-      "identifier": "Payroll.Report",
+      "identifier": "Report.Tenant",
       "culture": "en-US",
+      "attributes": {
+        "ErpId": "3CDBE5C7-A317-4942-8070-7CBC04A5BB70",
+        "SyncPayService": "MyService",
+        "MaxEmployee": "200"
+      },
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -15,12 +20,12 @@
       ],
       "divisions": [
         {
-          "name": "Payroll.Report"
+          "name": "Report.Division"
         }
       ],
       "regulations": [
         {
-          "name": "Payroll.Report",
+          "name": "Report.Regulation",
           "description": "The report example payroll",
           "lookups": [
             {
@@ -51,7 +56,7 @@
               ]
             },
             {
-              "name": "Quellensteuer",
+              "name": "WithholdingTax",
               "values": [
                 {
                   "keyValues": [
@@ -145,7 +150,7 @@
               ]
             },
             {
-              "name": "Unfallversicherung",
+              "name": "AccidentInsurance",
               "caseType": "Company",
               "fields": [
                 {
@@ -156,7 +161,7 @@
               ]
             },
             {
-              "name": "Krankentaggeldversicherung",
+              "name": "DailySicknessBenefitsInsurance",
               "caseType": "Company",
               "fields": [
                 {
@@ -181,11 +186,11 @@
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod"
                 }
@@ -247,11 +252,11 @@
               ]
             },
             {
-              "name": "Geburtsdatum",
+              "name": "BirthDate",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Geburtsdatum",
+                  "name": "BirthDate",
                   "valueType": "Date",
                   "timeType": "Timeless"
                 }
@@ -278,7 +283,7 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "valueExpressionFile": "WageTypes.cs",
               "collectors": [
                 "AHV Basis",
@@ -327,16 +332,18 @@
           "identifier": "bachmann.christoph@logo.com",
           "firstName": "Bachmann",
           "lastName": "Christoph",
+          "culture": "en-US",
           "divisions": [
-            "Payroll.Report"
+            "Report.Division"
           ]
         },
         {
           "identifier": "braunger.margarete@logo.com",
           "firstName": "Braunger",
           "lastName": "Margarete",
+          "culture": "en-UK",
           "divisions": [
-            "Payroll.Report"
+            "Report.Division"
           ]
         },
         {
@@ -344,7 +351,7 @@
           "firstName": "Frühling",
           "lastName": "Andreas",
           "divisions": [
-            "Payroll.Report"
+            "Report.Division"
           ]
         },
         {
@@ -352,26 +359,26 @@
           "firstName": "Future",
           "lastName": "Employee",
           "divisions": [
-            "Payroll.Report"
+            "Report.Division"
           ]
         }
       ],
       "payrolls": [
         {
-          "name": "Payroll.Report",
-          "divisionName": "Payroll.Report",
+          "name": "Report.Payroll",
+          "divisionName": "Report.Division",
           "clusterSetCaseValue": "*",
           "layers": [
             {
               "level": 1,
               "priority": 1,
-              "regulationName": "Payroll.Report"
+              "regulationName": "Report.Regulation"
             }
           ],
           "cases": [
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "reason": "Report Payroll Import",
               "case": {
                 "caseName": "AHV",
@@ -387,7 +394,7 @@
             },
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "AHV",
                 "values": [
@@ -402,7 +409,7 @@
             },
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "AHV",
                 "values": [
@@ -417,7 +424,7 @@
             },
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "ALV",
                 "values": [
@@ -432,9 +439,9 @@
             },
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
                     "caseFieldName": "NBU Satz",
@@ -447,9 +454,9 @@
             },
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
                     "caseFieldName": "NBU Satz",
@@ -462,9 +469,9 @@
             },
             {
               "userIdentifier": "peter.schmid@foo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Krankentaggeldversicherung",
+                "caseName": "DailySicknessBenefitsInsurance",
                 "values": [
                   {
                     "caseFieldName": "KTG Satz",
@@ -478,12 +485,12 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "bachmann.christoph@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2021-12-15T00:00:00.0Z"
@@ -494,7 +501,7 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "bachmann.christoph@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "EmploymentLevel",
                 "values": [
@@ -510,12 +517,12 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "bachmann.christoph@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2022-12-31T00:00:00.0Z"
                   }
@@ -525,12 +532,12 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "7000",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2021-12-15T00:00:00.0Z"
@@ -541,7 +548,7 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "EmploymentLevel",
                 "values": [
@@ -557,7 +564,7 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "Location",
                 "values": [
@@ -573,12 +580,12 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2022-12-31T00:00:00.0Z"
                   }
@@ -588,12 +595,12 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "frühling.Andreas@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "9000",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2021-12-15T00:00:00.0Z"
@@ -604,7 +611,7 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "frühling.Andreas@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
                 "caseName": "EmploymentLevel",
                 "values": [
@@ -620,12 +627,12 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "frühling.Andreas@logo.com",
-              "divisionName": "Payroll.Report",
+              "divisionName": "Report.Division",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2022-12-31T00:00:00.0Z"
                   }
@@ -637,150 +644,73 @@
       ],
       "payruns": [
         {
-          "payrollName": "Payroll.Report",
-          "name": "Payroll.TestReport"
+          "payrollName": "Report.Payroll",
+          "name": "Report.Payrun"
         }
       ],
       "payrunJobInvocations": [
         {
-          "name": "Payroll.TestReport.Dez20",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Jan23",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2024-12-01T00:00:00.0Z",
-          "evaluationDate": "2021-01-01T00:00:00.0Z",
-          "reason": "Demo Payrun Dez 20"
+          "periodStart": "2023-01-01T00:00:00.0Z",
+          "evaluationDate": "2023-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 23"
         },
         {
-          "name": "Payroll.TestReport.Jan21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Feb23",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2021-01-01T00:00:00.0Z",
-          "evaluationDate": "2021-02-01T00:00:00.0Z",
-          "reason": "Demo Payrun Jan 21"
+          "periodStart": "2023-02-01T00:00:00.0Z",
+          "evaluationDate": "2023-03-01T00:00:00.0Z",
+          "reason": "Demo Payrun Feb 23"
         },
         {
-          "name": "Payroll.TestReport.Feb21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Mrz23",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2021-02-01T00:00:00.0Z",
-          "evaluationDate": "2021-03-01T00:00:00.0Z",
-          "reason": "Demo Payrun Feb21"
+          "periodStart": "2023-03-01T00:00:00.0Z",
+          "evaluationDate": "2023-04-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mrz 23"
         },
         {
-          "name": "Payroll.TestReport.Mrz21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Apr23",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2021-03-01T00:00:00.0Z",
-          "evaluationDate": "2021-04-01T00:00:00.0Z",
-          "reason": "Demo Payrun Mrz21"
+          "periodStart": "2023-04-01T00:00:00.0Z",
+          "evaluationDate": "2023-05-01T00:00:00.0Z",
+          "reason": "Demo Payrun Apr 23"
         },
         {
-          "name": "Payroll.TestReport.Apr21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Mai23",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2021-04-01T00:00:00.0Z",
-          "evaluationDate": "2021-05-01T00:00:00.0Z",
-          "reason": "Demo Payrun Apr21"
+          "periodStart": "2023-05-01T00:00:00.0Z",
+          "evaluationDate": "2023-06-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mai 23"
         },
         {
-          "name": "Payroll.TestReport.Mai21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Dez23",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2021-05-01T00:00:00.0Z",
-          "evaluationDate": "2021-06-01T00:00:00.0Z",
-          "reason": "Demo Payrun Mai21"
+          "periodStart": "2023-12-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-01T00:00:00.0Z",
+          "reason": "Demo Payrun Dez 23"
         },
         {
-          "name": "Payroll.TestReport.Jun21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
+          "name": "Report.PayrunJob.Jan24",
+          "payrunName": "Report.Payrun",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2021-06-01T00:00:00.0Z",
-          "evaluationDate": "2021-07-01T00:00:00.0Z",
-          "reason": "Demo Payrun Jun21"
-        },
-        {
-          "name": "Payroll.TestReport.Jul21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2021-07-01T00:00:00.0Z",
-          "evaluationDate": "2021-08-01T00:00:00.0Z",
-          "reason": "Demo Payrun Jul21"
-        },
-        {
-          "name": "Payroll.TestReport.Aug21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2021-08-01T00:00:00.0Z",
-          "evaluationDate": "2021-09-01T00:00:00.0Z",
-          "reason": "Demo Payrun Aug21"
-        },
-        {
-          "name": "Payroll.TestReport.Sep21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2021-09-01T00:00:00.0Z",
-          "evaluationDate": "2021-10-01T00:00:00.0Z",
-          "reason": "Demo Payrun Sep21"
-        },
-        {
-          "name": "Payroll.TestReport.Okt21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2021-10-01T00:00:00.0Z",
-          "evaluationDate": "2021-11-01T00:00:00.0Z",
-          "reason": "Demo Payrun Okt21"
-        },
-        {
-          "name": "Payroll.TestReport.Nov21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2021-11-01T00:00:00.0Z",
-          "evaluationDate": "2021-12-01T00:00:00.0Z",
-          "reason": "Demo Payrun Nov21"
-        },
-        {
-          "name": "Payroll.TestReport.Dez21",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2021-12-01T00:00:00.0Z",
-          "evaluationDate": "2022-01-01T00:00:00.0Z",
-          "reason": "Demo Payrun Dez21"
-        },
-        {
-          "name": "Payroll.TestReport.Jan22",
-          "payrunName": "Payroll.TestReport",
-          "payrollName": "Payroll.Report",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2022-01-01T00:00:00.0Z",
-          "evaluationDate": "2022-02-01T00:00:00.0Z",
-          "reason": "Demo Payrun Jan22"
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 24"
         }
       ]
     }

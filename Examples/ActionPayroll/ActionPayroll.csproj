@@ -8,8 +8,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="PayrollEngine.Client.Services" Version="0.5.0-pre-230712" />
-		<PackageReference Include="PayrollEngine.Serilog" Version="0.5.0-pre-230712" />
+		<PackageReference Include="PayrollEngine.Client.Services" Version="0.5.0-pre-230713-6" />
+		<PackageReference Include="PayrollEngine.Serilog" Version="0.5.0-pre-230713-6" />
 	</ItemGroup>
 
 	<ItemGroup>
