@@ -1,6 +1,6 @@
 @ECHO OFF
 
-REM --- Test ---
+REM --- call test in all *.test subfolders ---
 FOR /D %%d IN (*.Test) DO (
      pushd %%d
 	 if exist *.pt.json (
