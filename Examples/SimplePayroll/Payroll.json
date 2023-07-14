@@ -1154,20 +1154,6 @@
           "startExpression": "SetPayrunJobAttribute(\"JobStart\", Date.Now.ToString(\"s\")); return true",
           "endExpression": "SetPayrunJobAttribute(\"RuntimeValuesEmployees\", string.Join(',', GetRuntimeValuesEmployees()));",
           "employeeAvailableExpression": "return !string.Equals(EmployeeIdentifier, \"old.omployee@foo.com\")",
-          "calendar": {
-            "firstMonthOfYear": "January",
-            "averageMonthDays": 30,
-            "averageWorkDays": 21.75,
-            "calendarWeekRule": "FirstFourDayWeek",
-            "firstDayOfWeek": "Monday",
-            "workingDays": [
-              "Monday",
-              "Tuesday",
-              "Thursday",
-              "Wednesday",
-              "Friday"
-            ]
-          },
           "payrunParameters": [
             {
               "name": "StringParam",
@@ -1202,41 +1188,13 @@
           "culture": "de-DE",
           "defaultReason": "Run simple payrun 2",
           "endExpression": "SetPayrunJobAttribute(\"JobEnd\", Date.Now.ToString(\"s\")); return",
-          "employeeAvailableExpression": "return !string.Equals(EmployeeIdentifier, \"old.omployee@foo.com\")",
-          "calendar": {
-            "firstMonthOfYear": "January",
-            "averageMonthDays": 30,
-            "averageWorkDays": 21.75,
-            "calendarWeekRule": "FirstFourDayWeek",
-            "firstDayOfWeek": "Monday",
-            "workingDays": [
-              "Monday",
-              "Tuesday",
-              "Thursday",
-              "Wednesday",
-              "Friday"
-            ]
-          }
+          "employeeAvailableExpression": "return !string.Equals(EmployeeIdentifier, \"old.omployee@foo.com\")"
         },
         {
           "name": "SimplePayrollPayrun3",
           "payrollName": "SimplePayroll.Derived1",
           "culture": "de-DE",
-          "defaultReason": "Run simple payrun 3",
-          "calendar": {
-            "firstMonthOfYear": "January",
-            "averageMonthDays": 30,
-            "averageWorkDays": 21.75,
-            "calendarWeekRule": "FirstFourDayWeek",
-            "firstDayOfWeek": "Monday",
-            "workingDays": [
-              "Monday",
-              "Tuesday",
-              "Thursday",
-              "Wednesday",
-              "Friday"
-            ]
-          }
+          "defaultReason": "Run simple payrun 3"
         }
       ]
     }
