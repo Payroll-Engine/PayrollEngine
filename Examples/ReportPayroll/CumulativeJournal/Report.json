@@ -34,6 +34,7 @@
                 {
                   "name": "JournalYear",
                   "valueType": "Year",
+                  "value": "2023",
                   "mandatory": true,
                   "attributes": {
                     "input.minvalue": 2000
