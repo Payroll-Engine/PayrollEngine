@@ -1,1 +1,7 @@
-call PayrollConsole TenantDelete WeekSimplePayroll /trydelete
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete WeekSimplePayroll /trydelete

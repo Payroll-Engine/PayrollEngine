@@ -1,2 +1,8 @@
-call PayrollConsole TenantDelete Cancellation.Test /trydelete
-call PayrollConsole PayrunTest *.pt.json /keeptest
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete Cancellation.Test /trydelete
+call %console% PayrunTest *.pt.json /keeptest

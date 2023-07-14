@@ -4,9 +4,13 @@ rem default: wait after results
 set args=/wait
 if not "%1" == "" set args=%1
 
-call PayrollConsole TenantDelete SimplePayroll /trydelete
-call PayrollConsole PayrollImport Payroll.json
-call PayrollConsole PayrollImport Payroll.Values.json
-call PayrollConsole PayrollImport Payroll.Lookups.json
-call PayrollConsole PayrollImport Payroll.Jobs.json
-call PayrollConsole PayrollResults SimplePayroll 2 %args%
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete SimplePayroll /trydelete
+call %console% PayrollImport Payroll.json
+call %console% PayrollImport Payroll.Values.json
+call %console% PayrollImport Payroll.Lookups.json
+call %console% PayrollImport Payroll.Jobs.json
+call %console% PayrollResults SimplePayroll 2 %args%

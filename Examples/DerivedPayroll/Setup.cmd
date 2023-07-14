@@ -1,5 +1,10 @@
 @echo off
-call PayrollConsole TenantDelete DerivedPayroll /trydelete
-call PayrollConsole PayrollImport Payroll.json
-call PayrollConsole PayrollImport Payroll.Values.json
-call PayrollConsole PayrollImport Payroll.Jobs.json %1
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete DerivedPayroll /trydelete
+call %console% PayrollImport Payroll.json
+call %console% PayrollImport Payroll.Values.json
+call %console% PayrollImport Payroll.Jobs.json %1

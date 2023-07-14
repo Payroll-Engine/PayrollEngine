@@ -4,6 +4,10 @@ rem default: wait after tests
 set args=/wait
 if not "%1" == "" set args=%1
 
-call PayrollConsole TenantDelete ActionTenant /trydelete
-call PayrollConsole PayrollImport Payroll.json
-call PayrollConsole CaseTest Test.ct.json /showall %args%
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete ActionTenant /trydelete
+call %console% PayrollImport Payroll.json
+call %console% CaseTest Test.ct.json /showall %args%

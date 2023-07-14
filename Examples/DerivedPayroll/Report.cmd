@@ -1,2 +1,7 @@
-call PayrollConsole PayrollResults DerivedPayroll 1
-pause
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% PayrollResults DerivedPayroll 1

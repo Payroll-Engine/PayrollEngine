@@ -1,1 +1,7 @@
-call PayrollConsole PayrollExport DerivedPayroll ..\Exports\DerivedPayroll.json
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% PayrollExport DerivedPayroll ..\Exports\DerivedPayroll.json

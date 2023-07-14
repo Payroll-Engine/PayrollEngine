@@ -1,2 +1,2 @@
-call PayrollConsole ScriptPublish WageTypes.cs
+call %console% ScriptPublish WageTypes.cs
 pause

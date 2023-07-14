@@ -1,2 +1,8 @@
-call PayrollConsole TenantDelete RetroPayroll /trydelete
-call PayrollConsole PayrunTest *.pt.json /testPrecisionOff
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete RetroPayroll /trydelete
+call %console% PayrunTest *.pt.json /testPrecisionOff

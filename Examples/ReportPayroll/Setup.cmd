@@ -1,4 +1,9 @@
 @echo off
-call PayrollConsole TenantDelete Report.Tenant /trydelete
-call PayrollConsole PayrollImport Payroll.json
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete Report.Tenant /trydelete
+call %console% PayrollImport Payroll.json
 call Import.Reports

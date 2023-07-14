@@ -1,3 +1,9 @@
-call PayrollConsole TenantDelete CaseTest /trydelete
-call PayrollConsole PayrollImport Payroll.json
-call PayrollConsole CaseTest *.ct.json
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% TenantDelete CaseTest /trydelete
+call %console% PayrollImport Payroll.json
+call %console% CaseTest *.ct.json

@@ -1,1 +1,7 @@
-call PayrollConsole Report tenant:Report.Tenant user:peter.schmid@foo.com regulation:Report.Regulation report:UsersSimple culture:de-CH /pdf /shellopen
+@echo off
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% Report tenant:Report.Tenant user:peter.schmid@foo.com regulation:Report.Regulation report:UsersSimple culture:de-CH /pdf /shellopen

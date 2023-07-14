@@ -1,2 +1,7 @@
 @echo off
-call PayrollConsole PayrollImport Report.json
+
+rem console
+set console=PayrollConsole
+if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+
+call %console% PayrollImport Report.json
