@@ -1,5 +1,5 @@
 @echo OFF
 echo Starting Payroll Engine Web App...
-pushd %~dp0..\..\PayrollEngine.WebApp\Server
-start dotnet run PayrollEngine.WebApp.Server.csproj http --urls=http://localhost:44345/ --trust
+pushd %~dp0..\Bin\PayrollEngine.WebApp\
+start dotnet PayrollEngine.WebApp.Server.dll --urls=https://localhost:7179/
 popd
