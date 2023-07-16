@@ -1,17 +1,20 @@
 @echo off
 
 rem --- backend url ---
-set backendurl=https://localhost
-if not "%PayrollEngineBackendUrl%" == "" set backendurl=%PayrollEngineBackendUrl%
+rem default backend url
+set backendUrl=https://localhost
+rem environment override backend url
+if not "%PayrollEnginebackendUrl%" == "" set backendUrl=%PayrollEnginebackendUrl%
 
 rem --- backend port ---
-set backendport=44354
-if not "%PayrollEngineBackendPort%" == "" set backendport=%PayrollEngineBackendPort%
+rem default backend port
+set backendPort=44354
+rem environment override backend port
+if not "%PayrollEnginebackendPort%" == "" set backendPort=%PayrollEnginebackendPort%
 
 rem --- start swagger ---
-set backendport=44354
-start "" %backendurl%:%backendport%/
+start "" %backendUrl%:%backendPort%/
 
 rem --- cleanup ---
-set backendport=
-set backendurl=
+set backendPort=
+set backendUrl=

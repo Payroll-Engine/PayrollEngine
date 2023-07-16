@@ -3,7 +3,6 @@
 rem --- setup configuration ---
 set dbVersion=1.0.0
 set dbReset=false
-set dbConnectionString=
 
 rem --- setup system environment and tools ---
 echo Setup system environment and tools...

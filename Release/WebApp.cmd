@@ -1,16 +1,20 @@
 @echo off
 
 rem --- web app url ---
-set webappurl=https://localhost
-if not "%PayrollEnginewebappUrl%" == "" set webappurl=%PayrollEnginewebappUrl%
+rem default web application url
+set webAppUrl=https://localhost
+rem environment override web application url
+if not "%PayrollEnginewebAppUrl%" == "" set webAppUrl=%PayrollEnginewebAppUrl%
 
 rem --- web app port ---
-set webappport=7179
-if not "%PayrollEnginewebappPort%" == "" set webappport=%PayrollEnginewebappPort%
+rem default web application port
+set webAppPort=7179
+rem environment override web application port
+if not "%PayrollEnginewebAppPort%" == "" set webAppPort=%PayrollEnginewebAppPort%
 
-rem --- start web app ---
-start "" %webappurl%:%webappport%/
+rem --- start web application ---
+start "" %webAppUrl%:%webAppPort%/
 
 rem --- cleanup ---
-set webappport=
-set webappurl=
+set webAppPort=
+set webAppUrl=
