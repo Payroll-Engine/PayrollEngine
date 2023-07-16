@@ -1,2 +1,2 @@
 @echo off
-setx PayrollDbQuery "%~dp0PayrollEngine.SqlServer.DbQuery\PayrollEngine.SqlServer.DbQuery.exe"
+setx PayrollDbQuery "%~dp0..\PayrollEngine.SqlServer.DbQuery\PayrollEngine.SqlServer.DbQuery.exe"

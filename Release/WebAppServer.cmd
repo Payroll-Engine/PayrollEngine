@@ -1,11 +1,19 @@
 @echo off
 
-rem web app port
-set webappport=7179
+rem --- web app url ---
+set webappserverurl=https://localhost
+if not "%PayrollEnginewebappserverurl%" == "" set webappserverurl=%PayrollEnginewebappserverurl%
 
-echo Starting Payroll Engine Web App...
+rem --- web app port ---
+
+set webappserverport=7179
+if not "%PayrollEnginewebappserverport%" == "" set webappserverport=%PayrollEnginewebappserverport%
+
+rem --- start web app ---
 pushd %~dp0PayrollEngine.WebApp\
-start dotnet PayrollEngine.WebApp.Server.dll --urls=https://localhost:%webappport%/
+start dotnet PayrollEngine.WebApp.Server.dll --urls=%webappserverurl%:%webappserverport%/
 popd
 
-set webappport=
+rem --- cleanup ---
+set webappserverport=
+set webappserverurl=
