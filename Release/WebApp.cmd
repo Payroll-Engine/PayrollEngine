@@ -34,7 +34,7 @@ goto exit
 
 :webAppError
 echo.
-echo [91mPayroll Engine Web Application %webAppUrl% is not available[0m
+echo.[91mPayroll Engine Web Application %webAppUrl% is not available[0m
 echo.
 pause
 goto exit

@@ -2,21 +2,15 @@
 rem ================= environment settings setup start =================
 rem PayrollEngineDatabase: database connections string
 set ConnectionString=server=localhost; Initial Catalog=PayrollEngine; Integrated Security=SSPI; Connection Timeout=1000; TrustServerCertificate=true
-
 rem PayrollEngineBackendUrl: backend backend server uls
 set BackendUrl=https://localhost
-
 rem PayrollEngineBackendPort: backend backend server port
 set BackendPort=44354
-
 rem PayrollEngineWebAppUrl: web application server url
 set WebAppUrl=https://localhost
-
 rem PayrollEngineWebAppPort: web application server port
 set WebAppPort=7179
 rem ================= environment settings setup end =================
-
-echo Setup Payroll Engine Environment...
 
 rem --- Database connection string ---
 rem current process

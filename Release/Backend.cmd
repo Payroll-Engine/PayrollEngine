@@ -34,7 +34,7 @@ goto exit
 
 :backendError
 echo.
-echo [91mPayroll Engine Backend Server %backendUrl% is not available[0m
+echo.[91mPayroll Engine Backend Server %backendUrl% is not available[0m
 echo.
 pause
 goto exit
