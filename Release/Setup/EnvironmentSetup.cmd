@@ -1,7 +1,7 @@
 @echo off
 rem ================= environment settings setup start =================
 rem PayrollEngineDatabase: database connections string
-set ConnectionString=server=localhost; database=PayrollEngine; Integrated Security=SSPI; Connection Timeout=1000
+set ConnectionString=server=localhost; Initial Catalog=PayrollEngine; Integrated Security=SSPI; Connection Timeout=1000; TrustServerCertificate=true
 
 rem PayrollEngineBackendUrl: backend backend server uls
 set BackendUrl=https://localhost
