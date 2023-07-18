@@ -1,7 +1,7 @@
 @echo off
 
 rem --- setup configuration ---
-set dbVersion=1.0.0
+set dbVersion=0.5.1
 
 rem --- query tool ---
 set query=PayrollDbQuery
@@ -10,54 +10,48 @@ if not "%PayrollDbQuery%" == "" set query=%PayrollDbQuery%
 rem --- test database ---
 :testDatabaseConnection
 echo Testing Payroll Engine Database...
-call %query% TestConnection
+call %query% TestSqlConnection
 if %ERRORLEVEL% neq 0 goto connectionError
 
 :testDatabaseVersion
 call %query% TestVersion Version MajorVersion MinorVersion SubVersion %dbVersion%
 if %ERRORLEVEL% neq 0 goto versionError
 
-rem --- backend server url ---
+rem --- parse backend server url ---
 :backendServerUrl
-rem default backend url
-set backendServerUrl=https://localhost
-rem environment override backend url
-if not "%PayrollEngineBackendUrl%" == "" set backendServerUrl=%PayrollEngineBackendUrl%
+call %query% ParseUrl backendServerUrl $BackendUrl$:$BackendPort$/
+if %ERRORLEVEL% neq 0 goto setupError
+if "%backendServerUrl%" == "" goto setupError
 
-rem --- backend server port ---
-:backendServerPort
-rem default backend port
-set backendServerPort=44354
-rem environment override backend port
-if not "%PayrollEngineBackendPort%" == "" set backendServerPort=%PayrollEngineBackendPort%
-
-set backendUrl=%backendServerUrl%:%backendServerPort%/
-
-rem --- test runing backend server ---
-:testBackend
-echo Testing backend connection %backendUrl%...
-call %query% TestConnection %backendUrl%
+rem --- test if the backend server connection is used ---
+:testBackendConnection
+echo Testing backend server connection...
+rem delay for the errorlevel
+timeout 2 > NUL
+call %query% TestHttpConnection %backendServerUrl%
 if %ERRORLEVEL% == 0 goto connectionError
 
 rem --- start backend server ---
 :startBackendServer
-echo Starting Payroll Engine Backend Server...
+echo Starting Payroll Engine backend server...
 pushd %~dp0PayrollEngine.Backend\
-start dotnet PayrollEngine.Backend.Server.dll --urls=%backendUrl%
+start /MIN "Payroll Engine - Backend Server" dotnet PayrollEngine.Backend.Server.dll --urls=%backendServerUrl%
 popd
+echo.[92mBackend server started %backendServerUrl%[0m
 goto exit
 
-rem --- backend server runing ---
-:connectionError
+rem --------------------------- error & exit ---------------------------
+
+:setupError
 echo.
-echo.[91mError connecting to %backendUrl%[0m
+echo.[91mPayroll Engine not installed[0m
 echo.
 pause
 goto exit
 
 :connectionError
 echo.
-echo.[91mPayroll Engine backend database is not available[0m
+echo.[91mPayroll Engine backend server %backendServerUrl% is not available[0m
 echo.
 pause
 goto exit
@@ -71,8 +65,6 @@ goto exit
 
 rem --- cleanup ---
 :exit
-set backendUrl=
-set backendServerPort=
 set backendServerUrl=
 set query=
 set dbVersion=

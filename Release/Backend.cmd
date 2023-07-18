@@ -1,40 +1,39 @@
 @echo off
 
-rem --- backend domain ---
-:backendDoamin
-rem default backend domain
-set backendDomain=https://localhost
-rem environment override backend url
-if not "%PayrollEnginebackendUrl%" == "" set backendDomain=%PayrollEnginebackendUrl%
-
-rem --- backend port ---
-:backendPort
-rem default backend port
-set backendPort=44354
-rem environment override backend port
-if not "%PayrollEnginebackendPort%" == "" set backendPort=%PayrollEnginebackendPort%
-
-rem --- setup url ---
-set backendUrl=%backendDomain%:%backendPort%/
-
 rem --- query tool ---
 set query=PayrollDbQuery
 if not "%PayrollDbQuery%" == "" set query=%PayrollDbQuery%
 
+rem --- parse backend server url ---
+:backendServerUrl
+call %query% ParseUrl backendServerUrl $BackendUrl$:$BackendPort$/
+if %ERRORLEVEL% neq 0 goto setupError
+if "%backendServerUrl%" == "" goto setupError
+
 rem --- test backend connection ---
-:testBackend
-echo Testing backend connection %backendUrl%...
-call %query% TestConnection %backendUrl%
-if %ERRORLEVEL% neq 0 goto backendError
+:testConnection
+echo Testing backend server connection...
+call %query% TestHttpConnection %backendServerUrl%
+if %ERRORLEVEL% neq 0 goto connectionError
 
 rem --- start swagger ---
 :openWebBrowser
-start "" %backendUrl%
+start "" %backendServerUrl%
+echo.[92mBackend client started %backendServerUrl%[0m
 goto exit
 
-:backendError
+rem --------------------------- error & exit ---------------------------
+
+:setupError
 echo.
-echo.[91mPayroll Engine Backend Server %backendUrl% is not available[0m
+echo.[91mPayroll Engine not installed[0m
+echo.
+pause
+goto exit
+
+:connectionError
+echo.
+echo.[91mPayroll Engine backend server %backendServerUrl% is not available[0m
 echo.
 pause
 goto exit
@@ -42,6 +41,4 @@ goto exit
 rem --- cleanup ---
 :exit
 set query=
-set backendUrl=
-set backendPort=
-set backendDomain=
+set backendServerUrl=

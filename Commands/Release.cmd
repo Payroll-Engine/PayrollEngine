@@ -9,7 +9,7 @@ rem cleanup
 if exist %archive% goto existingVersionError
 
 rem compress only switch
-goto compressRelease
+rem goto compressRelease
 
 :publishBinaries
 echo.
