@@ -341,3 +341,9 @@ ASALocalRun/
 /Bin
 /Packages
 .exports/
+/**/DROP/
+/**/TEMP/
+/**/packages/
+/**/bin/
+/**/obj/
+_site
