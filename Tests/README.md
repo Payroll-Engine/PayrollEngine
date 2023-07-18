@@ -1,5 +1,9 @@
 # Payroll Engine Tests
 
+## Commands
+- `Test.All.cmd` - run all tests
+- `<Test>/Test.cmd` - run test
+
 ## `Aggregation.Test`
 - Case field period aggregation types
 
