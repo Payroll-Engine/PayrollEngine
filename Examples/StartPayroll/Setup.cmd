@@ -10,7 +10,7 @@ if not "%PayrollConsole%" == "" set console=%PayrollConsole%
 
 call %console% TenantDelete StartTenant /trydelete
 call %console% PayrollImport Basic.json
+call %console% ChangePassword StartTenant lucy.smith@foo.com @ayroll3ngine
 call %console% PayrollImport Insurance.json
 call %console% PayrollImport Company.json
 call %console% PayrollImport Report.json
-call %console% PayrunEmployeeTest Company.Test.et.json %args%
