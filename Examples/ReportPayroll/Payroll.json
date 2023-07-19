@@ -12,9 +12,10 @@
       },
       "users": [
         {
-          "identifier": "peter.schmid@foo.com",
-          "firstName": "Peter",
-          "lastName": "Schmid",
+          "identifier": "lucy.smith@foo.com",
+          "firstName": "Lucy",
+          "lastName": "Smith",
+          "culture": "en-US",
           "userType": "Supervisor"
         }
       ],
@@ -377,7 +378,7 @@
           ],
           "cases": [
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "reason": "Report Payroll Import",
               "case": {
@@ -393,7 +394,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
                 "caseName": "AHV",
@@ -408,7 +409,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
                 "caseName": "AHV",
@@ -423,7 +424,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
                 "caseName": "ALV",
@@ -438,7 +439,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
                 "caseName": "AccidentInsurance",
@@ -453,7 +454,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
                 "caseName": "AccidentInsurance",
@@ -468,7 +469,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
                 "caseName": "DailySicknessBenefitsInsurance",
@@ -483,7 +484,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "bachmann.christoph@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -499,7 +500,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "bachmann.christoph@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -515,7 +516,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "bachmann.christoph@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -530,7 +531,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -546,7 +547,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -562,7 +563,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -578,7 +579,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "braunger.margarete@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -593,7 +594,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "frühling.Andreas@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -609,7 +610,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "frühling.Andreas@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -625,7 +626,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "frühling.Andreas@logo.com",
               "divisionName": "Report.Division",
               "case": {
@@ -652,7 +653,7 @@
         {
           "name": "Report.PayrunJob.Jan23",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2023-01-01T00:00:00.0Z",
           "evaluationDate": "2023-02-01T00:00:00.0Z",
@@ -661,7 +662,7 @@
         {
           "name": "Report.PayrunJob.Feb23",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2023-02-01T00:00:00.0Z",
           "evaluationDate": "2023-03-01T00:00:00.0Z",
@@ -670,7 +671,7 @@
         {
           "name": "Report.PayrunJob.Mrz23",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2023-03-01T00:00:00.0Z",
           "evaluationDate": "2023-04-01T00:00:00.0Z",
@@ -679,7 +680,7 @@
         {
           "name": "Report.PayrunJob.Apr23",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2023-04-01T00:00:00.0Z",
           "evaluationDate": "2023-05-01T00:00:00.0Z",
@@ -688,7 +689,7 @@
         {
           "name": "Report.PayrunJob.Mai23",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2023-05-01T00:00:00.0Z",
           "evaluationDate": "2023-06-01T00:00:00.0Z",
@@ -697,7 +698,7 @@
         {
           "name": "Report.PayrunJob.Dez23",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2023-12-01T00:00:00.0Z",
           "evaluationDate": "2024-01-01T00:00:00.0Z",
@@ -706,7 +707,7 @@
         {
           "name": "Report.PayrunJob.Jan24",
           "payrunName": "Report.Payrun",
-          "userIdentifier": "peter.schmid@foo.com",
+          "userIdentifier": "lucy.smith@foo.com",
           "jobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-02-01T00:00:00.0Z",

@@ -10,7 +10,7 @@
           "updateMode": "NoUpdate",
           "cases": [
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "DerivedDivision",
               "reason": "Derived Payroll change AHV",
               "case": {
@@ -26,7 +26,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "DerivedDivision",
               "reason": "Derived Payroll change Monatsfaktor",
               "case": {
@@ -42,7 +42,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "DerivedDivision",
               "reason": "Derived Payroll change Monatslohn",
@@ -59,7 +59,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "DerivedDivision",
               "reason": "Derived Payroll Import Employee Cases",

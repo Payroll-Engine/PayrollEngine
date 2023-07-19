@@ -6,7 +6,7 @@ namespace ReportPayroll.WageTypes;
 
 [WageTypeValueFunction(
     tenantIdentifier: "Report.Tenant",
-    userIdentifier: "peter.schmid@foo.com",
+    userIdentifier: "lucy.smith@foo.com",
     employeeIdentifier: "višnja.müller@foo.com",
     payrollName: "Report.Payroll",
     regulationName: "Report.Regulation")]

@@ -13,7 +13,7 @@ namespace ReportPayroll.EmployeeCaseValues;
 
 [ReportBuildFunction(
     tenantIdentifier: "Report.Tenant",
-    userIdentifier: "peter.schmid@foo.com",
+    userIdentifier: "lucy.smith@foo.com",
     regulationName: "Report.Regulation")]
 public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.ReportBuildFunction
 {
@@ -75,7 +75,7 @@ public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.Repor
 
 [ReportStartFunction(
     tenantIdentifier: "Report.Tenant",
-    userIdentifier: "peter.schmid@foo.com",
+    userIdentifier: "lucy.smith@foo.com",
     regulationName: "Report.Regulation")]
 public class ReportStartFunction : PayrollEngine.Client.Scripting.Function.ReportStartFunction
 {
@@ -105,7 +105,7 @@ public class ReportStartFunction : PayrollEngine.Client.Scripting.Function.Repor
 
 [ReportEndFunction(
     tenantIdentifier: "Report.Tenant",
-    userIdentifier: "peter.schmid@foo.com",
+    userIdentifier: "lucy.smith@foo.com",
     regulationName: "Report.Regulation")]
 public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportEndFunction
 {

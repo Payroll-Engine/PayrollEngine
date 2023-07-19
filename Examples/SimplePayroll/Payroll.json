@@ -18,9 +18,9 @@
       },
       "users": [
         {
-          "identifier": "peter.schmid@foo.com",
-          "firstName": "Peter",
-          "lastName": "Schmid",
+          "identifier": "lucy.smith@foo.com",
+          "firstName": "Lucy",
+          "lastName": "Smith",
           "culture": "en-US",
           "userType": "Supervisor",
           "attributes": {
@@ -45,7 +45,7 @@
         {
           "identifier": "lucia.schmid@foo.com",
           "firstName": "Lucia",
-          "lastName": "Schmid",
+          "lastName": "Smith",
           "culture": "en-US",
           "attributes": {
             "ErpId": "F9D93914-0B1D-4140-8162-1229736B587A",
@@ -68,7 +68,7 @@
         },
         {
           "identifier": "peter.staufer@foo.com",
-          "firstName": "Peter",
+          "firstName": "Lucy",
           "lastName": "Staufer",
           "culture": "en-US",
           "attributes": {
@@ -124,7 +124,7 @@
           "name": "MyTaskName",
           "category": "MyTaskCategory",
           "instruction": "Setup new employees see <a href=\"http://www.google.comh\">Google</a>",
-          "scheduledUserIdentifier": "peter.schmid@foo.com",
+          "scheduledUserIdentifier": "lucy.smith@foo.com",
           "scheduled": "2023-06-12T00:00:00.0Z",
           "attributes": {
             "ErpId": "2993DB89-26E8-44B1-8AB1-EC4A853D347A"

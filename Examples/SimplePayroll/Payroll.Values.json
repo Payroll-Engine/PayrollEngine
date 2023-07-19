@@ -11,7 +11,7 @@
           "updateMode": "NoUpdate",
           "cases": [
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "SimpleDivision1",
               "case": {
                 "caseName": "AHV",
@@ -48,7 +48,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "SimpleDivision1",
               "case": {
                 "caseName": "AHV Local",
@@ -63,7 +63,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "case": {
                 "caseName": "Unfallversicherung",
                 "values": [
@@ -77,7 +77,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "SimpleDivision1",
               "case": {
                 "caseName": "Unfallversicherung Local",
@@ -92,7 +92,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Location",
@@ -125,7 +125,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Monatslohn",
@@ -143,7 +143,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Monatslohn",
@@ -160,7 +160,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Abteilung",
@@ -177,7 +177,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Abteilung",
@@ -194,7 +194,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Beschäftigungsgrad",
@@ -211,7 +211,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Beschäftigungsgrad",
@@ -228,7 +228,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change Beschäftigungsgrad",
@@ -245,7 +245,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Krankheitsmeldung 1",
@@ -263,7 +263,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Krankheitsmeldung 2",
@@ -281,7 +281,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nunez@foo.com",
               "divisionName": "SimpleDivision2",
               "reason": "Change Bonus",
@@ -298,7 +298,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nunez@foo.com",
               "divisionName": "SimpleDivision2",
               "reason": "Change Bonus",
@@ -315,7 +315,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nunez@foo.com",
               "divisionName": "SimpleDivision2",
               "reason": "Change Geburtsdatum",
@@ -331,7 +331,7 @@
               }
             },
             {
-              "userIdentifier": "peter.schmid@foo.com",
+              "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
               "reason": "Change profile picture",

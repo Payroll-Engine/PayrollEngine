@@ -9,6 +9,7 @@
           "identifier": "lucy.smith@foo.com",
           "firstName": "Lucy",
           "lastName": "Smith",
+          "userType": "Supervisor",
           "culture": "en-US"
         }
       ],

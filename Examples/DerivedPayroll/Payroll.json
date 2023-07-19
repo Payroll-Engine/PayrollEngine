@@ -7,10 +7,10 @@
       "culture": "en-US",
       "users": [
         {
-          "identifier": "peter.schmid@foo.com",
-          "firstName": "Peter",
-          "culture": "it-IT",
-          "lastName": "Schmid",
+          "identifier": "lucy.smith@foo.com",
+          "firstName": "Lucy",
+          "lastName": "Smith",
+          "culture": "en-US",
           "userType": "Supervisor",
           "attributes": {
             "StartupPayroll": "DerivedPayroll.Derived",

@@ -11,7 +11,7 @@ namespace ReportPayroll.CumulativeJournal;
 
 [ReportEndFunction(
     tenantIdentifier: "Report.Tenant",
-    userIdentifier: "peter.schmid@foo.com",
+    userIdentifier: "lucy.smith@foo.com",
     regulationName: "Report.Regulation")]
 public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportEndFunction
 {

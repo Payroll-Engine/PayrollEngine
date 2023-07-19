@@ -8,10 +8,10 @@
       "users": [
         {
           "identifier": "lucy.smith@foo.com",
-          "userType": "Supervisor",
           "firstName": "Lucy",
           "lastName": "Smith",
-          "culture": "en-US"
+          "culture": "en-US",
+          "userType": "Supervisor"
         }
       ],
       "divisions": [
