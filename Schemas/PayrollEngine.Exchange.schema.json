@@ -303,11 +303,13 @@
       "x-enumNames": [
         "Regular",
         "Employee",
+        "Administrator",
         "Supervisor"
       ],
       "enum": [
         "Regular",
         "Employee",
+        "Administrator",
         "Supervisor"
       ]
     },
