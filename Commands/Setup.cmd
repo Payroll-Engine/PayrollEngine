@@ -12,7 +12,7 @@ if exist %setup% goto existingVersionError
 echo.
 echo Payroll Engine Setup
 echo.
-echo target: %setup%
+echo target: %version%
 echo.
 
 rem --- compress only switch ---

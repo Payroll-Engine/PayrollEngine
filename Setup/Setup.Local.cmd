@@ -4,7 +4,7 @@ rem --- title ---
 echo.[7m --- Payroll Engine Local Setup --- [0m
 echo.
 
-set config=%~dp0config.json
+set config=%~dp0engine.json
 set console=%~dp0PayrollEngine.PayrollConsole\PayrollEngine.PayrollConsole.exe
 set dbQuery=%~dp0PayrollEngine.SqlServer.DbQuery\PayrollEngine.SqlServer.DbQuery.exe
 
@@ -18,8 +18,9 @@ echo   [92m%PayrollConfiguration%[0m
 echo   old: [96m%PayrollConfiguration%[0m
 echo   new: [93m%config%[0m
 )
+echo.
 
-rem payroll configuration
+rem payroll console
 echo [97mPayroll console[0m
 if %PayrollConsole% == %console% (
 echo   [92m%PayrollConsole%[0m
@@ -27,8 +28,9 @@ echo   [92m%PayrollConsole%[0m
 echo   old: [96m%PayrollConsole%[0m
 echo   new: [93m%console%[0m
 )
+echo.
 
-rem payroll configuration
+rem db query
 echo [97mPayroll database query[0m
 if %PayrollDbQuery% == %dbQuery% (
 echo   [92m%PayrollDbQuery%[0m
@@ -37,7 +39,9 @@ echo   old: [96m%PayrollDbQuery%[0m
 echo   new: [93m%dbQuery%[0m
 )
 echo.
-if %PayrollConsole% == %console% if %PayrollDbQuery% == %dbQuery% if %PayrollDbQuery% == %dbQuery% goto noChanges
+
+rem --- confirmation ---
+if %PayrollConfiguration% == %config% if %PayrollConsole% == %console% if %PayrollDbQuery% == %dbQuery% goto noChanges
 pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to apply local settings..."
 echo.
 

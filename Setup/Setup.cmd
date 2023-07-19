@@ -1,18 +1,21 @@
 @echo off
 
-rem --- public setup configuration ---
-rem disable the setup confirmation
-set setup confirmation=true
-rem disable run of the backend server (and dependend items)
+rem === public setup configuration - BEGIN ===
+rem setup confirmation (default: true)
+set confirmation=true
+rem run of backend server (default: true)
 set runBackendServer=true
-rem disable start of the web application server
+rem open swagger (default: false)
+set openSwagger=false
+rem start web application server (default: true)
 set runWebAppServer=true
-rem disable open the web application
+rem open web application (default: true)
 set openWebApp=true
-rem disable backend server test execution
+rem execute backend server tests (default: true)
 set executeTests=true
-rem disable examples setup
+rem setup examples (default: true)
 set setupExamples=true
+rem === public setup configuration - END ===
 
 rem --- internal setup configuration (do not change)---
 set dbVersion=0.5.1
@@ -27,6 +30,7 @@ rem --- confirmation ---
 echo [97mSetup settings[0m
 echo   - confirmation [96m%confirmation%[0m
 echo   - run backend server [96m%runBackendServer%[0m
+echo   - open swagger [96m%openSwagger%[0m
 echo   - run web application server [96m%runWebAppServer%[0m
 echo   - open web application [96m%openWebApp%[0m
 echo   - execute backend tests [96m%executeTests%[0m
@@ -34,16 +38,16 @@ echo   - setup payroll examples [96m%setupExamples%[0m
 echo.
 echo Database version [96m%dbVersion%[0m
 echo.
-if "%confirmation%" == "false" goto setupTools
+if "%confirmation%" == "false" goto setupConfiguration
 pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to continue..."
 echo.
 echo.
 
 rem --- setup environment ---
 :setupConfiguration
-set PayrollConfiguration=%~dp0config.json
+set PayrollConfiguration=%~dp0engine.json
 rem --- future processes ---
-setx PayrollConfiguration "%~dp0config.json" > nul
+setx PayrollConfiguration "%~dp0engine.json" > nul
 
 rem --- setup payroll console ---
 :setupPayrollConsole
@@ -115,6 +119,7 @@ if "%runBackendServer%" == "false" goto setupComplete
 echo Starting backend server...
 pushd %~dp0PayrollEngine.Backend\
 start /MIN "Payroll Engine - Backend Server" dotnet PayrollEngine.Backend.Server.dll --urls=%backendServerUrl%
+echo.[96mBackend server started %backendServerUrl%[0m
 popd
 
 rem --- test if the backend server has been started ---
@@ -125,11 +130,18 @@ if %ERRORLEVEL% neq 0 goto backendStartError
 
 rem --- execute backend server tests ---
 :executeBackendServerTests
-if "%executeTests%" == "false" goto setupExamples
+if "%executeTests%" == "false" goto openSwagger
 echo Executing tests...
 pushd %~dp0Tests\
 call Test.All.cmd
 popd
+
+rem --- open swagger ---
+:openSwagger
+if "%openSwagger%" == "false" goto setupExamples
+start "" %backendServerUrl%
+echo.[96mBackend client started %backendServerUrl%[0m
+goto exit
 
 rem --- setup example ---
 :setupExamples
@@ -163,6 +175,7 @@ rem --- start web application server ---
 :startTestedWebAppServer
 pushd %~dp0PayrollEngine.WebApp\
 start /MIN "Payroll Engine - Web Application Server" dotnet PayrollEngine.WebApp.Server.dll --urls=%webAppServerUrl%
+echo.[96mWeb application server started %webAppServerUrl%[0m
 popd
 
 rem --- open web application ---
@@ -170,14 +183,16 @@ rem --- open web application ---
 if "%openWebApp%" == "false" goto setupComplete
 echo Starting web application ...
 start "" %webAppServerUrl%
+echo.[96mWeb application started[0m
 
 rem --- setup completed ---
 :setupComplete
 echo.
 echo.[92mSetup completed[0m
 if not "%runBackendServer%" == "false" echo.  - backend server is running
+if not "%openSwagger%" == "false" echo.  - swagger opened
 if not "%runWebAppServer%" == "false" echo.  - web application server is running
-if not "%openWebApp%" == "false" echo.  - web application started
+if not "%openWebApp%" == "false" echo.  - web application opened
 if not "%executeTests%" == "false" echo.  - backend tests executed
 if not "%setupExamples%" == "false" echo.  - payroll examples installed
 echo.
@@ -248,9 +263,12 @@ goto exit
 set webAppServerUrl=
 set backendServerUrl=
 set query=
-set tests=
-set exmaple=
-set dbVersion=
+rem config
 set confirmation=
 set runBackendServer=
+set openSwagger=
 set runWebAppServer=
+set openWebApp=
+set executeTests=
+set setupExamples=
+set dbVersion=

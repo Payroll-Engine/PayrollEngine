@@ -16,7 +16,7 @@ echo Testing backend server connection...
 call %query% TestHttpConnection %backendServerUrl%
 if %ERRORLEVEL% neq 0 goto connectionError
 
-rem --- start swagger ---
+rem --- open swagger ---
 :openWebBrowser
 start "" %backendServerUrl%
 echo.[92mBackend client started %backendServerUrl%[0m
