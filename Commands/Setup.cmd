@@ -2,7 +2,7 @@
 rem Use "Setup nopub" to skip binary publish
 
 rem --- setup version ---
-set version=0.5.0-230719-2
+set version=0.5.0-230719-4
 
 rem --- setup file ---
 set setup=%~dp0..\Bin\PayrollEngine_%version%.zip
