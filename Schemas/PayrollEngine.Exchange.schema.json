@@ -301,13 +301,13 @@
       "type": "string",
       "description": "The type of the user",
       "x-enumNames": [
-        "Regular",
+        "User",
         "Employee",
         "Administrator",
         "Supervisor"
       ],
       "enum": [
-        "Regular",
+        "User",
         "Employee",
         "Administrator",
         "Supervisor"
