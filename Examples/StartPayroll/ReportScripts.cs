@@ -155,9 +155,9 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
             new CaseValueColumn[]
             {
                 // simple columns
-                new("Monatslohn"),
+                new("MonthlyWage"),
                 new("EmploymentLevel"),
-                new("Geburtsdatum"),
+                new("BirthDate"),
                 // lookup column
                 new("Location", "Location")
             },

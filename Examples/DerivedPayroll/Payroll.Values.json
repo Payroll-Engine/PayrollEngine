@@ -28,12 +28,12 @@
             {
               "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "DerivedDivision",
-              "reason": "Derived Payroll change Monatsfaktor",
+              "reason": "Derived Payroll change mnthly factor",
               "case": {
-                "caseName": "Monatsfaktor",
+                "caseName": "MonthlyFactor",
                 "values": [
                   {
-                    "caseFieldName": "Monatsfaktor",
+                    "caseFieldName": "MonthlyFactor",
                     "value": "0.0125",
                     "start": "2020-01-01T00:00:00.0Z",
                     "created": "2019-12-15T00:00:00.0Z"
@@ -45,12 +45,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "DerivedDivision",
-              "reason": "Derived Payroll change Monatslohn",
+              "reason": "Derived Payroll change monthly wage",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2020-01-01T00:00:00.0Z",
                     "created": "2019-12-15T00:00:00.0Z"
@@ -64,16 +64,16 @@
               "divisionName": "DerivedDivision",
               "reason": "Derived Payroll Import Employee Cases",
               "case": {
-                "caseName": "Kaderstufe",
+                "caseName": "SquadLevel",
                 "values": [
                   {
-                    "caseFieldName": "Kaderstufe",
+                    "caseFieldName": "SquadLevel",
                     "value": "0",
                     "start": "2020-01-01T00:00:00.0Z",
                     "created": "2019-12-15T00:00:00.0Z"
                   },
                   {
-                    "caseFieldName": "Kaderlohn",
+                    "caseFieldName": "SquadSalary",
                     "value": "1400",
                     "start": "2020-01-01T00:00:00.0Z",
                     "created": "2019-12-15T00:00:00.0Z"

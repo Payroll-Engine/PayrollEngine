@@ -911,14 +911,14 @@
               ]
             },
             {
-              "name": "Lohn",
-              "description": "Monatslohn",
+              "name": "Wage",
+              "description": "Monthly wage",
               "caseType": "Employee",
-              "defaultReason": "Test Monatslohn",
+              "defaultReason": "Test monthly wage",
               "fields": [
                 {
-                  "name": "Lohn",
-                  "description": "Monatslohn",
+                  "name": "Wage",
+                  "description": "Monthly wage",
                   "valueType": "Money",
                   "timeType": "Moment",
                   "defaultStart": "today"
@@ -926,14 +926,14 @@
               ]
             },
             {
-              "name": "Zulage",
-              "description": "Monatslohn Zulage [10% bei Lohn grösser 5'000]",
+              "name": "Allowance",
+              "description": "Monthly wage allowance [10% for wages greater than 5'000]",
               "caseType": "Employee",
               "availableExpression": "false",
               "fields": [
                 {
-                  "name": "Zulage",
-                  "description": "Monatslohn Zulage",
+                  "name": "Allowance",
+                  "description": "Monthly wage allowance",
                   "valueType": "Money",
                   "timeType": "Moment",
                   "defaultStart": "today"
@@ -941,14 +941,14 @@
               ]
             },
             {
-              "name": "Sonderzulage",
-              "description": "Zulage zur Monatszulage [20% bei Zulage grösser 1'000]",
+              "name": "SpecialAllowance",
+              "description": "Allowance of the monthly allowance [20% for allowance greater than 1'000]",
               "caseType": "Employee",
               "availableExpression": "false",
               "fields": [
                 {
-                  "name": "Sonderzulage",
-                  "description": "Zulage zur Monatszulage",
+                  "name": "SpecialAllowance",
+                  "description": "Allowance of the monthly allowance",
                   "valueType": "Money",
                   "timeType": "Moment",
                   "defaultStart": "today"
@@ -1463,11 +1463,11 @@
             {
               "name": "AVeryLongCaseName",
               "nameLocalizations": {
-                "de": "Ein sehr sehr langer Case Name der nicht aufhören möchte"
+                "en": "A very very long case name that does not want to stop"
               },
               "description": "A very long case description",
               "descriptionLocalizations": {
-                "de": "Ein sehr sehr langer Case Beschreibung der nicht aufhören möchte"
+                "eb": "A very very long case name that does not want to stop"
               },
               "caseType": "Employee",
               "fields": [
@@ -1624,9 +1624,9 @@
               "buildExpression": "var baseValue = SourcePayrollValue[\"Conditions.Double\"]; return baseValue.HasValue && (int)baseValue > 100"
             },
             {
-              "sourceCaseName": "Lohn",
-              "targetCaseName": "Zulage",
-              "buildExpression": "TargetValue[\"Zulage\"] = TargetPayrollValue[\"Zulage\"].HasValue ?(decimal)SourceValue[\"Lohn\"] * 0.1M : 0; return true"
+              "sourceCaseName": "Wage",
+              "targetCaseName": "Allowance",
+              "buildExpression": "TargetValue[\"Allowance\"] = TargetPayrollValue[\"Allowance\"].HasValue ?(decimal)SourceValue[\"Wage\"] * 0.1M : 0; return true"
             },
             {
               "sourceCaseName": "Simple Lookups",

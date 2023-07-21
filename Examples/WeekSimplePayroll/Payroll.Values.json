@@ -30,10 +30,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.5",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2022-01-01T00:00:00.0Z"
@@ -47,10 +47,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Wochenlohn",
+                "caseName": "WeeklyWage",
                 "values": [
                   {
-                    "caseFieldName": "Wochenlohn",
+                    "caseFieldName": "WeeklyWage",
                     "value": "1000",
                     "start": "2022-01-01T00:00:00.0Z",
                     "end": "2024-12-31T00:00:00.0Z",
@@ -65,10 +65,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Wochenlohn",
+                "caseName": "WeeklyWage",
                 "values": [
                   {
-                    "caseFieldName": "Wochenlohn",
+                    "caseFieldName": "WeeklyWage",
                     "value": "1175",
                     "start": "2023-02-12T00:00:00.0Z",
                     "created": "2023-02-05T00:00:00.0Z"
@@ -82,10 +82,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2023-01-01T00:00:00.0Z",
                     "created": "2022-12-31T00:00:00.0Z"
@@ -99,10 +99,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2023-02-14T00:00:00.0Z",
                     "created": "2023-01-31T00:00:00.0Z"
@@ -116,10 +116,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2023-02-15T00:00:00.0Z",
                     "created": "2023-02-22T00:00:00.0Z"
@@ -133,10 +133,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2023-01-01T00:00:00.0Z",
                     "created": "2022-01-26T00:00:00.0Z"
@@ -150,10 +150,10 @@
               "divisionName": "WeekSimpleDivision",
               "reason": "Week Payroll Import",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "DEF",
                     "start": "2023-02-13T00:00:00.0Z",
                     "created": "2023-01-26T00:00:00.0Z"

@@ -112,7 +112,7 @@
               ]
             },
             {
-              "name": "Sonderbonus",
+              "name": "SpecialBonus",
               "values": [
                 {
                   "key": "Bonus1",
@@ -155,18 +155,18 @@
               "caseType": "Company",
               "fields": [
                 {
-                  "name": "NBU Satz",
+                  "name": "NBU Set",
                   "valueType": "Percent",
                   "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
-              "name": "DailySicknessBenefitsInsurance",
+              "name": "DailyDiseaseBenefitsInsurance",
               "caseType": "Company",
               "fields": [
                 {
-                  "name": "KTG Satz",
+                  "name": "KTG Set",
                   "valueType": "Percent",
                   "timeType": "CalendarPeriod"
                 }
@@ -209,33 +209,33 @@
               ]
             },
             {
-              "name": "Abteilung",
+              "name": "Department",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Abteilung",
+                  "name": "Department",
                   "valueType": "String",
                   "timeType": "Period"
                 }
               ]
             },
             {
-              "name": "Stundenlohn",
+              "name": "HourlyWage",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Stundenlohn",
+                  "name": "HourlyWage",
                   "valueType": "Money",
                   "timeType": "Period"
                 }
               ]
             },
             {
-              "name": "Anzahl Stunden",
+              "name": "NumberOfHhours",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Anzahl Stunden",
+                  "name": "NumberOfHhours",
                   "valueType": "Decimal",
                   "timeType": "Moment"
                 }
@@ -266,19 +266,19 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis"
+              "name": "AHV Base"
             },
             {
-              "name": "QST Basis"
+              "name": "QST Base"
             },
             {
-              "name": "Bruttolohn"
+              "name": "GrossWage"
             },
             {
-              "name": "UVG Basis"
+              "name": "UVG Base"
             },
             {
-              "name": "KTG Basis"
+              "name": "KTG Base"
             }
           ],
           "wageTypes": [
@@ -287,38 +287,37 @@
               "name": "MonthlyWage",
               "valueExpressionFile": "WageTypes.cs",
               "collectors": [
-                "AHV Basis",
-                "QST Basis",
-                "Bruttolohn",
-                "UVG Basis",
-                "KTG Basis",
-                "Bruttolohn"
+                "AHV Base",
+                "QST Base",
+                "GrossWage",
+                "UVG Base",
+                "KTG Base"
               ]
             },
             {
               "wageTypeNumber": 200,
-              "name": "Bruttolohn",
-              "valueExpression": "Collector[\"Bruttolohn\"].RoundTwentieth()"
+              "name": "GrossWage",
+              "valueExpression": "Collector[\"GrossWage\"].RoundTwentieth()"
             },
             {
               "wageTypeNumber": 208,
               "name": "AHV-Beitrag",
-              "valueExpression": "(Collector[\"AHV Basis\"] *-1m * CaseValue[\"AHV AN\"]).RoundTwentieth()"
+              "valueExpression": "(Collector[\"AHV Base\"] *-1m * CaseValue[\"AHV AN\"]).RoundTwentieth()"
             },
             {
               "wageTypeNumber": 209,
               "name": "ALV-Beitrag",
-              "valueExpression": "(Collector[\"AHV Basis\"] *-1m * CaseValue[\"ALV AN\"]).RoundTwentieth()"
+              "valueExpression": "(Collector[\"AHV Base\"] *-1m * CaseValue[\"ALV AN\"]).RoundTwentieth()"
             },
             {
               "wageTypeNumber": 210,
               "name": "UVG AN",
-              "valueExpression": "(Collector[\"UVG Basis\"] *-1m * CaseValue[\"NBU Satz\"]).RoundTwentieth()"
+              "valueExpression": "(Collector[\"UVG Base\"] *-1m * CaseValue[\"NBU Set\"]).RoundTwentieth()"
             },
             {
               "wageTypeNumber": 211,
               "name": "KTG AN",
-              "valueExpression": "(Collector[\"KTG Basis\"] *-1m * CaseValue[\"KTG Satz\"]).RoundTwentieth()"
+              "valueExpression": "(Collector[\"KTG Base\"] *-1m * CaseValue[\"KTG Set\"]).RoundTwentieth()"
             },
             {
               "wageTypeNumber": 300,
@@ -445,7 +444,7 @@
                 "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.5",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2022-01-01T00:00:00.0Z"
@@ -460,7 +459,7 @@
                 "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.05",
                     "start": "2023-03-01T00:00:00.0Z",
                     "created": "2022-02-01T00:00:00.0Z"
@@ -472,10 +471,10 @@
               "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "Report.Division",
               "case": {
-                "caseName": "DailySicknessBenefitsInsurance",
+                "caseName": "DailyDiseaseBenefitsInsurance",
                 "values": [
                   {
-                    "caseFieldName": "KTG Satz",
+                    "caseFieldName": "KTG Set",
                     "value": "0.0045",
                     "start": "2023-03-01T00:00:00.0Z",
                     "created": "2022-02-01T00:00:00.0Z"

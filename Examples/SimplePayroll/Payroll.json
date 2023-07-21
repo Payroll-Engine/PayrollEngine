@@ -187,11 +187,11 @@
               "valueFile": "scripts\\GetCurrentAge.cs"
             },
             {
-              "name": "GetSickDaysCount",
+              "name": "GetDiseaseDaysCount",
               "functionTypes": [
                 "WageTypeValue"
               ],
-              "valueFile": "scripts\\GetSickDaysCount.cs"
+              "valueFile": "scripts\\GetDiseaseDaysCount.cs"
             },
             {
               "name": "MyTool",
@@ -317,16 +317,16 @@
               ]
             },
             {
-              "name": "Unfallversicherung",
+              "name": "AccidentInsurance",
               "caseType": "Company",
-              "defaultReason": "Change Unfallversicherung",
+              "defaultReason": "Change accident insurance",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "NBU Satz",
+                  "name": "NBU Set",
                   "valueType": "Percent",
                   "valueScope": "Global",
                   "timeType": "CalendarPeriod",
@@ -335,7 +335,7 @@
                     "Legal"
                   ],
                   "valueAttributes": {
-                    "textAttribute": "NBU Satz Attr",
+                    "textAttribute": "NBU Set Attr",
                     "dateAttribute": "2024-04-04T08:00:00.0Z",
                     "numAttribute": 500
                   }
@@ -343,16 +343,16 @@
               ]
             },
             {
-              "name": "Unfallversicherung Local",
+              "name": "AccidentInsuranceLocal",
               "caseType": "Company",
-              "defaultReason": "Change Unfallversicherung Local",
+              "defaultReason": "Change accident insurance local",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "NBU Satz Local",
+                  "name": "NBU Set Local",
                   "valueType": "Percent",
                   "timeType": "CalendarPeriod",
                   "clusters": [
@@ -365,7 +365,7 @@
             {
               "name": "Location",
               "caseType": "Employee",
-              "defaultReason": "Change Location",
+              "defaultReason": "Change location",
               "clusters": [
                 "Onboarding",
                 "Legal"
@@ -394,29 +394,29 @@
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "nameLocalizations": {
-                "en": "Monatslohn EN",
-                "de": "Monatslohn DE",
-                "fr": "Monatslohn FR",
-                "it": "Monatslohn IT"
+                "en": "MonthlyWage EN",
+                "de": "MonthlyWage DE",
+                "fr": "MonthlyWage FR",
+                "it": "MonthlyWage IT"
               },
               "caseType": "Employee",
               "cancellationType": "Case",
-              "defaultReason": "Change Monatslohn",
-              "validateExpression": "AddCaseValueTag(\"Monatslohn\", \"MyCaseValueTag\");",
+              "defaultReason": "Change monthly wage",
+              "validateExpression": "AddCaseValueTag(\"MonthlyWage\", \"MyCaseValueTag\");",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "nameLocalizations": {
-                    "en": "Monatslohn EN",
-                    "de": "Monatslohn DE",
-                    "fr": "Monatslohn FR",
-                    "it": "Monatslohn IT"
+                    "en": "MonthlyWage EN",
+                    "de": "MonthlyWage DE",
+                    "fr": "MonthlyWage FR",
+                    "it": "MonthlyWage IT"
                   },
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
@@ -425,7 +425,7 @@
                     "Legal"
                   ],
                   "valueAttributes": {
-                    "textAttribute": "Monatslohn Attr",
+                    "textAttribute": "MonthlyWage Attr",
                     "dateAttribute": "2023-12-21T10:15:00.0Z",
                     "numAttribute": 100
                   }
@@ -433,16 +433,16 @@
               ]
             },
             {
-              "name": "Beschäftigungsgrad",
+              "name": "EmploymentLevel",
               "caseType": "Employee",
-              "defaultReason": "Change Beschäftigungsgrad",
+              "defaultReason": "Change employment level",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "Beschäftigungsgrad",
+                  "name": "EmploymentLevel",
                   "valueType": "Percent",
                   "timeType": "Period",
                   "clusters": [
@@ -450,7 +450,7 @@
                     "Legal"
                   ],
                   "valueAttributes": {
-                    "textAttribute": "Beschäftigungsgrad Attr",
+                    "textAttribute": "EmploymentLevel Attr",
                     "dateAttribute": "2023-11-17T12:25:00.0Z",
                     "numAttribute": 200
                   }
@@ -458,16 +458,16 @@
               ]
             },
             {
-              "name": "Abteilung",
+              "name": "Department",
               "caseType": "Employee",
-              "defaultReason": "Change Abteilung",
+              "defaultReason": "Change department",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "Abteilung",
+                  "name": "Department",
                   "valueType": "String",
                   "timeType": "Period",
                   "clusters": [
@@ -475,7 +475,7 @@
                     "Legal"
                   ],
                   "valueAttributes": {
-                    "textAttribute": "Abteilung Attr",
+                    "textAttribute": "Department Attr",
                     "dateAttribute": "2023-07-05T17:00:00.0Z",
                     "numAttribute": 300
                   }
@@ -486,8 +486,8 @@
               "name": "Titel",
               "caseType": "Employee",
               "availableExpression": "false",
-              "availableExpression2": "CaseValue[\"Abteilung\"].HasValue",
-              "defaultReason": "Change Titel",
+              "availableExpression2": "CaseValue[\"Department\"].HasValue",
+              "defaultReason": "Change titel",
               "clusters": [
                 "Onboarding",
                 "Legal"
@@ -559,13 +559,13 @@
               ]
             },
             {
-              "name": "Sozialversicherungsnummer",
-              "defaultReason": "Meldung Sozialversicherungsnummer",
+              "name": "NationalInsuranceNumber",
+              "defaultReason": "Change national insurance number",
               "caseType": "Employee",
               "order": 1,
               "fields": [
                 {
-                  "name": "Sozialversicherungsnummer",
+                  "name": "NationalInsuranceNumber",
                   "valueType": "String",
                   "valueScope": "Global",
                   "timeType": "Timeless",
@@ -587,7 +587,7 @@
               },
               "description": "Slot Parent",
               "caseType": "Employee",
-              "defaultReason": "Change Slot Parent",
+              "defaultReason": "Change slot parent",
               "fields": [
                 {
                   "name": "ChildCount",
@@ -729,7 +729,7 @@
             {
               "name": "Bonus",
               "caseType": "Employee",
-              "defaultReason": "Change Bonus",
+              "defaultReason": "Change bonus",
               "clusters": [
                 "Onboarding",
                 "Legal"
@@ -755,16 +755,16 @@
               ]
             },
             {
-              "name": "Geburtsdatum",
+              "name": "BirthDate",
               "caseType": "Employee",
-              "defaultReason": "Change Geburtsdatum",
+              "defaultReason": "Change BirthDate",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "Geburtsdatum",
+                  "name": "BirthDate",
                   "valueType": "Date",
                   "valueScope": "Global",
                   "timeType": "Timeless",
@@ -776,16 +776,16 @@
               ]
             },
             {
-              "name": "Krankheit",
+              "name": "Disease",
               "caseType": "Employee",
-              "defaultReason": "Neue Krankheitsmeldung",
+              "defaultReason": "Neue disease",
               "clusters": [
                 "Onboarding",
                 "Legal"
               ],
               "fields": [
                 {
-                  "name": "Krankheit",
+                  "name": "Disease",
                   "valueType": "Percent",
                   "timeType": "Period",
                   "clusters": [
@@ -819,7 +819,7 @@
           ],
           "caseRelations": [
             {
-              "sourceCaseName": "Abteilung",
+              "sourceCaseName": "Department",
               "targetCaseName": "Titel"
             },
             {
@@ -923,7 +923,7 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
+              "name": "AHV Base",
               "endExpression": "ResultAttribute[\"Canton\"] = \"AG\"; ResultAttribute[\"Tari\"] = \"A0N\"; AddCustomResult(CollectorName, 2200, CycleStart, PeriodEnd); ; SetResultTags(new[] { \"MyColKey\" });"
             },
             {
@@ -933,21 +933,21 @@
               "name": "Debit"
             },
             {
-              "name": "Mindestlohn monatlich",
+              "name": "MinimumWageMonthly",
               "endExpression": "SetValues( new decimal[] { 36000m / 12 } );"
             },
             {
-              "name": "Höchstlohn monatlich",
+              "name": "MaximumWageMonthly",
               "startExpression": "SetValues( new decimal[] { 80000m / 12 } );"
             }
           ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "name": "MonthlyWage",
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"];",
               "collectors": [
-                "AHV Basis"
+                "AHV Base"
               ],
               "clusters": [
                 "Legal"
@@ -955,10 +955,10 @@
             },
             {
               "wageTypeNumber": 101.1,
-              "name": "Monatslohn.Credit",
+              "name": "MonthlyWage.Credit",
               "periodValues": true,
               "valueExpression": "WageType[101] * 0.05M",
-              "resultExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); Attribute[\"myValue\"] = (values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]).ValueAs<decimal>().RoundTwentieth()",
+              "resultExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); Attribute[\"myValue\"] = (values[\"MonthlyWage\"] * values[\"EmploymentLevel\"]).ValueAs<decimal>().RoundTwentieth()",
               "collectors": [
                 "Credit"
               ],
@@ -968,7 +968,7 @@
             },
             {
               "wageTypeNumber": 101.2,
-              "name": "Monatslohn.Debit",
+              "name": "MonthlyWage.Debit",
               "valueExpression": "decimal.Negate(WageType[101.1M])",
               "resultExpression": "Attribute[\"textAttribute\"] = \"My text 1\"; Attribute[\"dateAttribute\"] = \"2023-03-22T15:30:00.0Z\"; Attribute[\"numAttribute\"] = 75.85;",
               "collectors": [
@@ -980,43 +980,43 @@
             },
             {
               "wageTypeNumber": 101.5,
-              "name": "Monatslohn.WorkDay",
+              "name": "MonthlyWage.WorkDay",
               "periodValues": true,
-              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]"
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"]"
             },
             {
               "wageTypeNumber": 103,
               "name": "Bonus",
-              "valueExpression": "Collector[\"Höchstlohn monatlich\"]",
+              "valueExpression": "Collector[\"MaximumWageMonthly\"]",
               "collectors": [
-                "AHV Basis"
+                "AHV Base"
               ]
             },
             {
               "wageTypeNumber": 104,
               "name": "AHV AN Abzug",
-              "valueExpression": "Collector[\"AHV Basis\"] * CaseValue[\"AHV AN\"]",
-              "resultExpression": "AddCustomResult(\"Monatslohn\", 128M, CycleStart, CycleEnd);"
+              "valueExpression": "Collector[\"AHV Base\"] * CaseValue[\"AHV AN\"]",
+              "resultExpression": "AddCustomResult(\"MonthlyWage\", 128M, CycleStart, CycleEnd);"
             },
             {
               "wageTypeNumber": 106.1,
               "name": "Alterszulage local",
-              "valueExpression": "this.GetCurrentAge(CaseValue[\"Geburtsdatum\"]) > 50 ? CaseValue[\"Monatslohn\"] * 0.075M : CaseValue[\"Monatslohn\"] * 0.025M"
+              "valueExpression": "this.GetCurrentAge(CaseValue[\"BirthDate\"]) > 50 ? CaseValue[\"MonthlyWage\"] * 0.075M : CaseValue[\"MonthlyWage\"] * 0.025M"
             },
             {
               "wageTypeNumber": 106.2,
               "name": "Alterszulage local static",
-              "valueExpression": "return this.GetSickDaysCount();"
+              "valueExpression": "return this.GetDiseaseDaysCount();"
             },
             {
               "wageTypeNumber": 106.3,
               "name": "Alterszulage global",
-              "valueExpression": "MyTool.GetCurrentAge(CaseValue[\"Geburtsdatum\"]) > 50 ? CaseValue[\"Monatslohn\"] * 0.075M : CaseValue[\"Monatslohn\"] * 0.025M"
+              "valueExpression": "MyTool.GetCurrentAge(CaseValue[\"BirthDate\"]) > 50 ? CaseValue[\"MonthlyWage\"] * 0.075M : CaseValue[\"MonthlyWage\"] * 0.025M"
             },
             {
               "wageTypeNumber": 107,
-              "name": "Krankheitstage",
-              "valueExpression": "CaseValue[\"Krankheit\"].TotalDaysByValue()"
+              "name": "Disease days",
+              "valueExpression": "CaseValue[\"Disease\"].TotalDaysByValue()"
             },
             {
               "wageTypeNumber": 108,
@@ -1029,12 +1029,12 @@
             },
             {
               "wageTypeNumber": 109,
-              "name": "Maximallohn",
-              "valueExpression": "Collector[\"Höchstlohn monatlich\"]"
+              "name": "MaximumWage",
+              "valueExpression": "Collector[\"MaximumWageMonthly\"]"
             },
             {
               "wageTypeNumber": 110,
-              "name": "OrtBonus",
+              "name": "LocationBonus",
               "valueExpression": "\"Zürich\".Equals((GetLookup<Dictionary<string,object>>(\"Location\", \"8000\"))[\"name\"]) ? 250M : 0"
             },
             {

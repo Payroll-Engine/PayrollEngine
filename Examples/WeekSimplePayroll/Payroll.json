@@ -54,44 +54,44 @@
               ]
             },
             {
-              "name": "Unfallversicherung",
+              "name": "AccidentInsurance",
               "caseType": "Company",
               "fields": [
                 {
-                  "name": "NBU Satz",
+                  "name": "NBU Set",
                   "valueType": "Percent",
                   "timeType": "Period"
                 }
               ]
             },
             {
-              "name": "Wochenlohn",
+              "name": "WeeklyWage",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Wochenlohn",
+                  "name": "WeeklyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
-              "name": "Beschäftigungsgrad",
+              "name": "BeschäftigungEmploymentLevelsgrad",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Beschäftigungsgrad",
+                  "name": "EmploymentLevel",
                   "valueType": "Percent",
                   "timeType": "Period"
                 }
               ]
             },
             {
-              "name": "Abteilung",
+              "name": "Department",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Abteilung",
+                  "name": "Department",
                   "valueType": "String",
                   "timeType": "Period"
                 }
@@ -111,16 +111,16 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis"
+              "name": "AHV Base"
             }
           ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Wochenlohn",
-              "valueExpression": "var values = GetCaseValues(\"Wochenlohn\", \"Beschäftigungsgrad\"); return values[\"Wochenlohn\"] * values[\"Beschäftigungsgrad\"]",
+              "name": "WeeklyWage",
+              "valueExpression": "var values = GetCaseValues(\"WeeklyWage\", \"EmploymentLevel\"); return values[\"WeeklyWage\"] * values[\"EmploymentLevel\"]",
               "collectors": [
-                "AHV Basis"
+                "AHV Base"
               ]
             },
             {
@@ -128,18 +128,18 @@
               "name": "Bonus",
               "valueExpression": "CaseValue[\"Bonus\"]",
               "collectors": [
-                "AHV Basis"
+                "AHV Base"
               ]
             },
             {
               "wageTypeNumber": 104,
               "name": "AHV AN Abzug",
-              "valueExpression": "Collector[\"AHV Basis\"] * CaseValue[\"AHV AN\"]"
+              "valueExpression": "Collector[\"AHV Base\"] * CaseValue[\"AHV AN\"]"
             },
             {
               "wageTypeNumber": 105,
               "name": "NBU Abzug",
-              "valueExpression": "Collector[\"AHV Basis\"] * CaseValue[\"NBU Satz\"]"
+              "valueExpression": "Collector[\"AHV Base\"] * CaseValue[\"NBU Set\"]"
             }
           ]
         }

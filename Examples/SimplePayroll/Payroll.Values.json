@@ -65,10 +65,10 @@
             {
               "userIdentifier": "lucy.smith@foo.com",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.1",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2022-01-01T00:00:00.0Z"
@@ -80,10 +80,10 @@
               "userIdentifier": "lucy.smith@foo.com",
               "divisionName": "SimpleDivision1",
               "case": {
-                "caseName": "Unfallversicherung Local",
+                "caseName": "AccidentInsuranceLocal",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz Local",
+                    "caseFieldName": "NBU Set Local",
                     "value": "0.4",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2022-01-01T00:00:00.0Z"
@@ -95,7 +95,7 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Location",
+              "reason": "Change location",
               "case": {
                 "caseName": "Location",
                 "values": [
@@ -111,10 +111,10 @@
                 ],
                 "relatedCases": [
                   {
-                    "caseName": "Monatslohn",
+                    "caseName": "MonthlyWage",
                     "values": [
                       {
-                        "caseFieldName": "Monatslohn",
+                        "caseFieldName": "MonthlyWage",
                         "value": "6000",
                         "start": "2023-02-10T00:00:00.0Z",
                         "created": "2023-02-05T00:00:00.0Z"
@@ -128,12 +128,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Monatslohn",
+              "reason": "Change monthly wage",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2022-01-01T00:00:00.0Z",
                     "end": "2024-12-31T00:00:00.0Z",
@@ -146,12 +146,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Monatslohn",
+              "reason": "Change monthly wage",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "start": "2023-02-10T00:00:00.0Z",
                     "created": "2023-02-05T00:00:00.0Z"
@@ -163,12 +163,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Abteilung",
+              "reason": "Change department",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2023-01-01T00:00:00.0Z",
                     "created": "2022-01-26T00:00:00.0Z"
@@ -180,12 +180,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Abteilung",
+              "reason": "Change department",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "DEF",
                     "start": "2023-02-15T00:00:00.0Z",
                     "created": "2023-01-26T00:00:00.0Z"
@@ -197,12 +197,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Beschäftigungsgrad",
+              "reason": "Change employment level",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2023-01-01T00:00:00.0Z",
                     "created": "2022-12-31T00:00:00.0Z"
@@ -214,12 +214,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Beschäftigungsgrad",
+              "reason": "Changeemployment level",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2023-02-20T00:00:00.0Z",
                     "created": "2023-01-31T00:00:00.0Z"
@@ -231,12 +231,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Change Beschäftigungsgrad",
+              "reason": "Change employment level",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2023-02-24T00:00:00.0Z",
                     "created": "2023-02-22T00:00:00.0Z"
@@ -248,12 +248,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Krankheitsmeldung 1",
+              "reason": "Disease notification 1",
               "case": {
-                "caseName": "Krankheit",
+                "caseName": "Disease",
                 "values": [
                   {
-                    "caseFieldName": "Krankheit",
+                    "caseFieldName": "Disease",
                     "value": "1",
                     "start": "2023-02-04T00:00:00.0Z",
                     "end": "2023-02-07T00:00:00.0Z",
@@ -266,12 +266,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "SimpleDivision1",
-              "reason": "Krankheitsmeldung 2",
+              "reason": "Disease notification 2",
               "case": {
-                "caseName": "Krankheit",
+                "caseName": "Disease",
                 "values": [
                   {
-                    "caseFieldName": "Krankheit",
+                    "caseFieldName": "Disease",
                     "value": "0.5",
                     "start": "2023-02-16T00:00:00.0Z",
                     "end": "2023-02-21T00:00:00.0Z",
@@ -284,7 +284,7 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nunez@foo.com",
               "divisionName": "SimpleDivision2",
-              "reason": "Change Bonus",
+              "reason": "Change bonus",
               "case": {
                 "caseName": "Bonus",
                 "values": [
@@ -301,7 +301,7 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nunez@foo.com",
               "divisionName": "SimpleDivision2",
-              "reason": "Change Bonus",
+              "reason": "Change bonus",
               "case": {
                 "caseName": "Bonus",
                 "values": [
@@ -318,12 +318,12 @@
               "userIdentifier": "lucy.smith@foo.com",
               "employeeIdentifier": "mario.nunez@foo.com",
               "divisionName": "SimpleDivision2",
-              "reason": "Change Geburtsdatum",
+              "reason": "Change birth date",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-06-18T00:00:00.0Z",
                     "created": "2022-12-01T00:00:00.0Z"
                   }

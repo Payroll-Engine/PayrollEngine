@@ -11,3 +11,4 @@ call %console% PayrollImport Payroll.Values.json
 call %console% PayrollImport Payroll.Lookups.json
 call %console% PayrollImport Payroll.Jobs.json
 call %console% PayrollResults SimplePayroll 2 %args%
+rem pause

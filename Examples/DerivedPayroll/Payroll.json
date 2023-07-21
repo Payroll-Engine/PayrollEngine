@@ -51,22 +51,22 @@
               ]
             },
             {
-              "name": "Monatsfaktor",
+              "name": "MonthlyFactor",
               "caseType": "Company",
               "fields": [
                 {
-                  "name": "Monatsfaktor",
+                  "name": "MonthlyFactor",
                   "valueType": "Decimal",
                   "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "nameLocalizations": {
-                "en": "Monatslohn Root"
+                "en": "Monthly wage"
               },
-              "description": "Monatslohn Root",
+              "description": "Monthly wage Root",
               "caseType": "Employee",
               "lookups": [
                 "a",
@@ -75,9 +75,9 @@
               ],
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "nameLocalizations": {
-                    "en": "Monatslohn Root"
+                    "en": "MonthlyWage"
                   },
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
@@ -89,22 +89,22 @@
               ]
             },
             {
-              "name": "Kaderstufe",
+              "name": "SquadLevel",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Kaderstufe",
+                  "name": "SquadLevel",
                   "valueType": "Integer",
                   "timeType": "Period"
                 }
               ]
             },
             {
-              "name": "Grundeinkommen",
+              "name": "BasicIncome",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Grundeinkommen",
+                  "name": "BasicIncome",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod"
                 }
@@ -113,31 +113,31 @@
           ],
           "caseRelations": [
             {
-              "sourceCaseName": "Monatslohn",
-              "targetCaseName": "Kaderstufe"
+              "sourceCaseName": "MonthlyWage",
+              "targetCaseName": "SquadLevel"
             },
             {
-              "sourceCaseName": "Monatslohn",
-              "targetCaseName": "Grundeinkommen",
-              "buildExpression": " var value = (decimal?)SourceValue[\"Monatslohn\"]; TargetValue[\"Grundeinkommen\"] = value.HasValue ? value.Value * 0.125M : 0; TargetStart[\"Grundeinkommen\"] = SourceStart[\"Monatslohn\"]?.AddMonths(3); TargetEnd[\"Grundeinkommen\"] = SourceEnd[\"Monatslohn\"]?.AddMonths(3)"
+              "sourceCaseName": "MonthlyWage",
+              "targetCaseName": "BasicIncome",
+              "buildExpression": " var value = (decimal?)SourceValue[\"MonthlyWage\"]; TargetValue[\"BasicIncome\"] = value.HasValue ? value.Value * 0.125M : 0; TargetStart[\"BasicIncome\"] = SourceStart[\"MonthlyWage\"]?.AddMonths(3); TargetEnd[\"BasicIncome\"] = SourceEnd[\"MonthlyWage\"]?.AddMonths(3)"
             }
           ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn 1",
-              "valueExpression": "CaseValue[\"Monatslohn\"]"
+              "name": "MonthlyWage 1",
+              "valueExpression": "CaseValue[\"MonthlyWage\"]"
             },
             {
               "wageTypeNumber": 102,
-              "name": "Monatslohn 2",
-              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "name": "MonthlyWage 2",
+              "valueExpression": "CaseValue[\"MonthlyWage\"]",
               "resultExpression": "Attribute[\"Name\"] = \"Test\"; Attribute[\"Value\"] = 100"
             },
             {
               "wageTypeNumber": 103,
-              "name": "Monatslohn 3",
-              "valueExpression": "/* #sealed */ return (decimal)CaseValue[\"Monatslohn\"];"
+              "name": "MonthlyWage 3",
+              "valueExpression": "/* #sealed */ return (decimal)CaseValue[\"MonthlyWage\"];"
             }
           ]
         },
@@ -150,19 +150,19 @@
           ],
           "cases": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "nameLocalizations": {
-                "en": "Monatslohn Derived",
-                "it": "Monatslohn Derivato"
+                "en": "MonthlyWage Derived",
+                "it": "MonthlyWage Derivato"
               },
-              "description": "Monatslohn Derived",
+              "description": "MonthlyWage Derived",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "nameLocalizations": {
-                    "en": "Monatslohn Derived",
-                    "it": "Monatslohn Derivato"
+                    "en": "MonthlyWage Derived",
+                    "it": "MonthlyWage Derivato"
                   },
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
@@ -175,11 +175,11 @@
               ]
             },
             {
-              "name": "Monatslohn Zusatz",
+              "name": "MonthlyWageSupplement",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Monatslohn Zusatz",
+                  "name": "MonthlyWageSupplement",
                   "valueType": "Decimal",
                   "timeType": "CalendarPeriod"
                 }
@@ -189,12 +189,12 @@
           "wageTypes": [
             {
               "wageTypeNumber": 102,
-              "name": "Monatslohn 2",
+              "name": "MonthlyWage 2",
               "valueExpression": "null"
             },
             {
               "wageTypeNumber": 104,
-              "name": "Kaderlohn 1",
+              "name": "SquadSalary 1",
               "valueExpression": "null"
             }
           ]
@@ -208,19 +208,19 @@
           ],
           "cases": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "nameLocalizations": {
-                "en": "Monatslohn Leave",
-                "it": "Monatslohn Levato"
+                "en": "MonthlyWage Leave",
+                "it": "MonthlyWage Levato"
               },
-              "description": "Monatslohn Leave",
+              "description": "MonthlyWage Leave",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "nameLocalizations": {
-                    "en": "Monatslohn Leave",
-                    "it": "Monatslohn Derivato"
+                    "en": "MonthlyWage Leave",
+                    "it": "MonthlyWage Derivato"
                   },
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
@@ -231,7 +231,7 @@
                   }
                 },
                 {
-                  "name": "Monatslohn Spez",
+                  "name": "MonthlyWage Spez",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "optional": true
@@ -239,39 +239,39 @@
               ]
             },
             {
-              "name": "AHV Zusatz",
+              "name": "AHV Supplement",
               "caseType": "Employee",
               "availableExpression": "CaseValue[\"AHV\"].HasValue",
               "fields": [
                 {
-                  "name": "AHV Zusatz",
+                  "name": "AHV Supplement",
                   "valueType": "Decimal",
                   "timeType": "CalendarPeriod"
                 }
               ]
             },
             {
-              "name": "Kaderstufe",
+              "name": "SquadLevel",
               "caseType": "Employee",
               "fields": [
                 {
-                  "name": "Kaderlohn",
+                  "name": "SquadSalary",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
-                  "availableExpression": "(int)CaseValue[\"Kaderstufe\"] > 0;"
+                  "availableExpression": "(int)CaseValue[\"SquadLevel\"] > 0;"
                 }
               ]
             },
             {
-              "name": "Kaderstufe & Grundeinkommen",
+              "name": "SquadLevelAndBasicIncome",
               "caseType": "Employee",
               "baseCaseFields": [
                 {
-                  "name": "Kaderstufe",
+                  "name": "SquadLevel",
                   "order": 2
                 },
                 {
-                  "name": "Grundeinkommen",
+                  "name": "BasicIncome",
                   "order": 1
                 }
               ]
@@ -279,13 +279,13 @@
           ],
           "caseRelations": [
             {
-              "sourceCaseName": "Monatslohn Spez",
-              "targetCaseName": "Monatslohn"
+              "sourceCaseName": "MonthlyWage Spez",
+              "targetCaseName": "MonthlyWage"
             }
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
+              "name": "AHV Base",
               "endExpression": "ResultAttribute[\"Canton\"] = \"AG\"; ResultAttribute[\"Tari\"] = \"A0N\"; AddCustomResult(CollectorName, 2200, CycleStart, PeriodEnd); ; SetResultTags(new[] { \"MyColKey\" });"
             },
             {
@@ -298,19 +298,19 @@
           "wageTypes": [
             {
               "wageTypeNumber": 102,
-              "name": "Monatslohn 2",
-              "valueExpression": "(decimal)CaseValue[\"Monatslohn\"] * 2",
+              "name": "MonthlyWage 2",
+              "valueExpression": "(decimal)CaseValue[\"MonthlyWage\"] * 2",
               "resultExpression": "Attribute[\"MyName\"] = \"MyTest\"; Attribute[\"Value\"] = 22;"
             },
             {
               "wageTypeNumber": 103,
-              "name": "Monatslohn 3",
+              "name": "MonthlyWage 3",
               "overrideType": "Inactive"
             },
             {
               "wageTypeNumber": 104,
-              "name": "Kaderlohn 1",
-              "valueExpression": "(int)CaseValue[\"Kaderstufe\"] > 0 ? CaseValue[\"Kaderlohn\"] : null"
+              "name": "SquadSalary 1",
+              "valueExpression": "(int)CaseValue[\"SquadLevel\"] > 0 ? CaseValue[\"SquadSalary\"] : null"
             }
           ],
           "scripts": [
