@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 
 rem === public setup configuration - BEGIN ===
 rem setup confirmation (default: true)
@@ -42,6 +43,12 @@ if "%confirmation%" == "false" goto setupConfiguration
 pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to continue..."
 echo.
 echo.
+
+rem --- test .NET 7.0 runtime ---
+:testDotNet
+set tempFile=%TEMP%\Output.log
+dotnet --list-runtimes|FIND "7." > "!tempFile!"
+if %ErrorLevel% neq 0 goto dotNetError
 
 rem --- setup environment ---
 :setupConfiguration
@@ -102,6 +109,8 @@ echo.[92mDatabase setup completed[0m
 rem --- parse backend server url ---
 :backendServerUrl
 call %query% ParseUrl backendServerUrl $BackendUrl$:$BackendPort$/
+rem delay for the errorlevel
+timeout 2 > NUL
 if %ERRORLEVEL% neq 0 goto setupError
 if "%backendServerUrl%" == "" goto setupError
 
@@ -160,6 +169,8 @@ echo Starting web application server...
 rem --- parse web application server url ---
 :webAppServerUrl
 call %query% ParseUrl webAppServerUrl $WebAppUrl$:$WebAppPort$/
+rem delay for the errorlevel
+timeout 2 > NUL
 if %ERRORLEVEL% neq 0 goto setupError
 if "%webAppServerUrl%" == "" goto setupError
 
@@ -218,44 +229,51 @@ rem --------------------------- error & exit ---------------------------
 :setupError
 echo.
 echo.[91mPayroll Engine not installed[0m
-echo.
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :backendStartError
 echo.
 echo.[91mPayroll Engine backend server can not be started %backendServerUrl%[0m
-echo.
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dbServerError
 echo.[91mPlease install and start the SQL Server[0m
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dbClearError
 echo.[91mError on SQL-Server clear[0m
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dbSetupError
 echo.[91mError on SQL-Server setup[0m
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dbSetupErrorModel
 echo.[91mError on SQL-Server model setup[0m
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dbValidateError
 echo.[91mSQL-Server setup version validation failed %dbVersion%[0m
-pause
+pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :backendTestError
 echo.[91mPayroll Test error[0m
+pause>nul|set/p ="Press any key to exit..."
+goto exit
+
+:dotNetError
+echo.[91mThe .NET 7.0 Runtime for console apps is missing[0m
+echo.
+echo Please download and install the console appsruntime at:
+echo   - https://dotnet.microsoft.com/en-us/download/dotnet/7.0/runtime
+echo.
 pause
 goto exit
 
@@ -263,6 +281,7 @@ goto exit
 set webAppServerUrl=
 set backendServerUrl=
 set query=
+set tempFile=
 rem config
 set confirmation=
 set runBackendServer=
