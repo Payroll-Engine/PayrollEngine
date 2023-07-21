@@ -1,8 +1,8 @@
 @echo off
 
 rem console
-set console=PayrollConsole
-if not "%PayrollConsole%" == "" set console=%PayrollConsole%
+rem do not use the environment variable "%PayrollConsole%"
+set console=%~dp0..\Bin\PayrollEngine.PayrollConsole\PayrollEngine.PayrollConsole.exe
 
 rem --- release version ---
 call %console% UserVariable PayrollEngineSetupVersion $ProductVersion$ /wait
