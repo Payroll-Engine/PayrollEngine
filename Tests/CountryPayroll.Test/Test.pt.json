@@ -62,12 +62,12 @@
               ]
             },
             {
-              "name": "Unfallversicherung",
+              "name": "AccidentInsurance",
               "caseType": "Company",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "NBU Satz",
+                  "name": "NBU Set",
                   "valueType": "Percent",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -75,12 +75,12 @@
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -88,12 +88,12 @@
               ]
             },
             {
-              "name": "Beschäftigungsgrad",
+              "name": "EmploymentLevel",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Beschäftigungsgrad",
+                  "name": "EmploymentLevel",
                   "valueType": "Percent",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -103,23 +103,23 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
+              "name": "AHV Base",
               "created": "2019-01-01T00:00:00.0Z"
             }
           ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "name": "MonthlyWage",
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"];",
               "collectors": [
-                "AHV Basis"
+                "AHV Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 101.1,
-              "name": "MonatslohnCountry",
+              "name": "MonthlyWageCountry",
               "valueExpression": "return Country.CurrentMonthWage;",
               "created": "2019-01-01T00:00:00.0Z"
             }
@@ -184,10 +184,10 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.5",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2018-01-01T00:00:00.0Z"
@@ -199,10 +199,10 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.05",
                     "start": "2019-03-01T00:00:00.0Z",
                     "created": "2018-02-01T00:00:00.0Z"
@@ -215,10 +215,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2018-01-01T00:00:00.0Z",
                     "end": "2020-12-31T00:00:00.0Z",
@@ -232,10 +232,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "start": "2019-02-10T00:00:00.0Z",
                     "created": "2019-02-05T00:00:00.0Z"
@@ -248,10 +248,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -264,10 +264,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2019-02-20T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -280,10 +280,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-02-24T00:00:00.0Z",
                     "created": "2019-02-22T00:00:00.0Z"
@@ -348,7 +348,7 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 2500
             }
           ]
@@ -368,7 +368,7 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 2925
             }
           ]
@@ -384,7 +384,7 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             }
           ]

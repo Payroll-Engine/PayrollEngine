@@ -28,30 +28,30 @@
   "availableTests": [
     {
       "testName": "EmployeeTest01",
-      "testDescription": "Test for available employee case Monatslohn",
-      "caseName": "Monatslohn",
+      "testDescription": "Test for available employee case monthly wage",
+      "caseName": "MonthlyWage",
       "output": false
     },
     {
       "testName": "EmployeeTest01Custom",
-      "caseName": "Monatslohn",
+      "caseName": "MonthlyWage",
       "output": true
     }
   ],
   "buildTests": [
     {
       "testName": "EmployeeTest02LimitLow",
-      "testDescription": "Test build of employee case Monatslohn 1",
+      "testDescription": "Test build of employee case monthly wage 1",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
         "employeeIdentifier": "višnja.müller@foo.com",
         "divisionName": "CaseTestDivision",
-        "reason": "Change Monatslohn",
+        "reason": "Change monthly wage",
         "case": {
-          "caseName": "Monatslohn",
+          "caseName": "MonthlyWage",
           "values": [
             {
-              "caseFieldName": "Monatslohn",
+              "caseFieldName": "MonthlyWage",
               "value": "5000",
               "start": "2018-01-01T00:00:00.0Z",
               "end": "2020-12-31T00:00:00.0Z",
@@ -61,15 +61,15 @@
         }
       },
       "output": {
-        "name": "Monatslohn",
+        "name": "MonthlyWage",
         "caseType":"Employee",
         "fields": [
           {
-            "name": "Monatslohn",
+            "name": "MonthlyWage",
             "value": "5000"
           },
           {
-            "name": "Sonderabzug",
+            "name": "SpecialDeduction",
             "value": "0"
           }
         ]
@@ -77,17 +77,17 @@
     },
     {
       "testName": "EmployeeTest02LimitHigh",
-      "testDescription": "Test build of employee case Monatslohn 2",
+      "testDescription": "Test build of employee case monthly wage 2",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
         "employeeIdentifier": "višnja.müller@foo.com",
         "divisionName": "CaseTestDivision",
-        "reason": "Change Monatslohn",
+        "reason": "Change monthly wage",
         "case": {
-          "caseName": "Monatslohn",
+          "caseName": "MonthlyWage",
           "values": [
             {
-              "caseFieldName": "Monatslohn",
+              "caseFieldName": "MonthlyWage",
               "value": "5001",
               "start": "2018-01-01T00:00:00.0Z",
               "end": "2020-12-31T00:00:00.0Z",
@@ -97,15 +97,15 @@
         }
       },
       "output": {
-        "name": "Monatslohn",
+        "name": "MonthlyWage",
         "caseType":"Employee",
         "fields": [
           {
-            "name": "Monatslohn",
+            "name": "MonthlyWage",
             "value": "5001"
           },
           {
-            "name": "Sonderabzug",
+            "name": "SpecialDeduction",
             "valueComment": "5001 * 0.085",
             "value": "425.085"
           }
@@ -114,17 +114,17 @@
     },
     {
       "testName": "EmployeeTest02Custom",
-      "testDescription": "Test build of employee case Monatslohn 3",
+      "testDescription": "Test build of employee case monthly wage 3",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
         "employeeIdentifier": "višnja.müller@foo.com",
         "divisionName": "CaseTestDivision",
-        "reason": "Change Monatslohn",
+        "reason": "Change monthly wage",
         "case": {
-          "caseName": "Monatslohn",
+          "caseName": "MonthlyWage",
           "values": [
             {
-              "caseFieldName": "Monatslohn",
+              "caseFieldName": "MonthlyWage",
               "value": "5200",
               "start": "2019-01-01T00:00:00.0Z",
               "created": "2018-12-15T18:22:45.0Z"
@@ -137,17 +137,17 @@
   "validateTests": [
     {
       "testName": "EmployeeTest03",
-      "testDescription": "Test valid employee case Monatslohn 1",
+      "testDescription": "Test valid employee case monthly wage 1",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
         "employeeIdentifier": "višnja.müller@foo.com",
         "divisionName": "CaseTestDivision",
-        "reason": "Change Monatslohn",
+        "reason": "Change monthly wage",
         "case": {
-          "caseName": "Monatslohn",
+          "caseName": "MonthlyWage",
           "values": [
             {
-              "caseFieldName": "Monatslohn",
+              "caseFieldName": "MonthlyWage",
               "value": "5200",
               "start": "2018-01-01T00:00:00.0Z",
               "end": "2020-12-31T00:00:00.0Z",
@@ -160,10 +160,10 @@
         "userIdentifier": "peter.schmid@foo.com",
         "employeeIdentifier": "višnja.müller@foo.com",
         "divisionName": "CaseTestDivision",
-        "reason": "Change Monatslohn",
+        "reason": "Change monthly wage",
         "values": [
           {
-            "caseFieldName": "Monatslohn",
+            "caseFieldName": "MonthlyWage",
             "value": "5200",
             "start": "2018-01-01T00:00:00.0Z",
             "end": "2020-12-31T00:00:00.0Z",
@@ -175,17 +175,17 @@
     },
     {
       "testName": "EmployeeTest03Custom",
-      "testDescription": "Test valid employee case Monatslohn 2",
+      "testDescription": "Test valid employee case monthly wage 2",
       "input": {
         "userIdentifier": "peter.schmid@foo.com",
         "employeeIdentifier": "višnja.müller@foo.com",
         "divisionName": "CaseTestDivision",
-        "reason": "Change Monatslohn",
+        "reason": "Change monthly wage",
         "case": {
-          "caseName": "Monatslohn",
+          "caseName": "MonthlyWage",
           "values": [
             {
-              "caseFieldName": "Monatslohn",
+              "caseFieldName": "MonthlyWage",
               "value": "5200",
               "start": "2018-01-01T00:00:00.0Z",
               "end": "2020-12-31T00:00:00.0Z",

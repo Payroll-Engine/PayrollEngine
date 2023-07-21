@@ -19,9 +19,9 @@ namespace PayrollEngine.TestCase
             //var caseValue = GetCasePeriodValue<decimal>("AHV AN Local");
             //if (caseValue > 0.05M)
             //{
-              //  Assert.Fail("Montaslohn must be less than 0.05");
+              //  Assert.Fail("Monthly wage must be less than 0.05");
             //}
-            var caseSet = GetCase("Monatslohn");
+            var caseSet = GetCase("MonthlyWage");
             Assert.AreEqual(test.Output, caseSet != null);
         }
 

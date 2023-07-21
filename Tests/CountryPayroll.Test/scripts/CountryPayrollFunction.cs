@@ -19,8 +19,8 @@ namespace PayrollEngine.Country
         {
             get
             {
-                var values = Function.GetCaseValues("Monatslohn", "Beschäftigungsgrad");
-                return values["Monatslohn"] * values["Beschäftigungsgrad"];
+                var values = Function.GetCaseValues("MonthlyWage", "EmploymentLevel");
+                return values["MonthlyWage"] * values["EmploymentLevel"];
             }
         }
     }

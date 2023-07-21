@@ -12,10 +12,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2018-01-01T00:00:00.0Z",
                     "end": "2020-12-31T00:00:00.0Z",
@@ -29,10 +29,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "50",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2017-12-15T00:00:00.0Z"
@@ -77,10 +77,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -93,10 +93,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "5.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -109,10 +109,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -125,10 +125,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
                   }
@@ -140,10 +140,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2019-02-20T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -156,10 +156,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "2.5",
                     "start": "2019-02-01T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -172,10 +172,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "DEF",
                     "start": "2019-01-15T00:00:00.0Z",
                     "created": "2019-01-12T00:00:00.0Z"
@@ -188,10 +188,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "start": "2019-02-10T00:00:00.0Z",
                     "created": "2019-02-05T00:00:00.0Z"
@@ -204,10 +204,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-02-24T00:00:00.0Z",
                     "created": "2019-02-22T00:00:00.0Z"
@@ -220,10 +220,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "75",
                     "start": "2019-04-01T00:00:00.0Z",
                     "created": "2019-02-22T01:00:00.0Z"
@@ -236,10 +236,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-03-15T00:00:00.0Z",
                     "created": "2019-02-26T00:00:00.0Z"
@@ -300,10 +300,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "7.5",
                     "start": "2019-05-24T00:00:00.0Z",
                     "created": "2019-03-22T00:00:00.0Z"
@@ -334,10 +334,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2018-01-01T00:00:00.0Z",
                     "end": "2020-12-31T00:00:00.0Z",
@@ -351,10 +351,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "50",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2017-12-15T00:00:00.0Z"
@@ -399,10 +399,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -415,10 +415,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "5.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -431,10 +431,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -447,10 +447,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
                   }
@@ -462,10 +462,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2019-02-20T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -478,10 +478,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "2.5",
                     "start": "2019-02-01T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -494,10 +494,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "DEF",
                     "start": "2019-01-15T00:00:00.0Z",
                     "created": "2019-01-12T00:00:00.0Z"
@@ -510,10 +510,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "start": "2019-02-10T00:00:00.0Z",
                     "created": "2019-02-05T00:00:00.0Z"
@@ -526,10 +526,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-02-24T00:00:00.0Z",
                     "created": "2019-02-22T00:00:00.0Z"
@@ -542,10 +542,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "75",
                     "start": "2019-04-01T00:00:00.0Z",
                     "created": "2019-02-22T01:00:00.0Z"
@@ -558,10 +558,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-03-15T00:00:00.0Z",
                     "created": "2019-02-26T00:00:00.0Z"
@@ -622,10 +622,10 @@
               "divisionName": "TestDivision",
               "employeeIdentifier": "remo.meier@foo.com",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "7.5",
                     "start": "2019-05-24T00:00:00.0Z",
                     "created": "2019-03-22T00:00:00.0Z"
@@ -789,11 +789,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 102774
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 102774
             },
             {
@@ -841,11 +841,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 102774
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 102774
             },
             {
@@ -893,11 +893,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3050
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3050
             }
           ]
@@ -937,11 +937,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3000
             }
           ]
@@ -981,11 +981,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 8555
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 8555
             }
           ]
@@ -1025,11 +1025,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3562.5
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3562.5
             }
           ]
@@ -1069,11 +1069,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3000
             }
           ]
@@ -1113,17 +1113,17 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3000
             }
           ],
           "payrunResults": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "start": "2020-01-01T00:00:00.0Z",
               "end": "2020-01-31T23:59:59.9Z",
               "value": "6000"

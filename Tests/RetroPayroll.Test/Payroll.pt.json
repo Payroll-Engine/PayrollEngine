@@ -37,13 +37,13 @@
           "created": "2018-01-01T00:00:00.0Z",
           "cases": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
-              "defaultReason": "Change Monatslohn",
+              "defaultReason": "Change monthly wage",
               "created": "2018-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2018-01-01T00:00:00.0Z"
@@ -51,13 +51,13 @@
               ]
             },
             {
-              "name": "Beschäftigungsgrad",
+              "name": "EmploymentLevel",
               "caseType": "Employee",
-              "defaultReason": "Change Beschäftigungsgrad",
+              "defaultReason": "Change employment level",
               "created": "2018-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Beschäftigungsgrad",
+                  "name": "EmploymentLevel",
                   "valueType": "Percent",
                   "timeType": "Period",
                   "created": "2018-01-01T00:00:00.0Z"
@@ -82,8 +82,8 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"]",
+              "name": "MonthlyWage",
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"]",
               "created": "2018-01-01T00:00:00.0Z",
               "clusters": [
                 "Legal",
@@ -173,10 +173,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "1",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2017-12-15T18:22:45.0Z"
@@ -189,10 +189,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "end": "2019-02-14T00:00:00.0Z",
@@ -206,10 +206,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-05-01T00:00:00.0Z",
                     "end": "2019-05-31T00:00:00.0Z",
@@ -223,10 +223,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2018-10-01T00:00:00.0Z",
                     "created": "2017-12-15T18:22:45.0Z"
@@ -239,10 +239,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "start": "2018-11-10T00:00:00.0Z",
                     "created": "2019-02-13T00:00:00.0Z"
@@ -255,10 +255,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5500",
                     "start": "2019-02-10T00:00:00.0Z",
                     "created": "2019-05-05T00:00:00.0Z"
@@ -287,10 +287,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "10000",
                     "start": "2019-03-01T00:00:00.0Z",
                     "end": "2019-04-15T00:00:00.0Z",
@@ -304,10 +304,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "0",
                     "start": "2019-03-01T00:00:00.0Z",
                     "end": "2019-04-15T00:00:00.0Z",
@@ -321,10 +321,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2019-03-01T00:00:00.0Z",
                     "end": "2019-04-15T00:00:00.0Z",
@@ -338,10 +338,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "7000",
                     "start": "2019-04-01T00:00:00.0Z",
                     "created": "2019-06-05T00:00:00.0Z"
@@ -354,10 +354,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "0",
                     "start": "2019-05-01T00:00:00.0Z",
                     "created": "2019-06-28T00:00:00.1Z"

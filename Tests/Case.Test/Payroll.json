@@ -45,19 +45,19 @@
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
-              "defaultReason": "Change Monatslohn",
+              "defaultReason": "Change monthly wage",
               "availableExpression": "false",
-              "buildExpression": "var monatslohn = GetValue<decimal?>(\"Monatslohn\"); SetValue(\"Sonderabzug\", monatslohn.HasValue && monatslohn > 5000M ? monatslohn * 0.085M : 0); return true",
+              "buildExpression": "var monthlyWage = GetValue<decimal?>(\"MonthlyWage\"); SetValue(\"SpecialDeduction\", monthlyWage.HasValue && monthlyWage > 5000M ? monthlyWage * 0.085M : 0); return true",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod"
                 },
                 {
-                  "name": "Sonderabzug",
+                  "name": "SpecialDeduction",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod"
                 }

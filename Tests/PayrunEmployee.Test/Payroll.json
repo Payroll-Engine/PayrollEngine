@@ -46,7 +46,7 @@
           "created": "2019-01-01T00:00:00.0Z",
           "lookups": [
             {
-              "name": "Quellensteuer",
+              "name": "WithholdingTax",
               "created": "2019-01-01T00:00:00.0Z",
               "values": [
                 {
@@ -102,7 +102,7 @@
               ]
             },
             {
-              "name": "Sonderbonus",
+              "name": "SpecialBonus",
               "created": "2019-01-01T00:00:00.0Z",
               "values": [
                 {
@@ -133,12 +133,12 @@
               ]
             },
             {
-              "name": "Unfallversicherung",
+              "name": "AccidentInsurance",
               "caseType": "Company",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "NBU Satz",
+                  "name": "NBU Set",
                   "valueType": "Percent",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -162,12 +162,12 @@
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -175,12 +175,12 @@
               ]
             },
             {
-              "name": "Beschäftigungsgrad",
+              "name": "EmploymentLevel",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Beschäftigungsgrad",
+                  "name": "EmploymentLevel",
                   "valueType": "Percent",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -188,12 +188,12 @@
               ]
             },
             {
-              "name": "Abteilung",
+              "name": "Department",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Abteilung",
+                  "name": "Department",
                   "valueType": "String",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -201,12 +201,12 @@
               ]
             },
             {
-              "name": "Stundenlohn",
+              "name": "HourlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Stundenlohn",
+                  "name": "HourlyWage",
                   "valueType": "Money",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -214,12 +214,12 @@
               ]
             },
             {
-              "name": "Anzahl Stunden",
+              "name": "NumberOfHours",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Anzahl Stunden",
+                  "name": "NumberOfHours",
                   "valueType": "Integer",
                   "timeType": "Moment",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -240,12 +240,12 @@
               ]
             },
             {
-              "name": "Geburtsdatum",
+              "name": "BirthDate",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Geburtsdatum",
+                  "name": "BirthDate",
                   "valueType": "Date",
                   "timeType": "Timeless",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -255,11 +255,11 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
+              "name": "AHV Base",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
-              "name": "QST Basis",
+              "name": "QST Base",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
@@ -276,18 +276,18 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "name": "MonthlyWage",
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"];",
               "collectors": [
-                "AHV Basis",
-                "QST Basis"
+                "AHV Base",
+                "QST Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 101.1,
-              "name": "Monatslohn.Credit",
-              "valueExpression": "CaseValue[\"Monatslohn\"] * 0.05M",
+              "name": "MonthlyWage.Credit",
+              "valueExpression": "CaseValue[\"MonthlyWage\"] * 0.05M",
               "collectors": [
                 "Credit"
               ],
@@ -295,8 +295,8 @@
             },
             {
               "wageTypeNumber": 101.2,
-              "name": "Monatslohn.Debit",
-              "valueExpression": "CaseValue[\"Monatslohn\"] * -0.05M",
+              "name": "MonthlyWage.Debit",
+              "valueExpression": "CaseValue[\"MonthlyWage\"] * -0.05M",
               "collectors": [
                 "Debit"
               ],
@@ -304,11 +304,11 @@
             },
             {
               "wageTypeNumber": 102,
-              "name": "Stundenlohn",
-              "valueExpression": "var values = GetCaseValues(\"Anzahl Stunden\", \"Stundenlohn\"); return values[\"Anzahl Stunden\"] * values[\"Stundenlohn\"];",
+              "name": "HourlyWage",
+              "valueExpression": "var values = GetCaseValues(\"NumberOfHours\", \"HourlyWage\"); return values[\"NumberOfHours\"] * values[\"HourlyWage\"];",
               "collectors": [
-                "AHV Basis",
-                "QST Basis"
+                "AHV Base",
+                "QST Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
@@ -317,33 +317,33 @@
               "name": "Bonus",
               "valueExpression": "CaseValue[\"Bonus\"]",
               "collectors": [
-                "AHV Basis",
-                "QST Basis"
+                "AHV Base",
+                "QST Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 106,
               "name": "Alterszulage",
-              "valueExpression": "CaseValue[\"Geburtsdatum\"].ValueAs<DateTime>().Age(PeriodEnd) >= 50 ? CaseValue[\"Monatslohn\"] * 0.075M : 0",
+              "valueExpression": "CaseValue[\"BirthDate\"].ValueAs<DateTime>().Age(PeriodEnd) >= 50 ? CaseValue[\"MonthlyWage\"] * 0.075M : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 199,
-              "name": "Lohndeckung",
+              "name": "WageCoverage",
               "valueExpression": "var results = GetPeriodWageTypeResults(101, new PeriodResultQuery(1, PayrunJobStatus.Legal)); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 206,
-              "name": "Quellensteuer",
-              "valueExpression": "var lookup = GetLookup<decimal>(\"Quellensteuer\", new Key(\"B\", 2, CaseValue[\"Location\"].Value, CaseValue[\"Geburtsdatum\"].ValueAs<DateTime>().Age(PeriodStart) >= 50 ? 50 : 0, (decimal)CaseValue[\"Stundenlohn\"] > 70m ? \"Y\" : \"N\" )); return lookup != null ? Collector[\"QST Basis\"] * lookup : 0;",
+              "name": "WithholdingTax",
+              "valueExpression": "var lookup = GetLookup<decimal>(\"WithholdingTax\", new Key(\"B\", 2, CaseValue[\"Location\"].Value, CaseValue[\"BirthDate\"].ValueAs<DateTime>().Age(PeriodStart) >= 50 ? 50 : 0, (decimal)CaseValue[\"HourlyWage\"] > 70m ? \"Y\" : \"N\" )); return lookup != null ? Collector[\"QST Base\"] * lookup : 0;",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 207,
-              "name": "Sonderbonus",
-              "valueExpression": "var lookup = GetRangeLookup<decimal>(\"Sonderbonus\", WageType[101]); return lookup != null ? WageType[101] * lookup : 0;",
+              "name": "SpecialBonus",
+              "valueExpression": "var lookup = GetRangeLookup<decimal>(\"SpecialBonus\", WageType[101]); return lookup != null ? WageType[101] * lookup : 0;",
               "created": "2019-01-01T00:00:00.0Z"
             }
           ]
@@ -396,10 +396,10 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.5",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2018-01-01T00:00:00.0Z"
@@ -411,10 +411,10 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.05",
                     "start": "2019-03-01T00:00:00.0Z",
                     "created": "2018-02-01T00:00:00.0Z"

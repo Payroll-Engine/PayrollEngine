@@ -12,7 +12,7 @@
           "sharedRegulation": true,
           "lookups": [
             {
-              "name": "Quellensteuer",
+              "name": "WithholdingTax",
               "created": "2019-01-01T00:00:00.0Z",
               "values": [
                 {
@@ -68,7 +68,7 @@
               ]
             },
             {
-              "name": "Sonderbonus",
+              "name": "SpecialBonus",
               "created": "2019-01-01T00:00:00.0Z",
               "values": [
                 {
@@ -147,12 +147,12 @@
               ]
             },
             {
-              "name": "Unfallversicherung",
+              "name": "AccidentInsurance",
               "caseType": "Company",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "NBU Satz",
+                  "name": "NBU Set",
                   "valueType": "Percent",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -176,12 +176,12 @@
               ]
             },
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -189,12 +189,12 @@
               ]
             },
             {
-              "name": "Beschäftigungsgrad",
+              "name": "EmploymentLevel",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Beschäftigungsgrad",
+                  "name": "EmploymentLevel",
                   "valueType": "Percent",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -202,12 +202,12 @@
               ]
             },
             {
-              "name": "Abteilung",
+              "name": "Department",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Abteilung",
+                  "name": "Department",
                   "valueType": "String",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -215,12 +215,12 @@
               ]
             },
             {
-              "name": "Stundenlohn",
+              "name": "HourlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Stundenlohn",
+                  "name": "HourlyWage",
                   "valueType": "Money",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -228,12 +228,12 @@
               ]
             },
             {
-              "name": "Anzahl Stunden",
+              "name": "NumberOfHours",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Anzahl Stunden",
+                  "name": "NumberOfHours",
                   "valueType": "Decimal",
                   "timeType": "Moment",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -254,12 +254,12 @@
               ]
             },
             {
-              "name": "Geburtsdatum",
+              "name": "BirthDate",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Geburtsdatum",
+                  "name": "BirthDate",
                   "valueType": "Date",
                   "timeType": "Timeless",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -267,7 +267,7 @@
               ]
             },
             {
-              "name": "Kinderzulage",
+              "name": "ChildAllowance",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "slots": [
@@ -283,7 +283,7 @@
               ],
               "fields": [
                 {
-                  "name": "Kinderzulage",
+                  "name": "ChildAllowance",
                   "valueType": "Money",
                   "timeType": "Period",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -293,11 +293,11 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
+              "name": "AHV Base",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
-              "name": "QST Basis",
+              "name": "QST Base",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
@@ -315,20 +315,20 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "var values = GetCaseValues(\"Monatslohn\", \"Beschäftigungsgrad\"); return values[\"Monatslohn\"] * values[\"Beschäftigungsgrad\"];",
+              "name": "MonthlyWage",
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"];",
               "resultExpression": "AddPayrunResult(\"MyPayrunResult\", 125.25, ValueType.Money); DisableCollector(\"Credit\");",
               "collectors": [
-                "AHV Basis",
-                "QST Basis",
+                "AHV Base",
+                "QST Base",
                 "Credit"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 101.1,
-              "name": "Monatslohn.Credit",
-              "valueExpression": "CaseValue[\"Monatslohn\"] * 0.05M",
+              "name": "MonthlyWage.Credit",
+              "valueExpression": "CaseValue[\"MonthlyWage\"] * 0.05M",
               "collectors": [
                 "Credit"
               ],
@@ -336,8 +336,8 @@
             },
             {
               "wageTypeNumber": 101.2,
-              "name": "Monatslohn.Debit",
-              "valueExpression": "CaseValue[\"Monatslohn\"] * 0.05M",
+              "name": "MonthlyWage.Debit",
+              "valueExpression": "CaseValue[\"MonthlyWage\"] * 0.05M",
               "collectors": [
                 "Debit"
               ],
@@ -345,11 +345,11 @@
             },
             {
               "wageTypeNumber": 102,
-              "name": "Stundenlohn",
-              "valueExpression": "var values = GetCaseValues(\"Anzahl Stunden\", \"Stundenlohn\"); return values[\"Anzahl Stunden\"] * values[\"Stundenlohn\"];",
+              "name": "HourlyWage",
+              "valueExpression": "var values = GetCaseValues(\"NumberOfHours\", \"HourlyWage\"); return values[\"NumberOfHours\"] * values[\"HourlyWage\"];",
               "collectors": [
-                "AHV Basis",
-                "QST Basis"
+                "AHV Base",
+                "QST Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
@@ -358,51 +358,51 @@
               "name": "Bonus",
               "valueExpression": "CaseValue[\"Bonus\"]",
               "collectors": [
-                "AHV Basis",
-                "QST Basis"
+                "AHV Base",
+                "QST Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 106,
-              "name": "Alterszulage",
-              "valueExpression": "CaseValue[\"Geburtsdatum\"].ValueAs<DateTime>().Age(PeriodEnd) >= 50 ? CaseValue[\"Monatslohn\"] * 0.075M : 0",
+              "name": "AgeAllowance",
+              "valueExpression": "CaseValue[\"BirthDate\"].ValueAs<DateTime>().Age(PeriodEnd) >= 50 ? CaseValue[\"MonthlyWage\"] * 0.075M : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 199,
-              "name": "Lohndeckung",
+              "name": "WageCoverage",
               "valueExpression": "var results = GetPeriodWageTypeResults(new(101, 1, PayrunJobStatus.Legal)).Values(); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 206,
-              "name": "Quellensteuer",
-              "valueExpression": "var lookup = GetLookup<decimal>(\"Quellensteuer\", new Key(\"B\", 2, CaseValue[\"Location\"].Value, CaseValue[\"Geburtsdatum\"].ValueAs<DateTime>().Age(PeriodStart) >= 50 ? 50 : 0, (decimal)CaseValue[\"Stundenlohn\"] > 70m ? \"Y\" : \"N\" )); return lookup != null ? Collector[\"QST Basis\"] * lookup : 0;",
+              "name": "WithholdingTax",
+              "valueExpression": "var lookup = GetLookup<decimal>(\"WithholdingTax\", new Key(\"B\", 2, CaseValue[\"Location\"].Value, CaseValue[\"BirthDate\"].ValueAs<DateTime>().Age(PeriodStart) >= 50 ? 50 : 0, (decimal)CaseValue[\"HourlyWage\"] > 70m ? \"Y\" : \"N\" )); return lookup != null ? Collector[\"QST Base\"] * lookup : 0;",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 207,
-              "name": "Sonderbonus",
-              "valueExpression": "var lookup = GetRangeLookup<decimal>(\"Sonderbonus\", WageType[101]); return lookup != null ? WageType[101] * lookup : 0;",
+              "name": "SpecialBonus",
+              "valueExpression": "var lookup = GetRangeLookup<decimal>(\"SpecialBonus\", WageType[101]); return lookup != null ? WageType[101] * lookup : 0;",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 208.1,
-              "name": "Kinderzulage 1",
-              "valueExpression": "return CaseValue[CaseFieldSlot(\"Kinderzulage\", \"K1\")]",
+              "name": "ChildAllowance 1",
+              "valueExpression": "return CaseValue[CaseFieldSlot(\"ChildAllowance\", \"K1\")]",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 208.2,
-              "name": "Kinderzulage 2",
-              "valueExpression": "return CaseValue[CaseFieldSlot(\"Kinderzulage\", \"K2\")]",
+              "name": "ChildAllowance 2",
+              "valueExpression": "return CaseValue[CaseFieldSlot(\"ChildAllowance\", \"K2\")]",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 208.3,
-              "name": "Kinderzulage 3",
-              "valueExpression": "return CaseValue[CaseFieldSlot(\"Kinderzulage\", \"K3\")]",
+              "name": "ChildAllowance 3",
+              "valueExpression": "return CaseValue[CaseFieldSlot(\"ChildAllowance\", \"K3\")]",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
@@ -420,8 +420,8 @@
             {
               "wageTypeNumber": 211,
               "name": "Case Value Attributes",
-              "valueExpression1": "var caseValue = GetRawCaseValue(\"Monatslohn\", PeriodEnd); if (caseValue == null || caseValue.Attributes == null || !caseValue.Attributes.ContainsKey(\"MyValueAttribute\")) return 0; return caseValue.Attributes[\"MyValueAttribute\"];",
-              "valueExpression": "var caseValue = GetRawCaseValue(\"Monatslohn\", PeriodEnd); return caseValue == null ? 0 : caseValue.Attributes == null ? -1 : caseValue.Attributes.GetValue<decimal>(\"MyValueAttribute\");",
+              "valueExpression1": "var caseValue = GetRawCaseValue(\"MonthlyWage\", PeriodEnd); if (caseValue == null || caseValue.Attributes == null || !caseValue.Attributes.ContainsKey(\"MyValueAttribute\")) return 0; return caseValue.Attributes[\"MyValueAttribute\"];",
+              "valueExpression": "var caseValue = GetRawCaseValue(\"MonthlyWage\", PeriodEnd); return caseValue == null ? 0 : caseValue.Attributes == null ? -1 : caseValue.Attributes.GetValue<decimal>(\"MyValueAttribute\");",
               "created": "2019-01-01T00:00:00.0Z"
             }
           ]
@@ -503,10 +503,10 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.5",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2018-01-01T00:00:00.0Z"
@@ -518,10 +518,10 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Unfallversicherung",
+                "caseName": "AccidentInsurance",
                 "values": [
                   {
-                    "caseFieldName": "NBU Satz",
+                    "caseFieldName": "NBU Set",
                     "value": "0.05",
                     "start": "2019-03-01T00:00:00.0Z",
                     "created": "2018-02-01T00:00:00.0Z"
@@ -534,10 +534,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "attributes": {
                       "MyValueAttribute": 1111
@@ -554,10 +554,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "attributes": {
                       "MyValueAttribute": 2222
@@ -573,10 +573,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -589,10 +589,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2019-02-20T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -605,10 +605,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-02-24T00:00:00.0Z",
                     "created": "2019-02-22T00:00:00.0Z"
@@ -621,10 +621,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "50",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2017-12-15T00:00:00.0Z"
@@ -637,10 +637,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "75",
                     "start": "2019-04-01T00:00:00.0Z",
                     "created": "2019-02-22T01:00:00.0Z"
@@ -653,10 +653,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "5.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -669,10 +669,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "2.5",
                     "start": "2019-02-01T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -685,10 +685,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "7.5",
                     "start": "2019-05-24T00:00:00.0Z",
                     "created": "2019-03-22T00:00:00.0Z"
@@ -701,10 +701,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -717,10 +717,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "DEF",
                     "start": "2019-01-15T00:00:00.0Z",
                     "created": "2019-01-12T00:00:00.0Z"
@@ -733,10 +733,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-03-15T00:00:00.0Z",
                     "created": "2019-02-26T00:00:00.0Z"
@@ -845,10 +845,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
                   }
@@ -860,10 +860,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "attributes": {
                       "MyValueAttribute": 3333
@@ -880,10 +880,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "attributes": {
                       "MyValueAttribute": 4444
@@ -899,10 +899,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -915,10 +915,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.6",
                     "start": "2019-02-20T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -931,10 +931,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Beschäftigungsgrad",
+                "caseName": "EmploymentLevel",
                 "values": [
                   {
-                    "caseFieldName": "Beschäftigungsgrad",
+                    "caseFieldName": "EmploymentLevel",
                     "value": "0.5",
                     "start": "2019-02-24T00:00:00.0Z",
                     "created": "2019-02-22T00:00:00.0Z"
@@ -947,10 +947,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "50",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2017-12-15T00:00:00.0Z"
@@ -963,10 +963,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "75",
                     "start": "2019-04-01T00:00:00.0Z",
                     "created": "2019-02-22T01:00:00.0Z"
@@ -979,10 +979,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "5.5",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -995,10 +995,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "2.5",
                     "start": "2019-02-01T00:00:00.0Z",
                     "created": "2019-01-31T00:00:00.0Z"
@@ -1011,10 +1011,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Anzahl Stunden",
+                "caseName": "NumberOfHours",
                 "values": [
                   {
-                    "caseFieldName": "Anzahl Stunden",
+                    "caseFieldName": "NumberOfHours",
                     "value": "7.5",
                     "start": "2019-05-24T00:00:00.0Z",
                     "created": "2019-03-22T00:00:00.0Z"
@@ -1027,10 +1027,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
@@ -1043,10 +1043,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "DEF",
                     "start": "2019-01-15T00:00:00.0Z",
                     "created": "2019-01-12T00:00:00.0Z"
@@ -1059,10 +1059,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Abteilung",
+                "caseName": "Department",
                 "values": [
                   {
-                    "caseFieldName": "Abteilung",
+                    "caseFieldName": "Department",
                     "value": "ABC",
                     "start": "2019-03-15T00:00:00.0Z",
                     "created": "2019-02-26T00:00:00.0Z"
@@ -1171,10 +1171,10 @@
               "employeeIdentifier": "remo.meier@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Geburtsdatum",
+                "caseName": "BirthDate",
                 "values": [
                   {
-                    "caseFieldName": "Geburtsdatum",
+                    "caseFieldName": "BirthDate",
                     "value": "1969-05-18T00:00:00.0Z",
                     "created": "2018-12-31T00:00:00.0Z"
                   }
@@ -1186,22 +1186,22 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "TestDivision",
               "case": {
-                "caseName": "Kinderzulage",
+                "caseName": "ChildAllowance",
                 "values": [
                   {
-                    "caseFieldName": "Kinderzulage",
+                    "caseFieldName": "ChildAllowance",
                     "caseSlot": "K1",
                     "value": "1000",
                     "created": "2018-12-31T00:00:00.0Z"
                   },
                   {
-                    "caseFieldName": "Kinderzulage",
+                    "caseFieldName": "ChildAllowance",
                     "caseSlot": "K2",
                     "value": "2000",
                     "created": "2018-12-31T01:00:00.0Z"
                   },
                   {
-                    "caseFieldName": "Kinderzulage",
+                    "caseFieldName": "ChildAllowance",
                     "caseSlot": "K3",
                     "value": "3000",
                     "created": "2018-12-31T02:00:00.0Z"
@@ -1351,11 +1351,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 102774
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 102774
             },
             {
@@ -1415,11 +1415,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 102774
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 102774
             },
             {
@@ -1491,11 +1491,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3050
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3050
             }
           ]
@@ -1559,11 +1559,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3000
             }
           ]
@@ -1627,11 +1627,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 8555
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 8555
             }
           ]
@@ -1695,11 +1695,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3562.5
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3562.5
             }
           ]
@@ -1763,11 +1763,11 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3000
             }
           ]
@@ -1831,17 +1831,17 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 3000
             },
             {
-              "collectorName": "QST Basis",
+              "collectorName": "QST Base",
               "value": 3000
             }
           ],
           "payrunResults": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "start": "2020-01-01T00:00:00.0Z",
               "end": "2020-01-31T23:59:59.9Z",
               "value": "6000",

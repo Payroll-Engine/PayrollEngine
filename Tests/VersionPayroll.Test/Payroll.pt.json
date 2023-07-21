@@ -28,7 +28,7 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "valueExpression": "1000",
               "created": "2018-12-22T00:00:00.0Z"
             }
@@ -43,7 +43,7 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "valueExpression": "2000",
               "created": "2019-01-17T00:00:00.0Z"
             }
@@ -58,7 +58,7 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "valueExpression": "3000",
               "created": "2019-02-21T00:00:00.0Z"
             }

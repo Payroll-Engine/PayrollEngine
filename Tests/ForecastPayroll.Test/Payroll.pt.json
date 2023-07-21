@@ -37,13 +37,13 @@
           "created": "2018-01-01T00:00:00.0Z",
           "cases": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
-              "defaultReason": "Change Monatslohn",
+              "defaultReason": "Change monthly wage",
               "created": "2018-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2018-01-01T00:00:00.0Z"
@@ -54,8 +54,8 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "CaseValue[\"Monatslohn\"] + GetWageTypeRetroResultSum(101)",
+              "name": "MonthlyWage",
+              "valueExpression": "CaseValue[\"MonthlyWage\"] + GetWageTypeRetroResultSum(101)",
               "created": "2018-01-01T00:00:00.0Z"
             }
           ]
@@ -77,12 +77,12 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "ForecastDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
-              "reason": "Change Monatslohn",
+              "reason": "Change monthly wage",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2018-01-01T00:00:00.0Z",
                     "created": "2017-12-15T18:22:45.0Z"
@@ -94,12 +94,12 @@
               "userIdentifier": "peter.schmid@foo.com",
               "divisionName": "ForecastDivision",
               "employeeIdentifier": "višnja.müller@foo.com",
-              "reason": "Forecast Monatslohn",
+              "reason": "Forecast monthly wage",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "6000",
                     "start": "2022-01-01T00:00:00.0Z",
                     "created": "2019-01-01T00:00:00.0Z"

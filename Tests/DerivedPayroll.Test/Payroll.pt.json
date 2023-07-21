@@ -42,12 +42,12 @@
           ],
           "cases": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -57,24 +57,24 @@
           ],
           "collectors": [
             {
-              "name": "AHV Basis",
+              "name": "AHV Base",
               "created": "2019-01-01T00:00:00.0Z"
             }
           ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "name": "MonthlyWage",
+              "valueExpression": "CaseValue[\"MonthlyWage\"]",
               "collectors": [
-                "AHV Basis"
+                "AHV Base"
               ],
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 102,
               "name": "Override",
-              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "valueExpression": "CaseValue[\"MonthlyWage\"]",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
@@ -119,12 +119,12 @@
           ],
           "cases": [
             {
-              "name": "Stundenlohn",
+              "name": "HourlyWage",
               "caseType": "Employee",
               "created": "2019-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Stundenlohn",
+                  "name": "HourlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2019-01-01T00:00:00.0Z"
@@ -141,10 +141,10 @@
           "wageTypes": [
             {
               "wageTypeNumber": 101,
-              "name": "Monatslohn",
-              "valueExpression": "CaseValue[\"Monatslohn\"]",
+              "name": "MonthlyWage",
+              "valueExpression": "CaseValue[\"MonthlyWage\"]",
               "collectors": [
-                "AHV Basis",
+                "AHV Base",
                 "Company Collector"
               ],
               "created": "2019-01-01T00:00:00.0Z"
@@ -163,8 +163,8 @@
             },
             {
               "wageTypeNumber": 106,
-              "name": "Stundenlohn",
-              "valueExpression": "CaseValue[\"Stundenlohn\"]",
+              "name": "HourlyWage",
+              "valueExpression": "CaseValue[\"HourlyWage\"]",
               "collectors": [
                 "Company Collector"
               ],
@@ -207,10 +207,10 @@
               "divisionName": "TestDerivedDivision",
               "reason": "Simple Payroll Import",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5125",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2019-01-01T00:00:00.0Z"
@@ -224,10 +224,10 @@
               "divisionName": "TestDerivedDivision",
               "reason": "Simple Payroll Import",
               "case": {
-                "caseName": "Stundenlohn",
+                "caseName": "HourlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Stundenlohn",
+                    "caseFieldName": "HourlyWage",
                     "value": "875",
                     "start": "2019-01-01T00:00:00.0Z",
                     "created": "2019-01-01T00:00:00.0Z"
@@ -287,7 +287,7 @@
           ],
           "collectorResults": [
             {
-              "collectorName": "AHV Basis",
+              "collectorName": "AHV Base",
               "value": 5125
             },
             {

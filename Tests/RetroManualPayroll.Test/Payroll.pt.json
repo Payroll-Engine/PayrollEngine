@@ -37,13 +37,13 @@
           "created": "2018-01-01T00:00:00.0Z",
           "cases": [
             {
-              "name": "Monatslohn",
+              "name": "MonthlyWage",
               "caseType": "Employee",
-              "defaultReason": "Change Monatslohn",
+              "defaultReason": "Change monthly wage",
               "created": "2018-01-01T00:00:00.0Z",
               "fields": [
                 {
-                  "name": "Monatslohn",
+                  "name": "MonthlyWage",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "created": "2018-01-01T00:00:00.0Z"
@@ -54,31 +54,31 @@
           "wageTypes": [
             {
               "wageTypeNumber": 100,
-              "name": "Monatslohn",
-              "valueExpression": "ScheduleRetroPayrun(PeriodStart.SubtractMonths(1), new[] { \"Retro1\" }); ScheduleRetroPayrun(PeriodStart.SubtractMonths(2), new[] { \"Retro2\" }); return GetCaseValue(\"Monatslohn\");",
+              "name": "MonthlyWage",
+              "valueExpression": "ScheduleRetroPayrun(PeriodStart.SubtractMonths(1), new[] { \"Retro1\" }); ScheduleRetroPayrun(PeriodStart.SubtractMonths(2), new[] { \"Retro2\" }); return GetCaseValue(\"MonthlyWage\");",
               "created": "2018-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 101.1,
-              "name": "Monatslohn.Retro1",
+              "name": "MonthlyWage.Retro1",
               "valueExpression": "return IsRetroPayrun && FirstCyclePeriod ? 500m : null",
               "created": "2018-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 101.2,
-              "name": "Monatslohn.Retro1Test",
+              "name": "MonthlyWage.Retro1Test",
               "valueExpression": "return GetWageTypeResults(new(101.1m, PeriodStart.SubtractMonths(1), PeriodEnd) { Tag = \"Retro1\" }).Sum()",
               "created": "2018-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 102.1,
-              "name": "Monatslohn.Retro2",
+              "name": "MonthlyWage.Retro2",
               "valueExpression": "return IsRetroPayrun && LastCyclePeriod ? 1000m : null",
               "created": "2018-01-01T00:00:00.0Z"
             },
             {
               "wageTypeNumber": 102.2,
-              "name": "Monatslohn.Retro2Test",
+              "name": "MonthlyWage.Retro2Test",
               "valueExpression": "return GetWageTypeResults(new(102.1m, PeriodStart.SubtractMonths(2), PeriodEnd) { Tag = \"Retro2\" }).Sum()",
               "created": "2018-01-01T00:00:00.0Z"
             }
@@ -102,10 +102,10 @@
               "employeeIdentifier": "višnja.müller@foo.com",
               "divisionName": "RetroManualDivision",
               "case": {
-                "caseName": "Monatslohn",
+                "caseName": "MonthlyWage",
                 "values": [
                   {
-                    "caseFieldName": "Monatslohn",
+                    "caseFieldName": "MonthlyWage",
                     "value": "5000",
                     "start": "2018-10-01T00:00:00.0Z",
                     "created": "2017-12-15T18:22:45.0Z"
