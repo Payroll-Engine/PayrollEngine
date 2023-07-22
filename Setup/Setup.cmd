@@ -264,15 +264,17 @@ pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :backendTestError
-echo.[91mPayroll Test error[0m
+echo.[91mPayroll test error[0m
 pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dotNetError
-echo.[91mThe .NET 7.0 Runtime for console apps is missing[0m
+echo.[91m.NET 7.0 Runtime is missing[0m
 echo.
-echo Please download and install the console appsruntime at:
+echo Please download and install the runtime for ASP.NET Core server applications
 echo   - https://dotnet.microsoft.com/en-us/download/dotnet/7.0/runtime
+echo     Windows: Run server apps - Download Hosting Bundle
+echo     Linux:   Run server apps - Install .NET
 echo.
 pause
 goto exit
