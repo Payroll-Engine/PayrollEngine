@@ -9,7 +9,7 @@ set version=%PayrollEngineSetupVersion%
 if "%version%" == "" goto missingVersionError
 
 rem --- setup file ---
-set setup=%~dp0..\Release\PayrollEngine_%version%.zip
+set setup=%~dp0..\Release\%version%\PayrollEngine_%version%.zip
 rem existing setup test
 if exist %setup% goto existingVersionError
 

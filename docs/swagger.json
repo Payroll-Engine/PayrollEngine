@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.5.0-230721-3",
+    "description": "Payroll Engine API v0.5.0-230723",
     "version": "1"
   },
   "paths": {
