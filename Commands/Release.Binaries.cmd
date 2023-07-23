@@ -16,7 +16,7 @@ if exist %setup% goto existingVersionError
 echo.
 echo target version: %version%
 echo.
-pause
+pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to continue..."
 
 rem --- compress only switch ---
 if "%1" == "nopub" goto buildArchive

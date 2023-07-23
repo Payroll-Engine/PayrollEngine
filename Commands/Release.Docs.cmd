@@ -21,11 +21,11 @@ echo compressing...
 echo.
 echo [92mScripting reference documentation created %targetFile%[0m
 
-rem --- client services reference ---
-:clientServiceReference
+rem --- services reference ---
+:serviceReference
 echo.
-echo ---- Client Services Reference ----
-set targetFile=%~dp0..\Release\%version%\ClientServicesReference_%version%.zip
+echo ---- Services Reference ----
+set targetFile=%~dp0..\Release\%version%\ServicesReference_%version%.zip
 echo building client services reference documentation...
 pushd %~dp0..\..\PayrollEngine.Client.Services\docfx\
 call Static.Build.cmd
