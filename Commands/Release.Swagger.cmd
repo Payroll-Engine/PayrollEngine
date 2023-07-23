@@ -19,8 +19,11 @@ rem --- swagger copy ---
 :swaggerCopy
 echo.
 echo copy swagger.json...
-copy %~dp0..\..\PayrollEngine.Backend\docs\swagger.json %~dp0..\Release\
+rem copy to release
+copy %~dp0..\..\PayrollEngine.Backend\docs\swagger.json %~dp0..\Release\%version%\
+rem updated docs folder
 copy %~dp0..\..\PayrollEngine.Backend\docs\swagger.json %~dp0..\docs\
+echo.
 goto exit
 
 :missingVersionError
