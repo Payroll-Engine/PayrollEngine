@@ -1,6 +1,6 @@
 @echo off
 
-echo Set Payroll Engine Version
+echo Set Payroll Set Release Version
 
 rem --- version setup ---
 :version

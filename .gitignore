@@ -340,6 +340,7 @@ ASALocalRun/
 
 /Bin
 /Packages
+/Release
 .exports/
 /**/DROP/
 /**/TEMP/

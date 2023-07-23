@@ -1,6 +1,6 @@
 @echo off
 
-echo Payroll Engine Document Setup
+echo ********** Payroll Engine Build Release Documents **********
 
 rem --- version check ---
 :versionCheck
@@ -11,10 +11,10 @@ rem --- scripting reference ---
 :scriptReference
 echo.
 echo ---- Scripting Reference ----
-set targetFile=%~dp0..\Bin\ScriptReference_%version%.zip
+set targetFile=%~dp0..\Release\ScriptReference_%version%.zip
 echo building scripting reference documentation...
 pushd %~dp0..\..\PayrollEngine.Client.Scripting\docfx\
-call Build.cmd
+call Static.Build.cmd
 popd
 echo compressing...
 7z a -ssw -r -tzip -y %targetFile% %~dp0..\..\PayrollEngine.Client.Scripting\docfx\_site\*.* > nul
@@ -25,10 +25,10 @@ rem --- client services reference ---
 :clientServiceReference
 echo.
 echo ---- Client Services Reference ----
-set targetFile=%~dp0..\Bin\ClientServicesReference_%version%.zip
+set targetFile=%~dp0..\Release\ClientServicesReference_%version%.zip
 echo building client services reference documentation...
 pushd %~dp0..\..\PayrollEngine.Client.Services\docfx\
-call Build.cmd
+call Static.Build.cmd
 popd
 echo compressing...
 7z a -ssw -r -tzip -y %targetFile% %~dp0..\..\PayrollEngine.Client.Services\docfx\_site\*.* > nul
