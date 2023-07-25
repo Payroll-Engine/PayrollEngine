@@ -6,34 +6,40 @@
 - `<Example>/Setup.cmd` - setup example
 - `<Example>/Delete.cmd` - delete example
 
-## `Action Payroll`
+## Web Application Login
+In the web application, `Luci` has the `Supervisor` rights for all examples:
+  - Name: `lucy.smith@foo.com`
+  - Passwort: `@ayroll3ngine`
+
+## Examples
+
+### `Action Payroll`
 > TODO 
 
-## `Case definition` - CaseDefPayroll
+### `Case definition` - CaseDefPayroll
 - Case value types
 - Case time types
 - Case Relations
 - Case Slots
 - Case Actions
 
-## `Derived Payroll`
+### `Derived Payroll`
 > TODO 
 
-## `Derived Payroll`
+### `Derived Payroll`
 > TODO 
 
-## `Extended Payroll`
+### `Extended Payroll`
 > TODO 
 
-## `Report Payroll`
+### `Report Payroll`
 > TODO 
 
-## `Simple Payroll`
+### `Simple Payroll`
 > TODO 
 
-## `Start Payroll`
+### `Start Payroll`
 > TODO 
 
-## `Week Simple Payroll`
+### `Week Simple Payroll`
 > TODO 
-
