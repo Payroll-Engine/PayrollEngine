@@ -4,7 +4,7 @@ echo Set Payroll Set Release Version
 
 rem --- version setup ---
 :version
-set version=0.5.0-230723
+set version=0.5.0-beta.2
 
 rem --- confirmation ---
 :confirmation
@@ -13,7 +13,7 @@ echo current version        [96m%PayrollEngineSetupVersion%[0m
 echo new version            [96m%version%[0m
 echo.
 if "%version%" == "%PayrollEngineSetupVersion%" goto noChanges
-pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to continue..."
+pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to set the version [96m%version%[0m..."
 echo.
 
 rem --- console ---
@@ -21,7 +21,7 @@ set console=%~dp0..\Bin\PayrollEngine.PayrollConsole\PayrollEngine.PayrollConsol
 if not "%PayrollConsole%" == "" set console=%PayrollConsole%
 
 rem --- release version ---
-call %console% UserVariable PayrollEngineSetupVersion %version% /wait
+call %console% UserVariable PayrollEngineSetupVersion %version%
 pause
 goto exit
 

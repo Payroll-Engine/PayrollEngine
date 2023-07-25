@@ -29,7 +29,20 @@
 | `VSBackup.cmd` | Create the visual studio back (call from Visual Studio Tool) |
 | `WebApp.Log.cmd` | Open the web application log file in power shell |
 
-<sup>1)</sup> Before you build the release with `Release.All.cmd`, the version must be set with `Release.Version.cmd`.
+<sup>1)</sup> see Release Build
+
+## Release Build
+Steps to build the release:
+1. Edit the file `Release.Version.cmd`
+    - set the variable `version` to the new version
+2. Execute the command `Release.Version.cmd`
+    - confirm new version
+3. Execute the command `Release.All.cmd`
+    - confirm the version release
+    -> creates the setup in the folder `Setup\Version`
+4. GitHub: create a new release with the same version name
+    - attach the binaries from the `Setup\Version` folder
+5. GitHub: publish the release
 
 ## Folders
 - `Bin` - binaries (publish output)

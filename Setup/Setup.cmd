@@ -218,8 +218,8 @@ echo.
 echo [97mMore[0m
 echo   [96mTests\Test.All.cmd[0m: run all payrun tests [BS]
 echo   [96mExamples\Setup.All.cmd[0m: setup all payroll examples [BS]
-echo   [96mdoc[0m folder: documentation
-echo   [96mSchema[0m folder: JSON validation schemas
+echo   folder [96mdoc[0m: documentation
+echo   folder [96mSchema[0m: JSON validation schemas
 echo.
 pause>nul|set/p ="Press any key to close this window..."
 goto exit
