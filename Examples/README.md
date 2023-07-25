@@ -6,11 +6,34 @@
 - `<Example>/Setup.cmd` - setup example
 - `<Example>/Delete.cmd` - delete example
 
-## `CaseDefPayroll` (Case definition)
+## `Action Payroll`
+> TODO 
+
+## `Case definition` - CaseDefPayroll
 - Case value types
 - Case time types
 - Case Relations
 - Case Slots
 - Case Actions
 
-> TODO complete examples description
+## `Derived Payroll`
+> TODO 
+
+## `Derived Payroll`
+> TODO 
+
+## `Extended Payroll`
+> TODO 
+
+## `Report Payroll`
+> TODO 
+
+## `Simple Payroll`
+> TODO 
+
+## `Start Payroll`
+> TODO 
+
+## `Week Simple Payroll`
+> TODO 
+

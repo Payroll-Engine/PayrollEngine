@@ -4,4 +4,4 @@ rem console
 set console=PayrollConsole
 if not "%PayrollConsole%" == "" set console=%PayrollConsole%
 
-call %console% ActionReport %~dp0..\.bin\Provider.Api\PayrollEngine.Client.Scripting.dll /wait
+call %console% ActionReport %~dp0..\Bin\PayrollEngine.Backend\PayrollEngine.Client.Scripting.dll
