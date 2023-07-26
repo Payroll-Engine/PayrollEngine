@@ -9,7 +9,6 @@ Welcome to the Payroll Engine.
 
 <br />
 <br />
-<br />
 
 | :point_right: [Continue to the Payroll Engine Wiki](https://github.com/Payroll-Engine/PayrollEngine/wiki) |
 |:------------------------|
