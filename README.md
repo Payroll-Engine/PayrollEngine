@@ -4,6 +4,10 @@
     <img alt="Payroll Engine" src="https://github.com/Payroll-Engine/PayrollEngine/blob/main/images/logo/NameNormalShadow.png" width="500px" />
   </picture>
 
-# Welcome to the Payroll Engine
+<br />
+Welcome to the Payroll Engine.
+
+<br />
+
 | :point_right: [Continue to the Payroll Engine Wiki](https://github.com/Payroll-Engine/PayrollEngine/wiki) |
 |:------------------------|
