@@ -10,5 +10,5 @@ Welcome to the Payroll Engine.
 <br />
 <br />
 
-| :point_right: [Continue to the Payroll Engine Wiki](https://github.com/Payroll-Engine/PayrollEngine/wiki) |
+| :point_right: **[Please visit the Payroll Engine Wiki](https://github.com/Payroll-Engine/PayrollEngine/wiki)** |
 |:------------------------|
