@@ -5,7 +5,6 @@
   </picture>
 
 <br />
-<br />
 
 | :point_right: **[Welcome to the Payroll Engine, please continue to the Wiki](https://github.com/Payroll-Engine/PayrollEngine/wiki)** |
 |:------------------------|
