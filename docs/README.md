@@ -6,4 +6,5 @@
 | Payroll Engine REST Service Endpoints       | [PDF](PayrollRestServicesEndpoints.pdf) |     |
 | Payroll Engine Repository-Map               | [PDF](PayrollEngineRepositoryMap.pdf) | |
 | Payroll Engine OData Query                  | [Markdown](ODataQuery.md) | |
+| Current Payroll OpenAPI Specification       | [swagger.json](swagger.json) | |
 <br />
