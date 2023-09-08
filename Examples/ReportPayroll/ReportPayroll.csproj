@@ -49,8 +49,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="PayrollEngine.Client.Services" Version="0.6.0-beta.7" />
-	  <PackageReference Include="PayrollEngine.Serilog" Version="0.6.0-beta.7" />
+	  <PackageReference Include="PayrollEngine.Client.Services" Version="0.6.0-beta.8" />
+	  <PackageReference Include="PayrollEngine.Serilog" Version="0.6.0-beta.8" />
 	</ItemGroup>
 
 	<ItemGroup>

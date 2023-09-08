@@ -31,7 +31,11 @@
 
 <sup>1)</sup> see Release Build
 
-## Release Build
+## Release Steps
+
+Before you start release, ensure taht all projects have the same version.
+
+### 1. Local Release
 Steps to build the release:
 1. Edit the file `Release.Version.cmd`
     - set the variable `version` to the new version
@@ -40,9 +44,35 @@ Steps to build the release:
 3. Execute the command `Release.All.cmd`
     - confirm the version release
     -> creates the setup in the folder `Setup\Version`
-4. GitHub: create a new release with the same version name
+
+### 2. GitHub Repositories and NuGet Packages
+1. Commit the `PayrollEngine.Core` repo to GitHub and build a new release
+2. -> Wait until the package is public available on nuget.org (a few minutes)
+3. Commit the following repos to GitHub and build new releases
+    - `PayrollEngine.Client.Core`
+    - `PayrollEngine.Serilog`
+    - `PayrollEngine.Document`
+    - `PayrollEngine.Document.*`
+4. -> Wait until the package `PayrollEngine.Client.Core` is public available on nuget.org (a few minutes)
+5. Commit the following repos to GitHub and build new releases
+    - `PayrollEngine.Client.Scripting`
+    - `PayrollEngine.Client.Test`
+6. -> Wait until both packages are public available on nuget.org (a few minutes)
+7. Commit the following repos to GitHub and build a new release
+    - `PayrollEngine.Client.Services`
+8. -> Wait until the package is public available on nuget.org (a few minutes)
+5. Commit the following repos to GitHub and build new releases
+    - `PayrollEngine.Backend`
+    - `PayrollEngine.PayrollConsole`
+    - `PayrollEngine.WebApp`
+    - `PayrollEngine.Client.Tutorials`
+    - `Regulation.*`
+    - `PayrollEngine`
+
+### 3. GitHub Release
+1. GitHub: create a new release with the same version name
     - attach the binaries from the `Setup\Version` folder
-5. GitHub: publish the release
+2. GitHub: publish the release
 
 ## Folders
 - `Bin` - binaries (publish output)
