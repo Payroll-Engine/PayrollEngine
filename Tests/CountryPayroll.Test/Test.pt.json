@@ -4,6 +4,7 @@
     {
       "identifier": "CountryPayroll.Test",
       "created": "2019-01-01T00:00:00.0Z",
+      "culture": "de-CH",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -15,7 +16,6 @@
       "divisions": [
         {
           "name": "TestDivision",
-          "culture": "de-CH",
           "created": "2019-01-01T00:00:00.0Z"
         }
       ],

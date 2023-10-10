@@ -4,6 +4,7 @@
     {
       "identifier": "Employee.Test",
       "created": "2019-01-01T00:00:00.0Z",
+      "culture": "de-CH",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -15,7 +16,6 @@
       "divisions": [
         {
           "name": "TestDivision",
-          "culture": "de-CH",
           "created": "2019-01-01T00:00:00.0Z"
         }
       ],
@@ -331,7 +331,7 @@
             {
               "wageTypeNumber": 199,
               "name": "WageCoverage",
-              "valueExpression": "var results = GetPeriodWageTypeResults(101, new PeriodResultQuery(1, PayrunJobStatus.Legal)); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
+              "valueExpression": "var results = GetPeriodWageTypeResults(new WageTypePeriodResultQuery(101, 1, PayrunJobStatus.Legal)); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {

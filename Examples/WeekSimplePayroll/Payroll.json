@@ -76,7 +76,7 @@
               ]
             },
             {
-              "name": "BeschäftigungEmploymentLevelsgrad",
+              "name": "EmploymentLevel",
               "caseType": "Employee",
               "fields": [
                 {

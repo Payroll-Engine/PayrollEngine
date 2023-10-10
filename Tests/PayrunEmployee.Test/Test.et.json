@@ -3,9 +3,11 @@
   "tenants": [
     {
       "identifier": "Employee.Test",
+      "updateMode": "NoUpdate",
       "payrolls": [
         {
           "name": "Employee.Test",
+          "updateMode": "NoUpdate",
           "cases": [
             {
               "userIdentifier": "peter.schmid@foo.com",

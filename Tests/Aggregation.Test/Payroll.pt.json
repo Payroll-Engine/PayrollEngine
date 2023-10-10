@@ -4,6 +4,7 @@
   "tenants": [
     {
       "identifier": "Aggregation.Test",
+      "culture": "de-CH",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -13,8 +14,7 @@
       ],
       "divisions": [
         {
-          "name": "Aggregation.Division",
-          "culture": "de-CH"
+          "name": "Aggregation.Division"
         }
       ],
       "regulations": [

@@ -4,6 +4,7 @@
   "tenants": [
     {
       "identifier": "Cancellation.Test",
+      "culture": "de-CH",
       "users": [
         {
           "identifier": "peter.schmid@foo.com",
@@ -13,8 +14,7 @@
       ],
       "divisions": [
         {
-          "name": "TestDivision",
-          "culture": "de-CH"
+          "name": "TestDivision"
         }
       ],
       "regulations": [
