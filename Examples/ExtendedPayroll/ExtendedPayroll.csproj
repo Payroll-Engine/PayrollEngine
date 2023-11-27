@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<AssemblyName>ExtendedPayroll</AssemblyName>
 		<RootNamespace>ExtendedPayroll</RootNamespace>
 		<Product>Payroll Engine Extended Payroll</Product>
@@ -16,8 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="PayrollEngine.Client.Services" Version="0.6.0-beta.11" />
-		<PackageReference Include="PayrollEngine.Serilog" Version="0.6.0-beta.11" />
+		<PackageReference Include="PayrollEngine.Client.Services" Version="0.8.0-beta.1" />
+		<PackageReference Include="PayrollEngine.Serilog" Version="0.8.0-beta.1" />
 	</ItemGroup>
 
 	<ItemGroup>

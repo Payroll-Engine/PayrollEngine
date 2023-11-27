@@ -29,7 +29,7 @@ public class MyActions : CaseChangeActionsBase
             // predefined digit checks: Mod11Radix2, Mod37Radix2, Mod97Radix10, Mod661Radix26, Mod1271Radix36
             // CheckDigit.Mod11Radix2.Check(checkValue);
         }
-        catch (CheckDigitException exception)
+        catch (CheckDigitException)
         {
             AddIssue(context, "InvalidUId", context.CaseFieldName, sourceValue);
         }

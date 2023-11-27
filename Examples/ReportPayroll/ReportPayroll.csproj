@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<AssemblyName>ReportPayroll</AssemblyName>
 		<RootNamespace>ReportPayroll</RootNamespace>
 		<Product>Payroll Engine Report Payroll</Product>
@@ -49,8 +49,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="PayrollEngine.Client.Services" Version="0.6.0-beta.11" />
-	  <PackageReference Include="PayrollEngine.Serilog" Version="0.6.0-beta.11" />
+	  <PackageReference Include="PayrollEngine.Client.Services" Version="0.8.0-beta.1" />
+	  <PackageReference Include="PayrollEngine.Serilog" Version="0.8.0-beta.1" />
 	</ItemGroup>
 
 	<ItemGroup>

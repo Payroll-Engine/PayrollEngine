@@ -44,10 +44,10 @@ pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to continue..."
 echo.
 echo.
 
-rem --- test .NET 7.0 runtime ---
+rem --- test .NET 8.0 runtime ---
 :testDotNet
 set tempFile=%TEMP%\Output.log
-dotnet --list-runtimes|FIND "7." > "!tempFile!"
+dotnet --list-runtimes|FIND "8." > "!tempFile!"
 if %ErrorLevel% neq 0 goto dotNetError
 
 rem --- setup environment ---
@@ -269,10 +269,10 @@ pause>nul|set/p ="Press any key to exit..."
 goto exit
 
 :dotNetError
-echo.[91m.NET 7.0 Runtime is missing[0m
+echo.[91m.NET 8.0 Runtime is missing[0m
 echo.
 echo Please download and install the runtime for ASP.NET Core server applications
-echo   - https://dotnet.microsoft.com/en-us/download/dotnet/7.0/runtime
+echo   - https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime
 echo     Windows: Run server apps - Download Hosting Bundle
 echo     Linux:   Run server apps - Install .NET
 echo.
