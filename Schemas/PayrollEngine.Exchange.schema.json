@@ -1873,7 +1873,7 @@
     },
     "CaseType": {
       "type": "string",
-      "description": "The type of a case",
+      "description": "The case type",
       "x-enumNames": [
         "Global",
         "National",
@@ -1910,7 +1910,7 @@
     },
     "CaseCancellationType": {
       "type": "string",
-      "description": "The cancellation type of a case",
+      "description": "The case cancellation type",
       "x-enumNames": [
         "None",
         "Case"
@@ -3787,7 +3787,7 @@
     },
     "CaseIssueType": {
       "type": "string",
-      "description": "The type of a case issue",
+      "description": "The case issue type",
       "x-enumNames": [
         "Unknown",
         "CaseInvalid",
@@ -4867,7 +4867,7 @@
             },
             "createdReason": {
               "type": "string",
-              "description": "The create reason (immutable)",
+              "description": "The created reason (immutable)",
               "minLength": 1
             },
             "releasedReason": {
@@ -5812,7 +5812,7 @@
                 "null",
                 "string"
               ],
-              "description": "The employe identifier (client only)"
+              "description": "The employee identifier (client only)"
             },
             "divisionId": {
               "type": "integer",

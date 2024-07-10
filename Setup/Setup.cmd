@@ -72,14 +72,14 @@ set query=%PayrollDbQuery%
 rem --- test available database server ---
 :testDatabaseServer
 echo Testing SQL Server...
-call %query% TestServer /noCatalog
+call "%query%" TestServer /noCatalog
 if %ERRORLEVEL% neq 0 goto dbServerError
 echo SQL Server available.
 
 rem --- test available database ---
 :testDatabase
 echo Testing database...
-call %query% TestSqlConnection
+call "%query%" TestSqlConnection
 if %ERRORLEVEL% neq 0 goto setupDatabase
 
 rem --- test available database version ---
@@ -91,24 +91,24 @@ if %ERRORLEVEL% == 0 goto runBackendServerServer
 rem --- setup database ---
 :setupDatabase
 echo Setup database...
-call %query% Query Database\SetupDefaultDatabase.sql /noCatalog
+call "%query%" Query Database\SetupDefaultDatabase.sql /noCatalog
 if %ERRORLEVEL% neq 0 goto dbSetupError
 
 rem --- setup database model ---
 :setupDatabaseModel
 echo Setup database model...
-call %query% Query Database\SetupModel.sql
+call "%query%" Query Database\SetupModel.sql
 if %ERRORLEVEL% neq 0 goto dbSetupErrorModel
 
 rem --- test database setup ---
 :testDatabaseSetup
-call %query% TestVersion Version MajorVersion MinorVersion SubVersion %dbVersion%
+call "%query%" TestVersion Version MajorVersion MinorVersion SubVersion %dbVersion%
 if %ERRORLEVEL% neq 0 goto dbValidateError
 echo.[92mDatabase setup completed[0m
 
 rem --- parse backend server url ---
 :backendServerUrl
-call %query% ParseUrl backendServerUrl $BackendUrl$:$BackendPort$/
+call "%query%" ParseUrl backendServerUrl $BackendUrl$:$BackendPort$/
 rem delay for the errorlevel
 timeout 2 > NUL
 if %ERRORLEVEL% neq 0 goto setupError
@@ -119,7 +119,7 @@ rem --- test if the backend server is already running ---
 echo Testing backend server is running...
 rem delay for the errorlevel
 timeout 2 > NUL
-call %query% TestHttpConnection %backendServerUrl%
+call "%query%" TestHttpConnection %backendServerUrl%
 if %ERRORLEVEL% == 0 goto executeBackendServerTests
 
 rem --- run backend server ---
@@ -134,7 +134,7 @@ popd
 rem --- test if the backend server has been started ---
 :testBackendStarted
 echo Testing backend server start...
-call %query% TestHttpConnection %backendServerUrl%
+call "%query%" TestHttpConnection %backendServerUrl%
 if %ERRORLEVEL% neq 0 goto backendStartError
 
 rem --- execute backend server tests ---
@@ -168,7 +168,7 @@ echo Starting web application server...
 
 rem --- parse web application server url ---
 :webAppServerUrl
-call %query% ParseUrl webAppServerUrl $WebAppUrl$:$WebAppPort$/
+call "%query%" ParseUrl webAppServerUrl $WebAppUrl$:$WebAppPort$/
 rem delay for the errorlevel
 timeout 2 > NUL
 if %ERRORLEVEL% neq 0 goto setupError
@@ -179,7 +179,7 @@ rem --- test if the web application server connection is used ---
 rem delay for the errorlevel
 timeout 2 > NUL
 echo Testing web application server %webAppServerUrl%...
-call %query% TestHttpConnection %webAppServerUrl%
+call "%query%" TestHttpConnection %webAppServerUrl%
 if %ERRORLEVEL% == 0 goto openWebApp
 
 rem --- start web application server ---

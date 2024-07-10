@@ -969,7 +969,7 @@
         },
         {
           "type": "object",
-          "description": "Case build function test\n            Test input: case change setup\n            Test output: case set\n            "
+          "description": "Case build function test.\n            Test input: case change setup\n            Test output: case set\n            "
         }
       ]
     },
@@ -1935,7 +1935,7 @@
         },
         {
           "type": "object",
-          "description": "Case validate function test\n            Test input: case change setup\n            Test output: case change\n            "
+          "description": "Case validate function test.\n            Test input: case change setup\n            Test output: case change\n            "
         }
       ]
     },

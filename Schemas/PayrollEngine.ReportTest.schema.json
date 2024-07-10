@@ -83,7 +83,7 @@
         },
         {
           "type": "object",
-          "description": "Report build test\n            Test input: report request\n            Test output: list of report parameter\n            "
+          "description": "Report build test.\n            Test input: report request\n            Test output: list of report parameter\n            "
         }
       ]
     },

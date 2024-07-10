@@ -33,7 +33,7 @@
 
 ## Release Steps
 
-Before you start release, ensure taht all projects have the same version.
+Before you start release, ensure that all projects have the same version.
 
 ### 1. Local Release
 Steps to build the release:
