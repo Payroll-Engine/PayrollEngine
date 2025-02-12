@@ -276,7 +276,7 @@
                     "caseFieldName": "Bonus",
                     "value": "500",
                     "start": "2019-04-01T00:00:00.0Z",
-                    "created": "2019-03-14T00:00:00.0Z"
+                    "created": "2019-03-15T00:00:00.0Z"
                   }
                 ]
               }
@@ -292,7 +292,7 @@
                     "caseFieldName": "Bonus",
                     "value": "50",
                     "start": "2019-04-01T00:00:00.0Z",
-                    "created": "2019-03-14T00:00:00.0Z"
+                    "created": "2019-03-16T00:00:00.0Z"
                   }
                 ]
               }
@@ -324,7 +324,7 @@
                     "caseFieldName": "Bonus",
                     "value": "5",
                     "start": "2019-04-15T00:00:00.0Z",
-                    "created": "2019-04-14T00:00:00.0Z"
+                    "created": "2019-04-17T00:00:00.0Z"
                   }
                 ]
               }
@@ -598,7 +598,7 @@
                     "caseFieldName": "Bonus",
                     "value": "500",
                     "start": "2019-04-01T00:00:00.0Z",
-                    "created": "2019-03-14T00:00:00.0Z"
+                    "created": "2019-03-15T00:00:00.0Z"
                   }
                 ]
               }
@@ -614,7 +614,7 @@
                     "caseFieldName": "Bonus",
                     "value": "50",
                     "start": "2019-04-01T00:00:00.0Z",
-                    "created": "2019-03-14T00:00:00.0Z"
+                    "created": "2019-03-16T00:00:00.0Z"
                   }
                 ]
               }
@@ -646,7 +646,7 @@
                     "caseFieldName": "Bonus",
                     "value": "5",
                     "start": "2019-04-15T00:00:00.0Z",
-                    "created": "2019-04-14T00:00:00.0Z"
+                    "created": "2019-04-17T00:00:00.0Z"
                   }
                 ]
               }
@@ -1126,6 +1126,7 @@
           "payrunResults": [
             {
               "name": "MonthlyWage",
+              "valueType": "Money",
               "start": "2020-01-01T00:00:00.0Z",
               "end": "2020-01-31T23:59:59.9Z",
               "value": "6000"

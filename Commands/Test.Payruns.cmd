@@ -1,3 +1,3 @@
 @echo OFF
 cd %~dp0..\Tests\
-call Test.All.cmd
+call Test.All.pecmd

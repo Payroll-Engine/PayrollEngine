@@ -4,7 +4,7 @@ echo Set Payroll Set Release Version
 
 rem --- version setup ---
 :version
-set version=0.8.0-beta.2
+set version=0.9.0-beta.1
 
 rem --- confirmation ---
 :confirmation
@@ -17,7 +17,7 @@ pause>nul|set/p ="Press <Ctrl+C> to exit or any other key to set the version [9
 echo.
 
 rem --- console ---
-set console=%~dp0..\Bin\PayrollEngine.PayrollConsole\PayrollEngine.PayrollConsole.exe
+set console=%~dp0..\Bin\Console\PayrollEngine.PayrollConsole.exe
 if not "%PayrollConsole%" == "" set console=%PayrollConsole%
 
 rem --- release version ---

@@ -204,7 +204,7 @@
                     "fr": "Children Count FR",
                     "it": "Children Count IT"
                   },
-                  "description": "The children count",
+                  "description": "The children count (max 3)",
                   "valueType": "Integer",
                   "defaultStart": "today",
                   "defaultValue": "0",
@@ -358,7 +358,7 @@
                   "defaultValue": "Non modifiable",
                   "order": 32,
                   "attributes": {
-                    "input.readOnly": true
+                    "input.valueReadOnly": true
                   }
                 },
                 {
@@ -369,7 +369,7 @@
                   "defaultStart": "tomorrow",
                   "order": 35,
                   "attributes": {
-                    "input.mask": "000-000-0000"
+                    "input.valueMask": "000-000-0000"
                   },
                   "defaultValue": "123-456-7890"
                 },
@@ -384,23 +384,6 @@
                     "input.showDescription": true,
                     "input.lineCount": 5,
                     "input.maxLength": 22
-                  }
-                },
-                {
-                  "name": "LookupString",
-                  "description": "LookupString Description [defaultStart=today, defaultEnd=+1year]",
-                  "valueType": "String",
-                  "lookupSettings": {
-                    "lookupName": "Location",
-                    "valueFieldName": "number",
-                    "textFieldName": "name"
-                  },
-                  "timeType": "Period",
-                  "defaultStart": "today",
-                  "defaultEnd": "offset:1y",
-                  "order": 20,
-                  "attributes": {
-                    "input.multiLookup": true
                   }
                 },
                 {
@@ -465,7 +448,7 @@
                   "defaultValue": "20",
                   "order": 200,
                   "attributes": {
-                    "input.stepValue": 10
+                    "input.stepSize": 10
                   }
                 },
                 {
@@ -527,11 +510,32 @@
                   }
                 },
                 {
+                  "name": "Weekday",
+                  "description": "Weekday Description",
+                  "valueType": "Weekday",
+                  "timeType": "CalendarPeriod",
+                  "order": 400
+                },
+                {
+                  "name": "Month",
+                  "description": "Month Description",
+                  "valueType": "Month",
+                  "timeType": "CalendarPeriod",
+                  "order": 400
+                },
+                {
+                  "name": "Year",
+                  "description": "Year Description",
+                  "valueType": "Year",
+                  "timeType": "CalendarPeriod",
+                  "order": 400
+                },
+                {
                   "name": "None",
                   "description": "None Description",
                   "valueType": "None",
                   "timeType": "CalendarPeriod",
-                  "order": 370
+                  "order": 1000
                 }
               ]
             },
@@ -1009,26 +1013,6 @@
                   "timeType": "Period",
                   "lookupSettings": {
                     "lookupName": "SimpleLookupValues",
-                    "textFieldName": "name",
-                    "valueFieldName": "name"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Multi Lookups",
-              "caseType": "Employee",
-              "defaultReason": "Test Multi Lookups",
-              "fields": [
-                {
-                  "name": "Multi Lookups",
-                  "valueType": "String",
-                  "timeType": "Period",
-                  "attributes": {
-                    "input.multiLookup": true
-                  },
-                  "lookupSettings": {
-                    "lookupName": "MultiLookupValues",
                     "textFieldName": "name",
                     "valueFieldName": "name"
                   }

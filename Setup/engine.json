@@ -1,7 +1,0 @@
-{
-  "databaseConnection": "server=localhost; Initial Catalog=PayrollEngine; Integrated Security=SSPI; Connection Timeout=1000; TrustServerCertificate=true",
-  "backendUrl": "https://localhost",
-  "backendPort": "44354",
-  "webAppUrl": "https://localhost",
-  "webAppPort": "7179"
-}

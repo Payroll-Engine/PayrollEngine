@@ -60,7 +60,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
             // employee id
             if (employee["Id"] is not int employeeId)
             {
-                throw new ScriptException("Missing employee id");
+                throw new ScriptException("Missing employee id.");
             }
 
             // temporary tables for employee

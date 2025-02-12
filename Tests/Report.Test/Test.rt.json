@@ -46,12 +46,14 @@
                   "braunger.margarete@logo.com",
                   "Braunger",
                   "Margarete",
-                  "English",
-                  "*",
-                  "null",
+                  "[\"ReportTestDivision\"]",
                   "*",
                   "*",
-                  "Active"
+                  "Active",
+                  "*",
+                  "*",
+                  "*",
+                  "*"
                 ]
               },
               {
@@ -60,12 +62,14 @@
                   "frühling.Andreas@logo.com",
                   "Frühling",
                   "Andreas",
-                  "English",
-                  "*",
-                  "null",
+                  "[\"ReportTestDivision\"]",
                   "*",
                   "*",
-                  "Active"
+                  "Active",
+                  "*",
+                  "*",
+                  "*",
+                  "*"
                 ]
               }
             ]

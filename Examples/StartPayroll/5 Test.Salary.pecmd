@@ -1,0 +1,3 @@
+# TenantDelete CaseTest /trydelete
+# PayrollImport Payroll.json
+CaseTest Test.Salary.ct.json /showall /wait

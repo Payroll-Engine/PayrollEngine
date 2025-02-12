@@ -1,0 +1,2 @@
+TenantDelete tenant:StartTenant /trydelete
+PayrollImport Basic.json /wait

@@ -1,0 +1,2 @@
+TenantDelete Payroll.Test /trydelete
+TenantDelete Payroll.Test.Shared /trydelete

@@ -1,0 +1,3 @@
+RegulationRebuild SimplePayroll SimplePayroll
+PayrunRebuild SimplePayroll SimplePayrollPayrun1
+PayrunRebuild SimplePayroll SimplePayrollPayrun2 /wait

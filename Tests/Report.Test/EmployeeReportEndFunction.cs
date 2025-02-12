@@ -24,7 +24,7 @@ public class WageTypeReportEndFunction : Scripting.Function.ReportEndFunction
         var employees = Tables["Employees"];
         if (employees == null)
         {
-            throw new ScriptException("Missing employees");
+            throw new ScriptException("Missing employees.");
         }
 
         // add employee type column

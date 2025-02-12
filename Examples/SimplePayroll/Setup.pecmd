@@ -1,0 +1,7 @@
+Delete.pecmd
+Import.pecmd
+ChangePassword SimplePayroll lucy.smith@foo.com @ayroll3nginE
+Import.Values.pecmd
+Import.Lookups.pecmd
+Import.Jobs.pecmd
+PayrollResults SimplePayroll 2 %args% / wait

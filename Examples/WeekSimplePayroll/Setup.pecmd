@@ -1,0 +1,6 @@
+Delete.pecmd
+Import.pecmd
+ChangePassword WeekSimplePayroll lucy.smith@foo.com @ayroll3nginE
+Import.Values.pecmd
+Import.Jobs.pecmd
+PayrollResults WeekSimplePayroll 1 %args%

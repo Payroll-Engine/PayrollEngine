@@ -7,19 +7,22 @@ echo.
 echo ----------------- Publishing JSON Schema Builder -----------------
 echo.
 echo Cleanup...
-if exist ..\Bin\PayrollEngine.JsonSchemaBuilder\ RD /Q /S ..\Bin\PayrollEngine.JsonSchemaBuilder\ > NUL
+if exist ..\Bin\JsonSchemaBuilder\ RD /Q /S ..\Bin\JsonSchemaBuilder\ > NUL
 if %ERRORLEVEL% neq 0 goto error
 echo.
-dotnet publish %~dp0..\..\PayrollEngine.JsonSchemaBuilder\JsonSchemaBuilder\PayrollEngine.JsonSchemaBuilder.csproj --self-contained %PUB_SELF_CONTAINED% --output %~dp0..\Bin\PayrollEngine.JsonSchemaBuilder --configuration Release
+dotnet publish %~dp0..\..\PayrollEngine.JsonSchemaBuilder\JsonSchemaBuilder\PayrollEngine.JsonSchemaBuilder.csproj --self-contained %PUB_SELF_CONTAINED% --output %~dp0..\Bin\JsonSchemaBuilder --configuration Release
 if %ERRORLEVEL% neq 0 goto error
 echo.
+rem dbquery tool replaced by admin tool
+goto exit
+
 echo ----------------- Publishing SQL Server Query -----------------
 echo.
 echo Cleanup...
-if exist ..\Bin\PayrollEngine.SqlServer.DbQuery\ RD /Q /S ..\Bin\PayrollEngine.SqlServer.DbQuery\ > NUL
+if exist ..\Bin\DbQuery\ RD /Q /S ..\Bin\DbQuery\ > NUL
 if %ERRORLEVEL% neq 0 goto error
 echo.
-dotnet publish %~dp0..\..\PayrollEngine.SqlServer.DbQuery\DbQuery\PayrollEngine.SqlServer.DbQuery.csproj --self-contained %PUB_SELF_CONTAINED% --output %~dp0..\Bin\PayrollEngine.SqlServer.DbQuery --configuration Release
+dotnet publish %~dp0..\..\PayrollEngine.SqlServer.DbQuery\DbQuery\PayrollEngine.SqlServer.DbQuery.csproj --self-contained %PUB_SELF_CONTAINED% --output %~dp0..\Bin\DbQuery --configuration Release
 if %ERRORLEVEL% neq 0 goto error
 goto exit
 

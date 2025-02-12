@@ -9,7 +9,7 @@
 ## Web Application Login
 In the web application, `Luci` has the `Supervisor` rights for **all** examples:
   - Name: `lucy.smith@foo.com`
-  - Passwort: `@ayroll3ngine`
+  - Passwort: `@ayroll3nginE`
 
 ## Examples
 

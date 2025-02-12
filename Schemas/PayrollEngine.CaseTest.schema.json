@@ -866,7 +866,7 @@
         },
         {
           "type": "object",
-          "description": "Case available function test\n            Test input: case change setup\n            Test output: bool indicates the case available state\n            ",
+          "description": "Case available function test.\n            Test input: case change setup\n            Test output: bool indicates the case available state\n            ",
           "required": [
             "caseName"
           ],

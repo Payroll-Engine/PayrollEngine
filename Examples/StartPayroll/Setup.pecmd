@@ -1,0 +1,7 @@
+TenantDelete StartTenant /trydelete
+PayrollImport Basic.json
+# --- web application login ---
+ChangePassword StartTenant lucy.smith@foo.com @ayroll3nginE
+PayrollImport Insurance.json
+PayrollImport Company.json
+PayrollImport Report.json

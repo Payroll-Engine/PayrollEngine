@@ -20,7 +20,7 @@ rem --- swagger copy ---
 echo.
 echo copy swagger.json...
 rem copy to release
-copy %~dp0..\..\PayrollEngine.Backend\docs\swagger.json %~dp0..\Release\%version%\
+copy %~dp0..\..\PayrollEngine.Backend\docs\swagger.json %~dp0..\Releases\%version%\
 rem updated docs folder
 copy %~dp0..\..\PayrollEngine.Backend\docs\swagger.json %~dp0..\docs\
 echo.

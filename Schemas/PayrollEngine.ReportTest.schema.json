@@ -468,7 +468,7 @@
         },
         {
           "type": "object",
-          "description": "Report execute test\n            Test input: report request\n            Test output: report data set\n            "
+          "description": "Report execute test.\n            Test input: report request\n            Test output: report data set\n            "
         }
       ]
     },

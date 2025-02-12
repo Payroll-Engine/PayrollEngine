@@ -15,9 +15,6 @@ if %ERRORLEVEL% neq 0 goto error
 rem pack document
 call Pack PayrollEngine.Document\Document\PayrollEngine.Document.csproj %PackAllConfiguration%
 if %ERRORLEVEL% neq 0 goto error
-rem pack document syncfusion
-call Pack PayrollEngine.Document.Syncfusion\Syncfusion\PayrollEngine.Document.Syncfusion.csproj %PackAllConfiguration%
-if %ERRORLEVEL% neq 0 goto error
 rem pack client core
 call Pack PayrollEngine.Client.Core\Client.Core\PayrollEngine.Client.Core.csproj %PackAllConfiguration%
 if %ERRORLEVEL% neq 0 goto error

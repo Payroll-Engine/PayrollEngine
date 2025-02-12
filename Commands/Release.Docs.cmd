@@ -11,7 +11,7 @@ rem --- scripting reference ---
 :scriptReference
 echo.
 echo ---- Scripting Reference ----
-set targetFile=%~dp0..\Release\%version%\ScriptReference_%version%.zip
+set targetFile=%~dp0..\Releases\%version%\ScriptReference_%version%.zip
 echo building scripting reference documentation...
 pushd %~dp0..\..\PayrollEngine.Client.Scripting\docfx\
 call Static.Build.cmd
@@ -25,7 +25,7 @@ rem --- services reference ---
 :serviceReference
 echo.
 echo ---- Services Reference ----
-set targetFile=%~dp0..\Release\%version%\ServicesReference_%version%.zip
+set targetFile=%~dp0..\Releases\%version%\ServicesReference_%version%.zip
 echo building client services reference documentation...
 pushd %~dp0..\..\PayrollEngine.Client.Services\docfx\
 call Static.Build.cmd

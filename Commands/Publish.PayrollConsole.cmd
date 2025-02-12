@@ -7,10 +7,10 @@ echo.
 echo ----------------- Payroll Console -----------------
 echo.
 echo Cleanup...
-if exist ..\Bin\PayrollEngine.PayrollConsole\ RD /Q /S ..\Bin\PayrollEngine.PayrollConsole\ > NUL
+if exist ..\Bin\Console\ RD /Q /S ..\Bin\Console\ > NUL
 if %ERRORLEVEL% neq 0 goto error
 echo.
-dotnet publish %~dp0..\..\PayrollEngine.PayrollConsole\PayrollConsole\PayrollEngine.PayrollConsole.csproj --self-contained %PUB_SELF_CONTAINED% --output %~dp0..\Bin\PayrollEngine.PayrollConsole --configuration Release
+dotnet publish %~dp0..\..\PayrollEngine.PayrollConsole\PayrollConsole\PayrollEngine.PayrollConsole.csproj --self-contained %PUB_SELF_CONTAINED% --output %~dp0..\Bin\Console --configuration Release
 if %ERRORLEVEL% neq 0 goto error
 goto exit
 

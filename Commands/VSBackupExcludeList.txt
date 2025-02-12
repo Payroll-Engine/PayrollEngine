@@ -7,4 +7,6 @@ obj
 help
 package
 packages
+release
+releases
 logs

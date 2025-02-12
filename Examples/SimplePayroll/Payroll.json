@@ -543,9 +543,6 @@
                   "name": "Building Type",
                   "valueType": "String",
                   "timeType": "Period",
-                  "attributes": {
-                    "input.multiLookup": true
-                  },
                   "lookupSettings": {
                     "lookupName": "BuildingType",
                     "textFieldName": "name",
@@ -572,7 +569,7 @@
                   "optional": true,
                   "order": 60,
                   "attributes": {
-                    "input.mask": "756.0000.0000.00"
+                    "input.valueMask": "756.0000.0000.00"
                   }
                 }
               ]
@@ -943,6 +940,16 @@
           ],
           "wageTypes": [
             {
+              "wageTypeNumber": 101,
+              "name": "MonthlyWage",
+              "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"RiskBonus\"); return values[\"MonthlyWage\"] * values[\"RiskBonus\"];",
+              "collectors": [
+                "AHV Base"
+              ],
+              "clusters": [
+                "Legal"
+              ]
+            },            {
               "wageTypeNumber": 101,
               "name": "MonthlyWage",
               "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"];",
