@@ -19,6 +19,7 @@
 | `Publish.PayrollConsole.cmd` | Publish payroll console to the bin folder |
 | `Publish.Tools.cmd` | Publish tools to the bin folder |
 | `Publish.WebApp.cmd` | Publish web application to the bin folder |
+| `Publish.AdminApp.cmd` | Publish admin application to the bin folder |
 | `Release.All.cmd` | Build complete release <sup>1)</sup> |
 | `Release.Binaries.cmd` | Build the release binaries |
 | `Release.Docs.cmd` | Build the release documents |
@@ -43,7 +44,8 @@ Steps to build the release:
     - confirm new version
 3. Execute the command `Release.All.cmd`
     - confirm the version release
-    -> creates the setup in the folder `Setup\Version`
+    -> creates the inary files in the folder `Bin`
+    -> creates the setup in the folder `Releases\Version`
 
 ### 2. GitHub Repositories and NuGet Packages
 1. Commit the `PayrollEngine.Core` repo to GitHub and build a new release
@@ -52,7 +54,6 @@ Steps to build the release:
     - `PayrollEngine.Client.Core`
     - `PayrollEngine.Serilog`
     - `PayrollEngine.Document`
-    - `PayrollEngine.Document.*`
 4. -> Wait until the package `PayrollEngine.Client.Core` is public available on nuget.org (a few minutes)
 5. Commit the following repos to GitHub and build new releases
     - `PayrollEngine.Client.Scripting`
@@ -71,7 +72,8 @@ Steps to build the release:
 
 ### 3. GitHub Release
 1. GitHub: create a new release with the same version name
-    - attach the binaries from the `Setup\Version` folder
+    - create a new tag with the release name
+    - attach the release files from the `Releases\Version` folder
 2. GitHub: publish the release
 
 ## Folders
@@ -82,7 +84,7 @@ Steps to build the release:
 - `images` - images
 - `Command` - command line tools
 - `Packages` - local NuGet packages
-- `Packages` - local NuGet packages
+- `Releases` - local release history
 - `Schemas` - JSON schemas
-- `Setup` - setup definition
+- `Setup` - setup files
 - `Tests` - payroll tests
