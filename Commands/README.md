@@ -75,6 +75,7 @@ Steps to build the release:
     - create a new tag with the release name
     - attach the release files from the `Releases\Version` folder
 2. GitHub: publish the release
+3. Add to the wiki releases page
 
 ## Folders
 - `Bin` - binaries (publish output)

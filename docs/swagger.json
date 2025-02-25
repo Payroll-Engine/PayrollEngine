@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.2",
+    "description": "Payroll Engine API v0.9.0-beta.3",
     "version": "1"
   },
   "paths": {
@@ -25634,7 +25634,15 @@
           "October",
           "November",
           "December",
-          "Year"
+          "Year",
+          "PeriodStart",
+          "PeriodStartDate",
+          "PeriodEnd",
+          "PeriodEndDate",
+          "CycleStart",
+          "CycleStartDate",
+          "CycleEnd",
+          "CycleEndDate"
         ],
         "type": "string",
         "description": "The case field date type"

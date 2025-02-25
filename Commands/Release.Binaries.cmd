@@ -39,6 +39,15 @@ call Publish.WebApp.cmd
 echo publishing admin application...
 call Publish.AdminApp.cmd
 
+rem --- action reference ---
+:actionReference
+echo.
+echo ------------------- Building action reference -------------------
+echo.
+pushd %~dp0..\docs\
+%~dp0..\Bin\Console\PayrollEngine.PayrollConsole.exe ActionReport %~dp0..\Bin\Backend\PayrollEngine.Client.Scripting.dll
+popd
+
 rem --- local setup ---
 :buildFullSetup
 echo.

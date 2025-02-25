@@ -1568,7 +1568,15 @@
         "October",
         "November",
         "December",
-        "Year"
+        "Year",
+        "PeriodStart",
+        "PeriodStartDate",
+        "PeriodEnd",
+        "PeriodEndDate",
+        "CycleStart",
+        "CycleStartDate",
+        "CycleEnd",
+        "CycleEndDate"
       ],
       "enum": [
         "Day",
@@ -1592,7 +1600,15 @@
         "October",
         "November",
         "December",
-        "Year"
+        "Year",
+        "PeriodStart",
+        "PeriodStartDate",
+        "PeriodEnd",
+        "PeriodEndDate",
+        "CycleStart",
+        "CycleStartDate",
+        "CycleEnd",
+        "CycleEndDate"
       ]
     },
     "LookupSettings": {

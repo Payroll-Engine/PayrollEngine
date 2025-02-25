@@ -1,10 +1,9 @@
 # Payroll Engine Documents
 
-| Document                                    | English | German |
-|:--|:--|:--|
-| Payroll Engine Whitepaper                   | [PDF](PayrolEngineWhitepaper.pdf) | [PDF](PayrolEngineWhitepaper_de.pdf)       |
-| Payroll Engine REST Service Endpoints       | [PDF](PayrollRestServicesEndpoints.pdf) |     |
-| Payroll Engine Repository-Map               | [PDF](PayrollEngineRepositoryMap.pdf) | |
-| Payroll Engine OData Query                  | [Markdown](ODataQuery.md) | |
-| Current Payroll OpenAPI Specification       | [swagger.json](swagger.json) | |
+| Document                                    | Link                                           |
+|:--|:--|
+| Payroll Engine Whitepaper                   | [PDF](PayrollEngineWhitepaper.pdf)             |
+| Payroll Engine Client Scripting Actions     | [Markdown](PayrollEngine.Client.Scripting.md)  |
+| Payroll Engine OData Query                  | [Markdown](ODataQuery.md)                      |
+| Current Payroll OpenAPI Specification       | [swagger.json](swagger.json)                   |
 <br />
