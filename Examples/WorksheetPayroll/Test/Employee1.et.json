@@ -1,0 +1,240 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "WorksheetTenant",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "WorksheetPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2024-12-28T18:00:00.0Z",
+              "case": {
+                "caseName": "CasualWorker",
+                "values": [
+                  {
+                    "caseFieldName": "CasualWorker",
+                    "value": "false",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2025-02-17T22:00:00.0Z",
+              "case": {
+                "caseName": "WorkdayHours",
+                "values": [
+                  {
+                    "caseFieldName": "WorkdayDate",
+                    "value": "2025-02-17T00:00:00.0Z",
+                    "start": "2025-02-17T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayStart",
+                    "value": "6",
+                    "start": "2025-02-17T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayEnd",
+                    "value": "16.5",
+                    "start": "2025-02-17T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayBreak",
+                    "value": "30",
+                    "start": "2025-02-17T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2025-02-18T22:00:00.0Z",
+              "case": {
+                "caseName": "WorkdayHours",
+                "values": [
+                  {
+                    "caseFieldName": "WorkdayDate",
+                    "value": "2025-02-18T00:00:00.0Z",
+                    "start": "2025-02-18T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayStart",
+                    "value": "6.25",
+                    "start": "2025-02-18T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayEnd",
+                    "value": "16.25",
+                    "start": "2025-02-18T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayBreak",
+                    "value": "30",
+                    "start": "2025-02-18T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2025-02-19T22:00:00.0Z",
+              "case": {
+                "caseName": "WorkdayHours",
+                "values": [
+                  {
+                    "caseFieldName": "WorkdayDate",
+                    "value": "2025-02-19T00:00:00.0Z",
+                    "start": "2025-02-19T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayStart",
+                    "value": "6",
+                    "start": "2025-02-19T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayEnd",
+                    "value": "17",
+                    "start": "2025-02-19T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayBreak",
+                    "value": "20",
+                    "start": "2025-02-19T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2025-02-20T22:00:00.0Z",
+              "case": {
+                "caseName": "WorkdayHours",
+                "values": [
+                  {
+                    "caseFieldName": "WorkdayDate",
+                    "value": "2025-02-20T00:00:00.0Z",
+                    "start": "2025-02-20T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayStart",
+                    "value": "8.5",
+                    "start": "2025-02-20T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayEnd",
+                    "value": "19",
+                    "start": "2025-02-20T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayBreak",
+                    "value": "25",
+                    "start": "2025-02-20T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2025-02-21T22:00:00.0Z",
+              "case": {
+                "caseName": "WorkdayHours",
+                "values": [
+                  {
+                    "caseFieldName": "WorkdayDate",
+                    "value": "2025-02-21T00:00:00.0Z",
+                    "start": "2025-02-21T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayStart",
+                    "value": "8.25",
+                    "start": "2025-02-21T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayEnd",
+                    "value": "19.75",
+                    "start": "2025-02-21T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkdayBreak",
+                    "value": "30",
+                    "start": "2025-02-21T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "WorksheetPayrunJob.Week8.2025",
+          "payrunName": "WorksheetPayrun",
+          "userIdentifier": "lucy.smith@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "reason": "Test Payrun Week 8 - 2025",
+          "jobStatus": "Complete",
+          "periodStart": "2025-02-17T00:00:00.0Z"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "WorksheetPayrunJob.Week8.2025",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 110,
+              "wageTypeName": "EarlyMorningWage",
+              "comment": "29.85 + 22.39 + 29.85",
+              "value": 82.09
+            },
+            {
+              "wageTypeNumber": 120,
+              "wageTypeName": "RegularWage",
+              "comment": "169.55 + 169.55 + 173.55 + 135.72 + 139.7",
+              "value": 788.04
+            },
+            {
+              "wageTypeNumber": 130,
+              "wageTypeName": "OvertimeLowWage",
+              "comment": "68.06 + 59.1 + 71.64 + 71.64 + 71.64",
+              "value": 342.08
+            },
+            {
+              "wageTypeNumber": 140,
+              "comment": "19.1 + 114.62 + 150.44",
+              "wageTypeName": "OvertimeHighWage",
+              "value": 284.17
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "Income",
+              "comment": "WT 110 + WT 120 + WT 130 + WT 140",
+              "value": 1496.38
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

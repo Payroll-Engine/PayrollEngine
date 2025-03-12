@@ -1,0 +1,97 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "WorksheetTenant",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "WorksheetPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "divisionName": "WorksheetDivision",
+              "created": "2024-12-28T18:00:00.0Z",
+              "case": {
+                "caseName": "Worksheet",
+                "values": [
+                  {
+                    "caseFieldName": "WorkTimeStep",
+                    "value": "5",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "RegularRate",
+                    "value": "23.88",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "CasualRateFactor",
+                    "value": "0.25",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "RegularWorkTime",
+                    "value": "7.6",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "RegularWorkTimeMin",
+                    "value": "2.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "RegularWorkTimeMax",
+                    "value": "16.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "BreakTimeMin",
+                    "value": "0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "BreakTimeMax",
+                    "value": "60",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "EarlyMorningDuration",
+                    "value": "7.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "EarlyMorningFactor",
+                    "value": "0.25",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "OvertimeLowDuration",
+                    "value": "2.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "OvertimeLowFactor",
+                    "value": "0.5",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "OvertimeHighDuration",
+                    "value": "7.4",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "OvertimeHighFactor",
+                    "value": "1.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

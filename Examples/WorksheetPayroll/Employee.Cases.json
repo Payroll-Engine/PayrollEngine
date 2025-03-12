@@ -1,0 +1,116 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "WorksheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "WorksheetRegulation",
+          "cases": [
+            {
+              "name": "CasualWorker",
+              "nameLocalizations": {
+                "en": "Casual worker"
+              },
+              "description": "Casual worker indicator",
+              "caseType": "Employee",
+              "availableExpression": "AdminUser",
+              "fields": [
+                {
+                  "name": "CasualWorker",
+                  "nameLocalizations": {
+                    "en": "Casual worker"
+                  },
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                }
+              ]
+            },
+            {
+              "name": "WorkdayHours",
+              "nameLocalizations": {
+                "en": "Working hours"
+              },
+              "description": "Working day hours",
+              "caseType": "Employee",
+              "buildExpression": "this.BuildWorkday()",
+              "validateExpression": "this.ValidateWorkday()",
+              "attributes": {
+                "input.fieldLayout": "ValueCompact",
+                "input.valuePickerStatic": true
+              },
+              "fields": [
+                {
+                  "name": "WorkdayDate",
+                  "nameLocalizations": {
+                    "en": "Working day"
+                  },
+                  "valueType": "Date",
+                  "defaultValue": "today",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Working day"
+                  }
+                },
+                {
+                  "name": "WorkdayStart",
+                  "nameLocalizations": {
+                    "en": "Start time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Start time",
+                    "input.valueTimePicker": "Day24"
+                  }
+                },
+                {
+                  "name": "WorkdayEnd",
+                  "nameLocalizations": {
+                    "en": "End time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "End time",
+                    "input.valueTimePicker": "Day24"
+                  }
+                },
+                {
+                  "name": "WorkdayBreak",
+                  "nameLocalizations": {
+                    "en": "Break"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "attributes": {
+                    "input.group": "Break",
+                    "input.valueTimePicker": "DayMinute"
+                  }
+                },
+                {
+                  "name": "WorkdayHours",
+                  "nameLocalizations": {
+                    "en": "Hours"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

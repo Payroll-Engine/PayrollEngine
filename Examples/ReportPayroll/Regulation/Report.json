@@ -58,7 +58,7 @@
                 },
                 {
                   "name": "Regulations.Filter",
-                  "value": "Id eq $RegulationId$",
+                  "value": "Id eq '$RegulationId$'",
                   "valueType": "String",
                   "hidden": true
                 }

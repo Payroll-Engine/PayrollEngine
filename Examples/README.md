@@ -63,3 +63,20 @@ Read [more details](ReportPayroll/) about the example reports.
 
 ### Week Simple Payroll
 - Payroll with weekly wage periods, calendar period `Week`
+
+### Worksheet Payroll
+- Features
+	- Supports different payroll calendars: weekly, bi-weekly, monthly etc.
+	- Customization of working days (calendar) and min/max working and break times.
+	- Different wage base rate for casual workers.
+	- Customized daily rates in four phases.
+	- Daily worksheet changes allow for different working hours and wages within a pay period.
+- Cases
+	- Worksheet (company case)
+	- Casual worker (employee case, administrator)
+	- Working hours (employee case, self-service)
+- Reports
+	- Working Time Report (employee)
+	- Wage Report (user)
+
+Read [more details](WorksheetPayroll/) about the worksheet payroll example.

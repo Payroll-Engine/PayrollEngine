@@ -1,0 +1,176 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "WorksheetTenant",
+      "culture": "de-CH",
+      "cultureOrig": "en-US",
+      "calendar": "WorksheetCalendar",
+      "calendars": [
+        {
+          "name": "WorksheetCalendar",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "Week",
+          "timeMap": "Cycle",
+          "weekMode": "WorkWeek"
+        }
+      ],
+      "users": [
+        {
+          "identifier": "lucy.smith@foo.com",
+          "firstName": "Lucy",
+          "lastName": "Smith",
+          "userType": "TenantAdministrator"
+        },
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "userType": "Employee",
+          "attributes": {
+            "Features": "EmployeeCases,Reports"
+          }
+        },
+        {
+          "identifier": "leon.stark@foo.com",
+          "firstName": "Leon",
+          "lastName": "Stark",
+          "userType": "Employee",
+          "attributes": {
+            "Features": "EmployeeCases,Reports"
+          }
+        }
+      ],
+      "divisions": [
+        {
+          "name": "WorksheetDivision",
+          "calendar": "WorksheetCalendar"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "WorksheetDivision"
+          ]
+        },
+        {
+          "identifier": "leon.stark@foo.com",
+          "firstName": "Leon",
+          "lastName": "Stark",
+          "divisions": [
+            "WorksheetDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "WorksheetRegulation",
+          "scripts": [
+            {
+              "name": "WorksheetBuild",
+              "functionTypes": [ "CaseChange" ],
+              "valueFile": "Script/WorksheetBuild.cs"
+            },
+            {
+              "name": "WorksheetValidate",
+              "functionTypes": [ "CaseChange" ],
+              "valueFile": "Script/WorksheetValidate.cs"
+            },
+            {
+              "name": "WorkdayBuild",
+              "functionTypes": [ "CaseChange" ],
+              "valueFile": "Script/WorkdayBuild.cs"
+            },
+            {
+              "name": "WorkdayValidate",
+              "functionTypes": [ "CaseChange" ],
+              "valueFile": "Script/WorkdayValidate.cs"
+            },
+            {
+              "name": "WorkdayWages",
+              "functionTypes": [ "WageTypeValue" ],
+              "valueFile": "Script/WorkdayWages.cs"
+            }
+          ],
+          "collectors": [
+            {
+              "name": "Income",
+              "nameLocalizations": {
+                "en": "Income"
+              }
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 110,
+              "name": "EarlyMorningWage",
+              "nameLocalizations": {
+                "en": "Early morning wage"
+              },
+              "valueExpression": "this.GetEarlyMorningWage()",
+              "collectors": [
+                "Income"
+              ]
+            },
+            {
+              "wageTypeNumber": 120,
+              "name": "RegularWage",
+              "nameLocalizations": {
+                "en": "Regular wage"
+              },
+              "valueExpression": "this.GetRegularWage()",
+              "collectors": [
+                "Income"
+              ]
+            },
+            {
+              "wageTypeNumber": 130,
+              "name": "OvertimeLowWage",
+              "nameLocalizations": {
+                "en": "Overtime low wage"
+              },
+              "valueExpression": "this.GetOvertimeLowWage()",
+              "collectors": [
+                "Income"
+              ]
+            },
+            {
+              "wageTypeNumber": 140,
+              "name": "OvertimeHighWage",
+              "nameLocalizations": {
+                "en": "Overtime high wage"
+              },
+              "valueExpression": "this.GetOvertimeHighWage()",
+              "collectors": [
+                "Income"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "WorksheetPayroll",
+          "divisionName": "WorksheetDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "WorksheetRegulation"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "WorksheetPayrun",
+          "payrollName": "WorksheetPayroll"
+        }
+      ]
+    }
+  ]
+}

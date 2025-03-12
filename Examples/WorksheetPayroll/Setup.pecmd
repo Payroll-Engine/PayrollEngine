@@ -1,0 +1,22 @@
+# Clean
+Delete.pecmd
+
+# Payroll
+PayrollImport Payroll.json
+PayrollImport Company.Cases.json
+PayrollImport Company.Values.json
+PayrollImport Employee.Cases.json
+PayrollImport Employee.Values.json
+
+# Reports
+Report/WorkTime/Import.pecmd
+Report/Wage/Import.pecmd
+
+# Logins
+ChangePassword WorksheetTenant lucy.smith@foo.com @ayroll3nginE
+ChangePassword WorksheetTenant višnja.müller@foo.com @ayroll3nginE
+ChangePassword WorksheetTenant leon.stark@foo.com @ayroll3nginE
+
+# Tests
+Test/Test.Employee1.pecmd
+Test/Test.Employee2.pecmd

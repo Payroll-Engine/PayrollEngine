@@ -301,16 +301,16 @@
       "type": "string",
       "description": "The type of the user",
       "x-enumNames": [
-        "User",
         "Employee",
-        "Administrator",
-        "Supervisor"
+        "User",
+        "TenantAdministrator",
+        "SystemAdministrator"
       ],
       "enum": [
-        "User",
         "Employee",
-        "Administrator",
-        "Supervisor"
+        "User",
+        "TenantAdministrator",
+        "SystemAdministrator"
       ]
     },
     "ModelBase": {
@@ -1085,6 +1085,20 @@
               ],
               "description": "The cancellation date",
               "format": "date-time"
+            },
+            "reason": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The change reason"
+            },
+            "forecast": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The change forecast"
             },
             "fields": {
               "type": [
@@ -3049,6 +3063,14 @@
               "oneOf": [
                 {
                   "$ref": "#/definitions/ReportAttributeMode"
+                }
+              ]
+            },
+            "userType": {
+              "description": "The user type (default: employee)",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/UserType"
                 }
               ]
             },

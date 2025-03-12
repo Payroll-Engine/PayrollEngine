@@ -56,6 +56,10 @@ pushd %~dp0..\..\PayrollEngine.WebApp
 call VSBackup %START_DIR%
 popd
 
+pushd %~dp0..\..\PayrollEngine.AdminApp
+call VSBackup %START_DIR%
+popd
+
 rem root repo
 pushd %~dp0..\..\PayrollEngine
 call VSBackup %START_DIR%

@@ -22,7 +22,7 @@
           "firstName": "Lucy",
           "lastName": "Smith",
           "culture": "en-US",
-          "userType": "Supervisor",
+          "userType": "TenantAdministrator",
           "attributes": {
             "ErpId": "C52F4DB2-A677-4BFC-9E5C-A4713A2532F5",
             "StartupPayroll": "SimplePayroll.Derived1",

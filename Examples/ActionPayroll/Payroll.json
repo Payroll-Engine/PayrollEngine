@@ -10,7 +10,7 @@
           "firstName": "Lucy",
           "lastName": "Smith",
           "culture": "en-US",
-          "userType": "Supervisor"
+          "userType": "TenantAdministrator"
         }
       ],
       "divisions": [

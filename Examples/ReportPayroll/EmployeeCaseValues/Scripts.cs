@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using PayrollEngine.Client.Scripting.Runtime;
-using System.Data;
-using System.Linq;
-using System.Text.Json;
+﻿using System.Linq;
 using PayrollEngine.Client.Scripting;
-using PayrollEngine.Client.Scripting.Function;
 using PayrollEngine.Client.Scripting.Report;
-// ReSharper disable StringLiteralTypo
+using PayrollEngine.Client.Scripting.Runtime;
 
+// ReSharper disable StringLiteralTypo
 // ReSharper disable once CheckNamespace
+
 namespace ReportPayroll.EmployeeCaseValues;
 
 [ReportBuildFunction(
@@ -29,45 +26,42 @@ public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.Repor
 
     [ReportBuildScript(
         reportName: "EmployeeCaseValues",
-        culture: "de-CH")]
+        culture: "de-CH",
+        parameters: "{ \"AllEmployees\": \"true\" }")]
     public object ReportBuildScript()
     {
-        var allParameter = "AllEmployees";
-        var employeeParameter = "EmployeeIdentifier";
+        // payroll selection
+        if (!ExecuteInputListQuery(
+                queryMethod: "QueryPayrolls",
+                queryParameters: new QueryParameters()
+                    .Parameter(nameof(TenantId), TenantId),
+                reportParameter: "PayrollId",
+                identifierFunc: row => row["Id"],
+                displayFunc: row => $"{row["Name"]}").Any())
+        {
+            return null;
+        }
 
-        // all employees
-        var allEmployees = GetParameter(allParameter, true);
+        // employee(s) selection
+        var allEmployees = GetParameter("AllEmployees", defaultValue: true);
         if (!allEmployees)
         {
-            var employees = ExecuteQuery("QueryEmployees",
-                new QueryParameters()
-                    .Parameter(nameof(TenantId), TenantId));
-            if (employees.Rows.Count == 0)
+            // employee list
+            var employees = ExecuteInputListQuery(
+                queryMethod: "QueryEmployees",
+                queryParameters: new QueryParameters()
+                    .Parameter(nameof(TenantId), TenantId),
+                reportParameter: "EmployeeIdentifier",
+                identifierFunc: row => row["Identifier"],
+                displayFunc: row => $"{row["FirstName"]} {row["LastName"]}",
+                selectFunc: identifiers => identifiers.First());
+            if (employees.Count == 0)
             {
                 return null;
             }
-
-            // setup list
-            var list = new List<string>();
-            var listValues = new List<string>();
-            foreach (var employee in employees.AsEnumerable())
-            {
-                list.Add($"{employee["FirstName"]} {employee["LastName"]}");
-                listValues.Add(employee["Identifier"].ToString());
-            }
-            SetParameterAttribute(employeeParameter, "input.list",
-                JsonSerializer.Serialize(list));
-            SetParameterAttribute(employeeParameter, "input.listValues",
-                JsonSerializer.Serialize(listValues));
-
-            // preselect the first employee
-            if (listValues.Count > 0)
-            {
-                SetParameterAttribute(employeeParameter, "input.listSelection", listValues.First());
-            }
         }
         // parameter visibility
-        SetParameterHidden(employeeParameter, allEmployees);
+        SetParameterHidden("EmployeeIdentifier", allEmployees);
 
         return null;
     }
@@ -77,6 +71,7 @@ public class ReportBuildFunction : PayrollEngine.Client.Scripting.Function.Repor
     tenantIdentifier: "Report.Tenant",
     userIdentifier: "lucy.smith@foo.com",
     regulationName: "Report.Regulation")]
+// ReSharper disable once UnusedType.Global
 public class ReportStartFunction : PayrollEngine.Client.Scripting.Function.ReportStartFunction
 {
     public ReportStartFunction(IReportStartRuntime runtime) :
@@ -149,28 +144,21 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
         }
         var employeeIds = employees.GetValues<int>("Id");
 
-        // query parameters
-        var parameters = new Dictionary<string, string>
-        {
-            {"TenantId", TenantId.ToString()},
-            {"PayrollId", payrollId.ToString()},
-            // fallback culture
-            {"Culture", UserCulture},
-            {"LookupNames", JsonSerializer.Serialize(new[] { "Location" })}
-        };
-
         // employee case values
-        var caseValuesTable = ExecuteEmployeeTimeCaseValueQuery("CaseValues", payrollId.Value, employeeIds,
-            new CaseValueColumn[]
-            {
+        var caseValuesTable = ExecuteEmployeeTimeCaseValueQuery(
+            tableName: "CaseValues",
+            payrollId: payrollId.Value,
+            employeeIds: employeeIds,
+            columns:
+            [
                 // simple columns
                 new("MonthlyWage"),
                 new("EmploymentLevel"),
                 new("BirthDate"),
                 // lookup column
                 new("Location", "Location")
-            },
-            UserCulture);
+            ],
+            culture: UserCulture);
         AddTable(caseValuesTable);
 
         // employee to case value relation

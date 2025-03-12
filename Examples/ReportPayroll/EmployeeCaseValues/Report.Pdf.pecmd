@@ -1,1 +1,1 @@
-Report tenant:Report.Tenant user:lucy.smith@foo.com regulation:Report.Regulation report:EmployeeCaseValues culture:de-CH /pdf /shellopen
+Report tenant:Report.Tenant user:lucy.smith@foo.com regulation:Report.Regulation report:EmployeeCaseValues parameterFile:parameters.json culture:de-CH /pdf /shellopen

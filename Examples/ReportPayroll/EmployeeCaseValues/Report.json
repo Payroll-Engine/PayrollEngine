@@ -35,6 +35,9 @@
                 {
                   "name": "PayrollId",
                   "valueType": "String",
+                  "nameLocalizations": {
+                    "en": "Payroll"
+                  },
                   "parameterType": "PayrollId"
                 },
                 {
@@ -50,7 +53,8 @@
                   "valueType": "String",
                   "nameLocalizations": {
                     "en": "Employee"
-                  }
+                  },
+                  "hidden": true
                 }
               ],
               "templates": [

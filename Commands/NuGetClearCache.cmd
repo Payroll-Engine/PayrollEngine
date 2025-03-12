@@ -8,7 +8,7 @@ if %ERRORLEVEL% neq 0 goto error
 rem --- clear build cache
 echo.
 echo Clearing local NuGet build cache...
-del ..\Packages\*.* /Q
+if exist ..\Packages\*.* del ..\Packages\*.* /Q
 if %ERRORLEVEL% neq 0 goto error
 goto exit
 

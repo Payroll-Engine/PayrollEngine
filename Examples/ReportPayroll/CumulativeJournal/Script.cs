@@ -65,8 +65,10 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
 
             // temporary tables for employee
             DataTable employeeWageTypeResults = AddTable("EmployeeWageTypeResults");
+            // ReSharper disable once RedundantAssignment
             DataTable employeeWageTypes = AddTable("EmployeeWageTypes");
             DataTable employeeCollectorResults = AddTable("EmployeeCollectorResults");
+            // ReSharper disable once RedundantAssignment
             DataTable employeeCollectors = AddTable("EmployeeCollectors");
 
             // results for each month in year

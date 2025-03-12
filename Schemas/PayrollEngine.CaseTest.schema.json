@@ -1107,6 +1107,20 @@
               "description": "The cancellation date",
               "format": "date-time"
             },
+            "reason": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The change reason"
+            },
+            "forecast": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The change forecast"
+            },
             "fields": {
               "type": [
                 "array",

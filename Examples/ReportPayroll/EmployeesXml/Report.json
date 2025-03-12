@@ -35,12 +35,14 @@
                 {
                   "name": "DefaultGerman",
                   "culture": "de",
+                  "contentType": "application/xsl",
                   "contentFile": "Employees.xsl",
                   "schemaFile": "Employees.xsd"
                 },
                 {
                   "name": "DefaultEnglish",
                   "culture": "en",
+                  "contentType": "application/xsl",
                   "contentFile": "Employees.xsl",
                   "schemaFile": "Employees.xsd"
                 }

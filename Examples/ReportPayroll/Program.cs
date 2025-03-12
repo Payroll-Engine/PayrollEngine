@@ -56,9 +56,9 @@ internal class Program : ConsoleProgram<Program>
     static async Tasks.Task Main()
     {
         // change the working report
-        //currentReport = ReportType.EmployeeCaseValueBuild;
+        currentReport = ReportType.EmployeeCaseValueBuild;
         //currentReport = ReportType.EmployeeCaseValueEnd;
-        currentReport = ReportType.CumulativeJournalEnd;
+        //currentReport = ReportType.CumulativeJournalEnd;
         
         Log.SetLogger(new PayrollLog());
         using var program = new Program();

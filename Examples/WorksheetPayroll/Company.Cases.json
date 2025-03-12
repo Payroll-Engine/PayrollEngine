@@ -1,0 +1,224 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "WorksheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "WorksheetRegulation",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "name": "Worksheet",
+              "description": "Worksheet settings",
+              "defaultReason": "Worksheet test.",
+              "caseType": "Company",
+              "buildExpression": "this.BuildWorksheet()",
+              "validateExpression": "this.ValidateWorksheet()",
+              "attributes": {
+                "input.variant": "Filled",
+                "input.fieldLayout": "Value",
+                "input.format": "0.#"
+              },
+              "fields": [
+                {
+                  "comment": " ======================== Rates ========================",
+                  "name": "RegularRate",
+                  "nameLocalizations": {
+                    "en": "Regular rate"
+                  },
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Rates",
+                    "input.hiddenName": true,
+                    "input.fieldLayout": "StartendValue",
+                    "input.format": "0.##"
+                  }
+                },
+                {
+                  "name": "CasualRateFactor",
+                  "nameLocalizations": {
+                    "en": "Casual rate factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Regular ========================",
+                  "name": "RegularWorkTime",
+                  "nameLocalizations": {
+                    "en": "Working time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Regular",
+                    "input.valueAdornment": "hours",
+                    "input.minValue": 1,
+                    "input.maxValue": 24
+                  }
+                },
+                {
+                  "name": "RegularWorkTimeMin",
+                  "nameLocalizations": {
+                    "en": "Minimum working time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.valueAdornment": "hours",
+                    "input.minValue": 1,
+                    "input.maxValue": 24
+                  }
+                },
+                {
+                  "name": "RegularWorkTimeMax",
+                  "nameLocalizations": {
+                    "en": "Maximum working time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.minValue": 1,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "comment": " ======================== Break ========================",
+                  "name": "BreakTimeMin",
+                  "nameLocalizations": {
+                    "en": "Minimum break"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Break",
+                    "input.minValue": 0,
+                    "input.maxValue": 1440,
+                    "input.valueAdornment": "minutes"
+                  }
+                },
+                {
+                  "name": "BreakTimeMax",
+                  "nameLocalizations": {
+                    "en": "Maximum break"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.minValue": 0,
+                    "input.maxValue": 1440,
+                    "input.valueAdornment": "minutes"
+                  }
+                },
+                {
+                  "comment": " ======================== Early morning ========================",
+                  "name": "EarlyMorningDuration",
+                  "nameLocalizations": {
+                    "en": "Early morning duration"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Earling morning",
+                    "input.minValue": 0,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "name": "EarlyMorningFactor",
+                  "nameLocalizations": {
+                    "en": "Early morning factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Overtime low ========================",
+                  "name": "OvertimeLowDuration",
+                  "nameLocalizations": {
+                    "en": "Overtime low duration"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Overtime low",
+                    "input.minValue": 0,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "name": "OvertimeLowFactor",
+                  "nameLocalizations": {
+                    "en": "Overtime low factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Overtime high ========================",
+                  "name": "OvertimeHighDuration",
+                  "nameLocalizations": {
+                    "en": "Overtime high duration"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Overtime high",
+                    "input.minValue": 0,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "name": "OvertimeHighFactor",
+                  "nameLocalizations": {
+                    "en": "Overtime high factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Timesheet ========================",
+                  "name": "WorkTimeStep",
+                  "nameLocalizations": {
+                    "en": "Work time step"
+                  },
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Timesheet",
+                    "input.minValue": 1,
+                    "input.maxValue": 30,
+                    "input.valueAdornment": "minutes"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

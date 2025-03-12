@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.3",
+    "description": "Payroll Engine API v0.9.0-beta.4",
     "version": "1"
   },
   "paths": {
@@ -12916,6 +12916,22 @@
             }
           },
           {
+            "name": "evaluationDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "regulationDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
             "name": "startDate",
             "in": "query",
             "schema": {
@@ -14163,6 +14179,14 @@
               "items": {
                 "type": "string"
               }
+            }
+          },
+          {
+            "name": "userType",
+            "in": "query",
+            "description": "The type of the user",
+            "schema": {
+              "$ref": "#/components/schemas/UserType"
             }
           }
         ],
@@ -26398,6 +26422,14 @@
             "format": "date-time",
             "nullable": true
           },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "forecast": {
+            "type": "string",
+            "nullable": true
+          },
           "fields": {
             "type": "array",
             "items": {
@@ -30487,6 +30519,9 @@
           "attributeMode": {
             "$ref": "#/components/schemas/ReportAttributeMode"
           },
+          "userType": {
+            "$ref": "#/components/schemas/UserType"
+          },
           "queries": {
             "type": "object",
             "additionalProperties": {
@@ -30978,6 +31013,9 @@
           },
           "attributeMode": {
             "$ref": "#/components/schemas/ReportAttributeMode"
+          },
+          "userType": {
+            "$ref": "#/components/schemas/UserType"
           },
           "queries": {
             "type": "object",
@@ -32258,10 +32296,10 @@
       },
       "UserType": {
         "enum": [
-          "User",
           "Employee",
-          "Administrator",
-          "Supervisor"
+          "User",
+          "TenantAdministrator",
+          "SystemAdministrator"
         ],
         "type": "string",
         "description": "The type of the user"

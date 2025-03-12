@@ -10,6 +10,7 @@ namespace ReportPayroll.WageTypes;
     employeeIdentifier: "višnja.müller@foo.com",
     payrollName: "Report.Payroll",
     regulationName: "Report.Regulation")]
+// ReSharper disable once UnusedType.Global
 public class WageTypeValueFunction : PayrollEngine.Client.Scripting.Function.WageTypeValueFunction
 {
     public WageTypeValueFunction(IWageTypeValueRuntime runtime) :
