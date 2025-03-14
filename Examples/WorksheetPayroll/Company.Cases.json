@@ -18,7 +18,6 @@
               "buildExpression": "this.BuildWorksheet()",
               "validateExpression": "this.ValidateWorksheet()",
               "attributes": {
-                "input.variant": "Filled",
                 "input.fieldLayout": "Value",
                 "input.format": "0.#"
               },

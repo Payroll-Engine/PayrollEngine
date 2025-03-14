@@ -26,7 +26,7 @@ public static class WorkdayBuild
         if (!function.IsWorkDay(function.GetDerivedCalendar(), workday))
         {
             valid = false;
-            function.AddInfo("Day off", $"{workday:d}");
+            function.AddInfo("Day off", $"{workday:dddd}");
         }
 
         // work period

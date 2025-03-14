@@ -2,6 +2,7 @@
 This example shows how to create a payroll solution to record daily working hours.
 
 There are different daily phases with their own wage factors:
+
 | Phase                  | Description                              | Rate                           |
 |:--|:--|:--|
 | Early Morning          | Time from midnight to regular start      | Factor of regular/casual rate  |

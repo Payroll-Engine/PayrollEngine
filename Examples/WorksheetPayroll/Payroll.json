@@ -4,8 +4,7 @@
   "tenants": [
     {
       "identifier": "WorksheetTenant",
-      "culture": "de-CH",
-      "cultureOrig": "en-US",
+      "culture": "en-US",
       "calendar": "WorksheetCalendar",
       "calendars": [
         {

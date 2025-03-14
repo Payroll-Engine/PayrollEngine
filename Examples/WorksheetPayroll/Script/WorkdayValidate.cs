@@ -19,7 +19,7 @@ public static class WorkdayValidate
         // calendar work day
         if (!function.IsWorkDay(function.GetDerivedCalendar(), workday))
         {
-            return function.AddIssue($"{workday:d} is not a working day.");
+            return function.AddIssue($"{workday:dddd} is not a working day.");
         }
 
         // working hours

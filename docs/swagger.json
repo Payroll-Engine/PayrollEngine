@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.4",
+    "description": "Payroll Engine API v0.9.0-beta.5",
     "version": "1"
   },
   "paths": {
@@ -425,7 +425,7 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/calendars/periods": {
+    "/api/tenants/{tenantId}/calendars/period": {
       "get": {
         "tags": [
           "Calendars"
@@ -509,7 +509,7 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/calendars/cycles": {
+    "/api/tenants/{tenantId}/calendars/cycle": {
       "get": {
         "tags": [
           "Calendars"
@@ -593,7 +593,7 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/calendars/values": {
+    "/api/tenants/{tenantId}/calendars/value": {
       "get": {
         "tags": [
           "Calendars"
