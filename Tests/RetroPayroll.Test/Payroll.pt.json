@@ -386,7 +386,8 @@
           "jobStatus": "Complete",
           "periodStart": "2018-10-01T00:00:00.0Z",
           "evaluationDate": "2018-10-28T00:00:00.0Z",
-          "reason": "Retro Payrun Oct 18"
+          "reason": "Retro Payrun Oct 18",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Nov18",
@@ -397,7 +398,8 @@
           "jobStatus": "Complete",
           "periodStart": "2018-11-01T00:00:00.0Z",
           "evaluationDate": "2018-11-28T00:00:00.0Z",
-          "reason": "Retro Payrun Nov 18"
+          "reason": "Retro Payrun Nov 18",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Dec18",
@@ -408,7 +410,8 @@
           "jobStatus": "Complete",
           "periodStart": "2018-12-01T00:00:00.0Z",
           "evaluationDate": "2018-12-28T00:00:00.0Z",
-          "reason": "Retro Payrun Dec 18"
+          "reason": "Retro Payrun Dec 18",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Jan19",
@@ -419,7 +422,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-01-28T00:00:00.0Z",
-          "reason": "Retro Payrun Jan 19"
+          "reason": "Retro Payrun Jan 19",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Feb19",
@@ -430,7 +434,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-02-01T00:00:00.0Z",
           "evaluationDate": "2019-02-28T00:00:00.0Z",
-          "reason": "Retro Payrun Feb 19"
+          "reason": "Retro Payrun Feb 19",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Mar19",
@@ -441,7 +446,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-03-01T00:00:00.0Z",
           "evaluationDate": "2019-03-28T00:00:00.0Z",
-          "reason": "Retro Payrun Mar 19"
+          "reason": "Retro Payrun Mar 19",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Apr19",
@@ -452,7 +458,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-04-01T00:00:00.0Z",
           "evaluationDate": "2019-04-28T00:00:00.0Z",
-          "reason": "Retro Payrun Apr 19"
+          "reason": "Retro Payrun Apr 19",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.May19",
@@ -463,7 +470,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-05-01T00:00:00.0Z",
           "evaluationDate": "2019-05-28T00:00:00.0Z",
-          "reason": "Retro Payrun May 19"
+          "reason": "Retro Payrun May 19",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Jun19",
@@ -474,7 +482,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-06-01T00:00:00.0Z",
           "evaluationDate": "2019-06-28T00:00:00.0Z",
-          "reason": "Retro Payrun Jun 19"
+          "reason": "Retro Payrun Jun 19",
+          "storeEmptyResults": true
         },
         {
           "name": "RetroPayrollPayrun.Jul19",
@@ -485,7 +494,8 @@
           "jobStatus": "Complete",
           "periodStart": "2019-07-01T00:00:00.0Z",
           "evaluationDate": "2019-07-28T00:00:00.0Z",
-          "reason": "Retro Payrun Jul 19"
+          "reason": "Retro Payrun Jul 19",
+          "storeEmptyResults": true
         }
       ],
       "payrollResults": [

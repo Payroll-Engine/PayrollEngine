@@ -1,8 +1,8 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.5",
+    "description": "Payroll Engine API v0.9.0-beta.6",
     "version": "1"
   },
   "paths": {
@@ -30026,6 +30026,9 @@
           "reason": {
             "minLength": 1,
             "type": "string"
+          },
+          "storeEmptyResults": {
+            "type": "boolean"
           },
           "logLevel": {
             "$ref": "#/components/schemas/LogLevel"

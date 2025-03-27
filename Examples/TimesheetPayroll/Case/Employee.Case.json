@@ -1,0 +1,117 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "TimesheetRegulation",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "name": "Employment",
+              "nameLocalizations": {
+                "en": "Employment"
+              },
+              "description": "Employment settings",
+              "caseType": "Employee",
+              "availableExpression": "AdminUser",
+              "fields": [
+                {
+                  "name": "CasualWorker",
+                  "nameLocalizations": {
+                    "en": "Casual worker"
+                  },
+                  "valueType": "Boolean",
+                  "timeType": "Period",
+                  "valueMandatory": true
+                }
+              ]
+            },
+            {
+              "name": "WorkTime",
+              "nameLocalizations": {
+                "en": "Work time"
+              },
+              "description": "Working time hours",
+              "caseType": "Employee",
+              "buildExpression": "TimesheetWorkTimeCase.Build<MyTimesheet>(this)",
+              "validateExpression": "TimesheetWorkTimeCase.Validate<MyTimesheet>(this)",
+              "attributes": {
+                "input.fieldLayout": "ValueCompact",
+                "input.valuePickerStatic": true
+              },
+              "fields": [
+                {
+                  "name": "WorkTimeDate",
+                  "nameLocalizations": {
+                    "en": "Working day"
+                  },
+                  "valueType": "Date",
+                  "defaultValue": "today",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Working day"
+                  }
+                },
+                {
+                  "name": "WorkTimeStart",
+                  "nameLocalizations": {
+                    "en": "Start time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Start time",
+                    "input.valueTimePicker": "Day24"
+                  }
+                },
+                {
+                  "name": "WorkTimeEnd",
+                  "nameLocalizations": {
+                    "en": "End time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "End time",
+                    "input.valueTimePicker": "Day24"
+                  }
+                },
+                {
+                  "name": "WorkTimeBreak",
+                  "nameLocalizations": {
+                    "en": "Break"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "attributes": {
+                    "input.group": "Break",
+                    "input.valueTimePicker": "DayMinute"
+                  }
+                },
+                {
+                  "name": "WorkTimeHours",
+                  "nameLocalizations": {
+                    "en": "Hours"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Moment",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.hidden": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "TimesheetPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "TimesheetDivision",
+              "created": "2024-12-28T18:00:00.0Z",
+              "case": {
+                "caseName": "Employment",
+                "values": [
+                  {
+                    "caseFieldName": "CasualWorker",
+                    "value": "false",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "employeeIdentifier": "leon.stark@foo.com",
+              "divisionName": "TimesheetDivision",
+              "created": "2024-12-28T18:00:00.0Z",
+              "case": {
+                "caseName": "Employment",
+                "values": [
+                  {
+                    "caseFieldName": "CasualWorker",
+                    "value": "true",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

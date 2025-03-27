@@ -5181,6 +5181,10 @@
           "description": "The execution reason (immutable)",
           "minLength": 1
         },
+        "storeEmptyResults": {
+          "type": "boolean",
+          "description": "Store empty employee results (default: false)"
+        },
         "logLevel": {
           "description": "The function log level, default is information",
           "oneOf": [

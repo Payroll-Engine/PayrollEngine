@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "TimesheetRegulation",
+          "updateMode": "NoUpdate",
+          "lookups": [
+            {
+              "name": "Workdays",
+              "values": [
+                {
+                  "key": "2025-07-04",
+                  "value": "false"
+                },
+                {
+                  "key": "2025-11-27",
+                  "value": "false"
+                },
+                {
+                  "key": "2025-12-25",
+                  "value": "false"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

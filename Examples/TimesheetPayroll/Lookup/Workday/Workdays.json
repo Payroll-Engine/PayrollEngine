@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "TimesheetRegulation",
+          "updateMode": "NoUpdate",
+          "scripts": [
+            {
+              "name": "Workday.Lookup",
+              "functionTypes": [ "Payroll" ],
+              "valueFile": "Workday.Lookup.cs"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

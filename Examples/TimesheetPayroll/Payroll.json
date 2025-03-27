@@ -1,0 +1,189 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "culture": "en-US",
+      "calendar": "TimesheetCalendar",
+      "calendars": [
+        {
+          "name": "TimesheetCalendar",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "Week",
+          "weekMode": "WorkWeek",
+          "workSaturday": true
+        }
+      ],
+      "users": [
+        {
+          "identifier": "lucy.smith@foo.com",
+          "firstName": "Lucy",
+          "lastName": "Smith",
+          "userType": "TenantAdministrator"
+        },
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "userType": "Employee",
+          "attributes": {
+            "Features": "EmployeeCases,Reports"
+          }
+        },
+        {
+          "identifier": "leon.stark@foo.com",
+          "firstName": "Leon",
+          "lastName": "Stark",
+          "userType": "Employee",
+          "attributes": {
+            "Features": "EmployeeCases,Reports"
+          }
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TimesheetDivision"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TimesheetDivision"
+          ]
+        },
+        {
+          "identifier": "leon.stark@foo.com",
+          "firstName": "Leon",
+          "lastName": "Stark",
+          "divisions": [
+            "TimesheetDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "TimesheetRegulation",
+          "scripts": [
+            {
+              "name": "Timesheet.Model",
+              "functionTypes": [ "All" ],
+              "valueFile": "Timesheet/Model.cs"
+            },
+            {
+              "name": "Timesheet.CaseBuild",
+              "functionTypes": [ "CaseBuild" ],
+              "valueFile": "Timesheet/CaseBuild.cs"
+            },
+            {
+              "name": "Timesheet.CaseValidate",
+              "functionTypes": [ "CaseValidate" ],
+              "valueFile": "Timesheet/CaseValidate.cs"
+            },
+            {
+              "name": "Timesheet.WageTypeValue",
+              "functionTypes": [ "WageTypeValue" ],
+              "valueFile": "Timesheet/WageTypeValue.cs"
+            },
+            {
+              "name": "Timesheet.ReportBuild",
+              "functionTypes": [ "ReportBuild" ],
+              "valueFile": "Timesheet/ReportBuild.cs"
+            },
+            {
+              "name": "Timesheet.ReportEnd",
+              "functionTypes": [ "ReportEnd" ],
+              "valueFile": "Timesheet/ReportEnd.cs"
+            },
+            {
+              "name": "MyTimesheet",
+              "functionTypes": [ "All" ],
+              "valueFile": "Script/MyTimesheet.cs"
+            },
+            {
+              "name": "MyTimesheet.WageTypeValue",
+              "functionTypes": [ "WageTypeValue" ],
+              "valueFile": "Script/MyTimesheet.WageTypeValue.cs"
+            }
+          ],
+          "collectors": [
+            {
+              "name": "Income",
+              "nameLocalizations": {
+                "en": "Income"
+              }
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 110,
+              "name": "EarlyPeriodWage",
+              "nameLocalizations": {
+                "en": "Early period wage"
+              },
+              "valueExpression": "this.TimesheetPeriodWage(\"EarlyPeriod\")",
+              "collectors": [
+                "Income"
+              ]
+            },
+            {
+              "wageTypeNumber": 120,
+              "name": "RegularWage",
+              "nameLocalizations": {
+                "en": "Regular wage"
+              },
+              "valueExpression": "this.TimesheetRegularWage()",
+              "collectors": [
+                "Income"
+              ]
+            },
+            {
+              "wageTypeNumber": 130,
+              "name": "LatePeriodLowWage",
+              "nameLocalizations": {
+                "en": "Late period low wage"
+              },
+              "valueExpression": "this.TimesheetPeriodWage(\"LatePeriodLow\")",
+              "collectors": [
+                "Income"
+              ]
+            },
+            {
+              "wageTypeNumber": 140,
+              "name": "LatePeriodHighWage",
+              "nameLocalizations": {
+                "en": "Late period high wage"
+              },
+              "valueExpression": "this.TimesheetPeriodWage(\"LatePeriodHigh\")",
+              "collectors": [
+                "Income"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "TimesheetPayroll",
+          "divisionName": "TimesheetDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "TimesheetRegulation"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "TimesheetPayrun",
+          "payrollName": "TimesheetPayroll"
+        }
+      ]
+    }
+  ]
+}

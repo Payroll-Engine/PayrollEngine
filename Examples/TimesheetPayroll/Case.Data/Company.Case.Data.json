@@ -1,0 +1,107 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "TimesheetPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "lucy.smith@foo.com",
+              "divisionName": "TimesheetDivision",
+              "created": "2024-12-28T18:00:00.0Z",
+              "case": {
+                "caseName": "Timesheet",
+                "values": [
+                  {
+                    "caseFieldName": "RegularRate",
+                    "value": "23.88",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "CasualRateFactor",
+                    "value": "0.25",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WeekendRateFactor",
+                    "value": "0.15",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "StartTime",
+                    "value": "7.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "EndTime",
+                    "value": "14.6",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "MinWorkTime",
+                    "value": "2.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "MaxWorkTime",
+                    "value": "16.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "BreakMin",
+                    "value": "0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "BreakMax",
+                    "value": "60",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "EarlyPeriodDuration",
+                    "value": "7.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "EarlyPeriodFactor",
+                    "value": "0.25",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "LatePeriodLowDuration",
+                    "value": "2.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "LatePeriodLowFactor",
+                    "value": "0.5",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "LatePeriodHighDuration",
+                    "value": "7.4",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "LatePeriodHighFactor",
+                    "value": "1.0",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "WorkTimeStep",
+                    "value": "5",
+                    "start": "2024-12-29T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

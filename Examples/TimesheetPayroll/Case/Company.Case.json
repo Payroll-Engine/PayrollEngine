@@ -1,0 +1,244 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "TimesheetRegulation",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "name": "Timesheet",
+              "description": "Timesheet settings",
+              "defaultReason": "Timesheet test.",
+              "caseType": "Company",
+              "validateExpression": "TimesheetCase.Validate<MyTimesheet>(this)",
+              "attributes": {
+                "input.fieldLayout": "Value",
+                "input.format": "0.#"
+              },
+              "fields": [
+                {
+                  "comment": " ======================== Rates ========================",
+                  "name": "RegularRate",
+                  "nameLocalizations": {
+                    "en": "Regular rate"
+                  },
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Rates",
+                    "input.hiddenName": true,
+                    "input.fieldLayout": "StartendValue",
+                    "input.format": "0.##"
+                  }
+                },
+                {
+                  "name": "CasualRateFactor",
+                  "nameLocalizations": {
+                    "en": "Casual rate factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "name": "WeekendRateFactor",
+                  "nameLocalizations": {
+                    "en": "Weekend rate factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Regular ========================",
+                  "name": "StartTime",
+                  "nameLocalizations": {
+                    "en": "Start time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Regular",
+                    "input.valueTimePicker": "Day24"
+                  }
+                },
+                {
+                  "name": "EndTime",
+                  "nameLocalizations": {
+                    "en": "End time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Regular",
+                    "input.valueTimePicker": "Day24"
+                  }
+                },
+                {
+                  "name": "MinWorkTime",
+                  "nameLocalizations": {
+                    "en": "Minimum working time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.valueAdornment": "hours",
+                    "input.minValue": 1,
+                    "input.maxValue": 24
+                  }
+                },
+                {
+                  "name": "MaxWorkTime",
+                  "nameLocalizations": {
+                    "en": "Maximum working time"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.minValue": 1,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "comment": " ======================== Break ========================",
+                  "name": "BreakMin",
+                  "nameLocalizations": {
+                    "en": "Minimum break"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Break",
+                    "input.minValue": 0,
+                    "input.maxValue": 1440,
+                    "input.valueAdornment": "minutes"
+                  }
+                },
+                {
+                  "name": "BreakMax",
+                  "nameLocalizations": {
+                    "en": "Maximum break"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.minValue": 0,
+                    "input.maxValue": 1440,
+                    "input.valueAdornment": "minutes"
+                  }
+                },
+                {
+                  "comment": " ======================== Early period ========================",
+                  "name": "EarlyPeriodDuration",
+                  "nameLocalizations": {
+                    "en": "Early period duration"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Early period",
+                    "input.minValue": 0,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "name": "EarlyPeriodFactor",
+                  "nameLocalizations": {
+                    "en": "Early morning factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Late period low ========================",
+                  "name": "LatePeriodLowDuration",
+                  "nameLocalizations": {
+                    "en": "Late period low duration"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Late period low",
+                    "input.minValue": 0,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "name": "LatePeriodLowFactor",
+                  "nameLocalizations": {
+                    "en": "Late period low factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Late period high ========================",
+                  "name": "LatePeriodHighDuration",
+                  "nameLocalizations": {
+                    "en": "Late period high duration"
+                  },
+                  "valueType": "Decimal",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.group": "Late period high",
+                    "input.minValue": 0,
+                    "input.maxValue": 24,
+                    "input.valueAdornment": "hours"
+                  }
+                },
+                {
+                  "name": "LatePeriodHighFactor",
+                  "nameLocalizations": {
+                    "en": "Late period high factor"
+                  },
+                  "valueType": "Percent",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.format": "N0"
+                  }
+                },
+                {
+                  "comment": " ======================== Timesheet ========================",
+                  "name": "WorkTimeStep",
+                  "nameLocalizations": {
+                    "en": "Work time step"
+                  },
+                  "valueType": "Integer",
+                  "timeType": "Period",
+                  "valueMandatory": true,
+                  "attributes": {
+                    "input.group": "Timesheet",
+                    "input.minValue": 1,
+                    "input.maxValue": 30,
+                    "input.valueAdornment": "minutes"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

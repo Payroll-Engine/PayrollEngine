@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-12-31T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "TimesheetTenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "TimesheetRegulation",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "WorkTime",
+              "nameLocalizations": {
+                "en": "Working Time Report",
+                "de": "Arbeitszeit Report"
+              },
+              "buildExpression": "TimesheetWorkTimeReport.Build(this)",
+              "endExpression": "TimesheetWorkTimeReport.End(this)",
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "hidden": true
+                },
+                {
+                  "name": "EmployeeIdentifier",
+                  "nameLocalizations": {
+                    "en": "Employee",
+                    "de": "Mitarbeiter"
+                  },
+                  "valueType": "String",
+                  "mandatory": true
+                },
+                {
+                  "name": "PayrollName",
+                  "nameLocalizations": {
+                    "en": "Payroll",
+                    "de": "Payroll"
+                  },
+                  "valueType": "String",
+                  "mandatory": true
+                },
+                {
+                  "name": "WorkDay",
+                  "nameLocalizations": {
+                    "en": "Workday",
+                    "de": "Arbeitstag"
+                  },
+                  "valueType": "Date",
+                  "mandatory": true
+                }
+              ],
+              "templates": [
+                {
+                  "name": "WorkTimeEnglish",
+                  "culture": "en",
+                  "contentFile": "Report_en.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

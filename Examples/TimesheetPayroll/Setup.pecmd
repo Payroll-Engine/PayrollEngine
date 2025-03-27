@@ -1,0 +1,28 @@
+# ========== Payrol Engine - Setup Timesheet Payroll ==========
+
+# --- clean ---
+Delete.pecmd
+
+# --- payroll ---
+PayrollImport Payroll.json
+
+# --- lookup data ---
+Lookup/Import.pecmd
+
+# --- case ---
+Case/Import.pecmd
+
+# --- report ---
+Report/Import.pecmd
+
+# --- case data ---
+Case.Data/Import.pecmd
+# Case.Data/Import.Excel.pecmd
+
+# --- login ---
+ChangePassword TimesheetTenant lucy.smith@foo.com @ayroll3nginE
+ChangePassword TimesheetTenant višnja.müller@foo.com @ayroll3nginE
+ChangePassword TimesheetTenant leon.stark@foo.com @ayroll3nginE
+
+# --- test ---
+Test/Import.pecmd
