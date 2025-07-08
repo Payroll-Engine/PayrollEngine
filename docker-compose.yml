@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -21,12 +19,13 @@ services:
         condition: service_started
     environment:
       DB_CONNECTION_STRING: 'Server=db;Database=master;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True'
+    entrypoint: /bin/sh
     command: >
-      /bin/sh -c "
+      -c "
         echo 'Waiting for database to be ready...'
         sleep 15
         echo 'Executing SQL script...'
-        dotnet PayrollEngine.SqlServer.DbQuery.dll query -c \"${DB_CONNECTION_STRING}\" -f /sql/ModelCreate.sql
+        dotnet PayrollEngine.SqlServer.DbQuery.dll query /sql/ModelCreate.sql '${DB_CONNECTION_STRING}'
       "
     volumes:
       - ../PayrollEngine.Backend/Database/ModelCreate.sql:/sql/ModelCreate.sql:ro
