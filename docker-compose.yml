@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: payroll-db
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+  db-init:
+    build:
+      context: ../PayrollEngine.SqlServer.DbQuery
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+    environment:
+      DB_CONNECTION_STRING: 'Server=db;Database=master;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True'
+    command: >
+      /bin/sh -c "
+        echo 'Waiting for database to be ready...'
+        sleep 15
+        echo 'Executing SQL script...'
+        dotnet PayrollEngine.SqlServer.DbQuery.dll query -c \"${DB_CONNECTION_STRING}\" -f /sql/ModelCreate.sql
+      "
+    volumes:
+      - ../PayrollEngine.Backend/Database/ModelCreate.sql:/sql/ModelCreate.sql:ro
+
+  backend-api:
+    build:
+      context: ../PayrollEngine.Backend
+      dockerfile: Dockerfile
+    container_name: payroll-backend-api
+    ports:
+      - "5001:8080"
+      - "5002:8081"
+    environment:
+      ASPNETCORE_URLS: 'http://+:8080;https://+:8081'
+      ConnectionStrings__PayrollDatabaseConnection: 'Server=db;Database=PayrollEngine;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;'
+    depends_on:
+      - db-init
+    volumes:
+      - ../PayrollEngine.Backend/logs:/app/logs
+
+  webapp:
+    build:
+      context: ../PayrollEngine.WebApp
+      dockerfile: Dockerfile
+    container_name: payroll-webapp
+    ports:
+      - "8081:8080"
+      - "8082:8081"
+    environment:
+      ASPNETCORE_URLS: 'http://+:8080;https://+:8081'
+      ApiSettings__BaseUrl: 'http://backend-api:8080'
+    depends_on:
+      - backend-api
+    volumes:
+      - ../PayrollEngine.WebApp/logs:/app/logs
+
+volumes:
+  mssql-data: 
