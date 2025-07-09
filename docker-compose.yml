@@ -11,21 +11,20 @@ services:
       - mssql-data:/var/opt/mssql
 
   db-init:
-    build:
-      context: ../PayrollEngine.SqlServer.DbQuery
-      dockerfile: Dockerfile
+    image: mcr.microsoft.com/mssql-tools
+    container_name: payrollengine-db-init
     depends_on:
-      db:
-        condition: service_started
-    environment:
-      DB_CONNECTION_STRING: 'Server=db;Database=master;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True'
+      - db
     entrypoint: /bin/sh
     command: >
       -c "
         echo 'Waiting for database to be ready...'
-        sleep 15
+        sleep 20
+        echo 'Creating database...'
+        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine\"
         echo 'Executing SQL script...'
-        dotnet PayrollEngine.SqlServer.DbQuery.dll query /sql/ModelCreate.sql '${DB_CONNECTION_STRING}'
+        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -d PayrollEngine -i /sql/ModelCreate.sql
+        echo 'Database initialization completed.'
       "
     volumes:
       - ../PayrollEngine.Backend/Database/ModelCreate.sql:/sql/ModelCreate.sql:ro
@@ -37,12 +36,13 @@ services:
     container_name: payroll-backend-api
     ports:
       - "5001:8080"
-      - "5002:8081"
     environment:
-      ASPNETCORE_URLS: 'http://+:8080;https://+:8081'
+      ASPNETCORE_URLS: 'http://+:8080'
+      ASPNETCORE_ENVIRONMENT: 'Development'
       ConnectionStrings__PayrollDatabaseConnection: 'Server=db;Database=PayrollEngine;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;'
     depends_on:
-      - db-init
+      db-init:
+        condition: service_completed_successfully
     volumes:
       - ../PayrollEngine.Backend/logs:/app/logs
 
@@ -53,12 +53,13 @@ services:
     container_name: payroll-webapp
     ports:
       - "8081:8080"
-      - "8082:8081"
     environment:
-      ASPNETCORE_URLS: 'http://+:8080;https://+:8081'
+      ASPNETCORE_URLS: 'http://+:8080'
+      ASPNETCORE_ENVIRONMENT: 'Development'
       ApiSettings__BaseUrl: 'http://backend-api:8080'
     depends_on:
       - backend-api
+    restart: unless-stopped
     volumes:
       - ../PayrollEngine.WebApp/logs:/app/logs
 
