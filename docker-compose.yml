@@ -1,6 +1,7 @@
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64  # Force x86_64 for compatibility across platforms
     container_name: payroll-db
     environment:
       ACCEPT_EULA: 'Y'
@@ -12,6 +13,7 @@ services:
 
   db-init:
     image: mcr.microsoft.com/mssql-tools
+    platform: linux/amd64  # Force x86_64 for compatibility
     container_name: payrollengine-db-init
     depends_on:
       - db
@@ -19,7 +21,9 @@ services:
     command: >
       -c "
         echo 'Waiting for database to be ready...'
-        sleep 20
+        sleep 30
+        echo 'Testing database connection...'
+        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
         echo 'Creating database...'
         /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine\"
         echo 'Executing SQL script...'
@@ -33,6 +37,9 @@ services:
     build:
       context: ../PayrollEngine.Backend
       dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+        - linux/arm64
     container_name: payroll-backend-api
     ports:
       - "5001:8080"
@@ -50,6 +57,9 @@ services:
     build:
       context: ../PayrollEngine.WebApp
       dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+        - linux/arm64
     container_name: payroll-webapp
     ports:
       - "8081:8080"
@@ -64,4 +74,4 @@ services:
       - ../PayrollEngine.WebApp/logs:/app/logs
 
 volumes:
-  mssql-data: 
+  mssql-data:
