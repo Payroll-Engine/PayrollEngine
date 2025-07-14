@@ -6,13 +6,14 @@ services:
     environment:
       ACCEPT_EULA: 'Y'
       MSSQL_SA_PASSWORD: '${DB_PASSWORD}'
+      MSSQL_PID: 'Developer'
     ports:
       - "1433:1433"
     volumes:
       - mssql-data:/var/opt/mssql
 
   db-init:
-    image: mcr.microsoft.com/mssql-tools
+    image: mcr.microsoft.com/mssql/server:2022-latest
     platform: linux/amd64  # Force x86_64 for compatibility
     container_name: payrollengine-db-init
     depends_on:
@@ -23,11 +24,11 @@ services:
         echo 'Waiting for database to be ready...'
         sleep 30
         echo 'Testing database connection...'
-        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
         echo 'Creating database...'
-        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine\"
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine\"
         echo 'Executing SQL script...'
-        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -d PayrollEngine -i /sql/ModelCreate.sql
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -d PayrollEngine -i /sql/ModelCreate.sql
         echo 'Database initialization completed.'
       "
     volumes:
