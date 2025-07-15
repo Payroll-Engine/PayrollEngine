@@ -16,12 +16,16 @@ The application uses a `.env` file to manage the database password. This file mu
 Create a file named `.env` with the following content:
 
 ```
-# Default database password
-# Please change this to a strong password in your local environment
-DB_PASSWORD=YourStrong!Password123
+# PayrollEngine Docker Stack Configuration
+DB_PASSWORD=PayrollStrongPass789
 ```
 
-**Important:** Replace `YourStrong!Password123` with a secure password of your choice.
+**Important Password Requirements:**
+- Use **alphanumeric characters only** (letters and numbers)
+- **Avoid special characters** like `!`, `@`, `#`, `$`, etc.
+- Special characters can cause authentication failures that appear as misleading "sqlcmd not found" errors
+- Example of good password: `PayrollStrongPass789`
+- Example of problematic password: `PayrollStrongPass789!` (contains `!`)
 
 ### 2. Build and Run the Stack
 
@@ -43,6 +47,10 @@ Once the stack is running, you can access the following services:
 - **PayrollEngine WebApp**: `http://localhost:8081`
 - **PayrollEngine Backend API**: `http://localhost:5001` (HTTP) or `https://localhost:5002` (HTTPS)
 - **SQL Server Database**: Connect using a client on `localhost:1433` with the `sa` user and the password you defined in the `.env` file.
+-  **Verification:** : Test the SQL Server connection:
+```sh
+docker exec payroll-db /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourPassword" -C -Q "SELECT @@VERSION"
+```
 
 ### 4. Stopping the Stack
 
@@ -57,4 +65,11 @@ docker-compose down
 To remove the database volume as well, run:
 ```sh
 docker-compose down -v
+```
+
+
+ **Verification:**
+ Test the SQL Server connection:
+```sh
+docker exec payroll-db /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourPassword" -C -Q "SELECT @@VERSION"
 ```
