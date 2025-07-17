@@ -348,3 +348,6 @@ ASALocalRun/
 /**/bin/
 /**/obj/
 _site
+
+# Environment variables file for local development
+.env

@@ -1,0 +1,74 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64  # Force x86_64 for compatibility across platforms
+    container_name: payroll-db
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: '${DB_PASSWORD}'
+      MSSQL_PID: 'Developer'
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64  # Force x86_64 for compatibility
+    container_name: payrollengine-db-init
+    depends_on:
+      - db
+    entrypoint: /bin/sh
+    command: >
+      -c "
+        echo 'Waiting for database to be ready...'
+        sleep 30
+        echo 'Testing database connection...'
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
+        echo 'Creating database...'
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine\"
+        echo 'Executing SQL script...'
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -d PayrollEngine -i /sql/ModelCreate.sql
+        echo 'Database initialization completed.'
+      "
+    volumes:
+      - ../PayrollEngine.Backend/Database/ModelCreate.sql:/sql/ModelCreate.sql:ro
+
+  backend-api:
+    build:
+      context: ../PayrollEngine.Backend
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    container_name: payroll-backend-api
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_URLS: 'http://+:8080'
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      ConnectionStrings__PayrollDatabaseConnection: 'Server=db;Database=PayrollEngine;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;'
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    volumes:
+      - ../PayrollEngine.Backend/logs:/app/logs
+
+  webapp:
+    build:
+      context: ../PayrollEngine.WebApp
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    container_name: payroll-webapp
+    ports:
+      - "8081:8080"
+    environment:
+      ASPNETCORE_URLS: 'http://+:8080'
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      ApiSettings__BaseUrl: 'http://backend-api:8080'
+    depends_on:
+      - backend-api
+    restart: unless-stopped
+    volumes:
+      - ../PayrollEngine.WebApp/logs:/app/logs
+
+volumes:
+  mssql-data:
