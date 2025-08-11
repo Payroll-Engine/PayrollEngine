@@ -23,14 +23,6 @@
 | Parameters       | <ul><li>`field` <i>The target field</i><ul><li>Types `String`</li></ul></li></ul> |
 
 ---
-### Input.SeAttachmentOptional
-| | |
-|:-- |:-- |
-| Description      | Set optional file attachments      |
-| Function type    | `CaseChange`   |
-| Categories       | `FieldInput`, `Field` |
-
----
 ### Input.SetAttachmentExtensions
 | | |
 |:-- |:-- |
@@ -52,6 +44,14 @@
 | | |
 |:-- |:-- |
 | Description      | Set without file attachments      |
+| Function type    | `CaseChange`   |
+| Categories       | `FieldInput`, `Field` |
+
+---
+### Input.SetAttachmentOptional
+| | |
+|:-- |:-- |
+| Description      | Set optional file attachments      |
 | Function type    | `CaseChange`   |
 | Categories       | `FieldInput`, `Field` |
 

@@ -300,11 +300,35 @@
     "UserType": {
       "type": "string",
       "description": "The type of the user",
+      "x-enum-names": [
+        "Employee",
+        "User",
+        "TenantAdministrator",
+        "SystemAdministrator"
+      ],
+      "x-enum-varnames": [
+        "Employee",
+        "User",
+        "TenantAdministrator",
+        "SystemAdministrator"
+      ],
       "x-enumNames": [
         "Employee",
         "User",
         "TenantAdministrator",
         "SystemAdministrator"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Employee",
@@ -362,9 +386,25 @@
     "ObjectStatus": {
       "type": "string",
       "description": "The object status",
+      "x-enum-names": [
+        "Active",
+        "Inactive"
+      ],
+      "x-enum-varnames": [
+        "Active",
+        "Inactive"
+      ],
       "x-enumNames": [
         "Active",
         "Inactive"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Active",
@@ -374,9 +414,25 @@
     "UpdateMode": {
       "type": "string",
       "description": "The exchange update mode",
+      "x-enum-names": [
+        "Update",
+        "NoUpdate"
+      ],
+      "x-enum-varnames": [
+        "Update",
+        "NoUpdate"
+      ],
       "x-enumNames": [
         "Update",
         "NoUpdate"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Update",
@@ -529,6 +585,28 @@
     "CalendarTimeUnit": {
       "type": "string",
       "description": "The calendar time unit",
+      "x-enum-names": [
+        "Year",
+        "SemiYear",
+        "Quarter",
+        "BiMonth",
+        "CalendarMonth",
+        "LunisolarMonth",
+        "SemiMonth",
+        "BiWeek",
+        "Week"
+      ],
+      "x-enum-varnames": [
+        "Year",
+        "SemiYear",
+        "Quarter",
+        "BiMonth",
+        "CalendarMonth",
+        "LunisolarMonth",
+        "SemiMonth",
+        "BiWeek",
+        "Week"
+      ],
       "x-enumNames": [
         "Year",
         "SemiYear",
@@ -539,6 +617,28 @@
         "SemiMonth",
         "BiWeek",
         "Week"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Year",
@@ -555,9 +655,25 @@
     "CalendarTimeMap": {
       "type": "string",
       "description": "The calendar time map",
+      "x-enum-names": [
+        "Period",
+        "Cycle"
+      ],
+      "x-enum-varnames": [
+        "Period",
+        "Cycle"
+      ],
       "x-enumNames": [
         "Period",
         "Cycle"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Period",
@@ -567,6 +683,34 @@
     "Month": {
       "type": "string",
       "description": "Enumeration with the year months",
+      "x-enum-names": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "x-enum-varnames": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
       "x-enumNames": [
         "January",
         "February",
@@ -580,6 +724,34 @@
         "October",
         "November",
         "December"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "January",
@@ -599,10 +771,30 @@
     "CalendarWeekRule": {
       "type": "string",
       "description": "Defines different rules for determining the first week of the year",
+      "x-enum-names": [
+        "FirstDay",
+        "FirstFullWeek",
+        "FirstFourDayWeek"
+      ],
+      "x-enum-varnames": [
+        "FirstDay",
+        "FirstFullWeek",
+        "FirstFourDayWeek"
+      ],
       "x-enumNames": [
         "FirstDay",
         "FirstFullWeek",
         "FirstFourDayWeek"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "FirstDay",
@@ -613,6 +805,24 @@
     "DayOfWeek": {
       "type": "string",
       "description": "Specifies the day of the week",
+      "x-enum-names": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "x-enum-varnames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
       "x-enumNames": [
         "Sunday",
         "Monday",
@@ -621,6 +831,24 @@
         "Thursday",
         "Friday",
         "Saturday"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Sunday",
@@ -635,9 +863,25 @@
     "CalendarWeekMode": {
       "type": "string",
       "description": "The calendar week mode",
+      "x-enum-names": [
+        "Week",
+        "WorkWeek"
+      ],
+      "x-enum-varnames": [
+        "Week",
+        "WorkWeek"
+      ],
       "x-enumNames": [
         "Week",
         "WorkWeek"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Week",
@@ -937,6 +1181,26 @@
     "WebhookAction": {
       "type": "string",
       "description": "The Webhook message type",
+      "x-enum-names": [
+        "None",
+        "CaseFunctionRequest",
+        "CaseChangeAdded",
+        "PayrunFunctionRequest",
+        "PayrunJobProcess",
+        "PayrunJobFinish",
+        "ReportFunctionRequest",
+        "TaskChange"
+      ],
+      "x-enum-varnames": [
+        "None",
+        "CaseFunctionRequest",
+        "CaseChangeAdded",
+        "PayrunFunctionRequest",
+        "PayrunJobProcess",
+        "PayrunJobFinish",
+        "ReportFunctionRequest",
+        "TaskChange"
+      ],
       "x-enumNames": [
         "None",
         "CaseFunctionRequest",
@@ -946,6 +1210,26 @@
         "PayrunJobFinish",
         "ReportFunctionRequest",
         "TaskChange"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "None",
@@ -1440,6 +1724,38 @@
     "ValueType": {
       "type": "string",
       "description": "The payroll value types for cases",
+      "x-enum-names": [
+        "String",
+        "Boolean",
+        "Integer",
+        "NumericBoolean",
+        "Decimal",
+        "DateTime",
+        "None",
+        "Date",
+        "Weekday",
+        "Month",
+        "Year",
+        "Money",
+        "Percent",
+        "WebResource"
+      ],
+      "x-enum-varnames": [
+        "String",
+        "Boolean",
+        "Integer",
+        "NumericBoolean",
+        "Decimal",
+        "DateTime",
+        "None",
+        "Date",
+        "Weekday",
+        "Month",
+        "Year",
+        "Money",
+        "Percent",
+        "WebResource"
+      ],
       "x-enumNames": [
         "String",
         "Boolean",
@@ -1455,6 +1771,38 @@
         "Money",
         "Percent",
         "WebResource"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "String",
@@ -1476,9 +1824,25 @@
     "ValueScope": {
       "type": "string",
       "description": "The scope for a payroll value",
+      "x-enum-names": [
+        "Local",
+        "Global"
+      ],
+      "x-enum-varnames": [
+        "Local",
+        "Global"
+      ],
       "x-enumNames": [
         "Local",
         "Global"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Local",
@@ -1488,11 +1852,35 @@
     "CaseFieldTimeType": {
       "type": "string",
       "description": "The time period type for a regulation case field",
+      "x-enum-names": [
+        "Timeless",
+        "Moment",
+        "Period",
+        "CalendarPeriod"
+      ],
+      "x-enum-varnames": [
+        "Timeless",
+        "Moment",
+        "Period",
+        "CalendarPeriod"
+      ],
       "x-enumNames": [
         "Timeless",
         "Moment",
         "Period",
         "CalendarPeriod"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Timeless",
@@ -1504,10 +1892,30 @@
     "CaseFieldTimeUnit": {
       "type": "string",
       "description": "The date type for a regulation case field",
+      "x-enum-names": [
+        "Day",
+        "HalfDay",
+        "Month"
+      ],
+      "x-enum-varnames": [
+        "Day",
+        "HalfDay",
+        "Month"
+      ],
       "x-enumNames": [
         "Day",
         "HalfDay",
         "Month"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "Day",
@@ -1518,10 +1926,30 @@
     "CaseFieldAggregationType": {
       "type": "string",
       "description": "Aggregation type for a period case field Period",
+      "x-enum-names": [
+        "Summary",
+        "Last",
+        "First"
+      ],
+      "x-enum-varnames": [
+        "Summary",
+        "Last",
+        "First"
+      ],
       "x-enumNames": [
         "Summary",
         "Last",
         "First"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "Summary",
@@ -1532,9 +1960,25 @@
     "OverrideType": {
       "type": "string",
       "description": "Override type for derivable object",
+      "x-enum-names": [
+        "Active",
+        "Inactive"
+      ],
+      "x-enum-varnames": [
+        "Active",
+        "Inactive"
+      ],
       "x-enumNames": [
         "Active",
         "Inactive"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Active",
@@ -1544,12 +1988,40 @@
     "CaseFieldCancellationMode": {
       "type": "string",
       "description": "The cancellation mode for a regulation case field",
+      "x-enum-names": [
+        "TimeType",
+        "Previous",
+        "Keep",
+        "Reset",
+        "Invert"
+      ],
+      "x-enum-varnames": [
+        "TimeType",
+        "Previous",
+        "Keep",
+        "Reset",
+        "Invert"
+      ],
       "x-enumNames": [
         "TimeType",
         "Previous",
         "Keep",
         "Reset",
         "Invert"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "TimeType",
@@ -1562,10 +2034,30 @@
     "CaseValueCreationMode": {
       "type": "string",
       "description": "The case value creation mode",
+      "x-enum-names": [
+        "OnChanges",
+        "Always",
+        "Discard"
+      ],
+      "x-enum-varnames": [
+        "OnChanges",
+        "Always",
+        "Discard"
+      ],
       "x-enumNames": [
         "OnChanges",
         "Always",
         "Discard"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "OnChanges",
@@ -1576,6 +2068,70 @@
     "CaseFieldDateType": {
       "type": "string",
       "description": "The case field date type",
+      "x-enum-names": [
+        "Day",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Month",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+        "Year",
+        "PeriodStart",
+        "PeriodStartDate",
+        "PeriodEnd",
+        "PeriodEndDate",
+        "CycleStart",
+        "CycleStartDate",
+        "CycleEnd",
+        "CycleEndDate"
+      ],
+      "x-enum-varnames": [
+        "Day",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Month",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+        "Year",
+        "PeriodStart",
+        "PeriodStartDate",
+        "PeriodEnd",
+        "PeriodEndDate",
+        "CycleStart",
+        "CycleStartDate",
+        "CycleEnd",
+        "CycleEndDate"
+      ],
       "x-enumNames": [
         "Day",
         "Sunday",
@@ -1607,6 +2163,70 @@
         "CycleStartDate",
         "CycleEnd",
         "CycleEndDate"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Day",
@@ -1904,11 +2524,35 @@
     "CaseType": {
       "type": "string",
       "description": "The case type",
+      "x-enum-names": [
+        "Global",
+        "National",
+        "Company",
+        "Employee"
+      ],
+      "x-enum-varnames": [
+        "Global",
+        "National",
+        "Company",
+        "Employee"
+      ],
       "x-enumNames": [
         "Global",
         "National",
         "Company",
         "Employee"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Global",
@@ -1941,9 +2585,25 @@
     "CaseCancellationType": {
       "type": "string",
       "description": "The case cancellation type",
+      "x-enum-names": [
+        "None",
+        "Case"
+      ],
+      "x-enum-varnames": [
+        "None",
+        "Case"
+      ],
       "x-enumNames": [
         "None",
         "Case"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "None",
@@ -2442,6 +3102,22 @@
     "CollectMode": {
       "type": "string",
       "description": "The collect mode",
+      "x-enum-names": [
+        "Summary",
+        "Minimum",
+        "Maximum",
+        "Average",
+        "Range",
+        "Count"
+      ],
+      "x-enum-varnames": [
+        "Summary",
+        "Minimum",
+        "Maximum",
+        "Average",
+        "Range",
+        "Count"
+      ],
       "x-enumNames": [
         "Summary",
         "Minimum",
@@ -2449,6 +3125,22 @@
         "Average",
         "Range",
         "Count"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Summary",
@@ -2691,6 +3383,66 @@
       "type": "string",
       "description": "The payroll function type",
       "x-enumFlags": true,
+      "x-enum-names": [
+        "CaseAvailable",
+        "CaseBuild",
+        "CaseValidate",
+        "CaseChange",
+        "Case",
+        "CaseRelationBuild",
+        "CaseRelationValidate",
+        "CaseRelation",
+        "CollectorStart",
+        "CollectorApply",
+        "CollectorEnd",
+        "Collector",
+        "WageTypeValue",
+        "WageTypeResult",
+        "WageType",
+        "PayrunStart",
+        "PayrunEmployeeAvailable",
+        "PayrunEmployeeStart",
+        "PayrunEmployeeEnd",
+        "PayrunWageTypeAvailable",
+        "PayrunEnd",
+        "Payrun",
+        "Payroll",
+        "ReportBuild",
+        "ReportStart",
+        "ReportEnd",
+        "Report",
+        "All"
+      ],
+      "x-enum-varnames": [
+        "CaseAvailable",
+        "CaseBuild",
+        "CaseValidate",
+        "CaseChange",
+        "Case",
+        "CaseRelationBuild",
+        "CaseRelationValidate",
+        "CaseRelation",
+        "CollectorStart",
+        "CollectorApply",
+        "CollectorEnd",
+        "Collector",
+        "WageTypeValue",
+        "WageTypeResult",
+        "WageType",
+        "PayrunStart",
+        "PayrunEmployeeAvailable",
+        "PayrunEmployeeStart",
+        "PayrunEmployeeEnd",
+        "PayrunWageTypeAvailable",
+        "PayrunEnd",
+        "Payrun",
+        "Payroll",
+        "ReportBuild",
+        "ReportStart",
+        "ReportEnd",
+        "Report",
+        "All"
+      ],
       "x-enumNames": [
         "CaseAvailable",
         "CaseBuild",
@@ -2720,6 +3472,66 @@
         "ReportEnd",
         "Report",
         "All"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "CaseAvailable",
@@ -2889,6 +3701,32 @@
     "ReportParameterType": {
       "type": "string",
       "description": "The report value types",
+      "x-enum-names": [
+        "Value",
+        "Now",
+        "Today",
+        "TenantId",
+        "UserId",
+        "EmployeeId",
+        "RegulationId",
+        "PayrollId",
+        "PayrunId",
+        "ReportId",
+        "WebhookId"
+      ],
+      "x-enum-varnames": [
+        "Value",
+        "Now",
+        "Today",
+        "TenantId",
+        "UserId",
+        "EmployeeId",
+        "RegulationId",
+        "PayrollId",
+        "PayrunId",
+        "ReportId",
+        "WebhookId"
+      ],
       "x-enumNames": [
         "Value",
         "Now",
@@ -2901,6 +3739,32 @@
         "PayrunId",
         "ReportId",
         "WebhookId"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Value",
@@ -3169,9 +4033,25 @@
     "ReportAttributeMode": {
       "type": "string",
       "description": "The case result kind",
+      "x-enum-names": [
+        "Json",
+        "Table"
+      ],
+      "x-enum-varnames": [
+        "Json",
+        "Table"
+      ],
       "x-enumNames": [
         "Json",
         "Table"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Json",
@@ -3826,6 +4706,34 @@
     "CaseIssueType": {
       "type": "string",
       "description": "The case issue type",
+      "x-enum-names": [
+        "Unknown",
+        "CaseInvalid",
+        "CaseUnknown",
+        "CaseRelationInvalid",
+        "CaseFieldDuplicated",
+        "CaseValueIncomplete",
+        "CaseValueMissing",
+        "CaseValueStartInvalid",
+        "CaseValueEndInvalid",
+        "CaseValueEndMissing",
+        "CaseValueWeekdayInvalid",
+        "CaseValueMonthInvalid"
+      ],
+      "x-enum-varnames": [
+        "Unknown",
+        "CaseInvalid",
+        "CaseUnknown",
+        "CaseRelationInvalid",
+        "CaseFieldDuplicated",
+        "CaseValueIncomplete",
+        "CaseValueMissing",
+        "CaseValueStartInvalid",
+        "CaseValueEndInvalid",
+        "CaseValueEndMissing",
+        "CaseValueWeekdayInvalid",
+        "CaseValueMonthInvalid"
+      ],
       "x-enumNames": [
         "Unknown",
         "CaseInvalid",
@@ -3839,6 +4747,34 @@
         "CaseValueEndMissing",
         "CaseValueWeekdayInvalid",
         "CaseValueMonthInvalid"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Unknown",
@@ -4603,9 +5539,25 @@
     "RetroTimeType": {
       "type": "string",
       "description": "The payrun retro type",
+      "x-enum-names": [
+        "Anytime",
+        "Cycle"
+      ],
+      "x-enum-varnames": [
+        "Anytime",
+        "Cycle"
+      ],
       "x-enumNames": [
         "Anytime",
         "Cycle"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Anytime",
@@ -4991,9 +5943,25 @@
     "RetroPayMode": {
       "type": "string",
       "description": "The payrun retro pay mode",
+      "x-enum-names": [
+        "None",
+        "ValueChange"
+      ],
+      "x-enum-varnames": [
+        "None",
+        "ValueChange"
+      ],
       "x-enumNames": [
         "None",
         "ValueChange"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "None",
@@ -5003,6 +5971,24 @@
     "PayrunJobStatus": {
       "type": "string",
       "description": "The payrun job status\nSupported state changes:\n- *: Draft | Forecast | Abort\n- Draft: Release | Abort\n- Release: Process | Abort\n- Process: Complete | Cancel",
+      "x-enum-names": [
+        "Draft",
+        "Release",
+        "Process",
+        "Complete",
+        "Forecast",
+        "Abort",
+        "Cancel"
+      ],
+      "x-enum-varnames": [
+        "Draft",
+        "Release",
+        "Process",
+        "Complete",
+        "Forecast",
+        "Abort",
+        "Cancel"
+      ],
       "x-enumNames": [
         "Draft",
         "Release",
@@ -5011,6 +5997,24 @@
         "Forecast",
         "Abort",
         "Cancel"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Draft",
@@ -5025,9 +6029,25 @@
     "PayrunJobResult": {
       "type": "string",
       "description": "The payrun job result",
+      "x-enum-names": [
+        "Full",
+        "Incremental"
+      ],
+      "x-enum-varnames": [
+        "Full",
+        "Incremental"
+      ],
       "x-enumNames": [
         "Full",
         "Incremental"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Full",
@@ -5241,6 +6261,22 @@
     "LogLevel": {
       "type": "string",
       "description": "Specifies the meaning and relative importance of a log event",
+      "x-enum-names": [
+        "Verbose",
+        "Debug",
+        "Information",
+        "Warning",
+        "Error",
+        "Fatal"
+      ],
+      "x-enum-varnames": [
+        "Verbose",
+        "Debug",
+        "Information",
+        "Warning",
+        "Error",
+        "Fatal"
+      ],
       "x-enumNames": [
         "Verbose",
         "Debug",
@@ -5248,6 +6284,22 @@
         "Warning",
         "Error",
         "Fatal"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Verbose",

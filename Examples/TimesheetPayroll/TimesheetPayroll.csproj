@@ -9,8 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="PayrollEngine.Client.Services" Version="0.9.0-beta.6" />
-		<PackageReference Include="PayrollEngine.Serilog" Version="0.9.0-beta.6" />
+		<PackageReference Include="PayrollEngine.Client.Services" Version="0.9.0-beta.7" />
+		<PackageReference Include="PayrollEngine.Serilog" Version="0.9.0-beta.7" />
 	</ItemGroup>
 
 	<ItemGroup>

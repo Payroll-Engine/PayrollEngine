@@ -395,9 +395,25 @@
     "ObjectStatus": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Active",
+        "Inactive"
+      ],
+      "x-enum-varnames": [
+        "Active",
+        "Inactive"
+      ],
       "x-enumNames": [
         "Active",
         "Inactive"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Active",
@@ -407,9 +423,25 @@
     "UpdateMode": {
       "type": "string",
       "description": "The exchange update mode",
+      "x-enum-names": [
+        "Update",
+        "NoUpdate"
+      ],
+      "x-enum-varnames": [
+        "Update",
+        "NoUpdate"
+      ],
       "x-enumNames": [
         "Update",
         "NoUpdate"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Update",
@@ -598,6 +630,38 @@
     "ValueType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "String",
+        "Boolean",
+        "Integer",
+        "NumericBoolean",
+        "Decimal",
+        "DateTime",
+        "None",
+        "Date",
+        "Weekday",
+        "Month",
+        "Year",
+        "Money",
+        "Percent",
+        "WebResource"
+      ],
+      "x-enum-varnames": [
+        "String",
+        "Boolean",
+        "Integer",
+        "NumericBoolean",
+        "Decimal",
+        "DateTime",
+        "None",
+        "Date",
+        "Weekday",
+        "Month",
+        "Year",
+        "Money",
+        "Percent",
+        "WebResource"
+      ],
       "x-enumNames": [
         "String",
         "Boolean",
@@ -613,6 +677,38 @@
         "Money",
         "Percent",
         "WebResource"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "String",
@@ -830,6 +926,34 @@
     "CaseIssueType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Unknown",
+        "CaseInvalid",
+        "CaseUnknown",
+        "CaseRelationInvalid",
+        "CaseFieldDuplicated",
+        "CaseValueIncomplete",
+        "CaseValueMissing",
+        "CaseValueStartInvalid",
+        "CaseValueEndInvalid",
+        "CaseValueEndMissing",
+        "CaseValueWeekdayInvalid",
+        "CaseValueMonthInvalid"
+      ],
+      "x-enum-varnames": [
+        "Unknown",
+        "CaseInvalid",
+        "CaseUnknown",
+        "CaseRelationInvalid",
+        "CaseFieldDuplicated",
+        "CaseValueIncomplete",
+        "CaseValueMissing",
+        "CaseValueStartInvalid",
+        "CaseValueEndInvalid",
+        "CaseValueEndMissing",
+        "CaseValueWeekdayInvalid",
+        "CaseValueMonthInvalid"
+      ],
       "x-enumNames": [
         "Unknown",
         "CaseInvalid",
@@ -843,6 +967,34 @@
         "CaseValueEndMissing",
         "CaseValueWeekdayInvalid",
         "CaseValueMonthInvalid"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Unknown",
@@ -1460,9 +1612,25 @@
     "ValueScope": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Local",
+        "Global"
+      ],
+      "x-enum-varnames": [
+        "Local",
+        "Global"
+      ],
       "x-enumNames": [
         "Local",
         "Global"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Local",
@@ -1472,11 +1640,35 @@
     "CaseFieldTimeType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Timeless",
+        "Moment",
+        "Period",
+        "CalendarPeriod"
+      ],
+      "x-enum-varnames": [
+        "Timeless",
+        "Moment",
+        "Period",
+        "CalendarPeriod"
+      ],
       "x-enumNames": [
         "Timeless",
         "Moment",
         "Period",
         "CalendarPeriod"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Timeless",
@@ -1488,10 +1680,30 @@
     "CaseFieldTimeUnit": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Day",
+        "HalfDay",
+        "Month"
+      ],
+      "x-enum-varnames": [
+        "Day",
+        "HalfDay",
+        "Month"
+      ],
       "x-enumNames": [
         "Day",
         "HalfDay",
         "Month"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "Day",
@@ -1502,10 +1714,30 @@
     "CaseFieldAggregationType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Summary",
+        "Last",
+        "First"
+      ],
+      "x-enum-varnames": [
+        "Summary",
+        "Last",
+        "First"
+      ],
       "x-enumNames": [
         "Summary",
         "Last",
         "First"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "Summary",
@@ -1516,9 +1748,25 @@
     "OverrideType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Active",
+        "Inactive"
+      ],
+      "x-enum-varnames": [
+        "Active",
+        "Inactive"
+      ],
       "x-enumNames": [
         "Active",
         "Inactive"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "Active",
@@ -1528,12 +1776,40 @@
     "CaseFieldCancellationMode": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "TimeType",
+        "Previous",
+        "Keep",
+        "Reset",
+        "Invert"
+      ],
+      "x-enum-varnames": [
+        "TimeType",
+        "Previous",
+        "Keep",
+        "Reset",
+        "Invert"
+      ],
       "x-enumNames": [
         "TimeType",
         "Previous",
         "Keep",
         "Reset",
         "Invert"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "TimeType",
@@ -1546,10 +1822,30 @@
     "CaseValueCreationMode": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "OnChanges",
+        "Always",
+        "Discard"
+      ],
+      "x-enum-varnames": [
+        "OnChanges",
+        "Always",
+        "Discard"
+      ],
       "x-enumNames": [
         "OnChanges",
         "Always",
         "Discard"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
       ],
       "enum": [
         "OnChanges",
@@ -1560,6 +1856,70 @@
     "CaseFieldDateType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Day",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Month",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+        "Year",
+        "PeriodStart",
+        "PeriodStartDate",
+        "PeriodEnd",
+        "PeriodEndDate",
+        "CycleStart",
+        "CycleStartDate",
+        "CycleEnd",
+        "CycleEndDate"
+      ],
+      "x-enum-varnames": [
+        "Day",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Month",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+        "Year",
+        "PeriodStart",
+        "PeriodStartDate",
+        "PeriodEnd",
+        "PeriodEndDate",
+        "CycleStart",
+        "CycleStartDate",
+        "CycleEnd",
+        "CycleEndDate"
+      ],
       "x-enumNames": [
         "Day",
         "Sunday",
@@ -1591,6 +1951,70 @@
         "CycleStartDate",
         "CycleEnd",
         "CycleEndDate"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Day",
@@ -1887,11 +2311,35 @@
     "CaseType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "Global",
+        "National",
+        "Company",
+        "Employee"
+      ],
+      "x-enum-varnames": [
+        "Global",
+        "National",
+        "Company",
+        "Employee"
+      ],
       "x-enumNames": [
         "Global",
         "National",
         "Company",
         "Employee"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null,
+        null
       ],
       "enum": [
         "Global",
@@ -1924,9 +2372,25 @@
     "CaseCancellationType": {
       "type": "string",
       "description": "",
+      "x-enum-names": [
+        "None",
+        "Case"
+      ],
+      "x-enum-varnames": [
+        "None",
+        "Case"
+      ],
       "x-enumNames": [
         "None",
         "Case"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null
       ],
       "enum": [
         "None",
