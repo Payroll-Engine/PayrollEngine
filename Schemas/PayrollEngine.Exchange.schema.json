@@ -7,6 +7,21 @@
     "tenants"
   ],
   "properties": {
+    "schema": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "Json schema"
+    },
+    "createdObjectDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "The default created date for new objects",
+      "format": "date-time"
+    },
     "tenants": {
       "type": "array",
       "description": "The tenants",
@@ -23,14 +38,6 @@
       "items": {
         "$ref": "#/definitions/RegulationShare"
       }
-    },
-    "createdObjectDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "description": "The default created date for new objects",
-      "format": "date-time"
     }
   },
   "definitions": {
@@ -1271,16 +1278,6 @@
                 "$ref": "#/definitions/CaseRelation"
               }
             },
-            "wageTypes": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The regulation wage types",
-              "items": {
-                "$ref": "#/definitions/WageType"
-              }
-            },
             "collectors": {
               "type": [
                 "array",
@@ -1289,6 +1286,16 @@
               "description": "The regulation collectors",
               "items": {
                 "$ref": "#/definitions/Collector"
+              }
+            },
+            "wageTypes": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The regulation wage types",
+              "items": {
+                "$ref": "#/definitions/WageType"
               }
             },
             "lookups": {
@@ -2449,26 +2456,6 @@
               ],
               "description": "The case validate expression file"
             },
-            "lookups": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The case lookups",
-              "items": {
-                "type": "string"
-              }
-            },
-            "slots": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The case slots",
-              "items": {
-                "$ref": "#/definitions/CaseSlot"
-              }
-            },
             "availableActions": {
               "type": [
                 "array",
@@ -2499,13 +2486,25 @@
                 "type": "string"
               }
             },
-            "attributes": {
+            "lookups": {
               "type": [
-                "null",
-                "object"
+                "array",
+                "null"
               ],
-              "description": "Custom object attributes",
-              "additionalProperties": {}
+              "description": "The case lookups",
+              "items": {
+                "type": "string"
+              }
+            },
+            "slots": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The case slots",
+              "items": {
+                "$ref": "#/definitions/CaseSlot"
+              }
             },
             "clusters": {
               "type": [
@@ -2516,6 +2515,14 @@
               "items": {
                 "type": "string"
               }
+            },
+            "attributes": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "Custom object attributes",
+              "additionalProperties": {}
             }
           }
         }
@@ -2779,14 +2786,6 @@
                 "type": "string"
               }
             },
-            "attributes": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "description": "Custom object attributes",
-              "additionalProperties": {}
-            },
             "clusters": {
               "type": [
                 "array",
@@ -2796,132 +2795,6 @@
               "items": {
                 "type": "string"
               }
-            }
-          }
-        }
-      ]
-    },
-    "WageType": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ModelBase"
-        },
-        {
-          "type": "object",
-          "description": "The payroll wage type client object",
-          "required": [
-            "wageTypeNumber",
-            "name"
-          ],
-          "properties": {
-            "wageTypeNumber": {
-              "type": "number",
-              "description": "The wage type number (immutable)",
-              "format": "decimal"
-            },
-            "name": {
-              "type": "string",
-              "description": "The wage type name",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "nameLocalizations": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "description": "The localized wage type names",
-              "additionalProperties": {
-                "type": "string"
-              }
-            },
-            "description": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The wage type description"
-            },
-            "descriptionLocalizations": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "description": "The localized wage type descriptions",
-              "additionalProperties": {
-                "type": "string"
-              }
-            },
-            "overrideType": {
-              "description": "The override type",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/OverrideType"
-                }
-              ]
-            },
-            "valueType": {
-              "description": "The value type, default is value type money",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/ValueType"
-                }
-              ]
-            },
-            "calendar": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The wage type calendar (fallback: employee calendar)"
-            },
-            "collectors": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "Associated collectors",
-              "items": {
-                "type": "string"
-              }
-            },
-            "collectorGroups": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "Associated collector groups",
-              "items": {
-                "type": "string"
-              }
-            },
-            "valueExpression": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "Expression: calculates of the wage type value"
-            },
-            "valueExpressionFile": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "Expression: calculates of the wage type value file"
-            },
-            "resultExpression": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "Expression: calculates of the wage type result attributes"
-            },
-            "resultExpressionFile": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "Expression: calculates of the wage type result attributes file"
             },
             "attributes": {
               "type": [
@@ -2930,16 +2803,6 @@
               ],
               "description": "Custom object attributes",
               "additionalProperties": {}
-            },
-            "clusters": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The wage type clusters",
-              "items": {
-                "type": "string"
-              }
             }
           }
         }
@@ -3077,14 +2940,6 @@
               ],
               "description": "Expression used while the collector is ended file"
             },
-            "attributes": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "description": "Custom object attributes",
-              "additionalProperties": {}
-            },
             "clusters": {
               "type": [
                 "array",
@@ -3094,6 +2949,14 @@
               "items": {
                 "type": "string"
               }
+            },
+            "attributes": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "Custom object attributes",
+              "additionalProperties": {}
             }
           }
         }
@@ -3149,6 +3012,150 @@
         "Average",
         "Range",
         "Count"
+      ]
+    },
+    "WageType": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ModelBase"
+        },
+        {
+          "type": "object",
+          "description": "The payroll wage type client object",
+          "required": [
+            "wageTypeNumber",
+            "name"
+          ],
+          "properties": {
+            "wageTypeNumber": {
+              "type": "number",
+              "description": "The wage type number (immutable)",
+              "format": "decimal"
+            },
+            "name": {
+              "type": "string",
+              "description": "The wage type name",
+              "maxLength": 128,
+              "minLength": 0
+            },
+            "nameLocalizations": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "The localized wage type names",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "description": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The wage type description"
+            },
+            "descriptionLocalizations": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "The localized wage type descriptions",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "overrideType": {
+              "description": "The override type",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/OverrideType"
+                }
+              ]
+            },
+            "valueType": {
+              "description": "The value type, default is value type money",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/ValueType"
+                }
+              ]
+            },
+            "calendar": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The wage type calendar (fallback: employee calendar)"
+            },
+            "valueExpression": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Expression: calculates of the wage type value"
+            },
+            "valueExpressionFile": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Expression: calculates of the wage type value file"
+            },
+            "resultExpression": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Expression: calculates of the wage type result attributes"
+            },
+            "resultExpressionFile": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Expression: calculates of the wage type result attributes file"
+            },
+            "collectors": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Associated collectors",
+              "items": {
+                "type": "string"
+              }
+            },
+            "collectorGroups": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Associated collector groups",
+              "items": {
+                "type": "string"
+              }
+            },
+            "clusters": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The wage type clusters",
+              "items": {
+                "type": "string"
+              }
+            },
+            "attributes": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "Custom object attributes",
+              "additionalProperties": {}
+            }
+          }
+        }
       ]
     },
     "LookupSet": {
@@ -3297,14 +3304,6 @@
                 "type": "string"
               }
             },
-            "overrideType": {
-              "description": "The override type",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/OverrideType"
-                }
-              ]
-            },
             "rangeSize": {
               "type": [
                 "null",
@@ -3312,6 +3311,14 @@
               ],
               "description": "The lookup range size",
               "format": "decimal"
+            },
+            "overrideType": {
+              "description": "The override type",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/OverrideType"
+                }
+              ]
             },
             "attributes": {
               "type": [
@@ -3938,26 +3945,6 @@
                 }
               ]
             },
-            "queries": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "description": "The report queries, key is the query name and value the api operation name",
-              "additionalProperties": {
-                "type": "string"
-              }
-            },
-            "relations": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The report data relations, based on the queries",
-              "items": {
-                "$ref": "#/definitions/DataRelation"
-              }
-            },
             "buildExpression": {
               "type": [
                 "null",
@@ -4008,13 +3995,25 @@
                 }
               ]
             },
-            "attributes": {
+            "queries": {
               "type": [
                 "null",
                 "object"
               ],
-              "description": "Custom object attributes",
-              "additionalProperties": {}
+              "description": "The report queries, key is the query name and value the api operation name",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "relations": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The report data relations, based on the queries",
+              "items": {
+                "$ref": "#/definitions/DataRelation"
+              }
             },
             "clusters": {
               "type": [
@@ -4025,6 +4024,14 @@
               "items": {
                 "type": "string"
               }
+            },
+            "attributes": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "description": "Custom object attributes",
+              "additionalProperties": {}
             }
           }
         }

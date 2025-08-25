@@ -2237,26 +2237,6 @@
               ],
               "description": "The case validate expression file"
             },
-            "lookups": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The case lookups",
-              "items": {
-                "type": "string"
-              }
-            },
-            "slots": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "description": "The case slots",
-              "items": {
-                "$ref": "#/definitions/CaseSlot"
-              }
-            },
             "availableActions": {
               "type": [
                 "array",
@@ -2287,12 +2267,25 @@
                 "type": "string"
               }
             },
-            "attributes": {
+            "lookups": {
               "type": [
-                "null",
-                "object"
+                "array",
+                "null"
               ],
-              "additionalProperties": {}
+              "description": "The case lookups",
+              "items": {
+                "type": "string"
+              }
+            },
+            "slots": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "The case slots",
+              "items": {
+                "$ref": "#/definitions/CaseSlot"
+              }
             },
             "clusters": {
               "type": [
@@ -2303,6 +2296,13 @@
               "items": {
                 "type": "string"
               }
+            },
+            "attributes": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "additionalProperties": {}
             }
           }
         }

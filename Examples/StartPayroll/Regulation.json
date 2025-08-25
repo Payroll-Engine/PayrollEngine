@@ -1,0 +1,134 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-01-01T00:00:00Z",
+  "tenants": [
+    {
+      "updateMode": "NoUpdate",
+      "identifier": "StartTenant",
+      "regulations": [
+        {
+          "name": "NS1.StartRegulation",
+          "cases": [
+            {
+              "caseType": "Employee",
+              "name": "NS1.Salary",
+              "buildExpression": "true",
+              "validateExpression": "true",
+              "fields": [
+                {
+                  "name": "NS1.Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "buildActions": [
+                    "Limit(500, 25000)"
+                  ],
+                  "validateActions": [
+                    "ValueBetween(500, 25000)"
+                  ]
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "NS1.Income",
+              "valueType": "Decimal"
+            },
+            {
+              "name": "NS1.Deduction",
+              "negated": true,
+              "valueType": "Decimal"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "NS1.Salary",
+              "valueType": "Decimal",
+              "valueExpression": "CaseValue[\"Salary\"]",
+              "collectors": [
+                "NS1.Income"
+              ]
+            }
+          ],
+          "lookups": [
+            {
+              "name": "NS1.InsuranceRate",
+              "values": [
+                {
+                  "key": "A",
+                  "value": "30",
+                  "valueObject": "30",
+                  "rangeValue": 1
+                },
+                {
+                  "key": "B",
+                  "value": "45",
+                  "valueObject": "45",
+                  "rangeValue": 3000
+                },
+                {
+                  "key": "C",
+                  "value": "60",
+                  "valueObject": "60",
+                  "rangeValue": 6000
+                }
+              ]
+            },
+            {
+              "name": "NS1.Name",
+              "values": [
+                {
+                  "key": "[8000,\"ZRH\"]",
+                  "value": "{\"number\":8000,\"name\":\"Zürich\"}",
+                  "valueObject": {
+                    "number": 8000,
+                    "name": "Zürich"
+                  },
+                  "rangeValue": 3
+                }
+              ]
+            }
+          ],
+          "reports": [
+            {
+              "name": "NS1.StartReport",
+              "queries": {
+                "Employees": "QueryEmployees",
+                "Results": "QueryPayrollResultValues"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "hidden": true,
+                  "parameterType": "TenantId"
+                },
+                {
+                  "name": "PayrunJobName",
+                  "mandatory": true
+                },
+                {
+                  "name": "Results.Filter",
+                  "hidden": true,
+                  "value": "jobName eq '$PayrunJobName$'"
+                }
+              ],
+              "templates": [
+                {
+                  "name": "StartReportTemplate English",
+                  "culture": "en",
+                  "content": "Report.English.frx"
+                },
+                {
+                  "name": "StartReportTemplate German",
+                  "culture": "de",
+                  "content": "Report.German.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

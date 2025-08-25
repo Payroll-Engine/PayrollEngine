@@ -1,0 +1,2 @@
+TenantDelete tenant:StartTenant /trydelete
+RegulationExcelImport Regulation.xlsx /wait
