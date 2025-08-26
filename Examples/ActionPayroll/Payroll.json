@@ -75,7 +75,7 @@
               "functionTypes": [
                 "CaseChange"
               ],
-              "valueFile": "Scripts\\MyActions.cs"
+              "valueFile": "Scripts/MyActions.cs"
             }
           ]
         }

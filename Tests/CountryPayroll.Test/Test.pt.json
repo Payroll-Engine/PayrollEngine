@@ -30,21 +30,21 @@
               "functionTypes": [
                 "All"
               ],
-              "valueFile": "scripts\\FunctionRegister.cs"
+              "valueFile": "scripts/FunctionRegister.cs"
             },
             {
               "name": "CountryFunction",
               "functionTypes": [
                 "All"
               ],
-              "valueFile": "scripts\\CountryFunction.cs"
+              "valueFile": "scripts/CountryFunction.cs"
             },
             {
               "name": "CountryPayrollFunction",
               "functionTypes": [
                 "Payroll"
               ],
-              "valueFile": "scripts\\CountryPayrollFunction.cs"
+              "valueFile": "scripts/CountryPayrollFunction.cs"
             }
           ],
               "cases": [

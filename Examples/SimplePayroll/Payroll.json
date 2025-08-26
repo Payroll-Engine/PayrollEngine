@@ -184,14 +184,14 @@
                 "CaseBuild",
                 "WageTypeValue"
               ],
-              "valueFile": "scripts\\GetCurrentAge.cs"
+              "valueFile": "scripts/GetCurrentAge.cs"
             },
             {
               "name": "GetDiseaseDaysCount",
               "functionTypes": [
                 "WageTypeValue"
               ],
-              "valueFile": "scripts\\GetDiseaseDaysCount.cs"
+              "valueFile": "scripts/GetDiseaseDaysCount.cs"
             },
             {
               "name": "MyTool",

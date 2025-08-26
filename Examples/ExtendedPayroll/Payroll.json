@@ -60,14 +60,14 @@
               "functionTypes": [
                 "WageTypeValue"
               ],
-              "valueFile": "Scripts\\WageTypeValueFunction.cs"
+              "valueFile": "Scripts/WageTypeValueFunction.cs"
             },
             {
               "name": "CompositeWageTypeValueFunction",
               "functionTypes": [
                 "WageTypeValue"
               ],
-              "valueFile": "Scripts\\CompositeWageTypeValueFunction.cs"
+              "valueFile": "Scripts/CompositeWageTypeValueFunction.cs"
             }
           ]
         }
