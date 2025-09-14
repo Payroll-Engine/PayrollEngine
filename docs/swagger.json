@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.9",
+    "description": "Payroll Engine API v0.9.0-beta.10",
     "version": "1"
   },
   "paths": {
@@ -26729,6 +26729,10 @@
             "format": "double",
             "nullable": true
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "caseRelation": {
             "$ref": "#/components/schemas/CaseRelationReference"
           },
@@ -26863,6 +26867,10 @@
             "format": "double",
             "nullable": true
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "caseRelation": {
             "$ref": "#/components/schemas/CaseRelationReference"
           },
@@ -26993,6 +27001,10 @@
           "valueType": {
             "$ref": "#/components/schemas/ValueType"
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "collectorGroups": {
             "type": "array",
             "items": {
@@ -27092,6 +27104,10 @@
           },
           "valueType": {
             "$ref": "#/components/schemas/ValueType"
+          },
+          "culture": {
+            "type": "string",
+            "nullable": true
           },
           "collectorGroups": {
             "type": "array",
@@ -27197,6 +27213,10 @@
             "type": "number",
             "format": "double"
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "start": {
             "type": "string",
             "format": "date-time"
@@ -27283,6 +27303,10 @@
             "type": "number",
             "format": "double"
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "start": {
             "type": "string",
             "format": "date-time"
@@ -27368,6 +27392,10 @@
           "value": {
             "type": "number",
             "format": "double"
+          },
+          "culture": {
+            "type": "string",
+            "nullable": true
           },
           "start": {
             "type": "string",
@@ -30195,6 +30223,10 @@
             "minLength": 1,
             "type": "string"
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "numericValue": {
             "type": "number",
             "format": "double",
@@ -32397,6 +32429,10 @@
             "type": "string",
             "nullable": true
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "collectors": {
             "type": "array",
             "items": {
@@ -32499,6 +32535,10 @@
             "type": "string",
             "nullable": true
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "collectors": {
             "type": "array",
             "items": {
@@ -32594,6 +32634,10 @@
             "type": "number",
             "format": "double"
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "start": {
             "type": "string",
             "format": "date-time"
@@ -32676,6 +32720,10 @@
             "type": "number",
             "format": "double"
           },
+          "culture": {
+            "type": "string",
+            "nullable": true
+          },
           "start": {
             "type": "string",
             "format": "date-time"
@@ -32757,6 +32805,10 @@
           "value": {
             "type": "number",
             "format": "double"
+          },
+          "culture": {
+            "type": "string",
+            "nullable": true
           },
           "start": {
             "type": "string",

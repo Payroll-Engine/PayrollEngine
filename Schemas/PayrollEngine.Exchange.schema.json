@@ -2864,6 +2864,13 @@
                 }
               ]
             },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The collector culture name based on RFC 4646"
+            },
             "collectorGroups": {
               "type": [
                 "array",
@@ -3087,6 +3094,13 @@
                 "string"
               ],
               "description": "The wage type calendar (fallback: employee calendar)"
+            },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The wage type culture name based on RFC 4646"
             },
             "valueExpression": {
               "type": [
@@ -4447,6 +4461,13 @@
               ],
               "description": "The case numeric value",
               "format": "decimal"
+            },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The case value culture name based on RFC 4646"
             },
             "caseRelation": {
               "description": "The case relation",
@@ -6448,6 +6469,13 @@
               "description": "The wage type custom result value (immutable)",
               "format": "decimal"
             },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The wage type custom result culture name based on RFC 4646"
+            },
             "start": {
               "type": "string",
               "description": "The period starting date for the value",
@@ -6536,6 +6564,13 @@
               "type": "number",
               "description": "The wage type result value (immutable)",
               "format": "decimal"
+            },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The wage type result culture name based on RFC 4646"
             },
             "start": {
               "type": "string",
@@ -6643,6 +6678,13 @@
               "description": "The collector custom result value (immutable)",
               "format": "decimal"
             },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The collector custom result culture name based on RFC 4646+"
+            },
             "start": {
               "type": "string",
               "description": "The period starting date for the value",
@@ -6735,6 +6777,13 @@
               "type": "number",
               "description": "The collector result value (immutable)",
               "format": "decimal"
+            },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The collector result culture name based on RFC 4646"
             },
             "start": {
               "type": "string",
@@ -6829,6 +6878,13 @@
               "type": "string",
               "description": "The result value (immutable)",
               "minLength": 1
+            },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The payrun result culture name based on RFC 4646"
             },
             "numericValue": {
               "type": [

@@ -70,7 +70,13 @@ Steps to build the release:
     - `Regulation.*`
     - `PayrollEngine`
 
-### 3. GitHub Release
+### 3. GitHub Releases
+Build aaplication releases:
+- `PayrollEngine.Backend`
+- `PayrollEngine.PayrollConsole`
+- `PayrollEngine.WebApp`
+
+Build `PayrollEngine` release:
 1. GitHub: create a new release with the same version name
     - create a new tag with the release name
     - attach the release files from the `Releases\Version` folder

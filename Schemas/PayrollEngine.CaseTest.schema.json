@@ -562,6 +562,13 @@
               "description": "The case numeric value",
               "format": "decimal"
             },
+            "culture": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The case value culture name based on RFC 4646"
+            },
             "caseRelation": {
               "description": "The case relation",
               "oneOf": [

@@ -254,9 +254,7 @@
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
                   "order": 315,
-                  "attributes": {
-                    "input.culture": "bs-Latn-BA"
-                  }
+                  "culture": "bs-Latn-BA"
                 }
               ]
             },

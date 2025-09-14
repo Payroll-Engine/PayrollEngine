@@ -1,0 +1,479 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2018-11-05T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Culture.Test",
+      "culture": "en-US",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "culture": "de-DE",
+          "userType": "User"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "Culture.Us.Test",
+          "culture": "en-US"
+        },
+        {
+          "name": "Culture.De.Test",
+          "culture": "de-DE"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "culture": "fr-CH",
+          "divisions": [
+            "Culture.Us.Test",
+            "Culture.De.Test"
+          ]
+        },
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "culture": "de-CH",
+          "divisions": [
+            "Culture.Us.Test",
+            "Culture.De.Test"
+          ]
+        },
+        {
+          "identifier": "leo.jackson@foo.com",
+          "firstName": "Leon",
+          "lastName": "Jackson",
+          "divisions": [
+            "Culture.Us.Test",
+            "Culture.De.Test"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Culture.Test",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                },
+                {
+                  "name": "Salary.Us",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "culture": "en-US"
+                },
+                {
+                  "name": "Salary.De",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "culture": "de-DE"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Salary",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            },
+            {
+              "wageTypeNumber": 101,
+              "name": "Salary.US",
+              "culture": "en-US",
+              "valueExpression": "CaseValue[\"Salary.Us\"]"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Salary.De",
+              "culture": "de-DE",
+              "valueExpression": "CaseValue[\"Salary.De\"]"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Salary.Gb",
+              "culture": "en-GB",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Culture.Us.Test",
+          "divisionName": "Culture.Us.Test",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "Culture.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "divisionName": "Culture.Us.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.Us",
+                    "value": "5000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.De",
+                    "value": "5000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "Culture.Us.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "3500",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.Us",
+                    "value": "3500",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.De",
+                    "value": "3500",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "leo.jackson@foo.com",
+              "divisionName": "Culture.Us.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "7800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.Us",
+                    "value": "7800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.De",
+                    "value": "7800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Culture.De.Test",
+          "divisionName": "Culture.De.Test",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "Culture.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "divisionName": "Culture.De.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "10000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.Us",
+                    "value": "10000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.De",
+                    "value": "10000",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "Culture.De.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.Us",
+                    "value": "5800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.De",
+                    "value": "5800",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "leo.jackson@foo.com",
+              "divisionName": "Culture.De.Test",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "12300",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.Us",
+                    "value": "12300",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  },
+                  {
+                    "caseFieldName": "Salary.De",
+                    "value": "12300",
+                    "start": "2018-11-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Culture.Us.Test",
+          "name": "Culture.Us.TestPayrun1"
+        },
+        {
+          "payrollName": "Culture.De.Test",
+          "name": "Culture.De.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Culture.TestPayrun1.Us.Jan19",
+          "payrunName": "Culture.Us.TestPayrun1",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19 (US)"
+        },
+        {
+          "name": "Culture.TestPayrun1.De.Jan19",
+          "payrunName": "Culture.De.TestPayrun1",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19 (DE)"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Culture.TestPayrun1.Us.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5000,
+              "culture": "fr-CH"
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 5000,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 5000,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5000,
+              "culture": "en-GB"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Culture.TestPayrun1.Us.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 3500,
+              "culture": "de-CH"
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 3500,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 3500,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 3500,
+              "culture": "en-GB"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Culture.TestPayrun1.Us.Jan19",
+          "employeeIdentifier": "leo.jackson@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 7800,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 7800,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 7800,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 7800,
+              "culture": "en-GB"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Culture.TestPayrun1.De.Jan19",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 10000,
+              "culture": "fr-CH"
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 10000,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 10000,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 10000,
+              "culture": "en-GB"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Culture.TestPayrun1.De.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 5800,
+              "culture": "de-CH"
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 5800,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 5800,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5800,
+              "culture": "en-GB"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Culture.TestPayrun1.De.Jan19",
+          "employeeIdentifier": "leo.jackson@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 12300,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 12300,
+              "culture": "en-US"
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 12300,
+              "culture": "de-DE"
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 12300,
+              "culture": "en-GB"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

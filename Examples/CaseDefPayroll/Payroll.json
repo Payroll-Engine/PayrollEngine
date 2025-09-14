@@ -471,20 +471,16 @@
                   "description": "Money en-US Description [culture=en-US]",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
-                  "order": 314,
-                  "attributes": {
-                    "input.culture": "en-US"
-                  }
+                  "culture": "en-US",
+                  "order": 314
                 },
                 {
                   "name": "Money de-DE",
                   "description": "Money de-DE Description [culture=de-DE]",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
-                  "order": 315,
-                  "attributes": {
-                    "input.culture": "de-DE"
-                  }
+                  "culture": "de-DE",
+                  "order": 315
                 },
                 {
                   "name": "Percent",
@@ -1437,12 +1433,7 @@
                   "valueType": "Money",
                   "timeType": "Period",
                   "defaultStart": "today",
-                  "attributes": {
-                    "input.culture": "de-DE"
-                  },
-                  "valueAttributes": {
-                    "input.culture": "de-DE"
-                  }
+                  "culture": "de-DE"
                 }
               ]
             },
@@ -1463,12 +1454,7 @@
                   "valueType": "Decimal",
                   "timeType": "Period",
                   "defaultStart": "today",
-                  "attributes": {
-                    "input.culture": "de-DE"
-                  },
-                  "valueAttributes": {
-                    "input.culture": "de-DE"
-                  }
+                  "culture": "de-DE"
                 }
               ]
             },
