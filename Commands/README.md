@@ -62,10 +62,11 @@ Steps to build the release:
 7. Commit the following repos to GitHub and build a new release
     - `PayrollEngine.Client.Services`
 8. -> Wait until the package is public available on nuget.org (a few minutes)
-5. Commit the following repos to GitHub and build new releases
+9. Commit the following repos to GitHub and build new releases
     - `PayrollEngine.Backend`
     - `PayrollEngine.PayrollConsole`
     - `PayrollEngine.WebApp`
+10. Commit the following repos to GitHub
     - `PayrollEngine.Client.Tutorials`
     - `Regulation.*`
     - `PayrollEngine`
