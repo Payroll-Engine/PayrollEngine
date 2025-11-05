@@ -1,0 +1,297 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "Payroll.Test.Lookup",
+      "created": "2019-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "TestDivision"
+          ],
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TestDivision",
+          "created": "2019-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Payroll.Test.Lookup",
+          "description": "The testing payroll",
+          "created": "2019-01-01T00:00:00.0Z",
+          "lookups": [
+            {
+              "name": "ThresholdLookup",
+              "rangeMode": "Threshold",
+              "created": "2019-01-01T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "T0",
+                  "rangeValue": 0,
+                  "value": "0.05"
+                },
+                {
+                  "key": "T10000",
+                  "rangeValue": 10000,
+                  "value": "0.10"
+                },
+                {
+                  "key": "T20000",
+                  "rangeValue": 20000,
+                  "value": "0.15"
+                },
+                {
+                  "key": "T30000",
+                  "rangeValue": 30000,
+                  "value": "0.20"
+                },
+                {
+                  "key": "T40000",
+                  "rangeValue": 40000,
+                  "value": "0.25"
+                }
+              ]
+            },
+            {
+              "name": "ProgressiveLookup",
+              "rangeMode": "Progressive",
+              "created": "2019-01-01T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "T0",
+                  "rangeValue": 0,
+                  "valueObject": {
+                    "factor": 0.05
+                  }
+                },
+                {
+                  "key": "T10000",
+                  "rangeValue": 10000,
+                  "valueObject": {
+                    "factor": 0.1
+                  }
+                },
+                {
+                  "key": "T20000",
+                  "rangeValue": 20000,
+                  "valueObject": {
+                    "factor": 0.15
+                  }
+                },
+                {
+                  "key": "T30000",
+                  "rangeValue": 30000,
+                  "valueObject": {
+                    "factor": 0.2
+                  }
+                },
+                {
+                  "key": "T40000",
+                  "rangeValue": 40000,
+                  "valueObject": {
+                    "factor": 0.25
+                  }
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Threshold0",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 0)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "name": "Threshold500",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 5000)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "name": "Threshold1000",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 10000)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.3,
+              "name": "Threshold1500",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 15000)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.4,
+              "name": "Threshold2500",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 25000)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.5,
+              "name": "Threshold3500",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 35000)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 101.6,
+              "name": "Threshold4500",
+              "valueExpression": "ApplyRangeValue(\"ThresholdLookup\", 45000)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201,
+              "name": "Progressive0",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 0, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201.1,
+              "name": "Progressive500",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 5000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201.2,
+              "name": "Progressive1000",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 10000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201.3,
+              "name": "Progressive1500",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 15000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201.4,
+              "name": "Progressive2500",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 25000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201.5,
+              "name": "Progressive3500",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 35000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 201.6,
+              "name": "Progressive4500",
+              "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 45000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Payroll.Test.Lookup",
+          "divisionName": "TestDivision",
+          "layers": [
+            {
+              "level": 1,
+              "regulationName": "Payroll.Test.Lookup"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Payroll.Test.Lookup",
+          "name": "Payroll.TestPayrun1"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Payroll.TestPayrun1.Jan19",
+          "payrunName": "Payroll.TestPayrun1",
+          "payrollName": "Payroll.Test.Lookup",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Payroll.TestPayrun1.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 101.1,
+              "value": 250
+            },
+            {
+              "wageTypeNumber": 101.2,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 101.3,
+              "value": 1500
+            },
+            {
+              "wageTypeNumber": 101.4,
+              "value": 3750
+            },
+            {
+              "wageTypeNumber": 101.5,
+              "value": 7000
+            },
+            {
+              "wageTypeNumber": 101.6,
+              "value": 11250
+            },
+            {
+              "wageTypeNumber": 201,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 201.1,
+              "value": 250
+            },
+            {
+              "wageTypeNumber": 201.2,
+              "value": 500
+            },
+            {
+              "wageTypeNumber": 201.3,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 201.4,
+              "value": 2250
+            },
+            {
+              "wageTypeNumber": 201.5,
+              "value": 4000
+            },
+            {
+              "wageTypeNumber": 201.6,
+              "value": 6250
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

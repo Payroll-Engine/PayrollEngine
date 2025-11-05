@@ -3318,6 +3318,14 @@
                 "type": "string"
               }
             },
+            "rangeMode": {
+              "description": "Lookup range mode",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/LookupRangeMode"
+                }
+              ]
+            },
             "rangeSize": {
               "type": [
                 "null",
@@ -3344,6 +3352,40 @@
             }
           }
         }
+      ]
+    },
+    "LookupRangeMode": {
+      "type": "string",
+      "description": "The lookup range mode",
+      "x-enum-names": [
+        "None",
+        "Threshold",
+        "Progressive"
+      ],
+      "x-enum-varnames": [
+        "None",
+        "Threshold",
+        "Progressive"
+      ],
+      "x-enumNames": [
+        "None",
+        "Threshold",
+        "Progressive"
+      ],
+      "x-enum-descriptions": [
+        null,
+        null,
+        null
+      ],
+      "x-enumDescriptions": [
+        null,
+        null,
+        null
+      ],
+      "enum": [
+        "None",
+        "Threshold",
+        "Progressive"
       ]
     },
     "Script": {

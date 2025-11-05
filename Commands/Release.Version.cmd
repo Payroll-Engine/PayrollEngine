@@ -4,7 +4,7 @@ echo Set Payroll Set Release Version
 
 rem --- version setup ---
 :version
-set version=0.9.0-beta.11
+set version=0.9.0-beta.12
 
 rem --- confirmation ---
 :confirmation

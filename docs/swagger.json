@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.11",
+    "description": "Payroll Engine API v0.9.0-beta.12",
     "version": "1"
   },
   "paths": {
@@ -28364,6 +28364,9 @@
           "overrideType": {
             "$ref": "#/components/schemas/OverrideType"
           },
+          "rangeMode": {
+            "$ref": "#/components/schemas/LookupRangeMode"
+          },
           "rangeSize": {
             "type": "number",
             "format": "double",
@@ -28477,6 +28480,15 @@
         },
         "additionalProperties": false
       },
+      "LookupRangeMode": {
+        "enum": [
+          "None",
+          "Threshold",
+          "Progressive"
+        ],
+        "type": "string",
+        "description": "The lookup range mode"
+      },
       "LookupSet": {
         "required": [
           "name",
@@ -28526,6 +28538,9 @@
           },
           "overrideType": {
             "$ref": "#/components/schemas/OverrideType"
+          },
+          "rangeMode": {
+            "$ref": "#/components/schemas/LookupRangeMode"
           },
           "rangeSize": {
             "type": "number",

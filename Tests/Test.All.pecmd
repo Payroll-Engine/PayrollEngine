@@ -7,6 +7,7 @@ CountryPayroll.Test/Test.pecmd
 DerivedPayroll.Test/Test.pecmd
 ForecastPayroll.Test/Test.pecmd
 IncrementalPayroll.Test/Test.pecmd
+Lookup.Test/Test.pecmd
 LunisoralCalendar.Test/Test.pecmd
 Payrun.Test/Test.pecmd
 PayrunEmployee.Test/Test.pecmd
