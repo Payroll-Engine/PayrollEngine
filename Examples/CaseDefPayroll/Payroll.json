@@ -863,7 +863,7 @@
               "description": "Doubles the value",
               "caseType": "Employee",
               "availableExpression": "false",
-              "validateExpression": "var value = PayrollValue[\"Conditions.Double\"]; if (value.HasValue && (int)value % 2 != 0) AddIssue(\"Conditions.Double\", \"Only odd values allowed\");",
+              "validateExpression": "var value = PayrollValue[\"Conditions.Double\"]; if (value.HasValue && (int)value % 2 != 0) AddCaseIssue(\"Only odd values allowed\");",
               "fields": [
                 {
                   "name": "Conditions.Double",
@@ -1184,13 +1184,18 @@
               "name": "CaseFieldBooleanAction",
               "caseType": "Employee",
               "defaultReason": "Test CaseFieldBooleaAction",
-              "buildExpression": "true",
+              "buildActions": [
+                "SetFieldEndPickerOpenMonth('BooleanAction')"
+              ],
               "fields": [
                 {
                   "name": "BooleanAction",
                   "valueType": "Integer",
                   "timeType": "Period",
                   "defaultStart": "today",
+                  "attributes": {
+                    "input.endPickerOpen": "month"
+                  },
                   "buildActions": [
                     "Input.SetEndMonthPicker",
                     "'IsTrue(#BooleanAction.Start.IsFirstDayOfMonth) ? SetFieldValue(#BooleanAction, 1) : SetFieldValue(#BooleanAction, 2)",
@@ -1395,8 +1400,7 @@
               "caseType": "Employee",
               "defaultReason": "Test CaseAvailableActionOn",
               "availableActions": [
-                "CaseValueNotEqual(@CaseAvailableToggle.Value?, 1)",
-                "'CaseValueGreaterThan(@CaseAvailableToggle.Value?, 0) ? CaseValueNotEqual(@CaseAvailableToggle.Value?, 1) : CaseValueNotEqual(@CaseAvailableToggle.Value?, 0)"
+                "? ^^CaseAvailableToggle != 1"
               ],
               "fields": [
                 {
@@ -1418,7 +1422,7 @@
               ],
               "defaultReason": "Test CaseAvailableActionOff",
               "availableActions": [
-                "CaseValueEqual(@CaseAvailableToggle.Value, 1)"
+                "? ^^CaseAvailableToggle == 1"
               ]
             },
             {
@@ -1474,11 +1478,18 @@
           ],
           "scripts": [
             {
-              "name": "MyCaseBuildActions",
+              "name": "MyCaseChange",
               "functionTypes": [
-                "CaseBuild"
+                "CaseChange"
               ],
-              "valueFile": "scripts/MyCaseBuildActions.cs"
+              "valueFile": "scripts/MyCaseChangeFunction.cs"
+            },
+            {
+              "name": "MyCaseValidate",
+              "functionTypes": [
+                "CaseValidate"
+              ],
+              "valueFile": "scripts/MyCaseValidateFunction.cs"
             }
           ],
           "caseRelations": [
@@ -1583,7 +1594,7 @@
               "sourceCaseName": "Conditions.Base",
               "targetCaseName": "Conditions.Double",
               "buildExpression": "TargetValue[\"Conditions.Double\"] =  (int)SourceValue[\"Conditions.Base\"] * 2; return true",
-              "validateExpression": "bool valid = (int)TargetValue[\"Conditions.Double\"] % (int)SourceValue[\"Conditions.Base\"] == 0; if (!valid) AddIssue(\"Invalid target double value\"); return valid"
+              "validateExpression": "bool valid = (int)TargetValue[\"Conditions.Double\"] % (int)SourceValue[\"Conditions.Base\"] == 0; if (!valid) AddCaseIssue(\"Invalid target double value\"); return valid"
             },
             {
               "sourceCaseName": "Conditions.Base",

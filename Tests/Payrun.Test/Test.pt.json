@@ -317,7 +317,7 @@
               "wageTypeNumber": 101,
               "name": "MonthlyWage",
               "valueExpression": "var values = GetCaseValues(\"MonthlyWage\", \"EmploymentLevel\"); return values[\"MonthlyWage\"] * values[\"EmploymentLevel\"];",
-              "resultExpression": "AddPayrunResult(\"MyPayrunResult\", 125.25, ValueType.Money); DisableCollector(\"Credit\");",
+              "resultExpression": "SetPayrunResult(\"MyPayrunResult\", 125.25, ValueType.Money); DisableCollector(\"Credit\");",
               "collectors": [
                 "AHV Base",
                 "QST Base",
@@ -372,7 +372,7 @@
             {
               "wageTypeNumber": 199,
               "name": "WageCoverage",
-              "valueExpression": "var results = GetPeriodWageTypeResults(new(101, 1, PayrunJobStatus.Legal)).Values(); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
+              "valueExpression": "var results = GetPeriodWageTypeResults(new(101, 1, PayrunJobStatus.Complete)).Values(); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {

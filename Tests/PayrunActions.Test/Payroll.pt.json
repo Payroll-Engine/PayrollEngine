@@ -1,0 +1,451 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2025-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "PayrunAction.Tenant",
+      "calendars": [
+        {
+          "name": "MonthlySalary",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "CalendarMonth"
+        }
+      ],
+      "calendar": "MonthlySalary",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        },
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "PayrunAction.Division",
+          "culture": "en-US"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "PayrunAction.Division"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "PayrunAction.Regulation",
+          "namespace": "MyNamespace",
+          "scripts": [
+            {
+              "name": "WageTypeAction",
+              "functionTypes": [
+                "WageTypeValue"
+              ],
+              "valueFile": "Scripts/WageTypeValueFunction.cs"
+            }
+          ],
+          "cases": [
+            {
+              "name": "MonthlyWage",
+              "caseType": "Employee",
+              "buildActions": [
+                "? ^:MonthlyWage <= 5000 ?= HiddenField('MonthlyWage') ?! VisibleField('MonthlyWage')",
+                "? ^:MonthlyWage <= 10000 ?= HiddenField('MonthlyWage')"
+              ],
+              "validateActions": [
+                "? ^:MonthlyWage < 10000"
+              ],
+              "defaultReason": "Change monthly wage",
+              "fields": [
+                {
+                  "name": "MonthlyWage",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "WageFactor",
+              "caseType": "Employee",
+              "defaultReason": "Change wage factor",
+              "fields": [
+                {
+                  "name": "WageFactor",
+                  "valueType": "Decimal",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "lookups": [
+            {
+              "name": "InsuranceKeyRate",
+              "values": [
+                {
+                  "key": "A",
+                  "value": "0.15"
+                },
+                {
+                  "key": "B",
+                  "value": ".25"
+                },
+                {
+                  "key": "C",
+                  "value": "0.5"
+                }
+              ]
+            },
+            {
+              "name": "InsuranceRangeRate",
+              "values": [
+                {
+                  "key": "Rate",
+                  "rangeValue": 1,
+                  "value": "0.1"
+                },
+                {
+                  "key": "Rate",
+                  "rangeValue": 3000,
+                  "value": "0.2"
+                },
+                {
+                  "key": "Rate",
+                  "rangeValue": 6000,
+                  "value": "0.3"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "CollectFactor",
+              "applyActions": [
+                "^|RuntimeValue = WageTypeValue",
+                "^|RuntimeValue"
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "MonthlyWage",
+              "valueActions": [
+                "? ^^MonthlyWage >= 5000",
+                "^@PayrunResult = ^^MonthlyWage * 1.5",
+                "^^MonthlyWage"
+              ],
+              "collectors": [
+                "CollectFactor"
+              ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "MonthlyWageConsolidated",
+              "valueActions": [
+                "^$MonthlyWage.Cycle"
+              ]
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "MonthlyWageYtd",
+              "valueActions": [
+                "^$MonthlyWage + ^$MonthlyWageConsolidated"
+              ]
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "LookupWage",
+              "valueActions": [
+                "^^MonthlyWage * ^#InsuranceKeyRate('A')"
+              ]
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "RangeLookupWage",
+              "valueActions": [
+                "^^MonthlyWage * ^#InsuranceRangeRate(None, ^^MonthlyWage)"
+              ]
+            },
+            {
+              "wageTypeNumber": 106,
+              "name": "MonthlyRateWage",
+              "valueActions": [
+                " #comment",
+                "^^MonthlyWage * ^^WageFactor"
+              ]
+            },
+            {
+              "wageTypeNumber": 107,
+              "name": "DuplicateMonthlyRateWage",
+              "valueActions": [
+                "Duplicate(^$MonthlyRateWage)"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "PayrunAction.Payroll",
+          "divisionName": "PayrunAction.Division",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "PayrunAction.Regulation"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "PayrunAction.Division",
+              "case": {
+                "caseName": "MonthlyWage",
+                "values": [
+                  {
+                    "caseFieldName": "MonthlyWage",
+                    "value": "5000",
+                    "start": "2025-10-01T00:00:00.0Z",
+                    "created": "2025-08-17T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "PayrunAction.Division",
+              "case": {
+                "caseName": "WageFactor",
+                "values": [
+                  {
+                    "caseFieldName": "WageFactor",
+                    "value": "2",
+                    "start": "2025-10-01T00:00:00.0Z",
+                    "created": "2025-08-17T18:22:45.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "PayrunAction.Division",
+              "case": {
+                "caseName": "WageFactor",
+                "values": [
+                  {
+                    "caseFieldName": "WageFactor",
+                    "value": "1.5",
+                    "start": "2025-11-16T00:00:00.0Z",
+                    "end": "2025-11-30T00:00:00.0Z",
+                    "created": "2025-09-22T18:22:45.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "PayrunAction.Payroll",
+          "name": "PayrunAction.Payrun",
+          "culture": "en-US",
+          "defaultReason": "Run payrun actions"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "PayrunAction.Payrun.Oct25",
+          "payrunName": "PayrunAction.Payrun",
+          "payrollName": "PayrunAction.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "consolidatedPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2025-10-01T00:00:00.0Z",
+          "evaluationDate": "2025-10-28T00:00:00.0Z",
+          "reason": "Consolidated Payrun Oct 25",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunAction.Payrun.Nov25",
+          "payrunName": "PayrunAction.Payrun",
+          "payrollName": "PayrunAction.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "consolidatedPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2025-11-01T00:00:00.0Z",
+          "evaluationDate": "2025-11-28T00:00:00.0Z",
+          "reason": "Consolidated Payrun Nov 25",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunAction.Payrun.Dec25",
+          "payrunName": "PayrunAction.Payrun",
+          "payrollName": "PayrunAction.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "consolidatedPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2025-12-01T00:00:00.0Z",
+          "evaluationDate": "2025-12-28T00:00:00.0Z",
+          "reason": "Consolidated Payrun Dec 25",
+          "storeEmptyResults": true
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "PayrunAction.Payrun.Oct25",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 750
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 20000
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "CollectFactor",
+              "value": 5000
+            }
+          ],
+          "payrunResults": [
+            {
+              "name": "PayrunResult",
+              "value": "7500",
+              "valueType": "Money"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunAction.Payrun.Nov25",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 750
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 8750
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 17500
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "CollectFactor",
+              "value": 5000
+            }
+          ],
+          "payrunResults": [
+            {
+              "name": "PayrunResult",
+              "value": "7500",
+              "valueType": "Money"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunAction.Payrun.Dec25",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 15000
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 750
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 20000
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "CollectFactor",
+              "value": 5000
+            }
+          ],
+          "payrunResults": [
+            {
+              "name": "PayrunResult",
+              "value": "7500",
+              "valueType": "Money"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

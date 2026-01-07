@@ -18,6 +18,7 @@
 |  [Lookup](Lookup.Test/) | Payrun | lookup range values test |
 |  [LunisoralCalendar](LunisoralCalendar.Test/) | Payrun | Lunisolar calendar test |
 |  [Payrun](Payrun.Test/) | Payrun | Payrun test  |
+|  [PayrunActions](PayrunActions.Test/) | Payrun | Payrun actions test  |
 |  [PayrunEmployee](PayrunEmployee.Test/) | Payrun employee | Payrun employee test  |
 |  [Report](Report.Test/) | Report | Report data test  |
 |  [RetroManualPayroll](RetroManualPayroll.Test/) | Payrun | Manual retro payrun job test |

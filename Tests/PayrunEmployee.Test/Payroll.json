@@ -331,7 +331,7 @@
             {
               "wageTypeNumber": 199,
               "name": "WageCoverage",
-              "valueExpression": "var results = GetPeriodWageTypeResults(new WageTypePeriodResultQuery(101, 1, PayrunJobStatus.Legal)); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
+              "valueExpression": "var results = GetPeriodWageTypeResults(new WageTypePeriodResultQuery(101, 1, PayrunJobStatus.Complete)); return results.Any() ? (results[0] < 3000 ? 3000-results[0] : 0) : 0",
               "created": "2019-01-01T00:00:00.0Z"
             },
             {

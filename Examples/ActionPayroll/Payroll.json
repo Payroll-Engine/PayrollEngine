@@ -4,6 +4,7 @@
   "tenants": [
     {
       "identifier": "ActionTenant",
+      "culture": "en-US",
       "users": [
         {
           "identifier": "lucy.smith@foo.com",
@@ -33,7 +34,7 @@
           "name": "ActionRegulation",
           "lookups": [
             {
-              "name": "MyActions.Actions",
+              "name": "MyActions.Action",
               "values": [
                 {
                   "key": "InvalidUId",
@@ -50,17 +51,24 @@
               "name": "UId",
               "caseType": "Employee",
               "defaultReason": "Test UId",
-              "validateExpression": "true",
+              "validateActions": [
+                "? CheckUId('UId', ^:UId)"
+              ],
               "fields": [
+                {
+                  "name": "Mandatory",
+                  "valueType": "String",
+                  "timeType": "Period",
+                  "attributes": {
+                    "input.endPickerOpen": "month"
+                  }
+                },
                 {
                   "name": "UId",
                   "valueType": "String",
                   "timeType": "Period",
                   "valueMandatory": true,
                   "defaultStart": "today",
-                  "validateActions": [
-                    "MyActions.CheckUId"
-                  ],
                   "attributes": {
                     "input.valueMask": "CHE-000.000.000",
                     "input.valueHelp": "Format CHE-123.456.789"
@@ -73,9 +81,9 @@
             {
               "name": "MyActions",
               "functionTypes": [
-                "CaseChange"
+                "CaseValidate"
               ],
-              "valueFile": "Scripts/MyActions.cs"
+              "valueFile": "Scripts/CaseValidateFunction.cs"
             }
           ]
         }

@@ -92,7 +92,7 @@
               "wageTypeNumber": 101,
               "name": "Cost Center Rate",
               "valueExpressionComment": "Get consolidated wage type 100 by cost center",
-              "valueExpression": "return GetWageTypeCustomResults(new(100, CycleStart, PeriodEnd, PayrunJobStatus.Legal) { Tag = CaseValue[\"Cost Center\"]?.Value?.ToString() }).Sum();"
+              "valueExpression": "return GetWageTypeCustomResults(new(100, CycleStart, PeriodEnd, PayrunJobStatus.Complete) { Tag = CaseValue[\"Cost Center\"]?.Value?.ToString() }).Sum();"
             },
             {
               "wageTypeNumber": 102,

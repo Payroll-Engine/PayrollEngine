@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.12",
+    "description": "Payroll Engine API v0.9.0-beta.13",
     "version": "1"
   },
   "paths": {
@@ -25430,20 +25430,6 @@
             },
             "nullable": true
           },
-          "buildActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "validateActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
           "attributes": {
             "type": "object",
             "additionalProperties": {
@@ -25800,20 +25786,6 @@
             "$ref": "#/components/schemas/LookupSettings"
           },
           "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "buildActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "validateActions": {
             "type": "array",
             "items": {
               "type": "string"
@@ -27039,6 +27011,27 @@
             "type": "string",
             "nullable": true
           },
+          "startActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "applyActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "endActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
           "attributes": {
             "type": "object",
             "additionalProperties": {
@@ -27126,6 +27119,27 @@
           },
           "endExpression": {
             "type": "string",
+            "nullable": true
+          },
+          "startActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "applyActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "endActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "threshold": {
@@ -28208,6 +28222,7 @@
           "PayrunEmployeeEnd",
           "PayrunWageTypeAvailable",
           "PayrunEnd",
+          "PayrunBase",
           "Payrun",
           "Payroll",
           "ReportBuild",
@@ -30420,6 +30435,12 @@
             },
             "nullable": true
           },
+          "namespace": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "version": {
             "type": "integer",
             "format": "int32"
@@ -32468,6 +32489,20 @@
           },
           "resultExpression": {
             "type": "string",
+            "nullable": true
+          },
+          "valueActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "resultActions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "attributes": {

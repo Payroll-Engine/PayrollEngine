@@ -1,6 +1,6 @@
 {
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
-  "createdObjectDate": "2018-11-05T00:00:00.0Z",
+  "createdObjectDate": "2025-01-01T00:00:00.0Z",
   "tenants": [
     {
       "identifier": "Calendar.Test",
@@ -13,24 +13,30 @@
       ],
       "calendars": [
         {
-          "name": "YearlySalary",
+          "name": "MonthlyWorkweek",
           "cycleTimeUnit": "Year",
           "periodTimeUnit": "CalendarMonth",
-          "timeMap": "Cycle"
+          "timeMap": "Period",
+          "weekMode": "WorkWeek",
+          "workMonday": true,
+          "workTuesday": true,
+          "workWednesday": true,
+          "workThursday": true,
+          "workFriday": true
         },
         {
-          "name": "MonthlySalary",
+          "name": "MonthlyWeek",
           "cycleTimeUnit": "Year",
           "periodTimeUnit": "CalendarMonth",
           "timeMap": "Period"
         }
       ],
-      "culture": "en-US",
-      "calendar": "YearlySalary",
+      "culture": "fr-FR",
+      "calendar": "MonthlyWorkweek",
       "divisions": [
         {
           "name": "Calendar.Test",
-          "culture": "en-US"
+          "culture": "fr-FR"
         }
       ],
       "employees": [
@@ -38,18 +44,6 @@
           "identifier": "višnja.müller@foo.com",
           "firstName": "Višnja",
           "lastName": "Müller",
-          "culture": "en-US",
-          "calendar": "YearlySalary",
-          "divisions": [
-            "Calendar.Test"
-          ]
-        },
-        {
-          "identifier": "remo.meier@foo.com",
-          "firstName": "Remo",
-          "lastName": "Meier",
-          "culture": "de-CH",
-          "calendar": "MonthlySalary",
           "divisions": [
             "Calendar.Test"
           ]
@@ -77,6 +71,45 @@
               "wageTypeNumber": 100,
               "name": "Salary",
               "valueExpression": "CaseValue[\"Salary\"]"
+            },
+            {
+              "wageTypeNumber": 101,
+              "name": "CalendarDayCount",
+              "valueExpression": "GetCalendarDayCount()"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Workday",
+              "valueExpression": "IsCalendarWorkDay(new DateTime(2025, 8, 1)) ? 1 : 0"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Weekend",
+              "valueExpression": "IsCalendarWorkDay(new DateTime(2025, 8, 3)) ? 1 : 0"
+            },
+            {
+              "wageTypeNumber": 200,
+              "name": "SalaryFullWeek",
+              "calendar": "MonthlyWeek",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            },
+            {
+              "wageTypeNumber": 201,
+              "name": "CalendarDayCountFullWeek",
+              "calendar": "MonthlyWeek",
+              "valueExpression": "GetCalendarDayCount()"
+            },
+            {
+              "wageTypeNumber": 202,
+              "name": "WorkdayFullWeek",
+              "calendar": "MonthlyWeek",
+              "valueExpression": "IsCalendarWorkDay(new DateTime(2025, 8, 1)) ? 1 : 0"
+            },
+            {
+              "wageTypeNumber": 203,
+              "name": "WeekendFullWeek",
+              "calendar": "MonthlyWeek",
+              "valueExpression": "IsCalendarWorkDay(new DateTime(2025, 8, 3)) ? 1 : 0"
             }
           ]
         }
@@ -95,36 +128,6 @@
             {
               "userIdentifier": "peter.schmid@foo.com",
               "employeeIdentifier": "višnja.müller@foo.com",
-              "divisionName": "Calendar.Test",
-              "case": {
-                "caseName": "Salary",
-                "values": [
-                  {
-                    "caseFieldName": "Salary",
-                    "value": "60000",
-                    "start": "2018-11-05T00:00:00.0Z"
-                  }
-                ]
-              }
-            },
-            {
-              "userIdentifier": "peter.schmid@foo.com",
-              "employeeIdentifier": "remo.meier@foo.com",
-              "divisionName": "Calendar.Test",
-              "case": {
-                "caseName": "Salary",
-                "values": [
-                  {
-                    "caseFieldName": "Salary",
-                    "value": "4800",
-                    "start": "2018-11-05T00:00:00.0Z"
-                  }
-                ]
-              }
-            },
-            {
-              "userIdentifier": "peter.schmid@foo.com",
-              "employeeIdentifier": "višnja.müller@foo.com",
               "reason": "Salary increase",
               "divisionName": "Calendar.Test",
               "case": {
@@ -132,26 +135,9 @@
                 "values": [
                   {
                     "caseFieldName": "Salary",
-                    "value": "63000",
-                    "start": "2019-06-01T00:00:00.0Z",
-                    "created": "2019-03-05T00:00:00.0Z"
-                  }
-                ]
-              }
-            },
-            {
-              "userIdentifier": "peter.schmid@foo.com",
-              "employeeIdentifier": "remo.meier@foo.com",
-              "reason": "Salary increase",
-              "divisionName": "Calendar.Test",
-              "case": {
-                "caseName": "Salary",
-                "values": [
-                  {
-                    "caseFieldName": "Salary",
-                    "value": "5200",
-                    "start": "2019-06-01T00:00:00.0Z",
-                    "created": "2019-03-05T00:00:00.0Z"
+                    "value": "3100",
+                    "start": "2025-08-05T00:00:00.0Z",
+                    "created": "2025-03-05T00:00:00.0Z"
                   }
                 ]
               }
@@ -167,62 +153,53 @@
       ],
       "payrunJobInvocations": [
         {
-          "name": "Calendar.TestPayrun1.Jan19",
+          "name": "Calendar.TestPayrun1.Aug25",
           "payrunName": "Calendar.TestPayrun1",
           "userIdentifier": "peter.schmid@foo.com",
           "jobStatus": "Complete",
-          "periodStart": "2019-01-01T00:00:00.0Z",
-          "evaluationDate": "2019-02-01T00:00:00.0Z",
-          "reason": "Demo Payrun Jan 19"
-        },
-        {
-          "name": "Calendar.TestPayrun1.Dez19",
-          "payrunName": "Calendar.TestPayrun1",
-          "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
-          "periodStart": "2019-12-01T00:00:00.0Z",
-          "evaluationDate": "2020-01-01T00:00:00.0Z",
-          "reason": "Demo Payrun Dez 19"
+          "periodStart": "2025-08-01T00:00:00.0Z",
+          "evaluationDate": "2025-09-01T00:00:00.0Z",
+          "reason": "Demo Payrun Aug 25"
         }
       ],
       "payrollResults": [
         {
-          "payrunJobName": "Calendar.TestPayrun1.Jan19",
+          "payrunJobName": "Calendar.TestPayrun1.Aug25",
           "employeeIdentifier": "višnja.müller@foo.com",
           "wageTypeResults": [
             {
+              "comment": "5 - 31 Aug - 19 of 21 working days (3100 / 21 * 19)",
               "wageTypeNumber": 100,
-              "value": 5000
-            }
-          ]
-        },
-        {
-          "payrunJobName": "Calendar.TestPayrun1.Jan19",
-          "employeeIdentifier": "remo.meier@foo.com",
-          "wageTypeResults": [
+              "value": 2804.76
+            },
             {
-              "wageTypeNumber": 100,
-              "value": 4800
-            }
-          ]
-        },
-        {
-          "payrunJobName": "Calendar.TestPayrun1.Dez19",
-          "employeeIdentifier": "višnja.müller@foo.com",
-          "wageTypeResults": [
+              "wageTypeNumber": 101,
+              "value": 21
+            },
             {
-              "wageTypeNumber": 100,
-              "value": 5250
-            }
-          ]
-        },
-        {
-          "payrunJobName": "Calendar.TestPayrun1.Dez19",
-          "employeeIdentifier": "remo.meier@foo.com",
-          "wageTypeResults": [
+              "wageTypeNumber": 102,
+              "value": 1
+            },
             {
-              "wageTypeNumber": 100,
-              "value": 5200
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "comment": "5 - 31 Aug - 27 of 31 days (3100 / 31 * 27)",
+              "wageTypeNumber": 200,
+              "value": 2700.0
+            },
+            {
+              "wageTypeNumber": 201,
+              "value": 31
+            },
+            {
+              "wageTypeNumber": 202,
+              "value": 1
+            },
+            {
+              "wageTypeNumber": 203,
+              "value": 1
             }
           ]
         }

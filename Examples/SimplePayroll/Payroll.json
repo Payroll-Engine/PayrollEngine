@@ -262,7 +262,8 @@
               "name": "AHV",
               "caseType": "National",
               "defaultReason": "Change AHV AN",
-              "validateExpression": "AddTask(\"AhvTask\", \"My instructions\", Date.Now.AddMonths(1), \"My category\", new() { { \"ErpId\", Guid.NewGuid() } }); return true;",
+              "validateExpression": "true",
+              "validateExpression2": "AddTask(\"AhvTask\", \"My instructions\", Date.Now.AddMonths(1), \"My category\", new() { { \"ErpId\", Guid.NewGuid() } }); return true;",
               "clusters": [
                 "Onboarding",
                 "Legal"

@@ -1,0 +1,210 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "Consolidated.Tenant",
+      "created": "2018-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "Consolidated.Division",
+          "culture": "en-US",
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "višnja.müller@foo.com",
+          "firstName": "Višnja",
+          "lastName": "Müller",
+          "divisions": [
+            "Consolidated.Division"
+          ],
+          "created": "2018-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Consolidated.Regulation",
+          "created": "2018-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "MonthlyWage",
+              "caseType": "Employee",
+              "defaultReason": "Change monthly wage",
+              "created": "2018-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "MonthlyWage",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "created": "2018-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "MonthlyWage",
+              "valueExpression": "CaseValue[\"MonthlyWage\"]",
+              "created": "2018-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "MonthlyWageConsolidated",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)",
+              "created": "2018-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "MonthlyWageYtd",
+              "valueExpression": "WageType[101] + WageType[102]",
+              "created": "2018-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Consolidated.Payroll",
+          "divisionName": "Consolidated.Division",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Consolidated.Regulation"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "višnja.müller@foo.com",
+              "divisionName": "Consolidated.Division",
+              "case": {
+                "caseName": "MonthlyWage",
+                "values": [
+                  {
+                    "caseFieldName": "MonthlyWage",
+                    "value": "5000",
+                    "start": "2018-10-01T00:00:00.0Z",
+                    "created": "2017-12-15T18:22:45.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Consolidated.Payroll",
+          "name": "Consolidated.Payrun",
+          "culture": "en-US",
+          "defaultReason": "Run Consolidated payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Consolidated.Payrun.Oct18",
+          "payrunName": "Consolidated.Payrun",
+          "payrollName": "Consolidated.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "consolidatedPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2018-10-01T00:00:00.0Z",
+          "evaluationDate": "2018-10-28T00:00:00.0Z",
+          "reason": "Consolidated Payrun Oct 18",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "Consolidated.Payrun.Nov18",
+          "payrunName": "Consolidated.Payrun",
+          "payrollName": "Consolidated.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "consolidatedPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2018-11-01T00:00:00.0Z",
+          "evaluationDate": "2018-11-28T00:00:00.0Z",
+          "reason": "Consolidated Payrun Nov 18",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "Consolidated.Payrun.Dec18",
+          "payrunName": "Consolidated.Payrun",
+          "payrollName": "Consolidated.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "consolidatedPayMode": "ValueChange",
+          "jobStatus": "Complete",
+          "periodStart": "2018-12-01T00:00:00.0Z",
+          "evaluationDate": "2018-12-28T00:00:00.0Z",
+          "reason": "Consolidated Payrun Dec 18",
+          "storeEmptyResults": true
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Consolidated.Payrun.Oct18",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Consolidated.Payrun.Nov18",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 10000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Consolidated.Payrun.Dec18",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 15000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

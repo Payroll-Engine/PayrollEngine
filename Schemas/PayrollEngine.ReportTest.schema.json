@@ -316,38 +316,6 @@
     "ValueType": {
       "type": "string",
       "description": "",
-      "x-enum-names": [
-        "String",
-        "Boolean",
-        "Integer",
-        "NumericBoolean",
-        "Decimal",
-        "DateTime",
-        "None",
-        "Date",
-        "Weekday",
-        "Month",
-        "Year",
-        "Money",
-        "Percent",
-        "WebResource"
-      ],
-      "x-enum-varnames": [
-        "String",
-        "Boolean",
-        "Integer",
-        "NumericBoolean",
-        "Decimal",
-        "DateTime",
-        "None",
-        "Date",
-        "Weekday",
-        "Month",
-        "Year",
-        "Money",
-        "Percent",
-        "WebResource"
-      ],
       "x-enumNames": [
         "String",
         "Boolean",
@@ -363,38 +331,6 @@
         "Money",
         "Percent",
         "WebResource"
-      ],
-      "x-enum-descriptions": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "x-enumDescriptions": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
       ],
       "enum": [
         "String",
@@ -416,32 +352,6 @@
     "ReportParameterType": {
       "type": "string",
       "description": "",
-      "x-enum-names": [
-        "Value",
-        "Now",
-        "Today",
-        "TenantId",
-        "UserId",
-        "EmployeeId",
-        "RegulationId",
-        "PayrollId",
-        "PayrunId",
-        "ReportId",
-        "WebhookId"
-      ],
-      "x-enum-varnames": [
-        "Value",
-        "Now",
-        "Today",
-        "TenantId",
-        "UserId",
-        "EmployeeId",
-        "RegulationId",
-        "PayrollId",
-        "PayrunId",
-        "ReportId",
-        "WebhookId"
-      ],
       "x-enumNames": [
         "Value",
         "Now",
@@ -454,32 +364,6 @@
         "PayrunId",
         "ReportId",
         "WebhookId"
-      ],
-      "x-enum-descriptions": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "x-enumDescriptions": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
       ],
       "enum": [
         "Value",
@@ -498,25 +382,9 @@
     "OverrideType": {
       "type": "string",
       "description": "",
-      "x-enum-names": [
-        "Active",
-        "Inactive"
-      ],
-      "x-enum-varnames": [
-        "Active",
-        "Inactive"
-      ],
       "x-enumNames": [
         "Active",
         "Inactive"
-      ],
-      "x-enum-descriptions": [
-        null,
-        null
-      ],
-      "x-enumDescriptions": [
-        null,
-        null
       ],
       "enum": [
         "Active",
@@ -572,25 +440,9 @@
     "ObjectStatus": {
       "type": "string",
       "description": "",
-      "x-enum-names": [
-        "Active",
-        "Inactive"
-      ],
-      "x-enum-varnames": [
-        "Active",
-        "Inactive"
-      ],
       "x-enumNames": [
         "Active",
         "Inactive"
-      ],
-      "x-enum-descriptions": [
-        null,
-        null
-      ],
-      "x-enumDescriptions": [
-        null,
-        null
       ],
       "enum": [
         "Active",
@@ -600,25 +452,9 @@
     "UpdateMode": {
       "type": "string",
       "description": "The exchange update mode",
-      "x-enum-names": [
-        "Update",
-        "NoUpdate"
-      ],
-      "x-enum-varnames": [
-        "Update",
-        "NoUpdate"
-      ],
       "x-enumNames": [
         "Update",
         "NoUpdate"
-      ],
-      "x-enum-descriptions": [
-        null,
-        null
-      ],
-      "x-enumDescriptions": [
-        null,
-        null
       ],
       "enum": [
         "Update",
