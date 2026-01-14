@@ -3,7 +3,7 @@
 
 > Assembly `PayrollEngine.Client.Scripting, Version=0.9.0.0, Culture=neutral, PublicKeyToken=null`
 
-> Date 1/7/2026 9:24 PM
+> Date 1/14/2026 8:14 AM
 
 <br />
 
@@ -83,10 +83,19 @@
 ### GetLookupValue
 | | |
 |:-- |:-- |
-| Description      | Get range lookup object value      |
+| Description      | Get lookup value by key and value field name      |
 | Function type    | `Payroll`   |
 | Categories       | `Lookup` |
-| Parameters       | <ul><li>`lookup` <i>The lookup name</i> [`String`]</li><li>`key` <i>The lookup key</i> [`String`]</li><li>`range` <i>The range value</i> [`Dec`]</li><li>`field` <i>The JSON value field name (optional)</i></li></ul> |
+| Parameters       | <ul><li>`lookup` <i>The lookup name</i> [`String`]</li><li>`key` <i>The lookup key</i></li><li>`rangeValue` <i>The lookup key or range value</i></li><li>`field` <i>The JSON value field name (optional)</i></li></ul> |
+
+---
+### GetLookupValue
+| | |
+|:-- |:-- |
+| Description      | Get lookup value by key or range value      |
+| Function type    | `Payroll`   |
+| Categories       | `Lookup` |
+| Parameters       | <ul><li>`lookup` <i>The lookup name</i> [`String`]</li><li>`keyOrRangeValue` <i>The lookup key or range value</i></li><li>`field` <i>The JSON value field name (optional)</i></li></ul> |
 
 ---
 ### GetPayrunResultValue
@@ -191,10 +200,19 @@
 ### HasLookupValue
 | | |
 |:-- |:-- |
-| Description      | Test for lookup value      |
+| Description      | Test for lookup value by key and range value      |
 | Function type    | `Payroll`   |
 | Categories       | `Lookup` |
-| Parameters       | <ul><li>`lookup` <i>The lookup name</i> [`String`]</li><li>`key` <i>The lookup key</i> [`String`]</li><li>`range` <i>The range value</i> [`Dec`]</li><li>`field` <i>The JSON value field name (optional)</i></li></ul> |
+| Parameters       | <ul><li>`lookup` <i>The lookup name</i> [`String`]</li><li>`key` <i>The lookup key</i> [`String`]</li><li>`field` <i>The JSON value field name (optional)</i></li></ul> |
+
+---
+### HasLookupValue
+| | |
+|:-- |:-- |
+| Description      | Test for lookup value by key      |
+| Function type    | `Payroll`   |
+| Categories       | `Lookup` |
+| Parameters       | <ul><li>`lookup` <i>The lookup name</i> [`String`]</li><li>`keyOrRangeValue` <i>The lookup key or range value</i></li><li>`field` <i>The JSON value field name (optional)</i></li></ul> |
 
 ---
 ### HiddenField

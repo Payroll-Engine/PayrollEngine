@@ -172,7 +172,7 @@
               "wageTypeNumber": 105,
               "name": "RangeLookupWage",
               "valueActions": [
-                "^^MonthlyWage * ^#InsuranceRangeRate(None, ^^MonthlyWage)"
+                "^^MonthlyWage * ^#InsuranceRangeRate(^^MonthlyWage)"
               ]
             },
             {
