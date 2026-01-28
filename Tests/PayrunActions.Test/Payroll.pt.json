@@ -139,6 +139,7 @@
               "wageTypeNumber": 101,
               "name": "MonthlyWage",
               "valueActions": [
+                "# calculation of single case value",
                 "? ^^MonthlyWage >= 5000",
                 "^@PayrunResult = ^^MonthlyWage * 1.5",
                 "^^MonthlyWage"
@@ -151,6 +152,7 @@
               "wageTypeNumber": 102,
               "name": "MonthlyWageConsolidated",
               "valueActions": [
+                "# calculation of monthly wage consolidated values from previous cycle periods",
                 "^$MonthlyWage.Cycle"
               ]
             },
@@ -158,6 +160,7 @@
               "wageTypeNumber": 103,
               "name": "MonthlyWageYtd",
               "valueActions": [
+                "# year-to-date calculation",
                 "^$MonthlyWage + ^$MonthlyWageConsolidated"
               ]
             },
@@ -165,6 +168,7 @@
               "wageTypeNumber": 104,
               "name": "LookupWage",
               "valueActions": [
+                "# lookup access by key",
                 "^^MonthlyWage * ^#InsuranceKeyRate('A')"
               ]
             },
@@ -172,6 +176,7 @@
               "wageTypeNumber": 105,
               "name": "RangeLookupWage",
               "valueActions": [
+                "# lookup access by range value",
                 "^^MonthlyWage * ^#InsuranceRangeRate(^^MonthlyWage)"
               ]
             },
@@ -179,14 +184,25 @@
               "wageTypeNumber": 106,
               "name": "MonthlyRateWage",
               "valueActions": [
-                " #comment",
+                "# calculation of multiple case values",
                 "^^MonthlyWage * ^^WageFactor"
               ]
             },
             {
               "wageTypeNumber": 107,
+              "name": "MonthlyRateWageInvalid",
+              "valueActions": [
+                "# invalid calculation of multiple case values",
+                "^|MonthlyWageRuntime = ^^MonthlyWage",
+                "^|WageFactorRuntime = ^^WageFactor",
+                "^|MonthlyWageRuntime * ^|WageFactorRuntime"
+              ]
+            },
+            {
+              "wageTypeNumber": 108,
               "name": "DuplicateMonthlyRateWage",
               "valueActions": [
+                "# custom acion",
                 "Duplicate(^$MonthlyRateWage)"
               ]
             }
@@ -334,6 +350,10 @@
             },
             {
               "wageTypeNumber": 107,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 108,
               "value": 20000
             }
           ],
@@ -381,6 +401,11 @@
             },
             {
               "wageTypeNumber": 107,
+              "comment": "value should be 8750",
+              "value": 17500
+            },
+            {
+              "wageTypeNumber": 108,
               "value": 17500
             }
           ],
@@ -428,6 +453,10 @@
             },
             {
               "wageTypeNumber": 107,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 108,
               "value": 20000
             }
           ],
