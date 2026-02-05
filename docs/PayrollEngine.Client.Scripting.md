@@ -3,9 +3,18 @@
 
 > Assembly `PayrollEngine.Client.Scripting, Version=0.9.0.0, Culture=neutral, PublicKeyToken=null`
 
-> Date 1/14/2026 8:14 AM
+> Date 2/5/2026 1:27 PM
 
 <br />
+
+---
+### Age
+| | |
+|:-- |:-- |
+| Description      | Get persons age      |
+| Function type    | `Payroll`   |
+| Categories       | `Date` |
+| Parameters       | <ul><li>`birthDate` <i>The persons birth date</i> [`Date`]</li><li>`testDate` <i>Reference date (default: utc-now)</i> [`Date`]</li></ul> |
 
 ---
 ### ApplyRangeLookupValue
@@ -170,6 +179,15 @@
 | Parameters       | `field` <i>The case field on the target case</i> [`String`]</ul> |
 
 ---
+### GetTimeSpan
+| | |
+|:-- |:-- |
+| Description      | Get the timespan between two dates      |
+| Function type    | `Payroll`   |
+| Categories       | `Date` |
+| Parameters       | <ul><li>`start` <i>The start date</i> [`Date`]</li><li>`end` <i>The end date</i> [`Date`]</li></ul> |
+
+---
 ### GetWageTypeValueByName
 | | |
 |:-- |:-- |
@@ -275,7 +293,7 @@
 | Description      | Get the maximum value      |
 | Function type    | `Payroll`   |
 | Categories       | `Math` |
-| Parameters       | <ul><li>`left` <i>The left compare value</i> [`Num`, `Date`]</li><li>`right` <i>The right compare value</i> [`Num`, `Date`]</li></ul> |
+| Parameters       | <ul><li>`left` <i>The left compare value</i> [`Num`, `Date`, `TimeSpan`]</li><li>`right` <i>The right compare value</i> [`Num`, `Date`, `TimeSpan`]</li></ul> |
 
 ---
 ### Max
@@ -284,16 +302,7 @@
 | Description      | Get the largest collection value      |
 | Function type    | `Payroll`   |
 | Categories       | `Math` |
-| Parameters       | `values` <i>Value collection</i> [`Num`, `Date`]</ul> |
-
----
-### Min
-| | |
-|:-- |:-- |
-| Description      | Get the smallest collection value      |
-| Function type    | `Payroll`   |
-| Categories       | `Math` |
-| Parameters       | `values` <i>Value collection</i> [`Num`, `Date`]</ul> |
+| Parameters       | `values` <i>Value collection</i> [`Num`, `Date`, `TimeSpan`]</ul> |
 
 ---
 ### Min
@@ -302,7 +311,16 @@
 | Description      | Get the minimum value      |
 | Function type    | `Payroll`   |
 | Categories       | `Math` |
-| Parameters       | <ul><li>`left` <i>The left compare value</i> [`Num`, `Date`]</li><li>`right` <i>The right compare value</i> [`Num`, `Date`]</li></ul> |
+| Parameters       | <ul><li>`left` <i>The left compare value</i> [`Num`, `Date`, `TimeSpan`]</li><li>`right` <i>The right compare value</i> [`Num`, `Date`, `TimeSpan`]</li></ul> |
+
+---
+### Min
+| | |
+|:-- |:-- |
+| Description      | Get the smallest collection value      |
+| Function type    | `Payroll`   |
+| Categories       | `Math` |
+| Parameters       | `values` <i>Value collection</i> [`Num`, `Date`, `TimeSpan`]</ul> |
 
 ---
 ### Range
@@ -311,7 +329,7 @@
 | Description      | Ensure value is within a value range      |
 | Function type    | `Payroll`   |
 | Categories       | `Math` |
-| Parameters       | <ul><li>`value` <i>The value to limit</i> [`Num`, `Date`]</li><li>`min` <i>The minimum value</i> [`Num`, `Date`]</li><li>`max` <i>The maximum value</i> [`Num`, `Date`]</li></ul> |
+| Parameters       | <ul><li>`value` <i>The value to limit</i> [`Num`, `Date`, `TimeSpan`]</li><li>`min` <i>The minimum value</i> [`Num`, `Date`, `TimeSpan`]</li><li>`max` <i>The maximum value</i> [`Num`, `Date`, `TimeSpan`]</li></ul> |
 
 ---
 ### RemoveRuntimeValue
@@ -321,6 +339,33 @@
 | Function type    | `Payrun`   |
 | Categories       | `Runtime` |
 | Parameters       | `key` <i>The value key</i> [`String`]</ul> |
+
+---
+### SameDay
+| | |
+|:-- |:-- |
+| Description      | Test for same date day      |
+| Function type    | `Payroll`   |
+| Categories       | `Date` |
+| Parameters       | <ul><li>`left` <i>The left date to compare</i> [`Date`]</li><li>`right` <i>The right date to compare</i> [`Date`]</li></ul> |
+
+---
+### SameMonth
+| | |
+|:-- |:-- |
+| Description      | Test for same date month      |
+| Function type    | `Payroll`   |
+| Categories       | `Date` |
+| Parameters       | <ul><li>`left` <i>The left date to compare</i> [`Date`]</li><li>`right` <i>The right date to compare</i> [`Date`]</li></ul> |
+
+---
+### SameYear
+| | |
+|:-- |:-- |
+| Description      | Test for same date year      |
+| Function type    | `Payroll`   |
+| Categories       | `Date` |
+| Parameters       | <ul><li>`left` <i>The left date to compare</i> [`Date`]</li><li>`right` <i>The right date to compare</i> [`Date`]</li></ul> |
 
 ---
 ### SetFieldAttachmentExtensions
@@ -744,3 +789,21 @@
 | Function type    | `CaseChange`   |
 | Categories       | `FieldInput`, `Field` |
 | Parameters       | `field` <i>The target field</i> [`String`]</ul> |
+
+---
+### Within
+| | |
+|:-- |:-- |
+| Description      | Test value is within a value range      |
+| Function type    | `Payroll`   |
+| Categories       | `Math` |
+| Parameters       | <ul><li>`value` <i>The value to test</i> [`Num`, `Date`, `TimeSpan`]</li><li>`min` <i>The minimum value</i> [`Num`, `Date`, `TimeSpan`]</li><li>`max` <i>The maximum value</i> [`Num`, `Date`, `TimeSpan`]</li></ul> |
+
+---
+### YearDiff
+| | |
+|:-- |:-- |
+| Description      | Test for same date year      |
+| Function type    | `Payroll`   |
+| Categories       | `Date` |
+| Parameters       | <ul><li>`start` <i>The start date</i> [`Date`]</li><li>`end` <i>The end date</i> [`Date`]</li></ul> |
