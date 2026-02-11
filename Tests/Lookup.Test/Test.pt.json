@@ -154,6 +154,48 @@
               "created": "2019-01-01T00:00:00.0Z"
             },
             {
+              "wageTypeNumber": 102,
+              "name": "ThresholdBracket0",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 0).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.1,
+              "name": "ThresholdBracket500",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 5000).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.2,
+              "name": "ThresholdBracket1000",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 10000).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.3,
+              "name": "ThresholdBracket1500",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 15000).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.4,
+              "name": "ThresholdBracket2500",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 25000).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.5,
+              "name": "ThresholdBracket3500",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 35000).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102.6,
+              "name": "ThresholdBracket4500",
+              "valueExpression": "GetLookupThresholdRange(\"ThresholdLookup\", 45000).RangeValue",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
               "wageTypeNumber": 201,
               "name": "Progressive0",
               "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 0, \"factor\")",
@@ -193,6 +235,48 @@
               "wageTypeNumber": 201.6,
               "name": "Progressive4500",
               "valueExpression": "ApplyRangeValue(\"ProgressiveLookup\", 45000, \"factor\")",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+                        {
+              "wageTypeNumber": 202,
+              "name": "ProgressiveBracket0",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 0).Sum(x => x.RangeValue)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 202.1,
+              "name": "ProgressiveBracket500",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 7500).Sum(x => x.RangeValue)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 202.2,
+              "name": "ProgressiveBracket1000",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 10000).Sum(x => x.RangeValue)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 202.3,
+              "name": "ProgressiveBracket1500",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 17500).Sum(x => x.RangeValue)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 202.4,
+              "name": "ProgressiveBracket2500",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 27500).Sum(x => x.RangeValue)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 202.5,
+              "name": "ProgressiveBracket3500",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 37500).Sum(x => x.RangeValue)",
+              "created": "2019-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 202.6,
+              "name": "ProgressiveBracket4500.60",
+              "valueExpression": "GetLookupProgressiveRanges(\"ProgressiveLookup\", 47500).Sum(x => x.RangeValue)",
               "created": "2019-01-01T00:00:00.0Z"
             }
           ]
@@ -262,6 +346,34 @@
               "value": 11250
             },
             {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 102.1,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102.2,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 102.3,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102.4,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102.5,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102.6,
+              "value": 5000
+            },
+            {
               "wageTypeNumber": 201,
               "value": 0
             },
@@ -288,6 +400,34 @@
             {
               "wageTypeNumber": 201.6,
               "value": 6250
+            },
+            {
+              "wageTypeNumber": 202,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 202.1,
+              "value": 7500
+            },
+            {
+              "wageTypeNumber": 202.2,
+              "value": 10000
+            },
+            {
+              "wageTypeNumber": 202.3,
+              "value": 17500
+            },
+            {
+              "wageTypeNumber": 202.4,
+              "value": 27500
+            },
+            {
+              "wageTypeNumber": 202.5,
+              "value": 37500
+            },
+            {
+              "wageTypeNumber": 202.6,
+              "value": 47500
             }
           ]
         }

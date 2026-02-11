@@ -205,6 +205,14 @@
                 "# custom acion",
                 "Duplicate(^$MonthlyRateWage)"
               ]
+            },
+            {
+              "wageTypeNumber": 109,
+              "name": "ConditionEvaluationOrderWage",
+              "valueActions": [
+                "# condtion evaluation order",
+                "(^$MonthlyWageYtd > ^$MonthlyWage AND ^#InsuranceKeyRate('A') > 0) OR PeriodStartMonth== 12 ? 1 : 0"
+              ]
             }
           ]
         }
@@ -355,6 +363,10 @@
             {
               "wageTypeNumber": 108,
               "value": 20000
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 0
             }
           ],
           "collectorResults": [
@@ -407,6 +419,10 @@
             {
               "wageTypeNumber": 108,
               "value": 17500
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 1
             }
           ],
           "collectorResults": [
@@ -458,6 +474,10 @@
             {
               "wageTypeNumber": 108,
               "value": 20000
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 1
             }
           ],
           "collectorResults": [
