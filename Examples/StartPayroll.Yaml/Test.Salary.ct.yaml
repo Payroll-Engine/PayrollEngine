@@ -1,0 +1,41 @@
+testName: Test.Salary
+tenantIdentifier: StartTenant
+userIdentifier: lucy.smith@foo.com
+payrollName: StartPayroll
+employeeIdentifier: mario.nuñez@foo.com
+validateTests:
+- testName: Employee.Salary.499.Test
+  input:
+    userIdentifier: lucy.smith@foo.com
+    employeeIdentifier: mario.nuñez@foo.com
+    divisionName: StartDivision
+    case:
+      caseName: Salary
+      values:
+      - caseFieldName: Salary
+        value: "499"
+        start: 2023-02-01T00:00:00Z
+        created: 2023-02-15T18:22:45Z
+  output:
+    issues:
+    - issueType: CaseInvalid
+      number: 400
+      caseFieldName: Salary
+- testName: Employee.Salary.500.Test
+  input:
+    userIdentifier: lucy.smith@foo.com
+    employeeIdentifier: mario.nuñez@foo.com
+    divisionName: StartDivision
+    case:
+      caseName: Salary
+      values:
+      - caseFieldName: Salary
+        value: "500"
+        start: 2023-02-01T00:00:00Z
+        created: 2023-02-15T18:22:45Z
+  output:
+    values:
+    - caseFieldName: Salary
+      value: "500"
+      start: 2023-02-01T00:00:00Z
+      created: 2023-02-15T18:22:45Z

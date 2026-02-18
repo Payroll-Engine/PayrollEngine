@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+createdObjectDate: 2023-01-01T00:00:00Z
+tenants:
+- identifier: StartTenant
+  regulations:
+  - name: StartRegulation
+    reports:
+    - name: StartReport
+      queries:
+        Employees: QueryEmployees
+        Results: QueryPayrollResultValues
+      parameters:
+      - name: TenantId
+        hidden: true
+        parameterType: TenantId
+      - name: PayrunJobName
+        mandatory: true
+      - name: Results.Filter
+        hidden: true
+        value: jobName eq '$PayrunJobName$'
+      templates:
+      - name: StartReportTemplate English
+        culture: en
+        contentFile: Report.English.frx
+      - name: StartReportTemplate German
+        culture: de
+        contentFile: Report.German.frx
+    updateMode: NoUpdate
+  updateMode: NoUpdate

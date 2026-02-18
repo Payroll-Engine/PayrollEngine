@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+createdObjectDate: 2023-01-01T00:00:00Z
+tenants:
+- identifier: StartTenant
+  regulations:
+  - name: InsuranceRegulation
+    sharedRegulation: true
+    baseRegulations:
+    - StartRegulation
+    wageTypes:
+    - wageTypeNumber: 200
+      name: InsuranceRate
+      valueExpression: GetRangeLookup<decimal>("InsuranceRate", WageType[100])
+      collectors:
+      - Deduction
+    lookups:
+    - name: InsuranceRate
+      values:
+      - key: A
+        value: "30"
+        rangeValue: 1
+      - key: B
+        value: "45"
+        rangeValue: 3000
+      - key: C
+        value: "60"
+        rangeValue: 6000
+  payrolls:
+  - name: StartPayroll
+    layers:
+    - regulationName: InsuranceRegulation
+      level: 2
+    updateMode: NoUpdate
+  updateMode: NoUpdate

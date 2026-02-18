@@ -1,0 +1,7 @@
+TenantDelete StartTenant /trydelete
+PayrollImport Basic.yaml
+# --- web application login ---
+ChangePassword StartTenant lucy.smith@foo.com @ayroll3nginE
+PayrollImport Insurance.yaml
+PayrollImport Company.yaml
+PayrollImport Report.yaml

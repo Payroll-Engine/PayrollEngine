@@ -1,14 +1,12 @@
 {
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
-  "createdObjectDate": "2023-01-01T00:00:00.0Z",
+  "createdObjectDate": "2023-01-01T00:00:00Z",
   "tenants": [
     {
       "identifier": "StartTenant",
-      "updateMode": "NoUpdate",
       "regulations": [
         {
           "name": "StartRegulation",
-          "updateMode": "NoUpdate",
           "reports": [
             {
               "name": "StartReport",
@@ -19,8 +17,8 @@
               "parameters": [
                 {
                   "name": "TenantId",
-                  "parameterType": "TenantId",
-                  "hidden": true
+                  "hidden": true,
+                  "parameterType": "TenantId"
                 },
                 {
                   "name": "PayrunJobName",
@@ -28,26 +26,28 @@
                 },
                 {
                   "name": "Results.Filter",
-                  "value": "jobName eq '$PayrunJobName$'",
-                  "hidden": true
+                  "hidden": true,
+                  "value": "jobName eq '$PayrunJobName$'"
                 }
               ],
               "templates": [
                 {
                   "name": "StartReportTemplate English",
-                  "contentFile": "Report.English.frx",
-                  "culture": "en"
+                  "culture": "en",
+                  "contentFile": "Report.English.frx"
                 },
                 {
                   "name": "StartReportTemplate German",
-                  "contentFile": "Report.German.frx",
-                  "culture": "de"
+                  "culture": "de",
+                  "contentFile": "Report.German.frx"
                 }
               ]
             }
-          ]
+          ],
+          "updateMode": "NoUpdate"
         }
-      ]
+      ],
+      "updateMode": "NoUpdate"
     }
   ]
 }

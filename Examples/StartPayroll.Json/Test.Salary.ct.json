@@ -3,8 +3,8 @@
   "testName": "Test.Salary",
   "tenantIdentifier": "StartTenant",
   "userIdentifier": "lucy.smith@foo.com",
-  "employeeIdentifier": "mario.nuñez@foo.com",
   "payrollName": "StartPayroll",
+  "employeeIdentifier": "mario.nuñez@foo.com",
   "validateTests": [
     {
       "testName": "Employee.Salary.499.Test",
@@ -27,9 +27,9 @@
       "output": {
         "issues": [
           {
-            "caseFieldName": "Salary",
             "issueType" : "CaseInvalid",
-            "number": 400
+            "number": 400,
+            "caseFieldName": "Salary"
           }
         ]
       }
@@ -46,8 +46,8 @@
             {
               "caseFieldName": "Salary",
               "value": "500",
-              "start": "2023-02-01T00:00:00.0Z",
-              "created": "2023-02-15T18:22:45.0Z"
+              "start": "2023-02-01T00:00:00Z",
+              "created": "2023-02-15T18:22:45Z"
             }
           ]
         }
@@ -57,8 +57,8 @@
           {
             "caseFieldName": "Salary",
             "value": "500",
-            "start": "2023-02-01T00:00:00.0Z",
-            "created": "2023-02-15T18:22:45.0Z"
+            "start": "2023-02-01T00:00:00Z",
+            "created": "2023-02-15T18:22:45Z"
           }
         ]
       }

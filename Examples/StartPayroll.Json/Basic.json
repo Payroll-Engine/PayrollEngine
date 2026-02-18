@@ -38,17 +38,17 @@
               "caseType": "Employee",
               "buildExpression": "true",
               "validateExpression": "true",
+              "buildActions": [
+                "^:Salary = Range(^:Salary, 500, 25000)"
+              ],
+              "validateActions": [
+                "? Within(^:Salary, 500, 25000)"
+              ],
               "fields": [
                 {
                   "name": "Salary",
                   "valueType": "Money",
-                  "timeType": "CalendarPeriod",
-                  "buildActions": [
-                    "Limit(500, 25000)"
-                  ],
-                  "validateActions": [
-                    "ValueBetween(500, 25000)"
-                  ]
+                  "timeType": "CalendarPeriod"
                 }
               ]
             }

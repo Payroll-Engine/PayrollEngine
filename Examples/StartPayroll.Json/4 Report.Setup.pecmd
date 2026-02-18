@@ -4,4 +4,4 @@ PayrollImport Insurance.json
 PayrollImport Company.json
 PayrollImport Report.json
 # build payroll results for the report
-PayrunEmployeeTest Company.Test.et.json
+PayrunEmployeeTest Company.Test.et.json /keeptest

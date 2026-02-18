@@ -1,0 +1,7 @@
+TenantDelete StartTenant /trydelete
+PayrollImport Basic.yaml
+PayrollImport Insurance.yaml
+PayrollImport Company.yaml
+PayrollImport Report.yaml
+# build payroll results for the report
+PayrunEmployeeTest Company.Test.et.yaml /keeptest

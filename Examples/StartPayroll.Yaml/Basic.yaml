@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+createdObjectDate: 2023-01-01T00:00:00Z
+tenants:
+- identifier: StartTenant
+  culture: en-US
+  users:
+  - identifier: lucy.smith@foo.com
+    firstName: Lucy
+    lastName: Smith
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: StartDivision
+  employees:
+  - identifier: mario.nuñez@foo.com
+    firstName: Mario
+    lastName: Nuñez
+    divisions:
+    - StartDivision
+  regulations:
+  - name: StartRegulation
+    cases:
+    - name: Salary
+      caseType: Employee
+      buildExpression: "true"
+      validateExpression: "true"
+      buildActions:
+      - ^:Salary = Range(^:Salary, 500, 25000)
+      validateActions:
+      - '? Within(^:Salary, 500, 25000)'
+      fields:
+      - name: Salary
+        valueType: Money
+        timeType: CalendarPeriod
+    collectors:
+    - name: Income
+    - name: Deduction
+      negated: true
+    wageTypes:
+    - wageTypeNumber: 100
+      name: Salary
+      valueExpression: CaseValue["Salary"]
+      collectors:
+      - Income
+  payrolls:
+  - name: StartPayroll
+    divisionName: StartDivision
+    layers:
+    - regulationName: StartRegulation
+      level: 1
+  payruns:
+  - name: StartPayrun
+    payrollName: StartPayroll

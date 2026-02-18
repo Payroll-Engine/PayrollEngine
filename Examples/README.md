@@ -60,6 +60,9 @@ Read [more details](ReportPayroll/) about the example reports.
 - Add derived wage types
 - Add sub wage types
 - Wiki examples [Basic Payroll](https://github.com/Payroll-Engine/PayrollEngine/wiki/Basic-Payroll) and [Advanced Payroll](https://github.com/Payroll-Engine/PayrollEngine/wiki/Advanced-Payroll)
+- Version
+	- JSON in `StartPayroll.Json`
+	- YAM in `StartPayroll.Yaml`
 
 ### Week Simple Payroll
 - Payroll with weekly wage periods, calendar period `Week`

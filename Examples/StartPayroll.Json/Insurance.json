@@ -4,35 +4,12 @@
   "tenants": [
     {
       "identifier": "StartTenant",
-      "updateMode": "NoUpdate",
       "regulations": [
         {
           "name": "InsuranceRegulation",
+          "sharedRegulation": true,
           "baseRegulations": [
             "StartRegulation"
-          ],
-          "sharedRegulation": true,
-          "lookups": [
-            {
-              "name": "InsuranceRate",
-              "values": [
-                {
-                  "key": "A",
-                  "rangeValue": 1,
-                  "value": "30"
-                },
-                {
-                  "key": "B",
-                  "rangeValue": 3000,
-                  "value": "45"
-                },
-                {
-                  "key": "C",
-                  "rangeValue": 6000,
-                  "value": "60"
-                }
-              ]
-            }
           ],
           "wageTypes": [
             {
@@ -43,21 +20,44 @@
                 "Deduction"
               ]
             }
+          ],
+          "lookups": [
+            {
+              "name": "InsuranceRate",
+              "values": [
+                {
+                  "key": "A",
+                  "value": "30",
+                  "rangeValue": 1
+                },
+                {
+                  "key": "B",
+                  "value": "45",
+                  "rangeValue": 3000
+                },
+                {
+                  "key": "C",
+                  "value": "60",
+                  "rangeValue": 6000
+                }
+              ]
+            }
           ]
         }
       ],
       "payrolls": [
         {
           "name": "StartPayroll",
-          "updateMode": "NoUpdate",
           "layers": [
             {
               "level": 2,
               "regulationName": "InsuranceRegulation"
             }
-          ]
+          ],
+          "updateMode": "NoUpdate"
         }
-      ]
+      ],
+      "updateMode": "NoUpdate"
     }
   ]
 }

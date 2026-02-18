@@ -428,31 +428,6 @@
             "caseFieldName"
           ],
           "properties": {
-            "divisionId": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "description": "The division id (immutable), Mandatory for case values with local value scope ValueScope",
-              "format": "int32"
-            },
-            "employeeId": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "description": "The employee id, mandatory for employee case changes (immutable)",
-              "format": "int32"
-            },
-            "divisionName": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The associated case field name",
-              "maxLength": 128,
-              "minLength": 0
-            },
             "caseName": {
               "type": [
                 "null",
@@ -597,6 +572,31 @@
                 "object"
               ],
               "additionalProperties": {}
+            },
+            "divisionName": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The associated case field name",
+              "maxLength": 128,
+              "minLength": 0
+            },
+            "divisionId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "The division id (immutable), Mandatory for case values with local value scope ValueScope",
+              "format": "int32"
+            },
+            "employeeId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "The employee id, mandatory for employee case changes (immutable)",
+              "format": "int32"
             }
           }
         }
@@ -1649,10 +1649,16 @@
           "type": "object",
           "description": "The payroll case client object",
           "required": [
-            "caseType",
-            "name"
+            "name",
+            "caseType"
           ],
           "properties": {
+            "name": {
+              "type": "string",
+              "description": "The case name",
+              "maxLength": 128,
+              "minLength": 0
+            },
             "caseType": {
               "description": "The type of he case (immutable)",
               "oneOf": [
@@ -1660,12 +1666,6 @@
                   "$ref": "#/definitions/CaseType"
                 }
               ]
-            },
-            "name": {
-              "type": "string",
-              "description": "The case name",
-              "maxLength": 128,
-              "minLength": 0
             },
             "nameLocalizations": {
               "type": [

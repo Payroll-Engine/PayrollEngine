@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+tenants:
+- identifier: StartTenant
+  payrolls:
+  - name: StartPayroll
+    cases:
+    - userIdentifier: lucy.smith@foo.com
+      employeeIdentifier: mario.nuñez@foo.com
+      divisionName: StartDivision
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "5000"
+          start: 2023-01-01T00:00:00Z
+          created: 2022-11-04T00:00:00Z
+    updateMode: NoUpdate
+  payrunJobInvocations:
+  - name: StartPayrunJob.Jan23
+    payrunName: StartPayrun
+    userIdentifier: lucy.smith@foo.com
+    jobStatus: Complete
+    periodStart: 2023-01-01T00:00:00Z
+    evaluationDate: 2023-02-01T00:00:00Z
+    reason: Test Payrun Jan 23
+    employeeIdentifiers:
+    - mario.nuñez@foo.com
+  payrollResults:
+  - payrunJobName: StartPayrunJob.Jan23
+    employeeIdentifier: mario.nuñez@foo.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5000
+    collectorResults:
+    - collectorName: Income
+      value: 5000
+    - collectorName: Deduction
+  updateMode: NoUpdate

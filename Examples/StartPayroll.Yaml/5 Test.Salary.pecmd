@@ -1,0 +1,3 @@
+# TenantDelete CaseTest /trydelete
+# PayrollImport Payroll.yaml
+CaseTest Test.Salary.ct.yaml /showall /wait

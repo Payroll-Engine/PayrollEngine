@@ -4,6 +4,6 @@ DerivedPayroll/Setup.pecmd
 ExtendedPayroll/Setup.pecmd
 ReportPayroll/Setup.pecmd
 SimplePayroll/Setup.pecmd
-StartPayroll/Setup.pecmd
+StartPayroll.Yaml/Setup.pecmd
 WeekSimplePayroll/Setup.pecmd
 TimesheetPayroll/Setup.pecmd

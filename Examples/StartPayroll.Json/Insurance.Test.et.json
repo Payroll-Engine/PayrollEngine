@@ -3,11 +3,9 @@
   "tenants": [
     {
       "identifier": "StartTenant",
-      "updateMode": "NoUpdate",
       "payrolls": [
         {
           "name": "StartPayroll",
-          "updateMode": "NoUpdate",
           "cases": [
             {
               "userIdentifier": "lucy.smith@foo.com",
@@ -19,8 +17,8 @@
                   {
                     "caseFieldName": "Salary",
                     "value": "5000",
-                    "start": "2023-01-01T00:00:00.0Z",
-                    "created": "2022-11-04T00:00:00.0Z"
+                    "start": "2023-01-01T00:00:00Z",
+                    "created": "2022-11-04T00:00:00Z"
                   }
                 ]
               }
@@ -36,13 +34,14 @@
                   {
                     "caseFieldName": "Salary",
                     "value": "6000",
-                    "start": "2023-07-01T00:00:00.0Z",
-                    "created": "2023-06-04T00:00:00.0Z"
+                    "start": "2023-07-01T00:00:00Z",
+                    "created": "2023-06-04T00:00:00Z"
                   }
                 ]
               }
             }
-          ]
+          ],
+          "updateMode": "NoUpdate"
         }
       ],
       "payrunJobInvocations": [
@@ -50,25 +49,25 @@
           "name": "StartPayrunJob.Jan23",
           "payrunName": "StartPayrun",
           "userIdentifier": "lucy.smith@foo.com",
-          "employeeIdentifiers": [
-            "mario.nuñez@foo.com"
-          ],
-          "reason": "Test Payrun Jan 23",
           "jobStatus": "Complete",
           "periodStart": "2023-01-01T00:00:00.0Z",
-          "evaluationDate": "2023-02-01T00:00:00.0Z"
+          "evaluationDate": "2023-02-01T00:00:00.0Z",
+          "reason": "Test Payrun Jan 23",
+          "employeeIdentifiers": [
+            "mario.nuñez@foo.com"
+          ]
         },
         {
           "name": "StartPayrunJob.Jul23",
           "payrunName": "StartPayrun",
           "userIdentifier": "lucy.smith@foo.com",
-          "employeeIdentifiers": [
-            "mario.nuñez@foo.com"
-          ],
-          "reason": "Test Payrun Jul 23",
           "jobStatus": "Complete",
           "periodStart": "2023-07-01T00:00:00.0Z",
-          "evaluationDate": "2023-08-01T00:00:00.0Z"
+          "evaluationDate": "2023-08-01T00:00:00.0Z",
+          "reason": "Test Payrun Jul 23",
+          "employeeIdentifiers": [
+            "mario.nuñez@foo.com"
+          ]
         }
       ],
       "payrollResults": [
@@ -120,7 +119,8 @@
             }
           ]
         }
-      ]
+      ],
+      "updateMode": "NoUpdate"
     }
   ]
 }

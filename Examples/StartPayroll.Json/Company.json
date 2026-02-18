@@ -4,7 +4,6 @@
   "tenants": [
     {
       "identifier": "StartTenant",
-      "updateMode": "NoUpdate",
       "regulations": [
         {
           "name": "CompanyRegulation",
@@ -39,15 +38,16 @@
       "payrolls": [
         {
           "name": "StartPayroll",
-          "updateMode": "NoUpdate",
           "layers": [
             {
               "level": 3,
               "regulationName": "CompanyRegulation"
             }
-          ]
+          ],
+          "updateMode": "NoUpdate"
         }
-      ]
+      ],
+      "updateMode": "NoUpdate"
     }
   ]
 }
