@@ -217,7 +217,7 @@ jobs:
       always() && needs.prepare.outputs.dry_run == 'false' &&
       needs.prepare.result == 'success' &&
       (needs.version-guard.result == 'success' || needs.version-guard.result == 'skipped')
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -225,6 +225,7 @@ jobs:
           fetch-depth: 0
 
       - name: Checkout API repos
+        shell: bash
         run: |
           ORG="${{ env.ORG }}"
           for REPO in PayrollEngine.Backend PayrollEngine.Client.Scripting PayrollEngine.Client.Services; do
