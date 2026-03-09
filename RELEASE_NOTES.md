@@ -1,7 +1,7 @@
 ### Features
 
 - General
-  - Overall refactoring with Claude (Opus 4.6)
+  - Internal tooling and infrastructure improvements
   - Updated exchange schema (`PayrollEngine.Exchange.schema.json`)
 
 - Website
