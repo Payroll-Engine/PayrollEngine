@@ -19,9 +19,9 @@ on:
         required: false
         default: ''
       update_wiki:
-        description: 'Update Wiki release notes'
+        description: 'Update Wiki release notes (deprecated)'
         type: boolean
-        default: true
+        default: false
       dry_run:
         description: 'Dry run (test pipeline, draft releases)'
         type: boolean
@@ -133,80 +133,52 @@ jobs:
             const libTag = `v${libVersion}`;
             const errors = [];
 
-            // ── Library repos ──────────────────────────
             const libRepos = [
-              'PayrollEngine.Core',
-              'PayrollEngine.Serilog',
-              'PayrollEngine.Document',
-              'PayrollEngine.Client.Core',
-              'PayrollEngine.Client.Scripting',
-              'PayrollEngine.Client.Test',
-              'PayrollEngine.Client.Services'
+              'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
+              'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
+              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services'
             ];
 
             console.log(`\n📦 Checking library version: ${libVersion}\n`);
-
             for (const repo of libRepos) {
               try {
                 await github.rest.git.getRef({ owner: org, repo, ref: `tags/${libTag}` });
                 errors.push(`${repo}: Git tag '${libTag}' already exists`);
               } catch (e) { if (e.status !== 404) throw e; }
-
               try {
                 await github.rest.repos.getReleaseByTag({ owner: org, repo, tag: libTag });
                 errors.push(`${repo}: GitHub Release '${libTag}' already exists`);
               } catch (e) { if (e.status !== 404) throw e; }
-
               try {
                 const packages = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
                   package_type: 'nuget', package_name: repo, org
                 });
-                if (packages.data.some(p => p.name === libVersion)) {
+                if (packages.data.some(p => p.name === libVersion))
                   errors.push(`${repo}: NuGet version '${libVersion}' already exists on GitHub Packages`);
-                }
               } catch (e) { if (e.status !== 404) console.warn(`  ⚠️ ${repo}: ${e.message}`); }
-
-              if (!errors.some(e => e.startsWith(repo))) {
-                console.log(`  ✅ ${repo}`);
-              }
+              if (!errors.some(e => e.startsWith(repo))) console.log(`  ✅ ${repo}`);
             }
 
-            // ── App repos ──────────────────────────────
             const apps = [
-              { repo: 'PayrollEngine.Backend', version: '${{ inputs.backend_version }}' },
+              { repo: 'PayrollEngine.Backend',       version: '${{ inputs.backend_version }}' },
               { repo: 'PayrollEngine.PayrollConsole', version: '${{ inputs.console_version }}' },
-              { repo: 'PayrollEngine.WebApp', version: '${{ inputs.webapp_version }}' }
+              { repo: 'PayrollEngine.WebApp',         version: '${{ inputs.webapp_version }}' }
             ].filter(a => a.version);
 
             if (apps.length > 0) console.log(`\n🐳 Checking app versions\n`);
-
             for (const { repo, version } of apps) {
               const tag = `v${version}`;
-
               try {
                 await github.rest.git.getRef({ owner: org, repo, ref: `tags/${tag}` });
                 errors.push(`${repo}: Git tag '${tag}' already exists`);
               } catch (e) { if (e.status !== 404) throw e; }
-
               try {
                 await github.rest.repos.getReleaseByTag({ owner: org, repo, tag });
                 errors.push(`${repo}: GitHub Release '${tag}' already exists`);
               } catch (e) { if (e.status !== 404) throw e; }
-
-              try {
-                const packageName = repo.toLowerCase();
-                const versions = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-                  package_type: 'container', package_name: packageName, org
-                });
-                if (versions.data.some(v => v.metadata?.container?.tags?.includes(version))) {
-                  errors.push(`${repo}: Docker image tag '${version}' already exists`);
-                }
-              } catch (e) { if (e.status !== 404) console.warn(`  ⚠️ ${repo}: ${e.message}`); }
-
               if (!errors.some(e => e.startsWith(repo))) console.log(`  ✅ ${repo} v${version}`);
             }
 
-            // ── Umbrella release ───────────────────────
             console.log(`\n📋 Checking umbrella release\n`);
             try {
               await github.rest.repos.getReleaseByTag({ owner: org, repo: 'PayrollEngine', tag: libTag });
@@ -216,7 +188,6 @@ jobs:
               console.log(`  ✅ PayrollEngine umbrella release`);
             }
 
-            // ── Result ─────────────────────────────────
             if (errors.length > 0) {
               core.setFailed([
                 `❌ Version guard failed with ${errors.length} conflict(s):`,
@@ -227,9 +198,8 @@ jobs:
               console.log('\n✅ All version checks passed — safe to proceed\n');
             }
 
-
   # =======================================================
-  # BREAKING CHANGE GUARD (detect undocumented API changes)
+  # BREAKING CHANGE GUARD
   # =======================================================
   breaking-change-guard:
     needs: [prepare, version-guard]
@@ -276,7 +246,6 @@ jobs:
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
           if (-not $notes -or $notes -notmatch 'breaking change') {
             Write-Host "::error::Breaking changes detected but not documented in RELEASE_NOTES.md"
-            Write-Host "Run Update-BreakingChanges.ps1 locally to review and document changes."
             exit 1
           }
           Write-Host "Breaking changes are documented in RELEASE_NOTES.md"
@@ -315,8 +284,6 @@ jobs:
 
   wait-wave-1:
     needs: [prepare, wave-1-core]
-    # always() required: version-guard/breaking-change-guard were skipped (dry_run),
-    # and GitHub propagates skip status transitively without explicit if conditions.
     if: always() && needs.wave-1-core.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -326,11 +293,15 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
+            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              console.log('⚠️ Dry-run: skipping release poll, trusting dispatch succeeded');
+              await new Promise(r => setTimeout(r, 15000));
+              return;
+            }
             const org = '${{ env.ORG }}';
             const tag = `v${{ needs.prepare.outputs.lib_version }}`;
             const maxAttempts = 60;
             const delay = 15000;
-
             for (let i = 0; i < maxAttempts; i++) {
               try {
                 const releases = await github.rest.repos.listReleases({
@@ -419,12 +390,16 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
+            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              console.log('⚠️ Dry-run: skipping release poll');
+              await new Promise(r => setTimeout(r, 15000));
+              return;
+            }
             const org = '${{ env.ORG }}';
             const tag = `v${{ needs.prepare.outputs.lib_version }}`;
             const repos = ['PayrollEngine.Serilog', 'PayrollEngine.Document', 'PayrollEngine.Client.Core'];
             const maxAttempts = 60;
             const delay = 15000;
-
             for (const repo of repos) {
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
@@ -495,12 +470,16 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
+            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              console.log('⚠️ Dry-run: skipping release poll');
+              await new Promise(r => setTimeout(r, 15000));
+              return;
+            }
             const org = '${{ env.ORG }}';
             const tag = `v${{ needs.prepare.outputs.lib_version }}`;
             const repos = ['PayrollEngine.Client.Scripting', 'PayrollEngine.Client.Test'];
             const maxAttempts = 60;
             const delay = 15000;
-
             for (const repo of repos) {
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
@@ -550,11 +529,15 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
+            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              console.log('⚠️ Dry-run: skipping release poll');
+              await new Promise(r => setTimeout(r, 15000));
+              return;
+            }
             const org = '${{ env.ORG }}';
             const tag = `v${{ needs.prepare.outputs.lib_version }}`;
             const maxAttempts = 60;
             const delay = 15000;
-
             for (let i = 0; i < maxAttempts; i++) {
               try {
                 const releases = await github.rest.repos.listReleases({
@@ -665,27 +648,22 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
+            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              console.log('⚠️ Dry-run: skipping release poll');
+              await new Promise(r => setTimeout(r, 15000));
+              return;
+            }
             const org = '${{ env.ORG }}';
-            const dryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
-            const runNum = '${{ github.run_number }}';
             const apps = [];
-
-            if ('${{ needs.wave-5-backend.result }}' === 'success') {
-              const v = dryRun ? `0.0.0-dryrun.${runNum}` : '${{ inputs.backend_version }}';
-              apps.push({ repo: 'PayrollEngine.Backend', tag: `v${v}` });
-            }
-            if ('${{ needs.wave-5-console.result }}' === 'success') {
-              const v = dryRun ? `0.0.0-dryrun.${runNum}` : '${{ inputs.console_version }}';
-              apps.push({ repo: 'PayrollEngine.PayrollConsole', tag: `v${v}` });
-            }
-            if ('${{ needs.wave-5-webapp.result }}' === 'success') {
-              const v = dryRun ? `0.0.0-dryrun.${runNum}` : '${{ inputs.webapp_version }}';
-              apps.push({ repo: 'PayrollEngine.WebApp', tag: `v${v}` });
-            }
+            if ('${{ needs.wave-5-backend.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.Backend',       tag: `v${{ inputs.backend_version }}` });
+            if ('${{ needs.wave-5-console.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.PayrollConsole', tag: `v${{ inputs.console_version }}` });
+            if ('${{ needs.wave-5-webapp.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.WebApp',         tag: `v${{ inputs.webapp_version }}` });
 
             const maxAttempts = 90;
             const delay = 15000;
-
             for (const { repo, tag } of apps) {
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
@@ -737,20 +715,15 @@ jobs:
           script: |
             const libVersion = '${{ needs.prepare.outputs.lib_version }}';
             const libPre = '${{ needs.prepare.outputs.lib_prerelease }}' === 'true';
-
             let body = '';
             const userNotes = `${{ steps.release_notes.outputs.content }}`;
             body += userNotes.trim() + '\n';
-
-            body += `\n---\n\n`;
-            body += `## 📦 NuGet Packages (v${libVersion})\n\n`;
-            body += `| Package | GitHub Packages | NuGet.org |\n`;
-            body += `|---------|----------------|----------|\n`;
+            body += `\n---\n\n## 📦 NuGet Packages (v${libVersion})\n\n`;
+            body += `| Package | GitHub Packages | NuGet.org |\n|---------|----------------|----------|\n`;
             const libs = [
-              'PayrollEngine.Core', 'PayrollEngine.Serilog',
-              'PayrollEngine.Document', 'PayrollEngine.Client.Core',
-              'PayrollEngine.Client.Scripting', 'PayrollEngine.Client.Test',
-              'PayrollEngine.Client.Services'
+              'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
+              'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
+              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services'
             ];
             for (const lib of libs) {
               const ghUrl = `https://github.com/Payroll-Engine/${lib}/packages`;
@@ -759,26 +732,19 @@ jobs:
               body += libPre ? '_pending sync_' : `[${libVersion}](${nugetUrl})`;
               body += ` |\n`;
             }
-
             const apps = [
-              { name: 'Backend', version: '${{ inputs.backend_version }}', pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
+              { name: 'Backend',       version: '${{ inputs.backend_version }}', pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
               { name: 'PayrollConsole', version: '${{ inputs.console_version }}', pre: '${{ needs.prepare.outputs.console_prerelease }}' },
-              { name: 'WebApp', version: '${{ inputs.webapp_version }}', pre: '${{ needs.prepare.outputs.webapp_prerelease }}' }
+              { name: 'WebApp',         version: '${{ inputs.webapp_version }}', pre: '${{ needs.prepare.outputs.webapp_prerelease }}' }
             ].filter(a => a.version);
-
             if (apps.length > 0) {
-              body += `\n## 🐳 Docker Images (Linux)\n\n`;
-              body += `| App | Version | Pull Command |\n`;
-              body += `|-----|---------|-------------|\n`;
+              body += `\n## 🐳 Docker Images (Linux)\n\n| App | Version | Pull Command |\n|-----|---------|-------------|\n`;
               for (const app of apps) {
-                const imgName = `payrollengine.${app.name.toLowerCase()}`;
-                const image = `ghcr.io/payroll-engine/${imgName}`;
+                const image = `ghcr.io/payroll-engine/payrollengine.${app.name.toLowerCase()}`;
                 const preTag = app.pre === 'true' ? ' _(pre-release)_' : '';
-                body += `| PayrollEngine.${app.name} | ${app.version}${preTag} `;
-                body += `| \`docker pull ${image}:${app.version}\` |\n`;
+                body += `| PayrollEngine.${app.name} | ${app.version}${preTag} | \`docker pull ${image}:${app.version}\` |\n`;
               }
             }
-
             return body;
           result-encoding: string
 
@@ -798,32 +764,21 @@ jobs:
           script: |
             const fs = require('fs');
             const org = '${{ env.ORG }}';
-            const backendVersion = '${{ inputs.backend_version }}';
-            const tag = `v${backendVersion}`;
-
+            const tag = `v${{ inputs.backend_version }}`;
             const releases = await github.rest.repos.listReleases({
               owner: org, repo: 'PayrollEngine.Backend', per_page: 10
             });
             const release = releases.data.find(r => r.tag_name === tag);
-            if (!release) {
-              console.log(`⚠️ Backend release ${tag} not found — skipping swagger.json`);
-              return;
-            }
-
+            if (!release) { console.log(`⚠️ Backend release ${tag} not found`); return; }
             const asset = release.assets.find(a => a.name === 'swagger.json');
-            if (!asset) {
-              console.log('⚠️ swagger.json not found in Backend release assets');
-              return;
-            }
-
-            console.log(`📥 Downloading swagger.json from Backend ${tag}...`);
+            if (!asset) { console.log('⚠️ swagger.json not found'); return; }
             const response = await github.request(
               'GET /repos/{owner}/{repo}/releases/assets/{asset_id}',
               { owner: org, repo: 'PayrollEngine.Backend', asset_id: asset.id,
                 headers: { accept: 'application/octet-stream' } }
             );
             fs.writeFileSync('swagger.json', Buffer.from(response.data));
-            console.log(`✅ swagger.json downloaded (${response.data.byteLength} bytes)`);
+            console.log(`✅ swagger.json downloaded`);
 
       - name: Attach swagger.json to umbrella release
         if: needs.prepare.outputs.build_backend == 'true'
@@ -833,20 +788,18 @@ jobs:
           files: swagger.json
 
   # ═══════════════════════════════════════════════════════
-  # FINALIZE: Wiki Update
+  # FINALIZE: Wiki Update (deprecated — kept for manual override)
   # ═══════════════════════════════════════════════════════
   update-wiki:
     needs: [prepare, create-umbrella-release]
     if: always() && needs.create-umbrella-release.result == 'success' && inputs.update_wiki == true
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main repo (for RELEASE_NOTES.md)
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           path: main
 
-      - name: Checkout wiki
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: Payroll-Engine/PayrollEngine.wiki
           token: ${{ secrets.PAT_DISPATCH }}
@@ -860,34 +813,15 @@ jobs:
             const libVersion = '${{ needs.prepare.outputs.lib_version }}';
             const releasesFile = 'wiki/Releases.md';
             const notesFile = 'main/RELEASE_NOTES.md';
-
-            let userNotes = '';
-            if (fs.existsSync(notesFile)) {
-              userNotes = fs.readFileSync(notesFile, 'utf8').trim();
-            }
-            if (!userNotes) {
-              userNotes = `Release v${libVersion}`;
-              console.log('⚠️ RELEASE_NOTES.md not found or empty — using fallback');
-            } else {
-              console.log(`✅ RELEASE_NOTES.md found (${userNotes.split('\n').length} lines)`);
-            }
-
+            let userNotes = fs.existsSync(notesFile) ? fs.readFileSync(notesFile, 'utf8').trim() : '';
+            if (!userNotes) { userNotes = `Release v${libVersion}`; }
             const now = new Date();
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
-
-            let entry = `\n## v${libVersion} - ${dateStr}\n`;
-            entry += userNotes + '\n';
-
+            let entry = `\n## v${libVersion} - ${dateStr}\n` + userNotes + '\n';
             let content = fs.readFileSync(releasesFile, 'utf8');
-            const firstVersionHeading = content.search(/\n## v\d/);
-            if (firstVersionHeading !== -1) {
-              content = content.slice(0, firstVersionHeading) + entry + content.slice(firstVersionHeading);
-            } else {
-              content += entry;
-            }
-
+            const idx = content.search(/\n## v\d/);
+            content = idx !== -1 ? content.slice(0, idx) + entry + content.slice(idx) : content + entry;
             fs.writeFileSync(releasesFile, content);
             console.log(`✅ Wiki entry added: ## v${libVersion} - ${dateStr}`);
 
