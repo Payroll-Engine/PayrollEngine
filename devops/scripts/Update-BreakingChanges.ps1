@@ -889,70 +889,96 @@ function Update-ReleaseNotes {
 }
 
 # -- Main ----------------------------------------------------------------------
+# Exit codes:
+#   0  -- no breaking changes detected
+#   1  -- breaking changes detected (document in RELEASE_NOTES.md)
+#   2  -- infrastructure failure (build, git, or tool error; detection unreliable)
 
 $startTime = Get-Date
-Write-Host "`n  PayrollEngine Breaking Change Detection" -ForegroundColor White
-Write-Host "  Baseline: $BaselineRef | $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -ForegroundColor DarkGray
-$script:report.Add("# PayrollEngine -- Breaking Change Report")
-$script:report.Add("**Baseline:** ``$BaselineRef`` | **Date:** $(Get-Date -Format 'yyyy-MM-dd HH:mm')")
 
-Update-SwaggerJson
+try {
+    Write-Host "`n  PayrollEngine Breaking Change Detection" -ForegroundColor White
+    Write-Host "  Baseline: $BaselineRef | $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -ForegroundColor DarkGray
+    $script:report.Add("# PayrollEngine -- Breaking Change Report")
+    $script:report.Add("**Baseline:** ``$BaselineRef`` | **Date:** $(Get-Date -Format 'yyyy-MM-dd HH:mm')")
 
-$script:currentSectionKey = "RestApi"
-Compare-SwaggerBreakingChanges
+    Update-SwaggerJson
 
-$toolDir = Initialize-ApiExtractorProject
+    $script:currentSectionKey = "RestApi"
+    Compare-SwaggerBreakingChanges
 
-$script:currentSectionKey = "BackendApi"
-Compare-DotNetApiSurface `
-    -Label "Backend API Models -- public API surface" `
-    -RepoPath $config.BackendApi.Repo `
-    -ProjectNames $config.BackendApi.Projects `
-    -ToolDir $toolDir
+    $toolDir = Initialize-ApiExtractorProject
+    if (-not $toolDir) {
+        throw "API extractor project could not be built -- .NET API surface comparison is unavailable."
+    }
 
-$script:currentSectionKey = "ScriptingApi"
-Compare-DotNetApiSurface `
-    -Label "Scripting API (Regulator) -- public API surface" `
-    -RepoPath $config.ScriptingApi.Repo `
-    -ProjectNames $config.ScriptingApi.Projects `
-    -ToolDir $toolDir
+    $script:currentSectionKey = "BackendApi"
+    Compare-DotNetApiSurface `
+        -Label "Backend API Models -- public API surface" `
+        -RepoPath $config.BackendApi.Repo `
+        -ProjectNames $config.BackendApi.Projects `
+        -ToolDir $toolDir
 
-$script:currentSectionKey = "ClientServices"
-Compare-DotNetApiSurface `
-    -Label "Client Services (Automator) -- public API surface" `
-    -RepoPath $config.ClientServices.Repo `
-    -ProjectNames $config.ClientServices.Projects `
-    -ToolDir $toolDir
+    $script:currentSectionKey = "ScriptingApi"
+    Compare-DotNetApiSurface `
+        -Label "Scripting API (Regulator) -- public API surface" `
+        -RepoPath $config.ScriptingApi.Repo `
+        -ProjectNames $config.ScriptingApi.Projects `
+        -ToolDir $toolDir
 
-$script:currentSectionKey = ""
+    $script:currentSectionKey = "ClientServices"
+    Compare-DotNetApiSurface `
+        -Label "Client Services (Automator) -- public API surface" `
+        -RepoPath $config.ClientServices.Repo `
+        -ProjectNames $config.ClientServices.Projects `
+        -ToolDir $toolDir
 
-if ($toolDir -and (Test-Path $toolDir)) {
-    Remove-Item $toolDir -Recurse -Force -ErrorAction SilentlyContinue
+    $script:currentSectionKey = ""
+
+    if ($toolDir -and (Test-Path $toolDir)) {
+        Remove-Item $toolDir -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    Update-ReleaseNotes
+
+    $elapsed = (Get-Date) - $startTime
+    Write-Host "`n$("-" * 70)" -ForegroundColor DarkGray
+
+    if ($script:breakingCount -gt 0) {
+        Write-Host "  RESULT: $($script:breakingCount) breaking change(s), $($script:warningCount) warning(s)" -ForegroundColor Red
+    }
+    elseif ($script:warningCount -gt 0) {
+        Write-Host "  RESULT: No breaking changes, $($script:warningCount) warning(s)" -ForegroundColor Yellow
+    }
+    else {
+        Write-Host "  RESULT: No breaking changes detected" -ForegroundColor Green
+    }
+    Write-Host "  Elapsed: $($elapsed.TotalSeconds.ToString('F1'))s" -ForegroundColor DarkGray
+
+    $script:report.Add("`n---")
+    $script:report.Add("**Summary:** $($script:breakingCount) breaking change(s), $($script:warningCount) warning(s) | $($elapsed.TotalSeconds.ToString('F1'))s")
+
+    if ($ReportPath) {
+        $script:report -join "`n" | Set-Content -Path $ReportPath -Encoding UTF8
+        Write-Host "  Report: $ReportPath" -ForegroundColor DarkGray
+    }
+
+    if ($script:breakingCount -gt 0) { exit 1 }
+    exit 0
 }
+catch {
+    $elapsed = (Get-Date) - $startTime
+    Write-Host "`n$("-" * 70)" -ForegroundColor DarkGray
+    Write-Host "  RESULT: Infrastructure failure -- detection aborted" -ForegroundColor Magenta
+    Write-Host "  ERROR:  $_" -ForegroundColor Magenta
+    Write-Host "  Elapsed: $($elapsed.TotalSeconds.ToString('F1'))s" -ForegroundColor DarkGray
 
-Update-ReleaseNotes
+    $script:report.Add("`n---")
+    $script:report.Add("**Result:** Infrastructure failure -- ``$_``")
 
-$elapsed = (Get-Date) - $startTime
-Write-Host "`n$("-" * 70)" -ForegroundColor DarkGray
+    if ($ReportPath) {
+        $script:report -join "`n" | Set-Content -Path $ReportPath -Encoding UTF8 -ErrorAction SilentlyContinue
+    }
 
-if ($script:breakingCount -gt 0) {
-    Write-Host "  RESULT: $($script:breakingCount) breaking change(s), $($script:warningCount) warning(s)" -ForegroundColor Red
+    exit 2
 }
-elseif ($script:warningCount -gt 0) {
-    Write-Host "  RESULT: No breaking changes, $($script:warningCount) warning(s)" -ForegroundColor Yellow
-}
-else {
-    Write-Host "  RESULT: No breaking changes detected" -ForegroundColor Green
-}
-Write-Host "  Elapsed: $($elapsed.TotalSeconds.ToString('F1'))s" -ForegroundColor DarkGray
-
-$script:report.Add("`n---")
-$script:report.Add("**Summary:** $($script:breakingCount) breaking change(s), $($script:warningCount) warning(s) | $($elapsed.TotalSeconds.ToString('F1'))s")
-
-if ($ReportPath) {
-    $script:report -join "`n" | Set-Content -Path $ReportPath -Encoding UTF8
-    Write-Host "  Report: $ReportPath" -ForegroundColor DarkGray
-}
-
-if ($script:breakingCount -gt 0) { exit 1 }
-exit 0

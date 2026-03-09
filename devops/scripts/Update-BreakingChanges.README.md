@@ -116,3 +116,4 @@ Only new entries are added; existing content is never modified or removed.
 |------|---------|
 | `0` | No breaking changes detected |
 | `1` | One or more breaking changes found |
+| `2` | Infrastructure failure — build, git, or tool error; detection result is unreliable |

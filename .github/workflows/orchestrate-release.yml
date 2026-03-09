@@ -33,6 +33,7 @@ permissions:
 
 env:
   ORG: Payroll-Engine
+  DOTNET_VERSION: '10.0.x'
 
 jobs:
   # ─── Prepare parameters ───────────────────────────────
@@ -151,7 +152,7 @@ jobs:
               } catch (e) { if (e.status !== 404) throw e; }
               try {
                 const packages = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-                  package_type: 'nuget', package_name: repo, org
+                  package_type: 'nuget', package_name: repo.toLowerCase(), org, per_page: 100
                 });
                 if (packages.data.some(p => p.name === libVersion))
                   errors.push(`${repo}: NuGet version '${libVersion}' already exists on GitHub Packages`);
@@ -176,6 +177,15 @@ jobs:
                 await github.rest.repos.getReleaseByTag({ owner: org, repo, tag });
                 errors.push(`${repo}: GitHub Release '${tag}' already exists`);
               } catch (e) { if (e.status !== 404) throw e; }
+              try {
+                const packageName = repo.toLowerCase();
+                const versions = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'container', package_name: packageName, org
+                });
+                if (versions.data.some(v => v.metadata?.container?.tags?.includes(version))) {
+                  errors.push(`${repo}: Docker image tag '${version}' already exists on ghcr.io`);
+                }
+              } catch (e) { if (e.status !== 404) console.warn(`  ⚠️ ${repo}: ${e.message}`); }
               if (!errors.some(e => e.startsWith(repo))) console.log(`  ✅ ${repo} v${version}`);
             }
 
@@ -238,14 +248,26 @@ jobs:
             -BaselineRef "HEAD~1" `
             -SkipReleaseNotes `
             -ReportPath "breaking-changes.md"
+          $ec = $LASTEXITCODE
+          # Capture exit code as step output so the check step can distinguish
+          # exit 1 (breaking changes) from exit 2 (infrastructure failure).
+          "exit_code=$ec" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          exit $ec
 
       - name: Check for undocumented breaking changes
         if: steps.detect.outcome == 'failure'
         shell: pwsh
         run: |
+          # Exit code 2 = infrastructure failure (build, git, or tool error).
+          # We cannot trust the detection result — always block.
+          if ('${{ steps.detect.outputs.exit_code }}' -eq '2') {
+            Write-Host "::error::Breaking change detection script failed due to an infrastructure error (build, git, or tool failure). Check the breaking-change-report artifact."
+            exit 1
+          }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
           if (-not $notes -or $notes -notmatch 'breaking change') {
             Write-Host "::error::Breaking changes detected but not documented in RELEASE_NOTES.md"
+            Write-Host "Run Update-BreakingChanges.ps1 locally to review and document the changes."
             exit 1
           }
           Write-Host "Breaking changes are documented in RELEASE_NOTES.md"
@@ -295,37 +317,29 @@ jobs:
           script: |
             const org = '${{ env.ORG }}';
             const version = '${{ needs.prepare.outputs.lib_version }}';
-            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
-            const repos = isDryRun
-              ? [{ repo: 'PayrollEngine.Core', type: 'nuget' }]
-              : [{ repo: 'PayrollEngine.Core', type: 'release' }];
             const maxAttempts = 60;
             const delay = 15000;
 
-            for (const { repo, type } of repos) {
-              let found = false;
-              for (let i = 0; i < maxAttempts && !found; i++) {
-                try {
-                  if (type === 'nuget') {
-                    const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-                      package_type: 'nuget', package_name: repo.toLowerCase(), org,
-                      state: 'active', per_page: 30
-                    });
-                    found = pkgs.data.some(p => p.name === version);
-                    if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
-                  } else {
-                    const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
-                    found = releases.data.some(r => r.tag_name === `v${version}`);
-                    if (found) console.log(`✅ ${repo} release found`);
-                  }
-                } catch (e) { /* retry */ }
-                if (!found) {
-                  console.log(`⏳ ${repo}: attempt ${i + 1}/${maxAttempts}...`);
-                  await new Promise(r => setTimeout(r, delay));
-                }
+            let found = false;
+            for (let i = 0; i < maxAttempts && !found; i++) {
+              try {
+                const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'nuget', package_name: 'payrollengine.core', org,
+                  state: 'active', per_page: 100
+                });
+                found = pkgs.data.some(p => p.name === version);
+                if (found) console.log(`✅ PayrollEngine.Core ${version} available on GitHub Packages`);
+              } catch (e) {
+                if (e.status === 401 || e.status === 403) throw e;
+                if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.status ?? 'network'} ${e.message}`);
               }
-              if (!found) throw new Error(`❌ Timeout waiting for ${repo} ${version}`);
+              if (!found) {
+                console.log(`⏳ Attempt ${i + 1}/${maxAttempts} – waiting for Core package...`);
+                await new Promise(r => setTimeout(r, delay));
+              }
             }
+            if (!found) throw new Error('❌ Timeout waiting for PayrollEngine.Core NuGet package');
+            // Extra propagation buffer
             await new Promise(r => setTimeout(r, 10000));
 
   # ═══════════════════════════════════════════════════════
@@ -402,7 +416,6 @@ jobs:
           script: |
             const org = '${{ env.ORG }}';
             const version = '${{ needs.prepare.outputs.lib_version }}';
-            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
             const repos = ['PayrollEngine.Serilog', 'PayrollEngine.Document', 'PayrollEngine.Client.Core'];
             const maxAttempts = 60;
             const delay = 15000;
@@ -411,21 +424,18 @@ jobs:
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  if (isDryRun) {
-                    const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-                      package_type: 'nuget', package_name: repo.toLowerCase(), org,
-                      state: 'active', per_page: 30
-                    });
-                    found = pkgs.data.some(p => p.name === version);
-                    if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
-                  } else {
-                    const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
-                    found = releases.data.some(r => r.tag_name === `v${version}`);
-                    if (found) console.log(`✅ ${repo} release found`);
-                  }
-                } catch (e) { /* retry */ }
+                  const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                    state: 'active', per_page: 100
+                  });
+                  found = pkgs.data.some(p => p.name === version);
+                  if (found) console.log(`✅ ${repo} ${version} available on GitHub Packages`);
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.status ?? 'network'} ${e.message}`);
+                }
                 if (!found) {
-                  console.log(`⏳ Waiting for ${repo}... (${i + 1}/${maxAttempts})`);
+                  console.log(`⏳ Waiting for ${repo} package... (${i + 1}/${maxAttempts})`);
                   await new Promise(r => setTimeout(r, delay));
                 }
               }
@@ -488,7 +498,6 @@ jobs:
           script: |
             const org = '${{ env.ORG }}';
             const version = '${{ needs.prepare.outputs.lib_version }}';
-            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
             const repos = ['PayrollEngine.Client.Scripting', 'PayrollEngine.Client.Test'];
             const maxAttempts = 60;
             const delay = 15000;
@@ -497,21 +506,18 @@ jobs:
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  if (isDryRun) {
-                    const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-                      package_type: 'nuget', package_name: repo.toLowerCase(), org,
-                      state: 'active', per_page: 30
-                    });
-                    found = pkgs.data.some(p => p.name === version);
-                    if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
-                  } else {
-                    const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
-                    found = releases.data.some(r => r.tag_name === `v${version}`);
-                    if (found) console.log(`✅ ${repo} release found`);
-                  }
-                } catch (e) { /* retry */ }
+                  const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                    state: 'active', per_page: 100
+                  });
+                  found = pkgs.data.some(p => p.name === version);
+                  if (found) console.log(`✅ ${repo} ${version} available on GitHub Packages`);
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.status ?? 'network'} ${e.message}`);
+                }
                 if (!found) {
-                  console.log(`⏳ Waiting for ${repo}... (${i + 1}/${maxAttempts})`);
+                  console.log(`⏳ Waiting for ${repo} package... (${i + 1}/${maxAttempts})`);
                   await new Promise(r => setTimeout(r, delay));
                 }
               }
@@ -553,7 +559,6 @@ jobs:
           script: |
             const org = '${{ env.ORG }}';
             const version = '${{ needs.prepare.outputs.lib_version }}';
-            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
             const repo = 'PayrollEngine.Client.Services';
             const maxAttempts = 60;
             const delay = 15000;
@@ -561,21 +566,16 @@ jobs:
             let found = false;
             for (let i = 0; i < maxAttempts && !found; i++) {
               try {
-                if (isDryRun) {
-                  const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-                    package_type: 'nuget', package_name: repo.toLowerCase(), org,
-                    state: 'active', per_page: 30
-                  });
-                  found = pkgs.data.some(p => p.name === version);
-                  if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
-                } else {
-                  const releases = await github.rest.repos.listReleases({
-                    owner: org, repo, per_page: 10
-                  });
-                  found = releases.data.some(r => r.tag_name === `v${version}`);
-                  if (found) console.log(`✅ ${repo} release found`);
-                }
-              } catch (e) { /* retry */ }
+                const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                  state: 'active', per_page: 100
+                });
+                found = pkgs.data.some(p => p.name === version);
+                if (found) console.log(`✅ ${repo} ${version} available on GitHub Packages`);
+              } catch (e) {
+                if (e.status === 401 || e.status === 403) throw e;
+                if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.status ?? 'network'} ${e.message}`);
+              }
               if (!found) {
                 console.log(`⏳ Attempt ${i + 1}/${maxAttempts}...`);
                 await new Promise(r => setTimeout(r, delay));
@@ -679,8 +679,9 @@ jobs:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
             if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              // App releases are drafted (not public) in dry-run;
+              // create-umbrella-release is skipped anyway. Return immediately.
               console.log('⚠️ Dry-run: skipping app release poll');
-              await new Promise(r => setTimeout(r, 15000));
               return;
             }
             const org = '${{ env.ORG }}';
@@ -701,7 +702,10 @@ jobs:
                   const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
                   found = releases.data.some(r => r.tag_name === tag);
                   if (found) console.log(`✅ ${repo} ${tag} release found`);
-                } catch (e) { /* retry */ }
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.status ?? 'network'} ${e.message}`);
+                }
                 if (!found) {
                   console.log(`⏳ Waiting for ${repo} ${tag}... (${i + 1}/${maxAttempts})`);
                   await new Promise(r => setTimeout(r, delay));
@@ -740,13 +744,17 @@ jobs:
 
       - name: Generate release body
         id: notes
+        env:
+          RELEASE_NOTES_CONTENT: ${{ steps.release_notes.outputs.content }}
         uses: actions/github-script@v7
         with:
           script: |
             const libVersion = '${{ needs.prepare.outputs.lib_version }}';
             const libPre = '${{ needs.prepare.outputs.lib_prerelease }}' === 'true';
             let body = '';
-            const userNotes = `${{ steps.release_notes.outputs.content }}`;
+            // Passed via env to avoid backtick/`${...}` injection when content
+            // is interpolated directly into a JS template literal.
+            const userNotes = process.env.RELEASE_NOTES_CONTENT || '';
             body += userNotes.trim() + '\n';
             body += `\n---\n\n## 📦 NuGet Packages (v${libVersion})\n\n`;
             body += `| Package | GitHub Packages | NuGet.org |\n|---------|----------------|----------|\n`;
@@ -810,8 +818,20 @@ jobs:
             fs.writeFileSync('swagger.json', Buffer.from(response.data));
             console.log(`✅ swagger.json downloaded`);
 
+      - name: Check swagger.json presence
+        id: swagger_check
+        if: needs.prepare.outputs.build_backend == 'true' && needs.wait-wave-5.result == 'success'
+        run: |
+          if [ -f swagger.json ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "✅ swagger.json present ($(wc -c < swagger.json) bytes)"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ swagger.json not found — skipping attach"
+          fi
+
       - name: Attach swagger.json to umbrella release
-        if: needs.prepare.outputs.build_backend == 'true'
+        if: needs.prepare.outputs.build_backend == 'true' && needs.wait-wave-5.result == 'success' && steps.swagger_check.outputs.exists == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.prepare.outputs.lib_version }}
@@ -822,7 +842,7 @@ jobs:
   # ═══════════════════════════════════════════════════════
   update-wiki:
     needs: [prepare, create-umbrella-release]
-    if: always() && needs.create-umbrella-release.result == 'success' && inputs.update_wiki == true
+    if: always() && needs.create-umbrella-release.result == 'success' && inputs.update_wiki == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
