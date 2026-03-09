@@ -79,7 +79,7 @@ jobs:
               webapp)  RAW_VERSION="${{ inputs.webapp_version }}" ;;
             esac
 
-            if [ "${DRY_RUN}" = "true" ] && [ -n "${RAW_VERSION}" ]; then
+            if [ "${DRY_RUN}" = "true" ]; then
               RAW_VERSION="0.0.0-dryrun.${{ github.run_number }}"
             fi
 
@@ -735,7 +735,7 @@ jobs:
             const apps = [
               { name: 'Backend',       version: '${{ inputs.backend_version }}', pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
               { name: 'PayrollConsole', version: '${{ inputs.console_version }}', pre: '${{ needs.prepare.outputs.console_prerelease }}' },
-              { name: 'WebApp',         version: '${{ inputs.webapp_version }}', pre: '${{ needs.prepare.outputs.webapp_prerelease }}' }
+              { name: 'WebApp',         version: '${{ inputs.webapp_version }}',  pre: '${{ needs.prepare.outputs.webapp_prerelease }}' }
             ].filter(a => a.version);
             if (apps.length > 0) {
               body += `\n## 🐳 Docker Images (Linux)\n\n| App | Version | Pull Command |\n|-----|---------|-------------|\n`;
