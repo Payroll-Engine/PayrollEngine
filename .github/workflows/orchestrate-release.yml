@@ -315,6 +315,9 @@ jobs:
 
   wait-wave-1:
     needs: [prepare, wave-1-core]
+    # always() required: version-guard/breaking-change-guard were skipped (dry_run),
+    # and GitHub propagates skip status transitively without explicit if conditions.
+    if: always() && needs.wave-1-core.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -331,7 +334,7 @@ jobs:
             for (let i = 0; i < maxAttempts; i++) {
               try {
                 const releases = await github.rest.repos.listReleases({
-                  owner: org, repo: 'PayrollEngine.Core', per_page: 5
+                  owner: org, repo: 'PayrollEngine.Core', per_page: 10
                 });
                 if (releases.data.find(r => r.tag_name === tag)) {
                   console.log('✅ PayrollEngine.Core release found');
@@ -349,6 +352,7 @@ jobs:
   # ═══════════════════════════════════════════════════════
   wave-2-serilog:
     needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: peter-evans/repository-dispatch@v3
@@ -366,6 +370,7 @@ jobs:
 
   wave-2-document:
     needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: peter-evans/repository-dispatch@v3
@@ -383,6 +388,7 @@ jobs:
 
   wave-2-client-core:
     needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: peter-evans/repository-dispatch@v3
@@ -400,6 +406,11 @@ jobs:
 
   wait-wave-2:
     needs: [prepare, wave-2-serilog, wave-2-document, wave-2-client-core]
+    if: |
+      always() &&
+      needs.wave-2-serilog.result == 'success' &&
+      needs.wave-2-document.result == 'success' &&
+      needs.wave-2-client-core.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -418,7 +429,7 @@ jobs:
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 5 });
+                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
                   found = releases.data.some(r => r.tag_name === tag);
                   if (found) console.log(`✅ ${repo} release found`);
                 } catch (e) { /* retry */ }
@@ -436,6 +447,7 @@ jobs:
   # ═══════════════════════════════════════════════════════
   wave-3-scripting:
     needs: [prepare, wait-wave-2]
+    if: always() && needs.wait-wave-2.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: peter-evans/repository-dispatch@v3
@@ -453,6 +465,7 @@ jobs:
 
   wave-3-test:
     needs: [prepare, wait-wave-2]
+    if: always() && needs.wait-wave-2.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: peter-evans/repository-dispatch@v3
@@ -470,6 +483,10 @@ jobs:
 
   wait-wave-3:
     needs: [prepare, wave-3-scripting, wave-3-test]
+    if: |
+      always() &&
+      needs.wave-3-scripting.result == 'success' &&
+      needs.wave-3-test.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -488,7 +505,7 @@ jobs:
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 5 });
+                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
                   found = releases.data.some(r => r.tag_name === tag);
                   if (found) console.log(`✅ ${repo} release found`);
                 } catch (e) { /* retry */ }
@@ -506,6 +523,7 @@ jobs:
   # ═══════════════════════════════════════════════════════
   wave-4-services:
     needs: [prepare, wait-wave-3]
+    if: always() && needs.wait-wave-3.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: peter-evans/repository-dispatch@v3
@@ -523,6 +541,7 @@ jobs:
 
   wait-wave-4:
     needs: [prepare, wave-4-services]
+    if: always() && needs.wave-4-services.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -539,7 +558,7 @@ jobs:
             for (let i = 0; i < maxAttempts; i++) {
               try {
                 const releases = await github.rest.repos.listReleases({
-                  owner: org, repo: 'PayrollEngine.Client.Services', per_page: 5
+                  owner: org, repo: 'PayrollEngine.Client.Services', per_page: 10
                 });
                 if (releases.data.some(r => r.tag_name === tag)) {
                   console.log('✅ Client.Services release found');
@@ -557,7 +576,7 @@ jobs:
   # ═══════════════════════════════════════════════════════
   wave-5-backend:
     needs: [prepare, wait-wave-4]
-    if: needs.prepare.outputs.build_backend == 'true'
+    if: always() && needs.wait-wave-4.result == 'success' && needs.prepare.outputs.build_backend == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Resolve app version
@@ -582,7 +601,7 @@ jobs:
 
   wave-5-console:
     needs: [prepare, wait-wave-4]
-    if: needs.prepare.outputs.build_console == 'true'
+    if: always() && needs.wait-wave-4.result == 'success' && needs.prepare.outputs.build_console == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Resolve app version
@@ -607,7 +626,7 @@ jobs:
 
   wave-5-webapp:
     needs: [prepare, wait-wave-4]
-    if: needs.prepare.outputs.build_webapp == 'true'
+    if: always() && needs.wait-wave-4.result == 'success' && needs.prepare.outputs.build_webapp == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Resolve app version
@@ -634,9 +653,9 @@ jobs:
     needs: [prepare, wave-5-backend, wave-5-console, wave-5-webapp]
     if: |
       always() && (
-        needs.prepare.outputs.build_backend == 'true' ||
-        needs.prepare.outputs.build_console == 'true' ||
-        needs.prepare.outputs.build_webapp == 'true'
+        needs.wave-5-backend.result == 'success' ||
+        needs.wave-5-console.result == 'success' ||
+        needs.wave-5-webapp.result == 'success'
       )
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -651,15 +670,15 @@ jobs:
             const runNum = '${{ github.run_number }}';
             const apps = [];
 
-            if ('${{ needs.prepare.outputs.build_backend }}' === 'true') {
+            if ('${{ needs.wave-5-backend.result }}' === 'success') {
               const v = dryRun ? `0.0.0-dryrun.${runNum}` : '${{ inputs.backend_version }}';
               apps.push({ repo: 'PayrollEngine.Backend', tag: `v${v}` });
             }
-            if ('${{ needs.prepare.outputs.build_console }}' === 'true') {
+            if ('${{ needs.wave-5-console.result }}' === 'success') {
               const v = dryRun ? `0.0.0-dryrun.${runNum}` : '${{ inputs.console_version }}';
               apps.push({ repo: 'PayrollEngine.PayrollConsole', tag: `v${v}` });
             }
-            if ('${{ needs.prepare.outputs.build_webapp }}' === 'true') {
+            if ('${{ needs.wave-5-webapp.result }}' === 'success') {
               const v = dryRun ? `0.0.0-dryrun.${runNum}` : '${{ inputs.webapp_version }}';
               apps.push({ repo: 'PayrollEngine.WebApp', tag: `v${v}` });
             }
@@ -671,7 +690,7 @@ jobs:
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 5 });
+                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
                   found = releases.data.some(r => r.tag_name === tag);
                   if (found) console.log(`✅ ${repo} ${tag} release found`);
                 } catch (e) { /* retry */ }
@@ -718,14 +737,11 @@ jobs:
           script: |
             const libVersion = '${{ needs.prepare.outputs.lib_version }}';
             const libPre = '${{ needs.prepare.outputs.lib_prerelease }}' === 'true';
-            const hasNotes = '${{ steps.release_notes.outputs.found }}' === 'true';
 
-            // ── User-written release notes ──────────────
             let body = '';
             const userNotes = `${{ steps.release_notes.outputs.content }}`;
             body += userNotes.trim() + '\n';
 
-            // ── Technical table: NuGet Packages ─────────
             body += `\n---\n\n`;
             body += `## 📦 NuGet Packages (v${libVersion})\n\n`;
             body += `| Package | GitHub Packages | NuGet.org |\n`;
@@ -744,7 +760,6 @@ jobs:
               body += ` |\n`;
             }
 
-            // ── Technical table: Docker Images ──────────
             const apps = [
               { name: 'Backend', version: '${{ inputs.backend_version }}', pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
               { name: 'PayrollConsole', version: '${{ inputs.console_version }}', pre: '${{ needs.prepare.outputs.console_prerelease }}' },
@@ -822,7 +837,7 @@ jobs:
   # ═══════════════════════════════════════════════════════
   update-wiki:
     needs: [prepare, create-umbrella-release]
-    if: inputs.update_wiki == true && needs.prepare.outputs.dry_run == 'false'
+    if: always() && needs.create-umbrella-release.result == 'success' && inputs.update_wiki == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repo (for RELEASE_NOTES.md)
@@ -846,7 +861,6 @@ jobs:
             const releasesFile = 'wiki/Releases.md';
             const notesFile = 'main/RELEASE_NOTES.md';
 
-            // ── Read release notes ──────────────────────
             let userNotes = '';
             if (fs.existsSync(notesFile)) {
               userNotes = fs.readFileSync(notesFile, 'utf8').trim();
@@ -858,8 +872,6 @@ jobs:
               console.log(`✅ RELEASE_NOTES.md found (${userNotes.split('\n').length} lines)`);
             }
 
-            // ── Build wiki entry in existing format ─────
-            // Format: "## v0.9.0-beta17 - Feb 18, 2026"
             const now = new Date();
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -868,15 +880,11 @@ jobs:
             let entry = `\n## v${libVersion} - ${dateStr}\n`;
             entry += userNotes + '\n';
 
-            // ── Insert after the static header section ──
             let content = fs.readFileSync(releasesFile, 'utf8');
-
-            // Find the first existing "## v" entry and insert before it
             const firstVersionHeading = content.search(/\n## v\d/);
             if (firstVersionHeading !== -1) {
               content = content.slice(0, firstVersionHeading) + entry + content.slice(firstVersionHeading);
             } else {
-              // No existing entries — append at end
               content += entry;
             }
 
