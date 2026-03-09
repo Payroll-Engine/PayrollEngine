@@ -1,0 +1,135 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "GlobalTech",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "GlobalTechPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "Initial salary setup",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "Initial employment level",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "Initial birth date",
+              "case": {
+                "caseName": "BirthDate",
+                "values": [
+                  {
+                    "caseFieldName": "BirthDate",
+                    "value": "1985-08-20T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "January 2024 performance bonus",
+              "case": {
+                "caseName": "PerformanceBonus",
+                "values": [
+                  {
+                    "caseFieldName": "PerformanceBonus",
+                    "value": "1000",
+                    "start": "2024-01-15T00:00:00.0Z",
+                    "created": "2024-01-10T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "Initial salary setup",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "10000",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "Initial employment level (60% part-time)",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.6",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+              "divisionName": "Engineering",
+              "reason": "Initial birth date",
+              "case": {
+                "caseName": "BirthDate",
+                "values": [
+                  {
+                    "caseFieldName": "BirthDate",
+                    "value": "1970-07-15T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

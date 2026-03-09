@@ -16,8 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="PayrollEngine.Client.Services" Version="0.9.0-beta.17" />
-		<PackageReference Include="PayrollEngine.Serilog" Version="0.9.0-beta.17" />
+		<PackageReference Include="PayrollEngine.Client.Services" Version="0.9.0-beta.dev" />
+		<PackageReference Include="PayrollEngine.Serilog" Version="0.9.0-beta.dev" />
 	</ItemGroup>
 
 	<ItemGroup>

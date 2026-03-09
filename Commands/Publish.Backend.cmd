@@ -17,7 +17,7 @@ if %ERRORLEVEL% neq 0 goto error
 
 rem ----- copy database files
 echo Publish backend...
-xcopy %~dp0..\..\PayrollEngine.Backend\Database\*.* %~dp0..\Bin\Backend\Database\*.* /S
+xcopy %~dp0..\..\PayrollEngine.Backend\Database\*.* %~dp0..\Bin\Backend\Database\*.* /S /Y
 if %ERRORLEVEL% neq 0 goto error
 goto exit
 

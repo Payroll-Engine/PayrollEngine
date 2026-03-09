@@ -1,0 +1,546 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "RetroPayroll",
+      "culture": "en-US",
+      "users": [
+        {
+          "identifier": "hr@retropayroll.com",
+          "firstName": "HR",
+          "lastName": "Admin",
+          "culture": "en-US",
+          "userType": "TenantAdministrator"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "RetroPayroll.Engineering"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "emma.bauer@retropayroll.com",
+          "firstName": "Emma",
+          "lastName": "Bauer",
+          "divisions": [ "RetroPayroll.Engineering" ]
+        },
+        {
+          "identifier": "ben.kowalski@retropayroll.com",
+          "firstName": "Ben",
+          "lastName": "Kowalski",
+          "divisions": [ "RetroPayroll.Engineering" ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "RetroRegulation",
+          "description": "Retro payroll regulation with salary, bonus, income tax and social security",
+          "cases": [
+            {
+              "name": "Salary",
+              "description": "Monthly base salary",
+              "caseType": "Employee",
+              "defaultReason": "Change monthly salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "EmploymentLevel",
+              "description": "Employment percentage (1.0 = full-time)",
+              "caseType": "Employee",
+              "defaultReason": "Change employment level",
+              "fields": [
+                {
+                  "name": "EmploymentLevel",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "Bonus",
+              "description": "One-time bonus payment (Moment: applies to the pay period containing the bonus date)",
+              "caseType": "Employee",
+              "defaultReason": "Enter bonus",
+              "fields": [
+                {
+                  "name": "Bonus",
+                  "valueType": "Money",
+                  "timeType": "Moment"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "GrossIncome",
+              "description": "Sum of base salary and bonus components"
+            },
+            {
+              "name": "Deductions",
+              "description": "Sum of income tax and social security deductions"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "BaseSalary",
+              "description": "Monthly salary scaled by employment level",
+              "valueExpression": "var v = GetCaseValues(\"Salary\", \"EmploymentLevel\"); return v[\"Salary\"] * v[\"EmploymentLevel\"];",
+              "collectors": [ "GrossIncome" ],
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "BaseSalaryDelta",
+              "description": "Sum of all retro-period corrections for WT 100 (positive = underpaid, negative = overpaid)",
+              "valueExpression": "GetWageTypeRetroResultSum(100)",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "Bonus",
+              "description": "One-time bonus — Moment type, recognised in the pay period containing the bonus date",
+              "valueExpression": "CaseValue[\"Bonus\"]",
+              "collectors": [ "GrossIncome" ],
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 112,
+              "name": "BonusDelta",
+              "description": "Sum of all retro-period corrections for WT 110",
+              "valueExpression": "GetWageTypeRetroResultSum(110)",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 200,
+              "name": "IncomeTax",
+              "description": "Simplified flat-rate income tax: 25% of gross income. Uses WageType references (not collector) to work in both normal and retro runs.",
+              "valueExpression": "(WageType[100] + WageType[110]) * 0.25M",
+              "collectors": [ "Deductions" ],
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 202,
+              "name": "IncomeTaxDelta",
+              "description": "Sum of all retro-period corrections for WT 200",
+              "valueExpression": "GetWageTypeRetroResultSum(200)",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 210,
+              "name": "SocialSecurity",
+              "description": "Social security contribution: 10% of gross income. Uses WageType references (not collector) to work in both normal and retro runs.",
+              "valueExpression": "(WageType[100] + WageType[110]) * 0.10M",
+              "collectors": [ "Deductions" ],
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 212,
+              "name": "SocialSecurityDelta",
+              "description": "Sum of all retro-period corrections for WT 210",
+              "valueExpression": "GetWageTypeRetroResultSum(210)",
+              "clusters": [ "Legal" ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "RetroPayroll",
+          "divisionName": "RetroPayroll.Engineering",
+          "layers": [
+            { "level": 1, "priority": 1, "regulationName": "RetroRegulation" }
+          ],
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypeRetro": "Retro",
+          "clusterSets": [
+            { "name": "Legal", "includeClusters": [ "Legal" ] },
+            { "name": "Retro", "includeClusters": [ "Retro" ] }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "emma.bauer@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4800",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "emma.bauer@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Retroactive salary adjustment — raise agreed in March, effective from January",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5800",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-03-10T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "emma.bauer@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Initial employment level — full-time",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "emma.bauer@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Retroactive part-time reduction — requested in April, effective from February",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.8",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-04-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "ben.kowalski@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "ben.kowalski@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Initial employment level — 50% part-time",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.5",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@retropayroll.com",
+              "employeeIdentifier": "ben.kowalski@retropayroll.com",
+              "divisionName": "RetroPayroll.Engineering",
+              "reason": "Q4/2023 performance bonus — approved and entered in March, payment date January",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "1500",
+                    "start": "2024-01-15T00:00:00.0Z",
+                    "created": "2024-03-08T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "RetroPayrun",
+          "payrollName": "RetroPayroll",
+          "defaultReason": "Monthly payroll run"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "RetroPayrun.Jan24",
+          "payrunName": "RetroPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "hr@retropayroll.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-31T00:00:00.0Z",
+          "reason": "January 2024 — baseline, no retro",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "RetroPayrun.Feb24",
+          "payrunName": "RetroPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "hr@retropayroll.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-29T00:00:00.0Z",
+          "reason": "February 2024 — baseline, no retro",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "RetroPayrun.Mar24",
+          "payrunName": "RetroPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "hr@retropayroll.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-31T00:00:00.0Z",
+          "reason": "March 2024 — retro: Emma salary raise (Jan+Feb), Ben bonus (Jan)",
+          "retroJobs": [
+            { "scheduleDate": "2024-01-01T00:00:00.0Z" },
+            { "scheduleDate": "2024-02-01T00:00:00.0Z" }
+          ],
+          "storeEmptyResults": true
+        },
+        {
+          "name": "RetroPayrun.Apr24",
+          "payrunName": "RetroPayrun",
+          "payrollName": "RetroPayroll",
+          "userIdentifier": "hr@retropayroll.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-04-01T00:00:00.0Z",
+          "evaluationDate": "2024-04-30T00:00:00.0Z",
+          "reason": "April 2024 — retro: Emma part-time reduction (Feb+Mar), negative deltas",
+          "retroJobs": [
+            { "scheduleDate": "2024-02-01T00:00:00.0Z" },
+            { "scheduleDate": "2024-03-01T00:00:00.0Z" }
+          ],
+          "storeEmptyResults": true
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "RetroPayrun.Jan24",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 4800 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1200 },
+            { "wageTypeNumber": 202, "value": 0 },
+            { "wageTypeNumber": 210, "value": 480 },
+            { "wageTypeNumber": 212, "value": 0 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 4800 },
+            { "collectorName": "Deductions",  "value": 1680 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Jan24",
+          "employeeIdentifier": "ben.kowalski@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 110 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 750 },
+            { "wageTypeNumber": 202, "value": 0 },
+            { "wageTypeNumber": 210, "value": 300 },
+            { "wageTypeNumber": 212, "value": 0 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 3000 },
+            { "collectorName": "Deductions",  "value": 1050 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Feb24",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 4800 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1200 },
+            { "wageTypeNumber": 202, "value": 0 },
+            { "wageTypeNumber": 210, "value": 480 },
+            { "wageTypeNumber": 212, "value": 0 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 4800 },
+            { "collectorName": "Deductions",  "value": 1680 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Feb24",
+          "employeeIdentifier": "ben.kowalski@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 110 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 750 },
+            { "wageTypeNumber": 202, "value": 0 },
+            { "wageTypeNumber": 210, "value": 300 },
+            { "wageTypeNumber": 212, "value": 0 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 3000 },
+            { "collectorName": "Deductions",  "value": 1050 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Mar24",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 5800 },
+            { "wageTypeNumber": 102, "value": 2000 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1450 },
+            { "wageTypeNumber": 202, "value": 500 },
+            { "wageTypeNumber": 210, "value": 580 },
+            { "wageTypeNumber": 212, "value": 200 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 5800 },
+            { "collectorName": "Deductions",  "value": 2030 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Mar24",
+          "retroPeriodStart": "2024-01-01T00:00:00.0Z",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 5800 },
+            { "wageTypeNumber": 200, "value": 1450 },
+            { "wageTypeNumber": 210, "value": 580 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Mar24",
+          "retroPeriodStart": "2024-02-01T00:00:00.0Z",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 5800 },
+            { "wageTypeNumber": 200, "value": 1450 },
+            { "wageTypeNumber": 210, "value": 580 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Mar24",
+          "employeeIdentifier": "ben.kowalski@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 110, "value": 0 },
+            { "wageTypeNumber": 112, "value": 1500 },
+            { "wageTypeNumber": 200, "value": 750 },
+            { "wageTypeNumber": 202, "value": 375 },
+            { "wageTypeNumber": 210, "value": 300 },
+            { "wageTypeNumber": 212, "value": 150 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 3000 },
+            { "collectorName": "Deductions",  "value": 1050 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Mar24",
+          "retroPeriodStart": "2024-01-01T00:00:00.0Z",
+          "employeeIdentifier": "ben.kowalski@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 110, "value": 1500 },
+            { "wageTypeNumber": 200, "value": 1125 },
+            { "wageTypeNumber": 210, "value": 450 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Apr24",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 4640 },
+            { "wageTypeNumber": 102, "value": -2320 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1160 },
+            { "wageTypeNumber": 202, "value": -580 },
+            { "wageTypeNumber": 210, "value": 464 },
+            { "wageTypeNumber": 212, "value": -232 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 4640 },
+            { "collectorName": "Deductions",  "value": 1624 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Apr24",
+          "retroPeriodStart": "2024-02-01T00:00:00.0Z",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 4640 },
+            { "wageTypeNumber": 200, "value": 1160 },
+            { "wageTypeNumber": 210, "value": 464 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Apr24",
+          "retroPeriodStart": "2024-03-01T00:00:00.0Z",
+          "employeeIdentifier": "emma.bauer@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 4640 },
+            { "wageTypeNumber": 200, "value": 1160 },
+            { "wageTypeNumber": 210, "value": 464 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayrun.Apr24",
+          "employeeIdentifier": "ben.kowalski@retropayroll.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 110, "value": 0 },
+            { "wageTypeNumber": 112, "value": 0 },
+            { "wageTypeNumber": 200, "value": 750 },
+            { "wageTypeNumber": 202, "value": 0 },
+            { "wageTypeNumber": 210, "value": 300 },
+            { "wageTypeNumber": 212, "value": 0 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 3000 },
+            { "collectorName": "Deductions",  "value": 1050 }
+          ]
+        }
+      ]
+    }
+  ]
+}

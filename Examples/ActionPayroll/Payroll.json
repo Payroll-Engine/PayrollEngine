@@ -37,7 +37,7 @@
               "name": "MyActions.Action",
               "values": [
                 {
-                  "key": "InvalidUId",
+                  "key": "InvalidRegistrationNumber",
                   "value": "(0) is invalid: (1)",
                   "valueLocalizations": {
                     "de": "(0) ist ungültig: (1)"
@@ -48,11 +48,11 @@
           ],
           "cases": [
             {
-              "name": "UId",
+              "name": "EmployeeRegistration",
               "caseType": "Employee",
-              "defaultReason": "Test UId",
+              "defaultReason": "Test employee registration number",
               "validateActions": [
-                "? CheckUId('UId', ^:UId)"
+                "? CheckRegistrationNumber('RegistrationNumber', ^:RegistrationNumber)"
               ],
               "fields": [
                 {
@@ -64,14 +64,14 @@
                   }
                 },
                 {
-                  "name": "UId",
+                  "name": "RegistrationNumber",
                   "valueType": "String",
                   "timeType": "Period",
                   "valueMandatory": true,
                   "defaultStart": "today",
                   "attributes": {
-                    "input.valueMask": "CHE-000.000.000",
-                    "input.valueHelp": "Format CHE-123.456.789"
+                    "input.valueMask": "REG-000.000.000",
+                    "input.valueHelp": "Format REG-000.000.000"
                   }
                 }
               ]

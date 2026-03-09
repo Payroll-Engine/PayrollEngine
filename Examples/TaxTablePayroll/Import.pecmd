@@ -1,0 +1,16 @@
+# Import national tax table data into the TaxTable.Monthly lookup.
+# Run after TaxTable.Payroll.yaml has been imported (step 1 of Setup.pecmd).
+#
+# Place the downloaded tax table file (fixed-width TXT, monthly period)
+# in the same folder as this file: taxrate-monthly.txt
+#
+# File source: national tax authority
+# Reference:   Sweden — skatteverket.se (Månadslön txt, ~389 kB, ~7,100 records)
+
+# Single bulk import (all records in one request)
+LookupTextImport TaxTableTenant TaxTable.Payroll taxrate-monthly.txt TaxTable.Monthly.map.json /bulk
+
+# Sliced bulk import (500 records per request)
+# The first slice resets the lookup (UpdateMode.Update),
+# each subsequent slice appends (UpdateMode.NoUpdate).
+# LookupTextImport TaxTableTenant TaxTable.Payroll taxrate-monthly.txt TaxTable.Monthly.map.json . 500 /bulk

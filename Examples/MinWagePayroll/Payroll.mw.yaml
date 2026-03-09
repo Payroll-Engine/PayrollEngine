@@ -1,0 +1,319 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# MinWagePayroll — FairPay GmbH
+# Demonstrates: minimum wage compliance via company case for the statutory rate,
+# automatic top-up for underpaid hourly workers, fully No-Code.
+createdObjectDate: 2026-01-01T00:00:00Z
+tenants:
+- identifier: FairPay
+  culture: en-US
+  users:
+  - identifier: hr@fairpay.com
+    firstName: HR
+    lastName: Admin
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: FairPay.Logistics
+  employees:
+  - identifier: leo.brandt@fairpay.com
+    firstName: Leo
+    lastName: Brandt
+    divisions:
+    - FairPay.Logistics
+  - identifier: mia.fischer@fairpay.com
+    firstName: Mia
+    lastName: Fischer
+    divisions:
+    - FairPay.Logistics
+  regulations:
+  - name: MinWageRegulation
+    description: >
+      Minimum wage compliance regulation: hourly pay checked against a versioned
+      year-lookup, automatic top-up when the hourly rate falls short.
+      Fully implemented with No-Code actions.
+
+    cases:
+
+    - name: MinimumWageSettings
+      description: >-
+        Statutory minimum hourly rate. Set once per year when the government
+        publishes the new rate. Uses CalendarPeriod so historic rates are preserved.
+      caseType: Company
+      defaultReason: Set statutory minimum hourly rate
+      buildActions:
+      - ^:MinHourlyRate = Range(^:MinHourlyRate, 1, 100)
+      fields:
+      - name: MinHourlyRate
+        valueType: Money
+        timeType: CalendarPeriod
+
+    - name: HourlyRate
+      description: Agreed hourly rate for this employee. Clamped to a valid range on input.
+      caseType: Employee
+      defaultReason: Set hourly rate
+      buildActions:
+      - ^:HourlyRate = Range(^:HourlyRate, 8, 100)
+      fields:
+      - name: HourlyRate
+        valueType: Money
+        timeType: CalendarPeriod
+
+    - name: HoursWorked
+      description: Actual hours worked in the pay period. Clamped to 0–300 on input.
+      caseType: Employee
+      defaultReason: Enter hours worked
+      buildActions:
+      - ^:HoursWorked = Range(^:HoursWorked, 0, 300)
+      fields:
+      - name: HoursWorked
+        valueType: Decimal
+        timeType: CalendarPeriod
+
+    collectors:
+    - name: GrossIncome
+      description: Total gross pay including any minimum wage top-up
+
+    wageTypes:
+
+    - wageTypeNumber: 100
+      name: BasePay
+      description: Actual pay calculated from the agreed hourly rate and hours worked.
+      valueActions:
+      - ^^HoursWorked * ^^HourlyRate
+      collectors:
+      - GrossIncome
+
+    - wageTypeNumber: 110
+      name: MinWageBase
+      description: >
+        Statutory minimum pay for the period: hours worked multiplied by the
+        minimum hourly rate from the year lookup. Used as a reference baseline —
+        not assigned to any collector.
+      valueActions:
+      - ^^HoursWorked * ^^MinHourlyRate
+
+    - wageTypeNumber: 120
+      name: MinWageTopUp
+      description: >
+        Top-up to reach the statutory minimum. Only calculated when MinWageBase
+        exceeds BasePay. Zero in all other cases (guard stops the action chain).
+      # Guard: skip when actual pay already meets or exceeds the minimum
+      valueActions:
+      - '? ^$MinWageBase > ^$BasePay'
+      - ^$MinWageBase - ^$BasePay
+      collectors:
+      - GrossIncome
+
+  payrolls:
+  - name: FairPayPayroll
+    divisionName: FairPay.Logistics
+    layers:
+    - level: 1
+      priority: 1
+      regulationName: MinWageRegulation
+
+    # --- Case values ---
+    cases:
+
+    # Statutory minimum hourly rate 2026
+    - userIdentifier: hr@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Statutory minimum wage 2026
+      case:
+        caseName: MinimumWageSettings
+        values:
+        - caseFieldName: MinHourlyRate
+          value: "15.00"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+
+    # Leo: hourly rate 14.50 (below minimum 15.00) — valid from January
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: leo.brandt@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Initial hourly rate — below statutory minimum
+      case:
+        caseName: HourlyRate
+        values:
+        - caseFieldName: HourlyRate
+          value: "14.50"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+
+    # Leo: rate raised to 16.00 in February — now above minimum
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: leo.brandt@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Hourly rate raise — now above statutory minimum
+      case:
+        caseName: HourlyRate
+        values:
+        - caseFieldName: HourlyRate
+          value: "16.00"
+          start: 2026-02-01T00:00:00Z
+          created: 2026-02-03T00:00:00Z
+
+    # Leo hours — January (160h)
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: leo.brandt@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Hours worked January 2026
+      case:
+        caseName: HoursWorked
+        values:
+        - caseFieldName: HoursWorked
+          value: "160"
+          start: 2026-01-01T00:00:00Z
+          end: 2026-01-31T00:00:00Z
+          created: 2026-01-15T00:00:00Z
+
+    # Leo hours — February (160h)
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: leo.brandt@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Hours worked February 2026
+      case:
+        caseName: HoursWorked
+        values:
+        - caseFieldName: HoursWorked
+          value: "160"
+          start: 2026-02-01T00:00:00Z
+          end: 2026-02-28T00:00:00Z
+          created: 2026-02-15T00:00:00Z
+
+    # Mia: hourly rate 17.00 — always above minimum
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: mia.fischer@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Hourly rate — above statutory minimum
+      case:
+        caseName: HourlyRate
+        values:
+        - caseFieldName: HourlyRate
+          value: "17.00"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+
+    # Mia hours — January (160h)
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: mia.fischer@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Hours worked January 2026
+      case:
+        caseName: HoursWorked
+        values:
+        - caseFieldName: HoursWorked
+          value: "160"
+          start: 2026-01-01T00:00:00Z
+          end: 2026-01-31T00:00:00Z
+          created: 2026-01-15T00:00:00Z
+
+    # Mia hours — February (160h)
+    - userIdentifier: hr@fairpay.com
+      employeeIdentifier: mia.fischer@fairpay.com
+      divisionName: FairPay.Logistics
+      reason: Hours worked February 2026
+      case:
+        caseName: HoursWorked
+        values:
+        - caseFieldName: HoursWorked
+          value: "160"
+          start: 2026-02-01T00:00:00Z
+          end: 2026-02-28T00:00:00Z
+          created: 2026-02-15T00:00:00Z
+
+  payruns:
+  - name: FairPayPayrun
+    payrollName: FairPayPayroll
+    defaultReason: Monthly payroll run
+
+  # ─── Payrun jobs ─────────────────────────────────────────────────────────────
+  payrunJobInvocations:
+
+  - name: FairPayPayrun.Jan26
+    payrunName: FairPayPayrun
+    payrollName: FairPayPayroll
+    userIdentifier: hr@fairpay.com
+    jobStatus: Complete
+    periodStart: 2026-01-01T00:00:00Z
+    evaluationDate: 2026-01-31T00:00:00Z
+    reason: January 2026 — Leo below minimum, top-up triggered
+    storeEmptyResults: true
+
+  - name: FairPayPayrun.Feb26
+    payrunName: FairPayPayrun
+    payrollName: FairPayPayroll
+    userIdentifier: hr@fairpay.com
+    jobStatus: Complete
+    periodStart: 2026-02-01T00:00:00Z
+    evaluationDate: 2026-02-28T00:00:00Z
+    reason: February 2026 — Leo raised, no top-up for either employee
+    storeEmptyResults: true
+
+  # ─── Expected test results ────────────────────────────────────────────────────
+  payrollResults:
+
+  # January — Leo (14.50/h, below minimum 15.00 → top-up triggered)
+  # BasePay:     160 x 14.50 = 2320
+  # MinWageBase: 160 x 15.00 = 2400
+  # TopUp:       2400 - 2320 = 80   (guard passes: 2400 > 2320)
+  - payrunJobName: FairPayPayrun.Jan26
+    employeeIdentifier: leo.brandt@fairpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BasePay:        2320
+      value: 2320
+    - wageTypeNumber: 110   # MinWageBase:    2400
+      value: 2400
+    - wageTypeNumber: 120   # MinWageTopUp:   80
+      value: 80
+    collectorResults:
+    - collectorName: GrossIncome   # 2320 + 80 = 2400
+      value: 2400
+
+  # January — Mia (17.00/h, above minimum → no top-up)
+  # BasePay:     160 x 17.00 = 2720
+  # MinWageBase: 160 x 15.00 = 2400
+  # TopUp:       0 (guard fails: 2400 < 2720)
+  - payrunJobName: FairPayPayrun.Jan26
+    employeeIdentifier: mia.fischer@fairpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BasePay:        2720
+      value: 2720
+    - wageTypeNumber: 110   # MinWageBase:    2400
+      value: 2400
+    - wageTypeNumber: 120   # MinWageTopUp:   0
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome   # 2720
+      value: 2720
+
+  # February — Leo (16.00/h after raise, now above minimum → no top-up)
+  # BasePay:     160 x 16.00 = 2560
+  # MinWageBase: 160 x 15.00 = 2400
+  # TopUp:       0 (guard fails: 2400 < 2560)
+  - payrunJobName: FairPayPayrun.Feb26
+    employeeIdentifier: leo.brandt@fairpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BasePay:        2560
+      value: 2560
+    - wageTypeNumber: 110   # MinWageBase:    2400
+      value: 2400
+    - wageTypeNumber: 120   # MinWageTopUp:   0
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome   # 2560
+      value: 2560
+
+  # February — Mia (unchanged, still above minimum)
+  - payrunJobName: FairPayPayrun.Feb26
+    employeeIdentifier: mia.fischer@fairpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BasePay:        2720
+      value: 2720
+    - wageTypeNumber: 110   # MinWageBase:    2400
+      value: 2400
+    - wageTypeNumber: 120   # MinWageTopUp:   0
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome   # 2720
+      value: 2720

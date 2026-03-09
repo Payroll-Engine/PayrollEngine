@@ -1,4 +1,5 @@
 ActionPayroll/Delete.pecmd
+GlobalPayroll/Delete.pecmd
 CaseDefPayroll/Delete.pecmd
 DerivedPayroll/Delete.pecmd
 ExtendedPayroll/Delete.pecmd
@@ -6,3 +7,4 @@ ReportPayroll/Delete.pecmd
 SimplePayroll/Delete.pecmd
 StartPayroll/Delete.pecmd
 WeekSimplePayroll/Delete.pecmd
+TaxTablePayroll/Delete.pecmd

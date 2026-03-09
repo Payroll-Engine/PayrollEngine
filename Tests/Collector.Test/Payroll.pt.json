@@ -1,0 +1,378 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-12-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Collector.Test",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "CollectorDivision"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Collector.Test",
+          "description": "Collector feature tests: multi-source accumulation, maxResult, minResult, negated",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "defaultReason": "Change salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "Bonus",
+              "caseType": "Employee",
+              "defaultReason": "Change bonus",
+              "fields": [
+                {
+                  "name": "Bonus",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "Deduction",
+              "caseType": "Employee",
+              "defaultReason": "Change deduction",
+              "fields": [
+                {
+                  "name": "Deduction",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "GrossWage",
+              "description": "Accumulates Salary and Bonus — tests multi-source accumulation"
+            },
+            {
+              "name": "SocialBase",
+              "description": "Salary only, capped at 3000 — tests maxResult",
+              "maxResult": 3000
+            },
+            {
+              "name": "MinWageBase",
+              "description": "Salary only, floored at 2000 — tests minResult",
+              "minResult": 2000
+            },
+            {
+              "name": "NegatedDeduction",
+              "description": "Deduction stored as negative amount — tests negated",
+              "negated": true
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Salary",
+              "description": "Monthly salary — contributes to GrossWage, SocialBase, MinWageBase",
+              "valueExpression": "CaseValue[\"Salary\"]",
+              "collectors": [ "GrossWage", "SocialBase", "MinWageBase" ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Bonus",
+              "description": "Monthly bonus — contributes to GrossWage only (tests multi-source accumulation)",
+              "valueExpression": "CaseValue[\"Bonus\"]",
+              "collectors": [ "GrossWage" ]
+            },
+            {
+              "wageTypeNumber": 201,
+              "name": "Deduction",
+              "description": "Deduction — contributes to NegatedDeduction collector",
+              "valueExpression": "CaseValue[\"Deduction\"]",
+              "collectors": [ "NegatedDeduction" ]
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "collector.employee@foo.com",
+          "firstName": "Collector",
+          "lastName": "Employee",
+          "divisions": [ "CollectorDivision" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Collector.Test.Payroll",
+          "divisionName": "CollectorDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Collector.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "1000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "2500",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-01-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4000",
+                    "start": "2024-03-01T00:00:00.0Z",
+                    "created": "2024-02-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "500",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-02T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "1000",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-01-16T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Bonus",
+                "values": [
+                  {
+                    "caseFieldName": "Bonus",
+                    "value": "2000",
+                    "start": "2024-03-01T00:00:00.0Z",
+                    "created": "2024-02-16T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "collector.employee@foo.com",
+              "divisionName": "CollectorDivision",
+              "case": {
+                "caseName": "Deduction",
+                "values": [
+                  {
+                    "caseFieldName": "Deduction",
+                    "value": "300",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-03T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Collector.Test.Payroll",
+          "name": "Collector.Test.Payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Collector.Test.Jan24",
+          "payrunName": "Collector.Test.Payrun",
+          "payrollName": "Collector.Test.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "reason": "Collector test Jan 2024 — minResult active (Salary 1000 < min 2000)"
+        },
+        {
+          "name": "Collector.Test.Feb24",
+          "payrunName": "Collector.Test.Payrun",
+          "payrollName": "Collector.Test.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-28T00:00:00.0Z",
+          "reason": "Collector test Feb 2024 — all collectors in normal range"
+        },
+        {
+          "name": "Collector.Test.Mar24",
+          "payrunName": "Collector.Test.Payrun",
+          "payrollName": "Collector.Test.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-28T00:00:00.0Z",
+          "reason": "Collector test Mar 2024 — maxResult active (Salary 4000 > max 3000)"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Collector.Test.Jan24",
+          "employeeIdentifier": "collector.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 500 },
+            { "wageTypeNumber": 201, "value": 300 }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "GrossWage",
+              "value": 1500,
+              "comment": "Salary(1000) + Bonus(500) = 1500"
+            },
+            {
+              "collectorName": "SocialBase",
+              "value": 1000,
+              "comment": "Salary(1000) < maxResult(3000) — no cap"
+            },
+            {
+              "collectorName": "MinWageBase",
+              "value": 2000,
+              "comment": "Salary(1000) < minResult(2000) — floored to 2000"
+            },
+            {
+              "collectorName": "NegatedDeduction",
+              "value": -300,
+              "comment": "Deduction(300) negated — stored as -300"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Collector.Test.Feb24",
+          "employeeIdentifier": "collector.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 2500 },
+            { "wageTypeNumber": 102, "value": 1000 },
+            { "wageTypeNumber": 201, "value": 300 }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "GrossWage",
+              "value": 3500,
+              "comment": "Salary(2500) + Bonus(1000) = 3500"
+            },
+            {
+              "collectorName": "SocialBase",
+              "value": 2500,
+              "comment": "Salary(2500) < maxResult(3000) — no cap"
+            },
+            {
+              "collectorName": "MinWageBase",
+              "value": 2500,
+              "comment": "Salary(2500) >= minResult(2000) — no floor"
+            },
+            {
+              "collectorName": "NegatedDeduction",
+              "value": -300,
+              "comment": "Deduction(300) negated — stored as -300"
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Collector.Test.Mar24",
+          "employeeIdentifier": "collector.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4000 },
+            { "wageTypeNumber": 102, "value": 2000 },
+            { "wageTypeNumber": 201, "value": 300 }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "GrossWage",
+              "value": 6000,
+              "comment": "Salary(4000) + Bonus(2000) = 6000"
+            },
+            {
+              "collectorName": "SocialBase",
+              "value": 3000,
+              "comment": "Salary(4000) > maxResult(3000) — capped to 3000"
+            },
+            {
+              "collectorName": "MinWageBase",
+              "value": 4000,
+              "comment": "Salary(4000) >= minResult(2000) — no floor"
+            },
+            {
+              "collectorName": "NegatedDeduction",
+              "value": -300,
+              "comment": "Deduction(300) negated — stored as -300"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

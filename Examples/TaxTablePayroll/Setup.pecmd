@@ -1,0 +1,11 @@
+# TaxTablePayroll — Full Setup
+# Prerequisites: backend running, taxrate-monthly.txt placed in this folder
+
+# 0. Clean previous run (safe if tenant does not exist)
+TenantDelete TaxTableTenant /trydelete
+
+# 1. Payroll regulation, tenant, employees, payroll, payrun
+PayrollImport TaxTable.Payroll.yaml
+
+# 2. Bulk import tax table data (~7,100 records)
+LookupTextImport TaxTableTenant TaxTable.Payroll taxrate-monthly.txt TaxTable.Monthly.map.json /bulk

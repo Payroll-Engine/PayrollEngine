@@ -1,0 +1,269 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "GlobalTech",
+      "culture": "en-US",
+      "users": [
+        {
+          "identifier": "admin@globaltech.com",
+          "firstName": "Alice",
+          "lastName": "Morgan",
+          "culture": "en-US",
+          "userType": "TenantAdministrator",
+          "attributes": {
+            "StartupPayroll": "GlobalTechPayroll",
+            "StartupPage": "regulation"
+          }
+        }
+      ],
+      "divisions": [
+        {
+          "name": "Engineering"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "sarah.chen@globaltech.com",
+          "firstName": "Sarah",
+          "lastName": "Chen",
+          "divisions": [
+            "Engineering"
+          ]
+        },
+        {
+          "identifier": "carlos.rodriguez@globaltech.com",
+          "firstName": "Carlos",
+          "lastName": "Rodriguez",
+          "divisions": [
+            "Engineering"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "GlobalPayroll",
+          "description": "International payroll regulation: progressive income tax, social security, health insurance, senior supplement, and performance bonus",
+          "lookups": [
+            {
+              "name": "IncomeTax",
+              "values": [
+                {
+                  "key": "Bracket1",
+                  "rangeValue": 1,
+                  "value": "0.10"
+                },
+                {
+                  "key": "Bracket2",
+                  "rangeValue": 3000,
+                  "value": "0.18"
+                },
+                {
+                  "key": "Bracket3",
+                  "rangeValue": 6000,
+                  "value": "0.25"
+                },
+                {
+                  "key": "Bracket4",
+                  "rangeValue": 10000,
+                  "value": "0.32"
+                }
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "name": "SocialSecurity",
+              "description": "National social security contribution rate",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "SocialSecurityRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "HealthInsurance",
+              "description": "Company-level employee health insurance contribution rate",
+              "caseType": "Company",
+              "fields": [
+                {
+                  "name": "HealthInsuranceRate",
+                  "valueType": "Percent",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "Salary",
+              "description": "Employee monthly base salary",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "EmploymentLevel",
+              "description": "Part-time factor: 1.0 = full-time, 0.5 = 50%, etc.",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "EmploymentLevel",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "BirthDate",
+              "description": "Employee date of birth (used for senior supplement eligibility)",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "BirthDate",
+                  "valueType": "Date",
+                  "timeType": "Timeless"
+                }
+              ]
+            },
+            {
+              "name": "PerformanceBonus",
+              "description": "One-time performance bonus paid in a specific pay period",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "PerformanceBonus",
+                  "valueType": "Money",
+                  "timeType": "Moment"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "GrossIncome"
+            },
+            {
+              "name": "Deductions"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "BaseSalary",
+              "description": "Monthly base salary scaled by the employee employment level",
+              "valueExpression": "var values = GetCaseValues(\"Salary\", \"EmploymentLevel\"); return values[\"Salary\"] * values[\"EmploymentLevel\"];",
+              "collectors": [
+                "GrossIncome"
+              ]
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "SeniorSupplement",
+              "description": "Additional 5% on base salary for employees aged 50 or older",
+              "valueExpression": "var bd = CaseValue[\"BirthDate\"]; return bd.HasValue && bd.ValueAs<DateTime>().Age(PeriodStart) >= 50 ? WageType[100] * 0.05M : 0M;",
+              "collectors": [
+                "GrossIncome"
+              ]
+            },
+            {
+              "wageTypeNumber": 120,
+              "name": "PerformanceBonus",
+              "description": "One-time discretionary performance bonus",
+              "valueExpression": "var bonus = CaseValue[\"PerformanceBonus\"]; return bonus.HasValue ? (decimal)bonus : 0M;",
+              "collectors": [
+                "GrossIncome"
+              ]
+            },
+            {
+              "wageTypeNumber": 200,
+              "name": "IncomeTax",
+              "description": "Progressive income tax applied to gross income using the IncomeTax bracket lookup",
+              "valueExpression": "var rate = GetRangeLookup<decimal>(\"IncomeTax\", Collector[\"GrossIncome\"]); return rate != null ? Collector[\"GrossIncome\"] * rate : 0M;",
+              "collectors": [
+                "Deductions"
+              ]
+            },
+            {
+              "wageTypeNumber": 210,
+              "name": "SocialSecurity",
+              "description": "Employee social security contribution on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"SocialSecurityRate\"]",
+              "collectors": [
+                "Deductions"
+              ]
+            },
+            {
+              "wageTypeNumber": 220,
+              "name": "HealthInsurance",
+              "description": "Employee health insurance contribution on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"HealthInsuranceRate\"]",
+              "collectors": [
+                "Deductions"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "GlobalTechPayroll",
+          "divisionName": "Engineering",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "GlobalPayroll"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "SocialSecurity",
+                "values": [
+                  {
+                    "caseFieldName": "SocialSecurityRate",
+                    "value": "0.10",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "HealthInsurance",
+                "values": [
+                  {
+                    "caseFieldName": "HealthInsuranceRate",
+                    "value": "0.05",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "GlobalTechPayrun",
+          "payrollName": "GlobalTechPayroll",
+          "defaultReason": "Monthly payroll run"
+        }
+      ]
+    }
+  ]
+}

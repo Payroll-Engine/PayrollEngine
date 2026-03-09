@@ -1,0 +1,221 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "GlobalTech",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "GlobalTechPayroll",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "BirthDate",
+                "values": [
+                  {
+                    "caseFieldName": "BirthDate",
+                    "value": "1985-08-20T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "sarah.chen@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "PerformanceBonus",
+                "values": [
+                  {
+                    "caseFieldName": "PerformanceBonus",
+                    "value": "1000",
+                    "start": "2024-01-15T00:00:00.0Z",
+                    "created": "2024-01-10T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "10000",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.6",
+                    "start": "2023-01-01T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@globaltech.com",
+              "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+              "divisionName": "Engineering",
+              "case": {
+                "caseName": "BirthDate",
+                "values": [
+                  {
+                    "caseFieldName": "BirthDate",
+                    "value": "1970-07-15T00:00:00.0Z",
+                    "created": "2022-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "GlobalTechPayrun.Test.Jan24",
+          "payrunName": "GlobalTechPayrun",
+          "userIdentifier": "admin@globaltech.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "January 2024 Payroll Test",
+          "employeeIdentifiers": [
+            "sarah.chen@globaltech.com",
+            "carlos.rodriguez@globaltech.com"
+          ]
+        },
+        {
+          "name": "GlobalTechPayrun.Test.Feb24",
+          "payrunName": "GlobalTechPayrun",
+          "userIdentifier": "admin@globaltech.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-01T00:00:00.0Z",
+          "reason": "February 2024 Payroll Test — verifies Moment bonus is not carried into subsequent periods",
+          "employeeIdentifiers": [
+            "sarah.chen@globaltech.com",
+            "carlos.rodriguez@globaltech.com"
+          ]
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "GlobalTechPayrun.Test.Jan24",
+          "employeeIdentifier": "sarah.chen@globaltech.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 6000 },
+            { "wageTypeNumber": 110, "value": 0 },
+            { "wageTypeNumber": 120, "value": 1000 },
+            { "wageTypeNumber": 200, "value": 1750 },
+            { "wageTypeNumber": 210, "value": 700 },
+            { "wageTypeNumber": 220, "value": 350 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 7000 },
+            { "collectorName": "Deductions",  "value": 2800 }
+          ]
+        },
+        {
+          "payrunJobName": "GlobalTechPayrun.Test.Jan24",
+          "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 6000 },
+            { "wageTypeNumber": 110, "value": 300 },
+            { "wageTypeNumber": 120, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1575 },
+            { "wageTypeNumber": 210, "value": 630 },
+            { "wageTypeNumber": 220, "value": 315 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 6300 },
+            { "collectorName": "Deductions",  "value": 2520 }
+          ]
+        },
+        {
+          "payrunJobName": "GlobalTechPayrun.Test.Feb24",
+          "employeeIdentifier": "sarah.chen@globaltech.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 6000 },
+            { "wageTypeNumber": 110, "value": 0 },
+            { "wageTypeNumber": 120, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1500 },
+            { "wageTypeNumber": 210, "value": 600 },
+            { "wageTypeNumber": 220, "value": 300 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 6000 },
+            { "collectorName": "Deductions",  "value": 2400 }
+          ]
+        },
+        {
+          "payrunJobName": "GlobalTechPayrun.Test.Feb24",
+          "employeeIdentifier": "carlos.rodriguez@globaltech.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 6000 },
+            { "wageTypeNumber": 110, "value": 300 },
+            { "wageTypeNumber": 120, "value": 0 },
+            { "wageTypeNumber": 200, "value": 1575 },
+            { "wageTypeNumber": 210, "value": 630 },
+            { "wageTypeNumber": 220, "value": 315 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 6300 },
+            { "collectorName": "Deductions",  "value": 2520 }
+          ]
+        }
+      ]
+    }
+  ]
+}

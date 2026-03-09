@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# TaxTablePayroll — TaxTableTenant
+# Demonstrates: large national tax table import, sliced bulk import, range lookup
+# with named columns (GetRangeObjectLookup). Lookup values populated via Import.pecmd.
+createdObjectDate: 2026-01-01T00:00:00Z
+tenants:
+- identifier: TaxTableTenant
+  culture: en-US
+  users:
+  - identifier: admin@taxtabletenant.com
+    firstName: Admin
+    lastName: User
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: MainDivision
+  employees:
+  - identifier: alice.standard@example.com
+    firstName: Alice
+    lastName: Standard
+    divisions:
+    - MainDivision
+  - identifier: bob.senior@example.com
+    firstName: Bob
+    lastName: Senior
+    divisions:
+    - MainDivision
+  regulations:
+  - name: TaxTable.Payroll
+    description: >
+      Tax table regulation: withholding tax deduction resolved via a composite-key
+      range lookup. Salary and taxpayer settings from employee case data.
+    lookups:
+    - name: TaxTable.Monthly
+      description: >
+        Monthly withholding tax deduction by table number and income bracket.
+        Key format: '{periodType} {tableNumber}' (e.g. '30 34').
+        Range value: lower income bound.
+        Named values: Col1..Col6 (taxpayer category columns).
+      values: []
+    cases:
+    - name: Salary
+      description: Monthly gross salary used as the income base for withholding tax.
+      caseType: Employee
+      fields:
+      - name: MonthlySalary
+        valueType: Money
+        timeType: CalendarPeriod
+    - name: TaxTableSettings
+      caseType: Employee
+      description: Withholding tax parameters for this employee
+      fields:
+      - name: TaxTableNumber
+        description: >
+          Tax table number assigned by the national tax authority.
+          Determines the withholding rate based on municipality/region.
+        valueType: String
+        timeType: CalendarPeriod
+      - name: TaxColumn
+        description: >
+          Taxpayer category column (1-6).
+          1 = wage earner under 66 yrs (most common)
+          2 = pension recipient 66+
+          3 = wage earner 66+
+          4 = sickness/activity compensation under 66
+          5 = other pensionable income
+          6 = pension income under 66
+        valueType: Integer
+        timeType: CalendarPeriod
+    collectors:
+    - name: GrossIncome
+      description: Gross taxable income before deductions
+    - name: WithholdingTax
+      negated: true
+      description: Aggregated withholding tax deductions
+    - name: NetIncome
+      description: Net income after withholding tax
+    wageTypes:
+    - wageTypeNumber: 100
+      name: MonthlySalary
+      description: Regular monthly salary
+      valueExpression: CaseValue["MonthlySalary"]
+      collectors:
+      - GrossIncome
+      - NetIncome
+    - wageTypeNumber: 500
+      name: WithholdingTax
+      description: >
+        Withholding tax deduction looked up from the national tax table.
+      valueExpression: |
+        var tableNumber = GetCaseValue<string>("TaxTableNumber");
+        var column      = GetCaseValue<int>("TaxColumn");
+        var salary      = WageType[100];
+        var key         = "30 " + tableNumber;
+        var colName     = "Col" + column;
+        var deduction   = GetRangeObjectLookup<decimal>("TaxTable.Monthly", salary, colName, key);
+        return -deduction;
+      collectors:
+      - WithholdingTax
+      - NetIncome
+  payrolls:
+  - name: TaxTablePayroll
+    divisionName: MainDivision
+    layers:
+    - regulationName: TaxTable.Payroll
+      level: 1
+  payruns:
+  - name: TaxTablePayrun
+    payrollName: TaxTablePayroll
+    defaultReason: Monthly payroll run

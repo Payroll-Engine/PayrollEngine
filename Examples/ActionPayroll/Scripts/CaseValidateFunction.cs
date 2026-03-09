@@ -3,21 +3,21 @@ namespace PayrollEngine.Client.Scripting.Function;
 
 public partial class CaseValidateFunction
 {
-    [ActionIssue("MissingUId", "Missing UId", 1)]
-    [ActionIssue("InvalidUId", "(0) with invalid UID: (1)", 2)]
+    [ActionIssue("MissingRegistrationNumber", "Missing registration number", 1)]
+    [ActionIssue("InvalidRegistrationNumber", "(0) with invalid registration number: (1)", 2)]
     [ActionParameter("caseFieldName", "The case field name")]
-    [ActionParameter("uid", "The UID text")]
-    [CaseValidateAction("CheckUId", "Validate for the Swiss company id (UID)")]
-    public bool CheckUId(string caseFieldName, string uid)
+    [ActionParameter("registrationNumber", "The registration number text")]
+    [CaseValidateAction("CheckRegistrationNumber", "Validate a structured registration number with ISO 7064 check digit")]
+    public bool CheckRegistrationNumber(string caseFieldName, string registrationNumber)
     {
-        if (string.IsNullOrWhiteSpace(uid))
+        if (string.IsNullOrWhiteSpace(registrationNumber))
         {
-            AddCaseAttributeIssue("MissingUId");
+            AddCaseAttributeIssue("MissingRegistrationNumber");
             return false;
         }
 
-        // extract check value
-        var checkValue = uid.RemoveFromStart("CHE-").Replace(".", string.Empty);
+        // extract check value: strip prefix and separators
+        var checkValue = registrationNumber.RemoveFromStart("REG-").Replace(".", string.Empty);
 
         try
         {
@@ -27,13 +27,13 @@ public partial class CaseValidateFunction
             // predefined digit checks: Mod11Radix2, Mod37Radix2, Mod97Radix10, Mod661Radix26, Mod1271Radix36
             // CheckDigit.Mod11Radix2.Check(checkValue);
 
-            LogInformation($"Valid Uid {uid}.");
+            LogInformation($"Valid registration number {registrationNumber}.");
             return true;
         }
         catch (CheckDigitException)
         {
-            LogError($"Invalid Uid check value {checkValue}.");
-            AddCaseAttributeIssue("InvalidUId", caseFieldName, $"Invalid UId: {uid},");
+            LogError($"Invalid registration number check value {checkValue}.");
+            AddCaseAttributeIssue("InvalidRegistrationNumber", caseFieldName, $"Invalid registration number: {registrationNumber}");
         }
         return false;
     }

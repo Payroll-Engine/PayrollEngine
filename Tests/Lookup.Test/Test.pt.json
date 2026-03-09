@@ -46,11 +46,6 @@
                   "value": "0.05"
                 },
                 {
-                  "key": "T10000",
-                  "rangeValue": 10000,
-                  "value": "0.10"
-                },
-                {
                   "key": "T20000",
                   "rangeValue": 20000,
                   "value": "0.15"
@@ -64,6 +59,11 @@
                   "key": "T40000",
                   "rangeValue": 40000,
                   "value": "0.25"
+                },
+                {
+                  "key": "T10000",
+                  "rangeValue": 10000,
+                  "value": "0.10"
                 }
               ]
             },

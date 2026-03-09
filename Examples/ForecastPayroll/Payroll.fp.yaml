@@ -1,0 +1,390 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# ForecastPayroll — PlanSoft GmbH
+# Demonstrates: forecast payrun isolation, two parallel what-if scenarios,
+# No-Code condition guard on planned bonus wage type.
+createdObjectDate: 2026-01-01T00:00:00Z
+tenants:
+- identifier: PlanSoft
+  culture: en-US
+  users:
+  - identifier: hr@plansoft.com
+    firstName: HR
+    lastName: Admin
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: PlanSoft.HR
+  employees:
+  - identifier: sophie.kramer@plansoft.com
+    firstName: Sophie
+    lastName: Kramer
+    divisions:
+    - PlanSoft.HR
+  regulations:
+  - name: ForecastRegulation
+    description: >
+      Forecast payroll regulation: salary increase and bonus planning scenarios
+      with isolated forecast data. Fully implemented with No-Code actions.
+    cases:
+
+    - name: Salary
+      description: Monthly base salary. Clamped to valid range on input.
+      caseType: Employee
+      defaultReason: Change monthly salary
+      buildActions:
+      - ^:Salary = Range(^:Salary, 500, 25000)
+      fields:
+      - name: Salary
+        valueType: Money
+        timeType: CalendarPeriod
+
+    - name: PlannedBonus
+      description: >
+        Planned monthly bonus for what-if analysis. Entered with a forecast tag —
+        invisible to production payruns. Clamped to valid range on input.
+      caseType: Employee
+      defaultReason: Plan monthly bonus
+      buildActions:
+      - ^:PlannedBonus = Range(^:PlannedBonus, 0, 10000)
+      fields:
+      - name: PlannedBonus
+        valueType: Money
+        timeType: CalendarPeriod
+
+    collectors:
+    - name: GrossIncome
+      description: Sum of base salary and bonus components
+    - name: Deductions
+      description: Sum of income tax and social contributions
+
+    wageTypes:
+
+    - wageTypeNumber: 100
+      name: BaseSalary
+      description: Monthly base salary from employee case data.
+      valueActions:
+      - ^^Salary
+      collectors:
+      - GrossIncome
+
+    - wageTypeNumber: 110
+      name: PlannedBonus
+      description: >
+        Planned bonus. Only calculated when a bonus value is present for the
+        period. In production runs (no forecast data) the guard stops here and
+        the wage type produces no result.
+      # Guard: skip entirely when no bonus is planned for this period
+      # CalendarPeriod returns 0 when no value is entered — no HasValue guard needed
+      valueActions:
+      - '? ^^PlannedBonus > 0'
+      - ^^PlannedBonus
+      collectors:
+      - GrossIncome
+
+    - wageTypeNumber: 200
+      name: IncomeTax
+      description: Flat-rate income tax of 20% on gross income.
+      # Reference period wage type values — picks up both salary and bonus
+      valueActions:
+      - (^$BaseSalary + ^$PlannedBonus) * 0.20
+      collectors:
+      - Deductions
+
+    - wageTypeNumber: 210
+      name: SocialContribution
+      description: Social insurance contribution of 8% on gross income.
+      valueActions:
+      - (^$BaseSalary + ^$PlannedBonus) * 0.08
+      collectors:
+      - Deductions
+
+    - wageTypeNumber: 300
+      name: NetSalary
+      description: >
+        Net salary after deductions. Key output for forecast comparison:
+        shows the bottom-line impact of each scenario in a single value.
+      valueActions:
+      - ^$BaseSalary + ^$PlannedBonus - ^$IncomeTax - ^$SocialContribution
+
+  payrolls:
+  - name: PlanSoftPayroll
+    divisionName: PlanSoft.HR
+    layers:
+    - level: 1
+      priority: 1
+      regulationName: ForecastRegulation
+
+    # --- Production case data ---
+    cases:
+    - userIdentifier: hr@plansoft.com
+      employeeIdentifier: sophie.kramer@plansoft.com
+      divisionName: PlanSoft.HR
+      reason: Current salary — production baseline
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "5000"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+
+    # --- Forecast scenario 1: SalaryIncrease2026 ---
+    # Salary raised to 6000, effective January 2026 — isolated from production
+    - userIdentifier: hr@plansoft.com
+      employeeIdentifier: sophie.kramer@plansoft.com
+      divisionName: PlanSoft.HR
+      reason: "Forecast: salary increase to 6000 from January 2026"
+      forecast: SalaryIncrease2026
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "6000"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-15T00:00:00Z
+
+    # --- Forecast scenario 2: BonusScenario2026 ---
+    # Monthly bonus of 500 for Q1 2026, salary unchanged — isolated from production
+    - userIdentifier: hr@plansoft.com
+      employeeIdentifier: sophie.kramer@plansoft.com
+      divisionName: PlanSoft.HR
+      reason: "Forecast: monthly bonus 500 for Q1 2026"
+      forecast: BonusScenario2026
+      case:
+        caseName: PlannedBonus
+        values:
+        - caseFieldName: PlannedBonus
+          value: "500"
+          start: 2026-01-01T00:00:00Z
+          end: 2026-03-31T00:00:00Z
+          created: 2025-12-15T00:00:00Z
+
+  payruns:
+  - name: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    defaultReason: Monthly payroll run
+
+  # ─── Payrun jobs ─────────────────────────────────────────────────────────────
+  payrunJobInvocations:
+
+  # Production baseline — January 2026
+  - name: PlanSoftPayrun.Prod.Jan26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Complete
+    periodStart: 2026-01-01T00:00:00Z
+    evaluationDate: 2026-01-31T00:00:00Z
+    reason: January 2026 — production baseline
+    storeEmptyResults: true
+
+  # Forecast SalaryIncrease2026 — three-month planning horizon
+  - name: PlanSoftPayrun.SalaryIncrease.Jan26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Forecast
+    forecast: SalaryIncrease2026
+    periodStart: 2026-01-01T00:00:00Z
+    evaluationDate: 2026-01-31T00:00:00Z
+    reason: "Forecast SalaryIncrease2026 — January 2026"
+    storeEmptyResults: true
+
+  - name: PlanSoftPayrun.SalaryIncrease.Feb26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Forecast
+    forecast: SalaryIncrease2026
+    periodStart: 2026-02-01T00:00:00Z
+    evaluationDate: 2026-02-28T00:00:00Z
+    reason: "Forecast SalaryIncrease2026 — February 2026"
+    storeEmptyResults: true
+
+  - name: PlanSoftPayrun.SalaryIncrease.Mar26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Forecast
+    forecast: SalaryIncrease2026
+    periodStart: 2026-03-01T00:00:00Z
+    evaluationDate: 2026-03-31T00:00:00Z
+    reason: "Forecast SalaryIncrease2026 — March 2026"
+    storeEmptyResults: true
+
+  # Forecast BonusScenario2026 — three-month planning horizon
+  - name: PlanSoftPayrun.BonusScenario.Jan26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Forecast
+    forecast: BonusScenario2026
+    periodStart: 2026-01-01T00:00:00Z
+    evaluationDate: 2026-01-31T00:00:00Z
+    reason: "Forecast BonusScenario2026 — January 2026"
+    storeEmptyResults: true
+
+  - name: PlanSoftPayrun.BonusScenario.Feb26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Forecast
+    forecast: BonusScenario2026
+    periodStart: 2026-02-01T00:00:00Z
+    evaluationDate: 2026-02-28T00:00:00Z
+    reason: "Forecast BonusScenario2026 — February 2026"
+    storeEmptyResults: true
+
+  - name: PlanSoftPayrun.BonusScenario.Mar26
+    payrunName: PlanSoftPayrun
+    payrollName: PlanSoftPayroll
+    userIdentifier: hr@plansoft.com
+    jobStatus: Forecast
+    forecast: BonusScenario2026
+    periodStart: 2026-03-01T00:00:00Z
+    evaluationDate: 2026-03-31T00:00:00Z
+    reason: "Forecast BonusScenario2026 — March 2026"
+    storeEmptyResults: true
+
+  # ─── Expected test results ────────────────────────────────────────────────────
+  payrollResults:
+
+  # Production January — baseline: salary 5000, no bonus
+  - payrunJobName: PlanSoftPayrun.Prod.Jan26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100  # BaseSalary:          5000
+      value: 5000
+    - wageTypeNumber: 110  # PlannedBonus:         0 (guard stops, no forecast data)
+      value: 0
+    - wageTypeNumber: 200  # IncomeTax:            5000 * 0.20 = 1000
+      value: 1000
+    - wageTypeNumber: 210  # SocialContribution:   5000 * 0.08 = 400
+      value: 400
+    - wageTypeNumber: 300  # NetSalary:            5000 - 1000 - 400 = 3600
+      value: 3600
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+    - collectorName: Deductions
+      value: 1400
+
+  # Forecast SalaryIncrease2026 January — salary 6000, no bonus
+  - payrunJobName: PlanSoftPayrun.SalaryIncrease.Jan26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100  # BaseSalary:          6000 (forecast case overrides production)
+      value: 6000
+    - wageTypeNumber: 110  # PlannedBonus:         0 (no bonus in this scenario)
+      value: 0
+    - wageTypeNumber: 200  # IncomeTax:            6000 * 0.20 = 1200
+      value: 1200
+    - wageTypeNumber: 210  # SocialContribution:   6000 * 0.08 = 480
+      value: 480
+    - wageTypeNumber: 300  # NetSalary:            6000 - 1200 - 480 = 4320
+      value: 4320
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 6000
+    - collectorName: Deductions
+      value: 1680
+
+  # Forecast SalaryIncrease2026 February — same values (static salary, no mutations)
+  - payrunJobName: PlanSoftPayrun.SalaryIncrease.Feb26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 6000
+    - wageTypeNumber: 110
+      value: 0
+    - wageTypeNumber: 200
+      value: 1200
+    - wageTypeNumber: 210
+      value: 480
+    - wageTypeNumber: 300
+      value: 4320
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 6000
+    - collectorName: Deductions
+      value: 1680
+
+  # Forecast SalaryIncrease2026 March
+  - payrunJobName: PlanSoftPayrun.SalaryIncrease.Mar26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 6000
+    - wageTypeNumber: 110
+      value: 0
+    - wageTypeNumber: 200
+      value: 1200
+    - wageTypeNumber: 210
+      value: 480
+    - wageTypeNumber: 300
+      value: 4320
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 6000
+    - collectorName: Deductions
+      value: 1680
+
+  # Forecast BonusScenario2026 January — salary 5000, bonus 500
+  - payrunJobName: PlanSoftPayrun.BonusScenario.Jan26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100  # BaseSalary:          5000 (production salary unchanged)
+      value: 5000
+    - wageTypeNumber: 110  # PlannedBonus:         500 (forecast case, guard passes)
+      value: 500
+    - wageTypeNumber: 200  # IncomeTax:            5500 * 0.20 = 1100
+      value: 1100
+    - wageTypeNumber: 210  # SocialContribution:   5500 * 0.08 = 440
+      value: 440
+    - wageTypeNumber: 300  # NetSalary:            5500 - 1100 - 440 = 3960
+      value: 3960
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500
+    - collectorName: Deductions
+      value: 1540
+
+  # Forecast BonusScenario2026 February
+  - payrunJobName: PlanSoftPayrun.BonusScenario.Feb26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5000
+    - wageTypeNumber: 110
+      value: 500
+    - wageTypeNumber: 200
+      value: 1100
+    - wageTypeNumber: 210
+      value: 440
+    - wageTypeNumber: 300
+      value: 3960
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500
+    - collectorName: Deductions
+      value: 1540
+
+  # Forecast BonusScenario2026 March
+  - payrunJobName: PlanSoftPayrun.BonusScenario.Mar26
+    employeeIdentifier: sophie.kramer@plansoft.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5000
+    - wageTypeNumber: 110
+      value: 500
+    - wageTypeNumber: 200
+      value: 1100
+    - wageTypeNumber: 210
+      value: 440
+    - wageTypeNumber: 300
+      value: 3960
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500
+    - collectorName: Deductions
+      value: 1540

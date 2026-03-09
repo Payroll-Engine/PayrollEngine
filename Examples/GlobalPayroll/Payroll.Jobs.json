@@ -1,0 +1,41 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "GlobalTech",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "GlobalTechPayrun.Jan24",
+          "payrunName": "GlobalTechPayrun",
+          "payrollName": "GlobalTechPayroll",
+          "userIdentifier": "admin@globaltech.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "January 2024 Payroll"
+        },
+        {
+          "name": "GlobalTechPayrun.Feb24",
+          "payrunName": "GlobalTechPayrun",
+          "payrollName": "GlobalTechPayroll",
+          "userIdentifier": "admin@globaltech.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-01T00:00:00.0Z",
+          "reason": "February 2024 Payroll"
+        },
+        {
+          "name": "GlobalTechPayrun.Mar24",
+          "payrunName": "GlobalTechPayrun",
+          "payrollName": "GlobalTechPayroll",
+          "userIdentifier": "admin@globaltech.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-04-01T00:00:00.0Z",
+          "reason": "March 2024 Payroll"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-12-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "RetroPayMode.Test",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "RetroPayModeDivision"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "RetroPayMode.Test",
+          "description": "Tests retroPayMode: None suppresses retro sub-runs; ValueChange triggers them",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "defaultReason": "Change salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Salary",
+              "description": "Base salary — recalculated in retro sub-runs",
+              "valueExpression": "CaseValue[\"Salary\"]",
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "SalaryRetroDiff",
+              "description": "Retro delta — Legal only, never runs in retro sub-runs",
+              "valueExpression": "GetWageTypeRetroResultSum(101)",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "IsRetroIndicator",
+              "description": "1 in retro sub-runs, 0 in main runs",
+              "valueExpression": "IsRetroPayrun ? 1 : 0",
+              "clusters": [ "Legal", "Retro" ]
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "retro.employee@foo.com",
+          "firstName": "Retro",
+          "lastName": "Employee",
+          "divisions": [ "RetroPayModeDivision" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "RetroPayMode.Test.Payroll",
+          "divisionName": "RetroPayModeDivision",
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypeRetro": "Retro",
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [ "Legal" ]
+            },
+            {
+              "name": "Retro",
+              "includeClusters": [ "Retro" ]
+            }
+          ],
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "RetroPayMode.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "retro.employee@foo.com",
+              "divisionName": "RetroPayModeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "3000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "retro.employee@foo.com",
+              "divisionName": "RetroPayModeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "3000",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-01-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "retro.employee@foo.com",
+              "divisionName": "RetroPayModeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "3000",
+                    "start": "2024-03-01T00:00:00.0Z",
+                    "created": "2024-02-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "retro.employee@foo.com",
+              "divisionName": "RetroPayModeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-02-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "retro.employee@foo.com",
+              "divisionName": "RetroPayModeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4500",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-03-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "RetroPayMode.Test.Payroll",
+          "name": "RetroPayMode.Test.Payrun",
+          "culture": "de-CH",
+          "defaultReason": "RetroPayMode test"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "RetroPayMode.Test.Jan24",
+          "payrunName": "RetroPayMode.Test.Payrun",
+          "payrollName": "RetroPayMode.Test.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "Baseline: Salary=3000 for Jan, Feb retro change not yet visible"
+        },
+        {
+          "name": "RetroPayMode.Test.Feb24.None",
+          "payrunName": "RetroPayMode.Test.Payrun",
+          "payrollName": "RetroPayMode.Test.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "retroPayMode": "None",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-28T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "retroPayMode=None: Jan mutation (Salary=4000, created=Feb15) visible but retro sub-run suppressed; Feb change (created=Mar05) not yet visible"
+        },
+        {
+          "name": "RetroPayMode.Test.Mar24.ValueChange",
+          "payrunName": "RetroPayMode.Test.Payrun",
+          "payrollName": "RetroPayMode.Test.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-28T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "retroPayMode=ValueChange (default): Feb mutation (Salary=4500, created=Mar05) triggers retro sub-run for Feb"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "RetroPayMode.Test.Jan24",
+          "employeeIdentifier": "retro.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 103, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayMode.Test.Feb24.None",
+          "employeeIdentifier": "retro.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 103, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayMode.Test.Mar24.ValueChange",
+          "employeeIdentifier": "retro.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4500 },
+            { "wageTypeNumber": 102, "value": 500 },
+            { "wageTypeNumber": 103, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "RetroPayMode.Test.Mar24.ValueChange",
+          "retroPeriodStart": "2024-02-01T00:00:00.0Z",
+          "employeeIdentifier": "retro.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4500 },
+            { "wageTypeNumber": 103, "value": 1 }
+          ]
+        }
+      ]
+    }
+  ]
+}

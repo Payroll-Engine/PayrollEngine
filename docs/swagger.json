@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.13",
+    "description": "Payroll Engine API v0.9.0-beta.17",
     "version": "1"
   },
   "paths": {
@@ -688,488 +688,6 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/cases/{caseId}/audits": {
-      "get": {
-        "tags": [
-          "Case audits"
-        ],
-        "operationId": "QueryCaseAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "caseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Case audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "caseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/cases/{caseId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Case audits"
-        ],
-        "operationId": "GetCaseAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "caseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CaseAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/cases/{caseId}/fields/{fieldId}/audits": {
-      "get": {
-        "tags": [
-          "Case field audits"
-        ],
-        "operationId": "QueryCaseFieldAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "caseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "fieldId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Case field audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "caseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "fieldId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/cases/{caseId}/fields/{fieldId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Case field audits"
-        ],
-        "operationId": "GetCaseFieldAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "caseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "fieldId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CaseFieldAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/tenants/{tenantId}/regulations/{regulationId}/cases/{caseId}/fields": {
       "get": {
         "tags": [
@@ -1633,234 +1151,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/caserelations({relationId}/audits": {
-      "get": {
-        "tags": [
-          "Case relation audits"
-        ],
-        "operationId": "QueryCaseRelationAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "relationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Case relation audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "relationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/caserelations({relationId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Case relation audits"
-        ],
-        "operationId": "GetCaseRelationAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "relationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CaseRelationAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -2770,234 +2060,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/collectors/{collectorId}/audits": {
-      "get": {
-        "tags": [
-          "Collector audits"
-        ],
-        "operationId": "QueryCollectorAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "collectorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Collector audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "collectorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/collectors/{collectorId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Collector audits"
-        ],
-        "operationId": "GetCollectorAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "collectorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CollectorAudit"
-                }
-              }
-            }
-          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -7379,488 +6441,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/lookups/{lookupId}/audits": {
-      "get": {
-        "tags": [
-          "Lookup audits"
-        ],
-        "operationId": "QueryLookupAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "lookupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Lookup audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "lookupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/lookups/{lookupId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Lookup audits"
-        ],
-        "operationId": "GetLookupAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "lookupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LookupAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/lookups/{lookupId}/values/{lookupValueId}/audits": {
-      "get": {
-        "tags": [
-          "Lookup value audits"
-        ],
-        "operationId": "QueryLookupValueAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "lookupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "lookupValueId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Lookup value audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "lookupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "lookupValueId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/lookups/{lookupId}/values/{lookupValueId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Lookup value audits"
-        ],
-        "operationId": "GetLookupValueAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "lookupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "lookupValueId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LookupValueAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
         }
       }
@@ -14116,6 +12696,101 @@
         }
       }
     },
+    "/api/tenants/{tenantId}/payrolls/{payrollId}/lookups/ranges": {
+      "get": {
+        "tags": [
+          "Payrolls"
+        ],
+        "operationId": "GetPayrollLookupRanges",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "payrollId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "lookupNames",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "evaluationDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeValue",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "regulationDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LookupRangeResult"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tenants/{tenantId}/payrolls/{payrollId}/reports": {
       "get": {
         "tags": [
@@ -14897,15 +13572,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PayrunJob"
-                }
-              }
-            }
+          "202": {
+            "description": "Accepted"
           },
           "404": {
             "description": "Not Found",
@@ -17384,234 +16052,6 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/reports/{reportId}/audits": {
-      "get": {
-        "tags": [
-          "Report audits"
-        ],
-        "operationId": "QueryReportAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Report audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/reports/{reportId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Report audits"
-        ],
-        "operationId": "GetReportAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReportAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/tenants/{tenantId}/reportlogs": {
       "get": {
         "tags": [
@@ -17886,260 +16326,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/reports/{reportId}/parameters/{parameterId}/audits": {
-      "get": {
-        "tags": [
-          "Report parameter audits"
-        ],
-        "operationId": "QueryReportParameterAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "parameterId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Report parameter audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "parameterId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/reports/{reportId}/parameters/{parameterId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Report parameter audits"
-        ],
-        "operationId": "GetReportParameterAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "parameterId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReportParameterAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
         }
       }
@@ -18603,260 +16789,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/reports/{reportId}/templates/{templateId}/audits": {
-      "get": {
-        "tags": [
-          "Report template audits"
-        ],
-        "operationId": "QueryReportTemplateAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "templateId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Report template audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "templateId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/reports/{reportId}/templates/{templateId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Report template audits"
-        ],
-        "operationId": "GetReportTemplateAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "reportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "templateId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReportTemplateAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
         }
       }
@@ -20295,234 +18227,6 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/scripts/{scriptId}/audits": {
-      "get": {
-        "tags": [
-          "Script audits"
-        ],
-        "operationId": "QueryScriptAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "scriptId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Script audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "scriptId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/scripts/{scriptId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Script audits"
-        ],
-        "operationId": "GetScriptAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "scriptId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScriptAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/tenants/{tenantId}/regulations/{regulationId}/scripts": {
       "get": {
         "tags": [
@@ -21847,7 +19551,7 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/actions": {
+    "/api/tenants/{tenantId}/system/actions": {
       "get": {
         "tags": [
           "Tenants"
@@ -21869,6 +19573,56 @@
             "description": "The payroll function type",
             "schema": {
               "$ref": "#/components/schemas/FunctionType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActionInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/system/properties": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "operationId": "GetSystemScriptActionProperties",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "functionType",
+            "in": "query",
+            "description": "The payroll function type",
+            "schema": {
+              "$ref": "#/components/schemas/FunctionType"
+            }
+          },
+          {
+            "name": "readOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
             }
           }
         ],
@@ -22834,234 +20588,6 @@
               "application/json": {
                 "schema": {
                   "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/wagetypes/{wageTypeId}/audits": {
-      "get": {
-        "tags": [
-          "Wage type audits"
-        ],
-        "operationId": "QueryWageTypeAudits",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "wageTypeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "The OData filter expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "description": "The OData order-by expression (with support for attribute fields)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "description": "The query result type: items, count or items with count (default: result items)",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "description": "The OData field selection expression",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "The number of items in the queried collection that are to be skipped",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The object status (default: all status)",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "description": "The number of items in the queried collection",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Wage type audits"
-        ],
-        "operationId": "GetOptions",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "wageTypeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/tenants/{tenantId}/regulations/{regulationId}/wagetypes/{wageTypeId}/audits/{auditId}": {
-      "get": {
-        "tags": [
-          "Wage type audits"
-        ],
-        "operationId": "GetWageTypeAudit",
-        "parameters": [
-          {
-            "name": "tenantId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "regulationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "wageTypeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "auditId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WageTypeAudit"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -25004,137 +22530,6 @@
         },
         "additionalProperties": false
       },
-      "CaseAudit": {
-        "required": [
-          "caseId",
-          "caseType",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "caseId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "caseType": {
-            "$ref": "#/components/schemas/CaseType"
-          },
-          "name": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "descriptionLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "cancellationType": {
-            "$ref": "#/components/schemas/CaseCancellationType"
-          },
-          "baseCase": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "baseCaseFields": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CaseFieldReference"
-            },
-            "nullable": true
-          },
-          "availableExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "buildExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "validateExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "lookups": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "slots": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CaseSlot"
-            },
-            "nullable": true
-          },
-          "buildActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "validateActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CaseCancellationType": {
         "enum": [
           "None",
@@ -25455,161 +22850,6 @@
         ],
         "type": "string",
         "description": "Aggregation type for a period case field PayrollEngine.CaseFieldTimeType.Period"
-      },
-      "CaseFieldAudit": {
-        "required": [
-          "caseFieldId",
-          "mandatory",
-          "name",
-          "timeType",
-          "timeUnit",
-          "valueType"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "caseFieldId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "descriptionLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "valueType": {
-            "$ref": "#/components/schemas/ValueType"
-          },
-          "valueScope": {
-            "$ref": "#/components/schemas/ValueScope"
-          },
-          "timeType": {
-            "$ref": "#/components/schemas/CaseFieldTimeType"
-          },
-          "timeUnit": {
-            "$ref": "#/components/schemas/CaseFieldTimeUnit"
-          },
-          "periodAggregation": {
-            "$ref": "#/components/schemas/CaseFieldAggregationType"
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "cancellationMode": {
-            "$ref": "#/components/schemas/CaseFieldCancellationMode"
-          },
-          "culture": {
-            "type": "string",
-            "nullable": true
-          },
-          "mandatory": {
-            "type": "boolean"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "startDateType": {
-            "$ref": "#/components/schemas/CaseFieldDateType"
-          },
-          "endDateType": {
-            "$ref": "#/components/schemas/CaseFieldDateType"
-          },
-          "endMandatory": {
-            "type": "boolean"
-          },
-          "defaultStart": {
-            "type": "string",
-            "nullable": true
-          },
-          "defaultEnd": {
-            "type": "string",
-            "nullable": true
-          },
-          "defaultValue": {
-            "type": "string",
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "lookupSettings": {
-            "$ref": "#/components/schemas/LookupSettings"
-          },
-          "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "buildActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "validateActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "valueAttributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "CaseFieldCancellationMode": {
         "enum": [
@@ -25968,133 +23208,6 @@
           "updated": {
             "type": "string",
             "format": "date-time"
-          },
-          "sourceCaseName": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "sourceCaseNameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "sourceCaseSlot": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "sourceCaseSlotLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "targetCaseName": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "targetCaseNameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "targetCaseSlot": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "targetCaseSlotLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "buildExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "validateExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "buildActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "validateActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CaseRelationAudit": {
-        "required": [
-          "caseRelationId",
-          "sourceCaseName",
-          "targetCaseName"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "caseRelationId": {
-            "type": "integer",
-            "format": "int32"
           },
           "sourceCaseName": {
             "maxLength": 128,
@@ -27030,131 +24143,6 @@
             "items": {
               "type": "string"
             },
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CollectorAudit": {
-        "required": [
-          "collectorId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "collectorId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "collectMode": {
-            "$ref": "#/components/schemas/CollectMode"
-          },
-          "negated": {
-            "type": "boolean"
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "valueType": {
-            "$ref": "#/components/schemas/ValueType"
-          },
-          "culture": {
-            "type": "string",
-            "nullable": true
-          },
-          "collectorGroups": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "startExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "applyExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "endExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "startActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "applyActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "endActions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "threshold": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "minResult": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "maxResult": {
-            "type": "number",
-            "format": "double",
             "nullable": true
           },
           "attributes": {
@@ -28397,74 +25385,6 @@
         },
         "additionalProperties": false
       },
-      "LookupAudit": {
-        "required": [
-          "lookupId",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lookupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "descriptionLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "rangeSize": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "LookupData": {
         "required": [
           "name",
@@ -28495,6 +25415,33 @@
         },
         "additionalProperties": false
       },
+      "LookupRangeBracket": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "rangeStart": {
+            "type": "number",
+            "format": "double"
+          },
+          "rangeEnd": {
+            "type": "number",
+            "format": "double"
+          },
+          "rangeValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LookupRangeMode": {
         "enum": [
           "None",
@@ -28503,6 +25450,31 @@
         ],
         "type": "string",
         "description": "The lookup range mode"
+      },
+      "LookupRangeResult": {
+        "type": "object",
+        "properties": {
+          "lookupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "rangeMode": {
+            "$ref": "#/components/schemas/LookupRangeMode"
+          },
+          "rangeSize": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "brackets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LookupRangeBracket"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "LookupSet": {
         "required": [
@@ -28644,57 +25616,6 @@
           },
           "overrideType": {
             "$ref": "#/components/schemas/OverrideType"
-          }
-        },
-        "additionalProperties": false
-      },
-      "LookupValueAudit": {
-        "required": [
-          "key",
-          "lookupValueId",
-          "value"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lookupValueId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "key": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "value": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "valueLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "rangeValue": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -28948,6 +25869,7 @@
           256,
           512,
           4096,
+          8192,
           65535
         ],
         "type": "integer",
@@ -30073,6 +26995,9 @@
           "jobResult": {
             "$ref": "#/components/schemas/PayrunJobResult"
           },
+          "jobStatus": {
+            "$ref": "#/components/schemas/PayrunJobStatus"
+          },
           "periodStart": {
             "type": "string",
             "format": "date-time"
@@ -30649,111 +27574,6 @@
         "type": "string",
         "description": "The case result kind"
       },
-      "ReportAudit": {
-        "required": [
-          "name",
-          "reportId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "descriptionLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "category": {
-            "type": "string",
-            "nullable": true
-          },
-          "attributeMode": {
-            "$ref": "#/components/schemas/ReportAttributeMode"
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "queries": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "relations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DataRelation"
-            },
-            "nullable": true
-          },
-          "buildExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "startExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "endExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ReportLog": {
         "type": "object",
         "properties": {
@@ -30815,86 +27635,6 @@
           "updated": {
             "type": "string",
             "format": "date-time"
-          },
-          "name": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "descriptionLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "mandatory": {
-            "type": "boolean"
-          },
-          "hidden": {
-            "type": "boolean"
-          },
-          "value": {
-            "type": "string",
-            "nullable": true
-          },
-          "valueType": {
-            "$ref": "#/components/schemas/ValueType"
-          },
-          "parameterType": {
-            "$ref": "#/components/schemas/ReportParameterType"
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ReportParameterAudit": {
-        "required": [
-          "name",
-          "reportParameterId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "reportParameterId": {
-            "type": "integer",
-            "format": "int32"
           },
           "name": {
             "maxLength": 128,
@@ -31219,76 +27959,6 @@
         },
         "additionalProperties": false
       },
-      "ReportTemplateAudit": {
-        "required": [
-          "content",
-          "culture",
-          "name",
-          "reportTemplateId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "name": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "reportTemplateId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "culture": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "content": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "contentType": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "schema": {
-            "type": "string",
-            "nullable": true
-          },
-          "resource": {
-            "maxLength": 256,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "RetroPayMode": {
         "enum": [
           "None",
@@ -31388,52 +28058,6 @@
           "updated": {
             "type": "string",
             "format": "date-time"
-          },
-          "name": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "functionTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FunctionType"
-            },
-            "nullable": true
-          },
-          "value": {
-            "minLength": 1,
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ScriptAudit": {
-        "required": [
-          "name",
-          "scriptId",
-          "value"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "scriptId": {
-            "type": "integer",
-            "format": "int32"
           },
           "name": {
             "maxLength": 128,
@@ -32522,112 +29146,6 @@
         },
         "additionalProperties": false
       },
-      "WageTypeAudit": {
-        "required": [
-          "wageTypeId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "wageTypeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "wageTypeNumber": {
-            "type": "number",
-            "format": "double"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "nameLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "descriptionLocalizations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "overrideType": {
-            "$ref": "#/components/schemas/OverrideType"
-          },
-          "valueType": {
-            "$ref": "#/components/schemas/ValueType"
-          },
-          "calendar": {
-            "type": "string",
-            "nullable": true
-          },
-          "culture": {
-            "type": "string",
-            "nullable": true
-          },
-          "collectors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "collectorGroups": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "valueExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "resultExpression": {
-            "type": "string",
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "clusters": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "WageTypeCustomResult": {
         "required": [
           "end",
@@ -33013,5 +29531,136 @@
         "additionalProperties": false
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Administration"
+    },
+    {
+      "name": "Calendars"
+    },
+    {
+      "name": "Case fields"
+    },
+    {
+      "name": "Case relations"
+    },
+    {
+      "name": "Cases"
+    },
+    {
+      "name": "Collectors"
+    },
+    {
+      "name": "Company case changes"
+    },
+    {
+      "name": "Company case documents"
+    },
+    {
+      "name": "Company case values"
+    },
+    {
+      "name": "Divisions"
+    },
+    {
+      "name": "Employee case changes"
+    },
+    {
+      "name": "Employee case documents"
+    },
+    {
+      "name": "Employee case values"
+    },
+    {
+      "name": "Employees"
+    },
+    {
+      "name": "Global case changes"
+    },
+    {
+      "name": "Global case documents"
+    },
+    {
+      "name": "Global case values"
+    },
+    {
+      "name": "Logs"
+    },
+    {
+      "name": "Lookup values"
+    },
+    {
+      "name": "Lookups"
+    },
+    {
+      "name": "National case changes"
+    },
+    {
+      "name": "National case documents"
+    },
+    {
+      "name": "National case values"
+    },
+    {
+      "name": "Payroll consolidated results"
+    },
+    {
+      "name": "Payroll layers"
+    },
+    {
+      "name": "Payroll results"
+    },
+    {
+      "name": "Payrolls"
+    },
+    {
+      "name": "Payrun jobs"
+    },
+    {
+      "name": "Payrun parameters"
+    },
+    {
+      "name": "Payruns"
+    },
+    {
+      "name": "Regulation shares"
+    },
+    {
+      "name": "Regulations"
+    },
+    {
+      "name": "Report logs"
+    },
+    {
+      "name": "Report parameters"
+    },
+    {
+      "name": "Report templates"
+    },
+    {
+      "name": "Reports"
+    },
+    {
+      "name": "Scripts"
+    },
+    {
+      "name": "Tasks"
+    },
+    {
+      "name": "Tenants"
+    },
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Wage types"
+    },
+    {
+      "name": "Webhook messages"
+    },
+    {
+      "name": "Webhooks"
+    }
+  ]
 }

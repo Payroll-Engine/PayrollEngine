@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# TaxTablePayroll — Payrun Tests
+#
+# WT 100 (MonthlySalary) assertions are exact and always verifiable.
+# WT 500 (WithholdingTax) assertions depend on the downloaded tax table file.
+# Run Setup.pecmd once with the real taxrate-monthly.txt, then fill in the
+# actual WT 500 values from the payrun results and remove the TODO comments.
+
+createdObjectDate: 2026-01-01T00:00:00Z
+tenants:
+- identifier: TaxTableTenant
+  payrolls:
+  - name: TaxTablePayroll
+    cases:
+    # ── Alice: table 34, col 1 (standard wage earner) ──────────────
+    - userIdentifier: admin@taxtabletenant.com
+      employeeIdentifier: alice.standard@example.com
+      divisionName: MainDivision
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: MonthlySalary
+          value: "40000"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+    - userIdentifier: admin@taxtabletenant.com
+      employeeIdentifier: alice.standard@example.com
+      divisionName: MainDivision
+      case:
+        caseName: TaxTableSettings
+        values:
+        - caseFieldName: TaxTableNumber
+          value: "34"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+        - caseFieldName: TaxColumn
+          value: "1"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+    # ── Bob: table 34, col 2 (pension recipient 66+) ───────────────
+    - userIdentifier: admin@taxtabletenant.com
+      employeeIdentifier: bob.senior@example.com
+      divisionName: MainDivision
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: MonthlySalary
+          value: "20000"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+    - userIdentifier: admin@taxtabletenant.com
+      employeeIdentifier: bob.senior@example.com
+      divisionName: MainDivision
+      case:
+        caseName: TaxTableSettings
+        values:
+        - caseFieldName: TaxTableNumber
+          value: "34"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+        - caseFieldName: TaxColumn
+          value: "2"
+          start: 2026-01-01T00:00:00Z
+          created: 2025-12-01T00:00:00Z
+    updateMode: NoUpdate
+  payrunJobInvocations:
+  - name: TaxTablePayrunJob.Jan26
+    payrunName: TaxTablePayrun
+    userIdentifier: admin@taxtabletenant.com
+    jobStatus: Complete
+    periodStart: 2026-01-01T00:00:00Z
+    evaluationDate: 2026-02-01T00:00:00Z
+    reason: Test Payrun Jan 2026
+    employeeIdentifiers:
+    - alice.standard@example.com
+    - bob.senior@example.com
+  payrollResults:
+  # ── Alice ────────────────────────────────────────────────────────
+  - payrunJobName: TaxTablePayrunJob.Jan26
+    employeeIdentifier: alice.standard@example.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 40000
+    # TODO: fill in actual WT 500 value after first run with real taxrate-monthly.txt
+    # - wageTypeNumber: 500
+    #   value: ???
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 40000
+    # TODO: fill in actual collector values after first run
+    # - collectorName: WithholdingTax
+    #   value: ???
+    # - collectorName: NetIncome
+    #   value: ???
+  # ── Bob ──────────────────────────────────────────────────────────
+  - payrunJobName: TaxTablePayrunJob.Jan26
+    employeeIdentifier: bob.senior@example.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 20000
+    # TODO: fill in actual WT 500 value after first run with real taxrate-monthly.txt
+    # - wageTypeNumber: 500
+    #   value: ???
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 20000
+    # TODO: fill in actual collector values after first run
+    # - collectorName: WithholdingTax
+    #   value: ???
+    # - collectorName: NetIncome
+    #   value: ???
+  updateMode: NoUpdate

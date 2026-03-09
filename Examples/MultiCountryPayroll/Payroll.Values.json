@@ -1,0 +1,183 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "ACME.International",
+      "updateMode": "NoUpdate",
+      "payrolls": [
+        {
+          "name": "ACME.Payroll.DE",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "anna.weber@acme-international.com",
+              "divisionName": "ACME.DE",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5600",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "anna.weber@acme-international.com",
+              "divisionName": "ACME.DE",
+              "reason": "Initial employment level",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "sophie.klein@acme-international.com",
+              "divisionName": "ACME.DE",
+              "reason": "Initial salary (global — shared with FR payroll)",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "8000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "sophie.klein@acme-international.com",
+              "divisionName": "ACME.DE",
+              "reason": "Germany employment level: 60%",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.6",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "ACME.Payroll.FR",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "pierre.dubois@acme-international.com",
+              "divisionName": "ACME.FR",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4800",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "pierre.dubois@acme-international.com",
+              "divisionName": "ACME.FR",
+              "reason": "Initial employment level",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "sophie.klein@acme-international.com",
+              "divisionName": "ACME.FR",
+              "reason": "France employment level: 40% (salary is global, already set in DE payroll)",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.4",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "ACME.Payroll.NL",
+          "updateMode": "NoUpdate",
+          "cases": [
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "lucas.de.vries@acme-international.com",
+              "divisionName": "ACME.NL",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5200",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "employeeIdentifier": "lucas.de.vries@acme-international.com",
+              "divisionName": "ACME.NL",
+              "reason": "Initial employment level",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

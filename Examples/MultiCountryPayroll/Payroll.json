@@ -1,0 +1,493 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "ACME.International",
+      "culture": "en-US",
+      "users": [
+        {
+          "identifier": "admin@acme-international.com",
+          "firstName": "Alice",
+          "lastName": "Morgan",
+          "culture": "en-US",
+          "userType": "TenantAdministrator",
+          "attributes": {
+            "StartupPayroll": "ACME.Payroll.DE",
+            "StartupPage": "regulation"
+          }
+        }
+      ],
+      "divisions": [
+        { "name": "ACME.DE" },
+        { "name": "ACME.FR" },
+        { "name": "ACME.NL" }
+      ],
+      "employees": [
+        {
+          "identifier": "anna.weber@acme-international.com",
+          "firstName": "Anna",
+          "lastName": "Weber",
+          "divisions": [ "ACME.DE" ]
+        },
+        {
+          "identifier": "pierre.dubois@acme-international.com",
+          "firstName": "Pierre",
+          "lastName": "Dubois",
+          "divisions": [ "ACME.FR" ]
+        },
+        {
+          "identifier": "lucas.de.vries@acme-international.com",
+          "firstName": "Lucas",
+          "lastName": "de Vries",
+          "divisions": [ "ACME.NL" ]
+        },
+        {
+          "identifier": "sophie.klein@acme-international.com",
+          "firstName": "Sophie",
+          "lastName": "Klein",
+          "divisions": [ "ACME.DE", "ACME.FR" ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "ACME.Global",
+          "description": "Global base regulation: shared salary, employment level and company bonus across all country payrolls",
+          "sharedRegulation": true,
+          "cases": [
+            {
+              "name": "CompanyBonus",
+              "description": "Company-wide bonus rate applied uniformly in all countries",
+              "caseType": "Company",
+              "fields": [
+                {
+                  "name": "CompanyBonusRate",
+                  "valueType": "Percent",
+                  "valueScope": "Global",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "Salary",
+              "description": "Employee monthly base salary — Global scope allows one value to be read from any country payroll",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "valueScope": "Global",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "EmploymentLevel",
+              "description": "Employment percentage per country — not global, allowing split across countries (e.g. 60% DE + 40% FR)",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "EmploymentLevel",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "GrossIncome",
+              "description": "All income components"
+            },
+            {
+              "name": "Deductions",
+              "description": "All deductions (taxes + social contributions)"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "BaseSalary",
+              "description": "Monthly base salary scaled by the country-specific employment level",
+              "valueExpression": "var v = GetCaseValues(\"Salary\", \"EmploymentLevel\"); return v[\"Salary\"] * v[\"EmploymentLevel\"];",
+              "collectors": [ "GrossIncome" ]
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "CompanyBonus",
+              "description": "Global company bonus as a percentage of base salary — same rate for all countries",
+              "valueExpression": "WageType[100] * CaseValue[\"CompanyBonusRate\"]",
+              "collectors": [ "GrossIncome" ]
+            }
+          ]
+        },
+        {
+          "name": "ACME.DE",
+          "description": "Germany payroll regulation: income tax (25%) and social insurance (20%)",
+          "baseRegulations": [ "ACME.Global" ],
+          "cases": [
+            {
+              "name": "DEIncomeTax",
+              "description": "German income tax rate (simplified flat rate for demonstration)",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "DEIncomeTaxRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "DESocialInsurance",
+              "description": "German social insurance contribution rate (employee share)",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "DESocialInsuranceRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 200,
+              "name": "DEIncomeTax",
+              "description": "German income tax deduction on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"DEIncomeTaxRate\"]",
+              "collectors": [ "Deductions" ]
+            },
+            {
+              "wageTypeNumber": 210,
+              "name": "DESocialInsurance",
+              "description": "German social insurance deduction on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"DESocialInsuranceRate\"]",
+              "collectors": [ "Deductions" ]
+            }
+          ]
+        },
+        {
+          "name": "ACME.FR",
+          "description": "France payroll regulation: income tax (20%), CSG/CRDS (10%), family contribution (5%)",
+          "baseRegulations": [ "ACME.Global" ],
+          "cases": [
+            {
+              "name": "FRIncomeTax",
+              "description": "French income tax rate (PAS — simplified flat rate for demonstration)",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "FRIncomeTaxRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "FRCSG",
+              "description": "Contribution Sociale Generalisee + CRDS (employee share)",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "FRCSGRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "FRFamilyContribution",
+              "description": "French family contribution (Cotisation famille — employee share, simplified)",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "FRFamilyContributionRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 200,
+              "name": "FRIncomeTax",
+              "description": "French income tax deduction (Prelevement a la source) on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"FRIncomeTaxRate\"]",
+              "collectors": [ "Deductions" ]
+            },
+            {
+              "wageTypeNumber": 210,
+              "name": "FRCSGCRDS",
+              "description": "French CSG and CRDS social contributions on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"FRCSGRate\"]",
+              "collectors": [ "Deductions" ]
+            },
+            {
+              "wageTypeNumber": 220,
+              "name": "FRFamilyContribution",
+              "description": "French family contribution on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"FRFamilyContributionRate\"]",
+              "collectors": [ "Deductions" ]
+            }
+          ]
+        },
+        {
+          "name": "ACME.NL",
+          "description": "Netherlands payroll regulation: income tax box 1 (30%), AOW pension (20%), ZVW health (5%)",
+          "baseRegulations": [ "ACME.Global" ],
+          "cases": [
+            {
+              "name": "NLIncomeTax",
+              "description": "Dutch income tax box 1 rate (simplified flat rate for demonstration)",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "NLIncomeTaxRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "NLAOW",
+              "description": "Dutch state pension (AOW) contribution rate",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "NLAOWRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            },
+            {
+              "name": "NLZVW",
+              "description": "Dutch health insurance (Zorgverzekeringswet) employee contribution rate",
+              "caseType": "National",
+              "fields": [
+                {
+                  "name": "NLZVWRate",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 200,
+              "name": "NLIncomeTax",
+              "description": "Dutch income tax box 1 deduction on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"NLIncomeTaxRate\"]",
+              "collectors": [ "Deductions" ]
+            },
+            {
+              "wageTypeNumber": 210,
+              "name": "NLAOWPension",
+              "description": "Dutch AOW state pension contribution on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"NLAOWRate\"]",
+              "collectors": [ "Deductions" ]
+            },
+            {
+              "wageTypeNumber": 220,
+              "name": "NLZVWHealth",
+              "description": "Dutch ZVW health insurance contribution on gross income",
+              "valueExpression": "Collector[\"GrossIncome\"] * CaseValue[\"NLZVWRate\"]",
+              "collectors": [ "Deductions" ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "ACME.Payroll.DE",
+          "description": "Germany payroll: ACME.Global (level 1) + ACME.DE (level 2)",
+          "divisionName": "ACME.DE",
+          "layers": [
+            { "level": 1, "priority": 1, "regulationName": "ACME.Global" },
+            { "level": 2, "priority": 1, "regulationName": "ACME.DE" }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.DE",
+              "case": {
+                "caseName": "CompanyBonus",
+                "values": [
+                  {
+                    "caseFieldName": "CompanyBonusRate",
+                    "value": "0.05",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.DE",
+              "case": {
+                "caseName": "DEIncomeTax",
+                "values": [
+                  {
+                    "caseFieldName": "DEIncomeTaxRate",
+                    "value": "0.25",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.DE",
+              "case": {
+                "caseName": "DESocialInsurance",
+                "values": [
+                  {
+                    "caseFieldName": "DESocialInsuranceRate",
+                    "value": "0.20",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "ACME.Payroll.FR",
+          "description": "France payroll: ACME.Global (level 1) + ACME.FR (level 2)",
+          "divisionName": "ACME.FR",
+          "layers": [
+            { "level": 1, "priority": 1, "regulationName": "ACME.Global" },
+            { "level": 2, "priority": 1, "regulationName": "ACME.FR" }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.FR",
+              "case": {
+                "caseName": "FRIncomeTax",
+                "values": [
+                  {
+                    "caseFieldName": "FRIncomeTaxRate",
+                    "value": "0.20",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.FR",
+              "case": {
+                "caseName": "FRCSG",
+                "values": [
+                  {
+                    "caseFieldName": "FRCSGRate",
+                    "value": "0.10",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.FR",
+              "case": {
+                "caseName": "FRFamilyContribution",
+                "values": [
+                  {
+                    "caseFieldName": "FRFamilyContributionRate",
+                    "value": "0.05",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "ACME.Payroll.NL",
+          "description": "Netherlands payroll: ACME.Global (level 1) + ACME.NL (level 2)",
+          "divisionName": "ACME.NL",
+          "layers": [
+            { "level": 1, "priority": 1, "regulationName": "ACME.Global" },
+            { "level": 2, "priority": 1, "regulationName": "ACME.NL" }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.NL",
+              "case": {
+                "caseName": "NLIncomeTax",
+                "values": [
+                  {
+                    "caseFieldName": "NLIncomeTaxRate",
+                    "value": "0.30",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.NL",
+              "case": {
+                "caseName": "NLAOW",
+                "values": [
+                  {
+                    "caseFieldName": "NLAOWRate",
+                    "value": "0.20",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@acme-international.com",
+              "divisionName": "ACME.NL",
+              "case": {
+                "caseName": "NLZVW",
+                "values": [
+                  {
+                    "caseFieldName": "NLZVWRate",
+                    "value": "0.05",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "ACME.Payrun.DE",
+          "payrollName": "ACME.Payroll.DE",
+          "defaultReason": "Germany monthly payroll run"
+        },
+        {
+          "name": "ACME.Payrun.FR",
+          "payrollName": "ACME.Payroll.FR",
+          "defaultReason": "France monthly payroll run"
+        },
+        {
+          "name": "ACME.Payrun.NL",
+          "payrollName": "ACME.Payroll.NL",
+          "defaultReason": "Netherlands monthly payroll run"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "lookupName": "TaxTable.Monthly",
+  "comment": "Fixed-width tax table import — monthly period. Record layout per national tax authority specification (Postbeskrivning). One record = one income bracket with deduction amounts for all six taxpayer columns.",
+  "recordFilter": {
+    "start": 0,
+    "length": 1,
+    "value": "B",
+    "offset": 2
+  },
+  "key": {
+    "comment": "Composite key: period-type + table-number, e.g. '30 34' (monthly, table 34)",
+    "valueType": "text",
+    "start": 0,
+    "length": 5
+  },
+  "rangeValue": {
+    "comment": "Lower income bound of the bracket (SEK or local currency)",
+    "valueType": "integer",
+    "start": 6,
+    "length": 7
+  },
+  "values": [
+    {
+      "name": "Col1",
+      "comment": "Deduction for employees under 66 years of age",
+      "valueType": "integer",
+      "start": 20,
+      "length": 5
+    },
+    {
+      "name": "Col2",
+      "comment": "Deduction for pension recipients aged 66 or over",
+      "valueType": "integer",
+      "start": 25,
+      "length": 5
+    },
+    {
+      "name": "Col3",
+      "comment": "Deduction for employees aged 66 or over",
+      "valueType": "integer",
+      "start": 30,
+      "length": 5
+    },
+    {
+      "name": "Col4",
+      "comment": "Deduction for sickness/activity compensation recipients under 66",
+      "valueType": "integer",
+      "start": 35,
+      "length": 5
+    },
+    {
+      "name": "Col5",
+      "comment": "Deduction for other pensionable income recipients",
+      "valueType": "integer",
+      "start": 40,
+      "length": 5
+    },
+    {
+      "name": "Col6",
+      "comment": "Deduction for pension income recipients under 66",
+      "valueType": "integer",
+      "start": 45,
+      "length": 5
+    }
+  ]
+}

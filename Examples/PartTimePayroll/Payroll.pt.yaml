@@ -1,0 +1,434 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# PartTimePayroll — FlexWork AG
+# Demonstrates: employment level scaling, overtime (full-time only), retroactive level correction.
+# Fully implemented with No-Code actions.
+createdObjectDate: 2025-01-01T00:00:00Z
+tenants:
+- identifier: FlexWork
+  culture: en-US
+  users:
+  - identifier: hr@flexwork.com
+    firstName: HR
+    lastName: Admin
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: FlexWork.Engineering
+  employees:
+  - identifier: anna.weber@flexwork.com
+    firstName: Anna
+    lastName: Weber
+    divisions:
+    - FlexWork.Engineering
+  - identifier: mark.bauer@flexwork.com
+    firstName: Mark
+    lastName: Bauer
+    divisions:
+    - FlexWork.Engineering
+  regulations:
+  - name: PartTimeRegulation
+    description: >
+      Part-time payroll regulation: employment level scaling, overtime for full-time
+      employees only, and retroactive level corrections. Fully implemented with No-Code actions.
+    cases:
+
+    - name: Salary
+      description: Monthly base salary (full-time equivalent). Actual pay is scaled by EmploymentLevel.
+      caseType: Employee
+      defaultReason: Change monthly salary
+      # Clamp salary to valid range on input
+      buildActions:
+      - ^:Salary = Range(^:Salary, 500, 25000)
+      fields:
+      - name: Salary
+        valueType: Money
+        timeType: CalendarPeriod
+
+    - name: EmploymentLevel
+      description: Employment percentage (1.0 = full-time). Clamped to 0.1-1.0 on input.
+      caseType: Employee
+      defaultReason: Change employment level
+      # Clamp employment level to valid range on input
+      buildActions:
+      - ^:EmploymentLevel = Range(^:EmploymentLevel, 0.1, 1.0)
+      fields:
+      - name: EmploymentLevel
+        valueType: Percent
+        timeType: Period
+
+    - name: OvertimeHours
+      description: Overtime hours worked per period. Only available for full-time employees.
+      caseType: Employee
+      defaultReason: Enter overtime hours
+      # Hide case from HR when employee is part-time
+      availableActions:
+      - '? ^^EmploymentLevel >= 1.0'
+      fields:
+      - name: OvertimeHours
+        valueType: Decimal
+        timeType: CalendarPeriod
+
+    collectors:
+    - name: GrossIncome
+      description: Sum of base salary and overtime components
+    - name: Deductions
+      description: Sum of income tax and social security contributions
+
+    wageTypes:
+
+    - wageTypeNumber: 100
+      name: BaseSalary
+      description: Monthly salary scaled by employment level.
+      # Scale full-time salary by part-time factor
+      valueActions:
+      - ^^Salary * ^^EmploymentLevel
+      collectors:
+      - GrossIncome
+      clusters:
+      - Legal
+      - Retro
+
+    - wageTypeNumber: 102
+      name: BaseSalaryDelta
+      description: Sum of retro-period corrections for WT 100. Negative = overpayment recovery.
+      # Accumulate all retro corrections for BaseSalary
+      valueActions:
+      - ^$BaseSalary.RetroSum
+      clusters:
+      - Legal
+
+    - wageTypeNumber: 120
+      name: Overtime
+      description: >
+        Overtime pay: hours x hourly rate (Salary / 160h) x 1.25 surcharge.
+        Skipped for part-time employees or when no hours are entered.
+      # Guard: skip for part-time employees
+      # CalendarPeriod returns 0 when no hours entered — no HasValue guard needed
+      valueActions:
+      - '? ^^EmploymentLevel >= 1.0'
+      - ^^OvertimeHours * (^^Salary / 160M) * 1.25M
+      collectors:
+      - GrossIncome
+      clusters:
+      - Legal
+      - Retro
+
+    - wageTypeNumber: 200
+      name: IncomeTax
+      description: Flat-rate income tax of 20% on gross (BaseSalary + Overtime).
+      # Reference period wage type values — correct in both normal and retro runs
+      valueActions:
+      - (^$BaseSalary + ^$Overtime) * 0.20
+      collectors:
+      - Deductions
+      clusters:
+      - Legal
+      - Retro
+
+    - wageTypeNumber: 202
+      name: IncomeTaxDelta
+      description: Sum of retro-period corrections for WT 200.
+      valueActions:
+      - ^$IncomeTax.RetroSum
+      clusters:
+      - Legal
+
+    - wageTypeNumber: 210
+      name: SocialSecurity
+      description: Social security contribution of 8% on gross (BaseSalary + Overtime).
+      valueActions:
+      - (^$BaseSalary + ^$Overtime) * 0.08
+      collectors:
+      - Deductions
+      clusters:
+      - Legal
+      - Retro
+
+    - wageTypeNumber: 212
+      name: SocialSecurityDelta
+      description: Sum of retro-period corrections for WT 210.
+      valueActions:
+      - ^$SocialSecurity.RetroSum
+      clusters:
+      - Legal
+
+  payrolls:
+  - name: FlexWorkPayroll
+    divisionName: FlexWork.Engineering
+    clusterSetWageType: Legal
+    clusterSetWageTypeRetro: Retro
+    clusterSets:
+    - name: Legal
+      includeClusters:
+      - Legal
+    - name: Retro
+      includeClusters:
+      - Retro
+    layers:
+    - level: 1
+      priority: 1
+      regulationName: PartTimeRegulation
+    # --- Employee case values ---
+    cases:
+    - userIdentifier: hr@flexwork.com
+      employeeIdentifier: anna.weber@flexwork.com
+      divisionName: FlexWork.Engineering
+      reason: Initial salary
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "4800"
+          start: 2025-01-01T00:00:00Z
+          created: 2024-12-01T00:00:00Z
+    - userIdentifier: hr@flexwork.com
+      employeeIdentifier: anna.weber@flexwork.com
+      divisionName: FlexWork.Engineering
+      reason: Initial employment level - 80% part-time
+      case:
+        caseName: EmploymentLevel
+        values:
+        - caseFieldName: EmploymentLevel
+          value: "0.8"
+          start: 2025-01-01T00:00:00Z
+          created: 2024-12-01T00:00:00Z
+    - userIdentifier: hr@flexwork.com
+      employeeIdentifier: anna.weber@flexwork.com
+      divisionName: FlexWork.Engineering
+      # Entered March 5 but effective February 1 — triggers retro in March run
+      reason: Retroactive reduction to 60%, agreed in March, effective from February
+      case:
+        caseName: EmploymentLevel
+        values:
+        - caseFieldName: EmploymentLevel
+          value: "0.6"
+          start: 2025-02-01T00:00:00Z
+          created: 2025-03-05T00:00:00Z
+    - userIdentifier: hr@flexwork.com
+      employeeIdentifier: mark.bauer@flexwork.com
+      divisionName: FlexWork.Engineering
+      reason: Initial salary
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "5000"
+          start: 2025-01-01T00:00:00Z
+          created: 2024-12-01T00:00:00Z
+    - userIdentifier: hr@flexwork.com
+      employeeIdentifier: mark.bauer@flexwork.com
+      divisionName: FlexWork.Engineering
+      reason: Initial employment level - full-time
+      case:
+        caseName: EmploymentLevel
+        values:
+        - caseFieldName: EmploymentLevel
+          value: "1.0"
+          start: 2025-01-01T00:00:00Z
+          created: 2024-12-01T00:00:00Z
+    - userIdentifier: hr@flexwork.com
+      employeeIdentifier: mark.bauer@flexwork.com
+      divisionName: FlexWork.Engineering
+      reason: Overtime - 8 hours in February 2025
+      case:
+        caseName: OvertimeHours
+        values:
+        - caseFieldName: OvertimeHours
+          value: "8"
+          start: 2025-02-01T00:00:00Z
+          end: 2025-02-28T00:00:00Z
+          created: 2025-02-15T00:00:00Z
+
+  payruns:
+  - name: FlexWorkPayrun
+    payrollName: FlexWorkPayroll
+    defaultReason: Monthly payroll run
+
+  # --- Payrun jobs ---
+  payrunJobInvocations:
+  - name: FlexWorkPayrun.Jan25
+    payrunName: FlexWorkPayrun
+    payrollName: FlexWorkPayroll
+    userIdentifier: hr@flexwork.com
+    jobStatus: Complete
+    periodStart: 2025-01-01T00:00:00Z
+    evaluationDate: 2025-01-31T00:00:00Z
+    reason: January 2025 - baseline, no retro
+    storeEmptyResults: true
+
+  - name: FlexWorkPayrun.Feb25
+    payrunName: FlexWorkPayrun
+    payrollName: FlexWorkPayroll
+    userIdentifier: hr@flexwork.com
+    jobStatus: Complete
+    periodStart: 2025-02-01T00:00:00Z
+    evaluationDate: 2025-02-28T00:00:00Z
+    # Anna's retro change (created 2025-03-05) is not yet visible here
+    reason: February 2025 - Mark 8h overtime, Anna retro change not yet visible
+    storeEmptyResults: true
+
+  - name: FlexWorkPayrun.Mar25
+    payrunName: FlexWorkPayrun
+    payrollName: FlexWorkPayroll
+    userIdentifier: hr@flexwork.com
+    jobStatus: Complete
+    periodStart: 2025-03-01T00:00:00Z
+    evaluationDate: 2025-03-31T00:00:00Z
+    # Anna's level change now visible — triggers retro recalculation for February
+    reason: March 2025 - retro Anna level 60% effective Feb 1
+    retroJobs:
+    - scheduleDate: 2025-02-01T00:00:00Z
+    storeEmptyResults: true
+
+  # --- Expected test results ---
+  payrollResults:
+
+  # January — Anna (80%)
+  - payrunJobName: FlexWorkPayrun.Jan25
+    employeeIdentifier: anna.weber@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:      4800 x 0.8 = 3840
+      value: 3840
+    - wageTypeNumber: 102   # BaseSalaryDelta: no retro yet
+      value: 0
+    - wageTypeNumber: 200   # IncomeTax:       3840 x 0.20 = 768
+      value: 768
+    - wageTypeNumber: 202   # IncomeTaxDelta:  no retro yet
+      value: 0
+    - wageTypeNumber: 210   # SocialSecurity:  3840 x 0.08 = 307.20
+      value: 307.2
+    - wageTypeNumber: 212   # SocialSecurityDelta: no retro yet
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 3840
+    - collectorName: Deductions
+      value: 1075.2
+
+  # January — Mark (100%)
+  - payrunJobName: FlexWorkPayrun.Jan25
+    employeeIdentifier: mark.bauer@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:      5000 x 1.0 = 5000
+      value: 5000
+    - wageTypeNumber: 102   # BaseSalaryDelta: no retro yet
+      value: 0
+    - wageTypeNumber: 120   # Overtime:        no OT entered
+      value: 0
+    - wageTypeNumber: 200   # IncomeTax:       5000 x 0.20 = 1000
+      value: 1000
+    - wageTypeNumber: 202   # IncomeTaxDelta:  no retro yet
+      value: 0
+    - wageTypeNumber: 210   # SocialSecurity:  5000 x 0.08 = 400
+      value: 400
+    - wageTypeNumber: 212   # SocialSecurityDelta: no retro yet
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+    - collectorName: Deductions
+      value: 1400
+
+  # February — Anna (80%, retro change not yet visible)
+  - payrunJobName: FlexWorkPayrun.Feb25
+    employeeIdentifier: anna.weber@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:      4800 x 0.8 = 3840
+      value: 3840
+    - wageTypeNumber: 102   # BaseSalaryDelta: no retro yet
+      value: 0
+    - wageTypeNumber: 200   # IncomeTax:       3840 x 0.20 = 768
+      value: 768
+    - wageTypeNumber: 202   # IncomeTaxDelta:  no retro yet
+      value: 0
+    - wageTypeNumber: 210   # SocialSecurity:  3840 x 0.08 = 307.20
+      value: 307.2
+    - wageTypeNumber: 212   # SocialSecurityDelta: no retro yet
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 3840
+    - collectorName: Deductions
+      value: 1075.2
+
+  # February — Mark (100%, 8h overtime)
+  - payrunJobName: FlexWorkPayrun.Feb25
+    employeeIdentifier: mark.bauer@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:  5000 x 1.0 = 5000
+      value: 5000
+    - wageTypeNumber: 102   # BaseSalaryDelta: no retro yet
+      value: 0
+    - wageTypeNumber: 120   # Overtime:    8h x (5000/160) x 1.25 = 312.50
+      value: 312.5
+    - wageTypeNumber: 200   # IncomeTax:   (5000+312.50) x 0.20 = 1062.50
+      value: 1062.5
+    - wageTypeNumber: 202   # IncomeTaxDelta: no retro yet
+      value: 0
+    - wageTypeNumber: 210   # SocialSecurity: (5000+312.50) x 0.08 = 425
+      value: 425
+    - wageTypeNumber: 212   # SocialSecurityDelta: no retro yet
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5312.5
+    - collectorName: Deductions
+      value: 1487.5
+
+  # March — Anna current period (60%, with retro deltas)
+  - payrunJobName: FlexWorkPayrun.Mar25
+    employeeIdentifier: anna.weber@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:         4800 x 0.6 = 2880
+      value: 2880
+    - wageTypeNumber: 102   # BaseSalaryDelta:    2880 - 3840 = -960
+      value: -960
+    - wageTypeNumber: 200   # IncomeTax:          2880 x 0.20 = 576
+      value: 576
+    - wageTypeNumber: 202   # IncomeTaxDelta:     576 - 768 = -192
+      value: -192
+    - wageTypeNumber: 210   # SocialSecurity:     2880 x 0.08 = 230.40
+      value: 230.4
+    - wageTypeNumber: 212   # SocialSecurityDelta: 230.40 - 307.20 = -76.80
+      value: -76.8
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 2880
+    - collectorName: Deductions
+      value: 806.4
+
+  # March — Anna retro period (February recalculated at 60%)
+  - payrunJobName: FlexWorkPayrun.Mar25
+    retroPeriodStart: 2025-02-01T00:00:00Z
+    employeeIdentifier: anna.weber@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:     4800 x 0.6 = 2880
+      value: 2880
+    - wageTypeNumber: 200   # IncomeTax:      2880 x 0.20 = 576
+      value: 576
+    - wageTypeNumber: 210   # SocialSecurity: 2880 x 0.08 = 230.40
+      value: 230.4
+
+  # March — Mark (unaffected by Anna's retro, all deltas zero)
+  - payrunJobName: FlexWorkPayrun.Mar25
+    employeeIdentifier: mark.bauer@flexwork.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # BaseSalary:         5000
+      value: 5000
+    - wageTypeNumber: 102   # BaseSalaryDelta:    no retro
+      value: 0
+    - wageTypeNumber: 120   # Overtime:           no OT this period
+      value: 0
+    - wageTypeNumber: 200   # IncomeTax:          5000 x 0.20 = 1000
+      value: 1000
+    - wageTypeNumber: 202   # IncomeTaxDelta:     no retro
+      value: 0
+    - wageTypeNumber: 210   # SocialSecurity:     5000 x 0.08 = 400
+      value: 400
+    - wageTypeNumber: 212   # SocialSecurityDelta: no retro
+      value: 0
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+    - collectorName: Deductions
+      value: 1400

@@ -79,6 +79,19 @@
               ]
             }
           ],
+          "lookups": [
+            {
+              "name": "EdgeLookup",
+              "created": "2019-03-28T00:00:00.0Z",
+              "values": [
+                {
+                  "key": "rate",
+                  "value": "99",
+                  "created": "2019-03-28T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
           "wageTypes": [
             {
               "wageTypeNumber": 101,
@@ -135,6 +148,26 @@
               "clusters": [
                 "Legal",
                 "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 107,
+              "name": "EdgeDateWageType",
+              "description": "Tests GetDerivedWageTypes: created equals evaluationDate of Mar19, requires <= instead of <",
+              "valueExpression": "return 42",
+              "created": "2019-03-28T00:00:00.0Z",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 108,
+              "name": "EdgeDateLookup",
+              "description": "Tests GetDerivedLookups/LookupValues: EdgeLookup created equals evaluationDate of Mar19",
+              "valueExpression": "return HasLookup(\"EdgeLookup\") ? 99 : 0",
+              "created": "2018-01-01T00:00:00.0Z",
+              "clusters": [
+                "Legal"
               ]
             }
           ]
@@ -382,7 +415,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2018-10-01T00:00:00.0Z",
           "evaluationDate": "2018-10-28T00:00:00.0Z",
@@ -394,7 +426,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2018-11-01T00:00:00.0Z",
           "evaluationDate": "2018-11-28T00:00:00.0Z",
@@ -406,7 +437,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2018-12-01T00:00:00.0Z",
           "evaluationDate": "2018-12-28T00:00:00.0Z",
@@ -418,7 +448,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-01-28T00:00:00.0Z",
@@ -430,7 +459,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-02-01T00:00:00.0Z",
           "evaluationDate": "2019-02-28T00:00:00.0Z",
@@ -442,7 +470,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-03-01T00:00:00.0Z",
           "evaluationDate": "2019-03-28T00:00:00.0Z",
@@ -454,7 +481,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-04-01T00:00:00.0Z",
           "evaluationDate": "2019-04-28T00:00:00.0Z",
@@ -466,7 +492,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-05-01T00:00:00.0Z",
           "evaluationDate": "2019-05-28T00:00:00.0Z",
@@ -478,7 +503,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-06-01T00:00:00.0Z",
           "evaluationDate": "2019-06-28T00:00:00.0Z",
@@ -490,7 +514,6 @@
           "payrunName": "RetroPayrollPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-07-01T00:00:00.0Z",
           "evaluationDate": "2019-07-28T00:00:00.0Z",
@@ -517,6 +540,10 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 0
             }
           ]
         },
@@ -537,6 +564,10 @@
             },
             {
               "wageTypeNumber": 104,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 108,
               "value": 0
             }
           ]
@@ -559,6 +590,10 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 0
             }
           ]
         },
@@ -580,6 +615,10 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 0
             }
           ]
         },
@@ -600,6 +639,10 @@
             },
             {
               "wageTypeNumber": 104,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 108,
               "value": 0
             }
           ]
@@ -667,6 +710,14 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 42
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 99
             }
           ]
         },
@@ -688,6 +739,14 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 42
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 99
             }
           ]
         },
@@ -710,6 +769,14 @@
             {
               "wageTypeNumber": 104,
               "value": 10000
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 42
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 99
             }
           ]
         },
@@ -804,6 +871,14 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 42
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 99
             }
           ]
         },
@@ -871,6 +946,14 @@
             {
               "wageTypeNumber": 104,
               "value": 0
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 42
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 99
             }
           ]
         },

@@ -1,60 +1,82 @@
-# Payroll Engine Timesheet Example
-This example shows how to create a payroll solution to record daily working hours.
+# TimesheetPayroll Example
 
-The solution is based on a reusable timesheet module with the following features
-- Support for different payroll wage periods (weekly, bi-weekly, monthly...) and weekdays
-- Management of working days such as holidays, trade fair days
-- Timesheet settings can be changed daily, even during the wage period
-- Different daily hour rates with the share of the employee's salary
-- Different wage calculations for permanent and temporary employees
+A daily working hour recording solution for **TimesheetTenant**, demonstrating
+the `CaseObject` scripting pattern that maps payroll case fields to typed C# model
+classes. The timesheet module is reusable — subclass `Timesheet` and
+`TimesheetCalculator` to adapt it to any working-time regulation.
 
-The timesheet model is based on the `CaseObject` scripting class with payroll data mapped to C# classes.
+---
 
-## Calendar
-The [Payroll Calendar](https://github.com/Payroll-Engine/PayrollEngine/wiki/Calendars) is used as the basis for determining the period and working days.
-The `Workdays` lookup determines the holidays to exclude and the special days to include.
+## Features
 
-In the timesheet, the rates relevant for data entry and wage calculation are set. These settings are the [Time Data](https://github.com/Payroll-Engine/PayrollEngine/wiki/Time-Data), which allows the wage data to be checked on a daily basis.
+- Payroll calendars: weekly, bi-weekly, monthly
+- Working day management via `Workdays` lookup (holidays, special days)
+- Daily timesheet changes within a wage period
+- Four configurable hour rate phases (early, regular, late-low, late-high)
+- Different wage calculation for permanent and casual workers
+- Weekend rate factor via `MyTimesheetCalculator` override
+- Reports: work time report (per employee/day) and wage report (per payrun job)
+- Excel import for lookup data and working time entries
+
+---
 
 ## Timesheet Model
 
-### Timesheet Scripts
-The timesheet module is implemented in the following scripts.
+The timesheet module lives in the `Timesheet/` directory.
 
-| Name                   | Description                              | Function                 |
+### Scripts
+
+| File | Directory | Function type |
 |:--|:--|:--|
-| `Model.cs`             | Timesheet model types                    | All                      |
-| `CaseBuild.cs`         | Handle timesheet cases input             | Case build               |
-| `CaseValidate.cs`      | Validate the timesheet cases             | Case validate            |
-| `ReportBuild.cs`       | Handle timesheet repots input            | Report build             |
-| `ReportEnd.cs`         | Create timesheet reports                 | Report end               |
-| `WageTypeValue.cs`     | Calculate timesheet wages                | Wage type value          |
+| `Model.cs` | `Timesheet/` | All — model types shared across all functions |
+| `CaseBuild.cs` | `Timesheet/` | CaseBuild — Timesheet company case |
+| `CaseValidate.cs` | `Timesheet/` | CaseValidate — Timesheet company case |
+| `CaseBuild.cs` | `Case/WorkTime/` | CaseBuild — WorkTime employee case |
+| `CaseValidate.cs` | `Case/WorkTime/` | CaseValidate — WorkTime employee case |
+| `CaseValidate.cs` | `Case/Timesheet/` | CaseValidate — Timesheet company case (case-level) |
+| `ReportBuild.cs` | `Timesheet/` | ReportBuild — shared report build logic |
+| `ReportEnd.cs` | `Timesheet/` | ReportEnd — shared report end logic |
+| `WageTypeValue.cs` | `Timesheet/` | WageTypeValue — base wage calculation |
+| `ReportBuild.cs` | `Report/WorkTime/` | ReportBuild — work time report |
+| `ReportEnd.cs` | `Report/WorkTime/` | ReportEnd — work time report |
+| `ReportBuild.cs` | `Report/Wage/` | ReportBuild — wage report |
+| `ReportEnd.cs` | `Report/Wage/` | ReportEnd — wage report |
+
+### Customer Scripts
+
+The example customization lives in `Script/`:
+
+| File | Purpose |
+|:--|:--|
+| `Script/MyTimesheet.cs` | Subclass of `Timesheet` — adds 3 period slots and `WeekendRateFactor` |
+| `Script/MyTimesheet.WageTypeValue.cs` | `MyTimesheetCalculator` + `WageTypeValueFunctionExtensions` |
+
+---
+
+## Timesheet Case Fields
 
 ### Timesheet (Company Case)
-Based on the calendar, the timesheet keeps track of working hours and salary data:
 
-| Field                  | Description                              | Value type               |
+| Field | Description | ValueType |
 |:--|:--|:--|
-| `StartTime`            | Regular period start time                | Hour                     |
-| `EndTime`              | Regular period end time                  | Hour                     |
-| `MinWorkTime`          | Minimum work time                        | Hour                     |
-| `MaxWorkTime`          | Maximum work time                        | Hour                     |
-| `BreakMin`             | Minimum break time                       | Minute                   |
-| `BreakMax`             | Maximum break time <sup>1)</sup>         | Minute                   |
-| `RegularRate`          | Regular hour rate                        | Money                    |
-| `CasualRateFactor`     | Casual worker factor to the regular rate | Percent                  |
+| `StartTime` | Regular period start time | Hour |
+| `EndTime` | Regular period end time | Hour |
+| `MinWorkTime` | Minimum work time | Hour |
+| `MaxWorkTime` | Maximum work time | Hour |
+| `BreakMin` | Minimum break time | Minute |
+| `BreakMax` | Maximum break time ¹ | Minute |
+| `RegularRate` | Regular hour rate | Money |
+| `CasualRateFactor` | Casual worker factor relative to regular rate | Percent |
 
-<sup>1)</sup> Disable break time with zero<br />
+¹ Set to zero to disable break time.
 
-#### Timesheet Period
-| Field                  | Description                              | Value type               |
-|:--|:--|:--|
-| `<Namespace>Duration`  | Period duration                          | Hour                     |
-| `<Namespace>Factor`    | Period rate factor                       | Percent                  |
+#### Timesheet Periods
 
-Timesheet periods without duration or factor are ignored.
+Each period contributes a `<Namespace>Duration` (Hour) and `<Namespace>Factor`
+(Percent) case field pair. Periods without duration or factor are ignored.
 
-Use the `TimesheetPeriodAttribute` to mark a timesheet period:
+Periods are declared with `[TimesheetPeriod]` on the subclass:
+
 ```csharp
 public class MyTimesheet : Timesheet
 {
@@ -69,100 +91,88 @@ public class MyTimesheet : Timesheet
     // case fields LatePeriodHighDuration and LatePeriodHighFactor
     [TimesheetPeriod(order: +2, ns: nameof(LatePeriodHigh))]
     public TimesheetPeriod LatePeriodHigh { get; } = new();
-}
-```
-
-The attribute parameter `order` indicates the position of the period within the working day:
-- early periods: `-1` first period before the regular work start time, `-2` (second period before...)
-- late periods: `+1` first period after the regular work end time, `+2` (second period after...)
-
-The `order 0` is used by the regular work and is not allowed for a timesheet period.
-
-The `ns` attribute parameter specifies the namespace to be used as a prefix to the case field name.
- 
-### Employment (Employee Case - Administrator)
-| Field                  | Description                              | Value type               |
-|:--|:--|:--|
-| `CasualWorker`         | Casual employee                          | Boolean                  |
-
-### Work time (Employee Case - User or Employee Self-Service)
-| Field                  | Description                              | Value type               |
-|:--|:--|:--|
-| `WorkTimeDate`         | Working day                              | Date                     |
-| `WorkTimeStart`        | Start hour                               | Hour                     |
-| `WorkTimeEnd`          | End hour                                 | Hour                     |
-| `WorkTimeBreak`        | Break time                               | Minute                   |
-| `WorkTimeHours`        | Working hours (calculated)               | Minute                   |
-
-
-## Timesheet Payrun
-The calculation of the wage data is done using the `TimesheetCalculator` class:
-```csharp
-public static class WageTypeValueFunctionExtensions
-{
-    public static decimal TimesheetRegularWage(this WageTypeValueFunction function) =>
-        new TimesheetCalculator<MyTimesheet>().RegularWage(function);
-
-    public static decimal TimesheetPeriodWage(this WageTypeValueFunction function, string periodPropertyName) =>
-        new TimesheetCalculator<MyTimesheet>().PeriodWage(function, periodPropertyName);
-}
-```
-
-In the payroll run, the period results of the timesheet are assigned to the wage types:
-
-```json
-"wageTypes": [
-    {
-        "wageTypeNumber": 110,
-        "valueExpression": "this.TimesheetPeriodWage(\"EarlyPeriod\")"
-    },
-    {
-        "wageTypeNumber": 120,
-        "valueExpression": "this.TimesheetRegularWage()"
-    },
-    {
-        "wageTypeNumber": 130,
-        "valueExpression": "this.TimesheetPeriodWage(\"LatePeriodLow\")"
-    },
-    {
-        "wageTypeNumber": 140,
-        "valueExpression": "this.TimesheetPeriodWage(\"LatePeriodHigh\")"
-    }
-]
-```
-
-### Custom Wage Calculation
-The following example shows a specialization of `Timesheet` with an additional wage factor for weekend days:
-```csharp
-public class MyTimesheet : Timesheet
-{
-    // case fields EarlyPeriodDuration and EarlyPeriodFactor
-    [TimesheetPeriod(order: -1, ns: nameof(EarlyPeriod))]
-    public TimesheetPeriod EarlyPeriod { get; } = new();
-
-    // case fields LatePeriodLowDuration and LatePeriodLowFactor
-    [TimesheetPeriod(order: 1, ns: nameof(LatePeriodLow))]
-    public TimesheetPeriod LatePeriodLow { get; } = new();
-
-    // case fields LatePeriodHighDuration and LatePeriodHighFactor
-    [TimesheetPeriod(order: 2, ns: nameof(LatePeriodHigh))]
-    public TimesheetPeriod LatePeriodHigh { get; } = new();
 
     // case field WeekendRateFactor
     public decimal WeekendRateFactor { get; set; }
 }
 ```
 
-The additional weekend rate factor is calculated in a specialization of `TimesheetCalculator`:
+The `order` parameter positions the period in the working day:
+- Early periods: `-1` (first before regular start), `-2` (second before), …
+- Regular work: `0` — reserved, not allowed for custom periods
+- Late periods: `+1` (first after regular end), `+2` (second after), …
+
+The `ns` parameter is the prefix for the case field names.
+
+### Employment (Employee Case — Administrator)
+
+| Field | Description | ValueType |
+|:--|:--|:--|
+| `CasualWorker` | Marks employee as casual worker | Boolean |
+
+### Work Time (Employee Case — User / Self-Service)
+
+| Field | Description | ValueType |
+|:--|:--|:--|
+| `WorkTimeDate` | Working day | Date |
+| `WorkTimeStart` | Start hour | Hour |
+| `WorkTimeEnd` | End hour | Hour |
+| `WorkTimeBreak` | Break time | Minute |
+| `WorkTimeHours` | Working hours (calculated) | Minute |
+
+---
+
+## Calendar
+
+The [Payroll Calendar](https://github.com/Payroll-Engine/PayrollEngine/wiki/Calendars)
+determines the period and working days. The `Workdays` lookup defines holidays to
+exclude and special days to include.
+
+Timesheet settings store rates and constraints as
+[Time Data](https://github.com/Payroll-Engine/PayrollEngine/wiki/Time-Data),
+enabling daily wage data validation within the period.
+
+---
+
+## Wage Type Calculation
+
+`Script/MyTimesheet.WageTypeValue.cs` defines `MyTimesheetCalculator` (overrides
+weekend rate) and the extension methods:
+
+```csharp
+public static decimal TimesheetRegularWage(this WageTypeValueFunction function) =>
+    new MyTimesheetCalculator().RegularWage(function);
+
+public static decimal TimesheetPeriodWage(this WageTypeValueFunction function, string periodPropertyName) =>
+    new MyTimesheetCalculator().PeriodWage(function, periodPropertyName);
+```
+
+Wage types call the extensions directly from `valueExpression`:
+
+```json
+"wageTypes": [
+    { "wageTypeNumber": 110, "valueExpression": "this.TimesheetPeriodWage(\"EarlyPeriod\")" },
+    { "wageTypeNumber": 120, "valueExpression": "this.TimesheetRegularWage()" },
+    { "wageTypeNumber": 130, "valueExpression": "this.TimesheetPeriodWage(\"LatePeriodLow\")" },
+    { "wageTypeNumber": 140, "valueExpression": "this.TimesheetPeriodWage(\"LatePeriodHigh\")" }
+]
+```
+
+---
+
+## Customization
+
+### Weekend Rate Factor
+
+`MyTimesheetCalculator` overrides `CalcRegularWage` to multiply the wage by
+`WeekendRateFactor` on Saturday and Sunday:
+
 ```csharp
 public class MyTimesheetCalculator : TimesheetCalculator<MyTimesheet>
 {
     protected override decimal CalcRegularWage(WageDay day, HourPeriod timesheetPeriod)
     {
-        // regula wage
         var wage = base.CalcRegularWage(day, timesheetPeriod);
-
-        // weekend factor
         if (day.Date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
         {
             wage *= (1m + day.Timesheet.WeekendRateFactor);
@@ -173,48 +183,96 @@ public class MyTimesheetCalculator : TimesheetCalculator<MyTimesheet>
 ```
 
 ### Multiple Timesheets
-To use multiple timesheets, the namespace can be defined with the `CaseObject` attribute:
+
+Use `[CaseObject(ns: "...")]` to run two separate timesheets (e.g. internal +
+external) with distinct case field name prefixes:
+
 ```csharp
 [CaseObject(ns: "Int")]
-public class IntTimesheet : Timesheet
-{
-    // case fields IntEarlyPeriodDuration and IntEarlyPeriodFactor
-    [TimesheetPeriod(order: -1, ns: nameof(EarlyPeriod))]
-    public TimesheetPeriod EarlyPeriod { get; } = new();
-
-    // case fields IntLatePeriodDuration and IntLatePeriodFactor
-    [TimesheetPeriod(order: +1, ns: nameof(LatePeriod))]
-    public TimesheetPeriod LatePeriod { get; } = new();
-}
+public class IntTimesheet : Timesheet { ... }
 
 [CaseObject(ns: "Ext")]
-public class ExtTimesheet : Timesheet
-{
-    // case fields ExtEarlyPeriodDuration and ExtEarlyPeriodFactor
-    [TimesheetPeriod(order: -1, ns: nameof(EarlyPeriod))]
-    public TimesheetPeriod EarlyPeriod { get; } = new();
-
-    // case fields ExtLatePeriodDuration and ExtLatePeriodFactor
-    [TimesheetPeriod(order: +1, ns: nameof(LatePeriod))]
-    public TimesheetPeriod LatePeriod { get; } = new();
-}
+public class ExtTimesheet : Timesheet { ... }
 ```
 
-The names of the case fields must be adapted accordingly.
+Case field names are prefixed accordingly (`IntEarlyPeriodDuration`, etc.).
+
+---
 
 ## Excel Import
-In addition to Json, lookups and case values can also be imported from Excel files. In the example, the following Excel documents can be imported:
 
-- Lookup `Workdays` with the holidays and special days in `Lookup/Workdays.2025.xlsx`
-- Working time report in `Case.Data/WorkingTimes.2025.Week8.xlsx`
+Lookups and case data can be imported from Excel in addition to JSON:
 
-> The Excel documents have a special structure that must be respected.
+| File | Import command | What it imports |
+|:--|:--|:--|
+| `Lookup/Workday/Workdays.2025.xlsx` | `RegulationExcelImport /backend` | `Workdays` lookup — holidays and special days for 2025 |
+| `Case.Data/WorkTimes.2025.Week8.xlsx` | `CaseChangeExcelImport` | Employee work time entries for Week 8 / 2025 |
 
-## Timesheet Reports
+---
 
-- Work time report wit the parameter employee, payroll and workday
-- Wage report with the parameters employee and payrun job
+## Reports
+
+| Report | Parameters | Output |
+|:--|:--|:--|
+| WorkTime | `EmployeeIdentifier`, `PayrollName`, `WorkDay` | Work time report per employee and day |
+| Wage | `EmployeeIdentifier`, `PayrunJobName` | Wage report per payrun job |
+
+Both reports are available as Excel, PDF, and JSON output.
+
+---
 
 ## Tests
-- Employee1: Week 2025/8 payrun on non-casual worker
-- Employee2: Week 2025/8 payrun on casual worker
+
+| Test | Employee | Scenario |
+|:--|:--|:--|
+| `Employee1.et.json` | višnja.müller@foo.com | Week 2025/8 — permanent worker |
+| `Employee2.et.json` | leon.stark@foo.com | Week 2025/8 — casual worker |
+
+---
+
+## Files
+
+| Path | Purpose |
+|:--|:--|
+| `Payroll.json` | Tenant, employees, regulation, payroll, payrun |
+| `Timesheet/` | Core timesheet module scripts (Model, CaseBuild, CaseValidate, WageTypeValue, ReportBuild, ReportEnd) |
+| `Script/MyTimesheet.cs` | Customer timesheet subclass with 3 period slots and weekend rate |
+| `Script/MyTimesheet.WageTypeValue.cs` | `MyTimesheetCalculator` + `WageTypeValueFunctionExtensions` |
+| `Case/` | Case definitions (company + employee) and case-level scripts |
+| `Case.Data/` | Case data imports (JSON and Excel) |
+| `Lookup/Workday/` | Workdays lookup (JSON and Excel for 2025) |
+| `Report/WorkTime/` | Work time report definition and scripts |
+| `Report/Wage/` | Wage report definition and scripts |
+| `Test/` | Employee payroll tests (Employee1, Employee2) |
+
+## Commands
+
+```
+# Full setup
+Setup.pecmd
+
+# Import Excel lookup (alternative to JSON)
+Lookup/Workday/Import.Excel.pecmd
+
+# Import Excel case data (alternative to JSON)
+Case.Data/Import.Excel.pecmd
+
+# Run tests
+Test/Test.Employee1.pecmd
+Test/Test.Employee2.pecmd
+
+# Run reports
+Report/WorkTime/Report.Excel.pecmd
+Report/Wage/Report.Pdf.pecmd
+
+# Teardown
+Delete.pecmd
+```
+
+## Web Application Login
+
+| User | Password | Role |
+|:--|:--|:--|
+| `lucy.smith@foo.com` | `@ayroll3nginE` | Tenant Administrator |
+| `višnja.müller@foo.com` | `@ayroll3nginE` | Employee 1 (permanent) |
+| `leon.stark@foo.com` | `@ayroll3nginE` | Employee 2 (casual) |

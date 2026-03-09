@@ -1,0 +1,71 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "ACME.International",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "ACME.Payrun.DE.Jan24",
+          "payrunName": "ACME.Payrun.DE",
+          "payrollName": "ACME.Payroll.DE",
+          "userIdentifier": "admin@acme-international.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "Germany — January 2024 Payroll"
+        },
+        {
+          "name": "ACME.Payrun.FR.Jan24",
+          "payrunName": "ACME.Payrun.FR",
+          "payrollName": "ACME.Payroll.FR",
+          "userIdentifier": "admin@acme-international.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "France — January 2024 Payroll"
+        },
+        {
+          "name": "ACME.Payrun.NL.Jan24",
+          "payrunName": "ACME.Payrun.NL",
+          "payrollName": "ACME.Payroll.NL",
+          "userIdentifier": "admin@acme-international.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "Netherlands — January 2024 Payroll"
+        },
+        {
+          "name": "ACME.Payrun.DE.Feb24",
+          "payrunName": "ACME.Payrun.DE",
+          "payrollName": "ACME.Payroll.DE",
+          "userIdentifier": "admin@acme-international.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-01T00:00:00.0Z",
+          "reason": "Germany — February 2024 Payroll"
+        },
+        {
+          "name": "ACME.Payrun.FR.Feb24",
+          "payrunName": "ACME.Payrun.FR",
+          "payrollName": "ACME.Payroll.FR",
+          "userIdentifier": "admin@acme-international.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-01T00:00:00.0Z",
+          "reason": "France — February 2024 Payroll"
+        },
+        {
+          "name": "ACME.Payrun.NL.Feb24",
+          "payrunName": "ACME.Payrun.NL",
+          "payrollName": "ACME.Payroll.NL",
+          "userIdentifier": "admin@acme-international.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-01T00:00:00.0Z",
+          "reason": "Netherlands — February 2024 Payroll"
+        }
+      ]
+    }
+  ]
+}

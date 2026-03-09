@@ -5093,12 +5093,12 @@
       "type": "string",
       "description": "The payrun retro pay mode",
       "x-enumNames": [
-        "None",
-        "ValueChange"
+        "ValueChange",
+        "None"
       ],
       "enum": [
-        "None",
-        "ValueChange"
+        "ValueChange",
+        "None"
       ]
     },
     "PayrunJobStatus": {
@@ -5176,20 +5176,10 @@
           ],
           "description": "The job owner (immutable)"
         },
-        "payrunId": {
-          "type": "integer",
-          "description": "The payrun id (immutable)",
-          "format": "int32"
-        },
         "payrunName": {
           "type": "string",
           "description": "The payrun name (immutable)",
           "minLength": 1
-        },
-        "userId": {
-          "type": "integer",
-          "description": "The user id (immutable)",
-          "format": "int32"
         },
         "userIdentifier": {
           "type": "string",
@@ -5487,8 +5477,11 @@
               ]
             },
             "value": {
-              "type": "number",
-              "description": "The wage type custom result value (immutable)",
+              "type": [
+                "null",
+                "number"
+              ],
+              "description": "The collector custom result value (immutable)",
               "format": "decimal"
             },
             "culture": {
@@ -5583,8 +5576,11 @@
               ]
             },
             "value": {
-              "type": "number",
-              "description": "The wage type result value (immutable)",
+              "type": [
+                "null",
+                "number"
+              ],
+              "description": "The collector custom result value (immutable)",
               "format": "decimal"
             },
             "culture": {
@@ -5696,7 +5692,10 @@
               ]
             },
             "value": {
-              "type": "number",
+              "type": [
+                "null",
+                "number"
+              ],
               "description": "The collector custom result value (immutable)",
               "format": "decimal"
             },
@@ -5786,8 +5785,11 @@
               ]
             },
             "value": {
-              "type": "number",
-              "description": "The collector result value (immutable)",
+              "type": [
+                "null",
+                "number"
+              ],
+              "description": "The collector custom result value (immutable)",
               "format": "decimal"
             },
             "culture": {

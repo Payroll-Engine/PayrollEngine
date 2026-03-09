@@ -130,7 +130,6 @@
           "payrunName": "RetroManualPayrollPayrun",
           "payrollName": "RetroManualPayroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "retroPayMode": "ValueChange",
           "jobStatus": "Complete",
           "periodStart": "2019-02-01T00:00:00.0Z",
           "evaluationDate": "2019-02-28T00:00:00.0Z",

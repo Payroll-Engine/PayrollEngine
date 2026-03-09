@@ -1,0 +1,392 @@
+# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# MarchClausePayroll — ClearPay GmbH
+# Demonstrates: March clause (Märzklausel) — Q1 bonus check against the annual
+# BBG remainder of the previous year.
+#
+# The extension method NeedsMarchClauseRetro() detects whether a retro is required:
+#   bonus > 0 AND period in Q1 AND bonus > (BBG limit − previous year earnings)
+#
+# Retro scheduling is production-only behavior:
+#   if (!IsRetroPayrun && this.NeedsMarchClauseRetro(90000m))
+#       ScheduleRetroPayrun(new DateTime(PeriodStart.Year - 1, 12, 1));
+# ScheduleRetroPayrun() cannot be used in Exchange import payrun invocations —
+# the scheduled job cannot start while the current import job is running (deadlock).
+#
+# Employees:
+#   anna.weber   — bonus 20 000, BBG remainder 30 000 → below threshold → no retro needed
+#   ben.kowalski — bonus 12 000, BBG remainder  6 000 → exceeds threshold → retro needed
+#
+# BBG limit: 90 000 / year (hardcoded; in production read from Company.BbgLimit case).
+
+createdObjectDate: 2024-01-01T00:00:00Z
+tenants:
+- identifier: ClearPay
+  culture: en-US
+  users:
+  - identifier: hr@clearpay.com
+    firstName: HR
+    lastName: Admin
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: ClearPay.Operations
+  employees:
+  - identifier: anna.weber@clearpay.com
+    firstName: Anna
+    lastName: Weber
+    divisions:
+    - ClearPay.Operations
+  - identifier: ben.kowalski@clearpay.com
+    firstName: Ben
+    lastName: Kowalski
+    divisions:
+    - ClearPay.Operations
+
+  regulations:
+  - name: MarchClauseRegulation
+    description: >
+      March clause regulation: Q1 bonus check against the previous year's BBG
+      remainder. Demonstrates Low-Code extension methods (WageTypeValue script)
+      for pure calculation logic. Retro scheduling via ScheduleRetroPayrun() is
+      documented as production-only behavior.
+
+    cases:
+
+    - name: BbgLimit
+      description: Annual contribution ceiling (BBG) used for the March clause check.
+      caseType: Company
+      defaultReason: Set annual BBG limit
+      fields:
+      - name: BbgLimit
+        valueType: Money
+        timeType: Timeless
+
+    - name: Salary
+      description: Monthly base salary.
+      caseType: Employee
+      defaultReason: Change monthly salary
+      fields:
+      - name: Salary
+        valueType: Money
+        timeType: CalendarPeriod
+
+    - name: PreviousYearEarnings
+      description: >
+        Total gross earnings in the previous calendar year. Used by the March clause
+        extension method to compute the remaining BBG allowance.
+      caseType: Employee
+      defaultReason: Set previous-year earnings for BBG check
+      fields:
+      - name: PreviousYearEarnings
+        valueType: Money
+        timeType: Timeless
+
+    - name: AnnualBonus
+      description: >
+        One-time annual bonus. When paid in Q1, NeedsMarchClauseRetro() detects
+        whether the bonus exceeds the BBG remainder. In production, a retro payrun
+        for December of the previous year is then scheduled via ScheduleRetroPayrun().
+      caseType: Employee
+      defaultReason: Enter annual bonus
+      fields:
+      - name: AnnualBonus
+        valueType: Money
+        timeType: Period
+
+    collectors:
+    - name: GrossIncome
+      description: Sum of monthly salary and annual bonus.
+    - name: Deductions
+      description: Social insurance contributions.
+
+    wageTypes:
+
+    - wageTypeNumber: 100
+      name: MonthlySalary
+      description: Monthly base salary from the Salary case field.
+      valueActions:
+      - ^^Salary
+      collectors:
+      - GrossIncome
+
+    - wageTypeNumber: 200
+      name: AnnualBonus
+      description: >
+        Annual bonus with March clause check (Low-Code).
+        NeedsMarchClauseRetro() evaluates: bonus > 0, period in Q1, bonus > BBG remainder.
+        Production valueExpression (not used in Exchange import):
+          if (!IsRetroPayrun && this.NeedsMarchClauseRetro(90000m))
+              ScheduleRetroPayrun(new DateTime(PeriodStart.Year - 1, 12, 1));
+          return this.GetMarchClauseBonus(90000m);
+      # Exchange import: pure value return only — retro scheduling is production-only.
+      valueExpression: "return this.GetMarchClauseBonus(90000m);"
+      collectors:
+      - GrossIncome
+
+    - wageTypeNumber: 300
+      name: SocialSecurity
+      description: Social insurance contribution — 10% of gross (MonthlySalary + AnnualBonus).
+      valueActions:
+      - (^$MonthlySalary + ^$AnnualBonus) * 0.10
+      collectors:
+      - Deductions
+
+    scripts:
+    - name: MarchClauseFunctions
+      functionTypes:
+      - WageTypeValue
+      valueFile: Scripts/MarchClauseFunctions.cs
+
+  payrolls:
+  - name: ClearPayPayroll
+    divisionName: ClearPay.Operations
+    layers:
+    - level: 1
+      priority: 1
+      regulationName: MarchClauseRegulation
+
+    # -----------------------------------------------------------------------
+    # Company case values
+    # -----------------------------------------------------------------------
+    cases:
+    - userIdentifier: hr@clearpay.com
+      divisionName: ClearPay.Operations
+      reason: Annual BBG limit
+      case:
+        caseName: BbgLimit
+        values:
+        - caseFieldName: BbgLimit
+          value: "90000"
+          created: 2023-12-01T00:00:00Z
+
+    # -----------------------------------------------------------------------
+    # Anna Weber — PreviousYearEarnings 60 000, bonus 20 000
+    # BBG remainder: 90 000 - 60 000 = 30 000 → bonus 20 000 ≤ 30 000 → no retro
+    # -----------------------------------------------------------------------
+    - userIdentifier: hr@clearpay.com
+      employeeIdentifier: anna.weber@clearpay.com
+      divisionName: ClearPay.Operations
+      reason: Previous year earnings
+      case:
+        caseName: PreviousYearEarnings
+        values:
+        - caseFieldName: PreviousYearEarnings
+          value: "60000"
+          created: 2024-12-31T00:00:00Z
+
+    - userIdentifier: hr@clearpay.com
+      employeeIdentifier: anna.weber@clearpay.com
+      divisionName: ClearPay.Operations
+      reason: Monthly salary
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "5000"
+          start: 2024-12-01T00:00:00Z
+          created: 2024-11-30T00:00:00Z
+
+    - userIdentifier: hr@clearpay.com
+      employeeIdentifier: anna.weber@clearpay.com
+      divisionName: ClearPay.Operations
+      # bonus start 2025-02-01: not active in Dec 2024, active from Feb 2025
+      reason: Annual bonus February 2025 — below BBG remainder, no March clause
+      case:
+        caseName: AnnualBonus
+        values:
+        - caseFieldName: AnnualBonus
+          value: "20000"
+          start: 2025-02-01T00:00:00Z
+          created: 2025-02-01T00:00:00Z
+
+    # -----------------------------------------------------------------------
+    # Ben Kowalski — PreviousYearEarnings 84 000, bonus 12 000
+    # BBG remainder: 90 000 - 84 000 = 6 000 → bonus 12 000 > 6 000 → retro needed
+    # -----------------------------------------------------------------------
+    - userIdentifier: hr@clearpay.com
+      employeeIdentifier: ben.kowalski@clearpay.com
+      divisionName: ClearPay.Operations
+      reason: Previous year earnings
+      case:
+        caseName: PreviousYearEarnings
+        values:
+        - caseFieldName: PreviousYearEarnings
+          value: "84000"
+          created: 2024-12-31T00:00:00Z
+
+    - userIdentifier: hr@clearpay.com
+      employeeIdentifier: ben.kowalski@clearpay.com
+      divisionName: ClearPay.Operations
+      reason: Monthly salary
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "7000"
+          start: 2024-12-01T00:00:00Z
+          created: 2024-11-30T00:00:00Z
+
+    - userIdentifier: hr@clearpay.com
+      employeeIdentifier: ben.kowalski@clearpay.com
+      divisionName: ClearPay.Operations
+      # start: 2024-01-01 (Period) → active in Dec 2024 retro period
+      # created: 2025-02-15 → visible from evaluationDate 2025-02-28 onwards
+      reason: Annual bonus — entered Feb 2025, Period start 2024-01-01 (exceeds BBG remainder)
+      case:
+        caseName: AnnualBonus
+        values:
+        - caseFieldName: AnnualBonus
+          value: "12000"
+          start: 2024-01-01T00:00:00Z
+          created: 2025-02-15T00:00:00Z
+
+  payruns:
+  - name: ClearPayPayrun
+    payrollName: ClearPayPayroll
+    defaultReason: Monthly payroll run
+
+  # -------------------------------------------------------------------------
+  # Payrun jobs
+  # Note: retroJobs is omitted — ScheduleRetroPayrun() in the script handles
+  # retro scheduling in production. Exchange import does not support
+  # script-triggered retro jobs (deadlock: scheduled job cannot start while
+  # the import job is running).
+  # -------------------------------------------------------------------------
+  payrunJobInvocations:
+
+  - name: ClearPayPayrun.Dec24
+    payrunName: ClearPayPayrun
+    payrollName: ClearPayPayroll
+    userIdentifier: hr@clearpay.com
+    jobStatus: Complete
+    periodStart: 2024-12-01T00:00:00Z
+    evaluationDate: 2024-12-31T00:00:00Z
+    reason: December 2024 — salary baseline, no bonus visible yet
+    storeEmptyResults: true
+
+  - name: ClearPayPayrun.Jan25
+    payrunName: ClearPayPayrun
+    payrollName: ClearPayPayroll
+    userIdentifier: hr@clearpay.com
+    jobStatus: Complete
+    periodStart: 2025-01-01T00:00:00Z
+    evaluationDate: 2025-01-31T00:00:00Z
+    reason: January 2025 — salary only, no bonus visible yet
+    storeEmptyResults: true
+
+  - name: ClearPayPayrun.Feb25
+    payrunName: ClearPayPayrun
+    payrollName: ClearPayPayroll
+    userIdentifier: hr@clearpay.com
+    jobStatus: Complete
+    periodStart: 2025-02-01T00:00:00Z
+    evaluationDate: 2025-02-28T00:00:00Z
+    reason: >
+      February 2025 — Anna bonus 20 000 below BBG remainder 30 000 (no retro).
+      Ben bonus 12 000 exceeds BBG remainder 6 000 (retro Dec 2024 in production).
+    storeEmptyResults: true
+
+  # -------------------------------------------------------------------------
+  # Expected test results
+  # -------------------------------------------------------------------------
+  payrollResults:
+
+  # --- December 2024 — Anna ---
+  - payrunJobName: ClearPayPayrun.Dec24
+    employeeIdentifier: anna.weber@clearpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # MonthlySalary:  5 000
+      value: 5000
+    - wageTypeNumber: 200   # AnnualBonus:    0 (created 2025-02-01 > evaluationDate 2024-12-31)
+      value: 0
+    - wageTypeNumber: 300   # SocialSecurity: 5 000 × 0.10 = 500
+      value: 500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+    - collectorName: Deductions
+      value: 500
+
+  # --- December 2024 — Ben ---
+  - payrunJobName: ClearPayPayrun.Dec24
+    employeeIdentifier: ben.kowalski@clearpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # MonthlySalary:  7 000
+      value: 7000
+    - wageTypeNumber: 200   # AnnualBonus:    0 (created 2025-02-15 > evaluationDate 2024-12-31)
+      value: 0
+    - wageTypeNumber: 300   # SocialSecurity: 7 000 × 0.10 = 700
+      value: 700
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 7000
+    - collectorName: Deductions
+      value: 700
+
+  # --- January 2025 — Anna ---
+  - payrunJobName: ClearPayPayrun.Jan25
+    employeeIdentifier: anna.weber@clearpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # MonthlySalary:  5 000
+      value: 5000
+    - wageTypeNumber: 200   # AnnualBonus:    0 (created 2025-02-01 > evaluationDate 2025-01-31)
+      value: 0
+    - wageTypeNumber: 300   # SocialSecurity: 500
+      value: 500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+    - collectorName: Deductions
+      value: 500
+
+  # --- January 2025 — Ben ---
+  - payrunJobName: ClearPayPayrun.Jan25
+    employeeIdentifier: ben.kowalski@clearpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # MonthlySalary:  7 000
+      value: 7000
+    - wageTypeNumber: 200   # AnnualBonus:    0 (created 2025-02-15 > evaluationDate 2025-01-31)
+      value: 0
+    - wageTypeNumber: 300   # SocialSecurity: 700
+      value: 700
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 7000
+    - collectorName: Deductions
+      value: 700
+
+  # --- February 2025 — Anna ---
+  # BBG remainder = 90 000 - 60 000 = 30 000
+  # Bonus 20 000 ≤ 30 000 → NeedsMarchClauseRetro() = false → no retro
+  - payrunJobName: ClearPayPayrun.Feb25
+    employeeIdentifier: anna.weber@clearpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # MonthlySalary:  5 000
+      value: 5000
+    - wageTypeNumber: 200   # AnnualBonus:    20 000 (below BBG remainder)
+      value: 20000
+    - wageTypeNumber: 300   # SocialSecurity: (5 000 + 20 000) × 0.10 = 2 500
+      value: 2500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 25000
+    - collectorName: Deductions
+      value: 2500
+
+  # --- February 2025 — Ben ---
+  # BBG remainder = 90 000 - 84 000 = 6 000
+  # Bonus 12 000 > 6 000 → NeedsMarchClauseRetro() = true → retro Dec 2024 in production
+  - payrunJobName: ClearPayPayrun.Feb25
+    employeeIdentifier: ben.kowalski@clearpay.com
+    wageTypeResults:
+    - wageTypeNumber: 100   # MonthlySalary:  7 000
+      value: 7000
+    - wageTypeNumber: 200   # AnnualBonus:    12 000 (exceeds BBG remainder — retro in production)
+      value: 12000
+    - wageTypeNumber: 300   # SocialSecurity: (7 000 + 12 000) × 0.10 = 1 900
+      value: 1900
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 19000
+    - collectorName: Deductions
+      value: 1900

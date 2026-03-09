@@ -1,0 +1,209 @@
+### Features
+
+- General
+  - Overall refactoring with Claude (Opus 4.6)
+  - Updated exchange schema (`PayrollEngine.Exchange.schema.json`)
+
+- Website
+  - New documentation website at [payrollengine.org](https://payrollengine.org), replacing the GitHub Wiki
+  - Role-based structure: Provider (REST API), Regulator (No-Code/Low-Code), Automator (Client Services)
+  - White Paper content integrated into the documentation; standalone PDF removed
+
+- Examples
+  - New self-contained payroll examples — each includes regulation, case data, payrun jobs, and a test file
+  - **Tutorial**: `StartPayroll` — incremental three-layer regulation build (JSON + YAML variants)
+  - **Business Scenarios**
+    - `GlobalPayroll` — age supplement, one-time bonus, progressive tax
+    - `MultiCountryPayroll` — DE/FR/NL with shared base regulation and split employee
+    - `MinWagePayroll` — automatic top-up via year-versioned lookup, fully No-Code
+    - `PartTimePayroll` — overtime guard and retroactive level correction, fully No-Code
+    - `ForecastPayroll` — parallel what-if scenarios without regulation change, fully No-Code
+    - `MarchClausePayroll` — German Märzklausel Q1 bonus routing via Low-Code extension methods
+  - **Retro Corrections**: `RetroPayroll` — positive deltas, late Moment entry, cascading correction
+  - **Data Import**: `TaxTablePayroll` — ~7 100 records bulk import with range-based withholding tax
+
+- Tests
+  - New `PayrunEmployeePreview.Test` — payrun job preview without persisting results
+  - New `WageTracingPayroll.Test` — wage calculation traceability via `clusterSetWageTypePeriod`
+  - New `RetroPayMode.Test` — `retroPayMode` None vs. ValueChange: verifies that `None` suppresses retro sub-runs even when prior-period mutations are detected, while `ValueChange` triggers them
+  - New `Collector.Test` — collector features: multi-source accumulation, `maxResult` cap (3 jobs), `minResult` floor, `negated` sign inversion
+  - New `PayrunEdge.Test` — payrun date boundary and temporal edge cases: period boundaries, retro trigger via `created`/`evaluationDate` alignment, Period touching, CalendarPeriod overlap, mid-period split, `evalDate==PeriodStart/PeriodEnd/CycleEnd`, forecast
+
+- CI/CD Pipeline
+  - New orchestrated release pipeline with wave-based build ordering
+  - Single-click release for all libraries and applications via GitHub Actions
+  - Version guard prevents accidental overwrites of existing releases, packages, and tags
+  - `Directory.Build.props` is auto-updated, committed, and tagged by the workflow
+  - Dry-run mode for pipeline testing without side effects
+  - `RELEASE_NOTES.md` as single source for release text (umbrella release + wiki)
+  - New `ci.yml` workflow for build and test on pull requests and pushes to `main`
+  - New `devops/scripts` with release preparation tooling:
+    - `Update-BreakingChanges.ps1` — automated breaking change detection across REST API, Backend, Scripting, and Client Services surfaces
+    - `Release-Changelog.ps1` — cross-repo changelog collection with conventional commit parsing
+    - `Update-CommitMessage.ps1` — pre-fills Git commit message from `RELEASE_NOTES.md` for Visual Studio
+  - New `devops/scripts` with database schema tooling:
+    - `Export-DbScript.ps1` — exports the live SQL Server schema to a `.sql` file (Create or Delete mode) via `PayrollDatabaseConnection`
+    - `Format-DbScript.ps1` — normalises GO delimiters and topologically sorts DDL objects to eliminate forward-reference warnings
+    - `Compare-DbScript.ps1` — diffs two formatted `.sql` files and generates an incremental update script (Added / Removed / Modified)
+    - `Generate-DbUpdate.ps1` — orchestrates Format + Compare in one step to generate an update script from any two SQL files
+    - `Compose-DbScript.ps1` — injects version-check and version-set blocks into Create and Update scripts from a JSON config
+
+- NuGet Packages
+  - GitHub Packages as primary NuGet source for all `PayrollEngine.*` packages
+  - New `nuget.config` with package source mapping (`PayrollEngine.*` → GitHub Packages, `*` → NuGet.org)
+  - Dedicated sync workflow for selective NuGet.org publishing
+
+- Docker
+  - Automated Linux container builds for Backend, PayrollConsole, and WebApp
+  - Images published to `ghcr.io/payroll-engine/*`
+  - Pre-release images skip the `:latest` tag
+
+- [Backend](https://github.com/Payroll-Engine/PayrollEngine.Backend)
+  - Payrun job preview endpoint (`POST .../payruns/jobs/preview`)
+    - synchronous single-employee payrun calculation without persisting results
+    - returns `PayrollResultSet` with wage type, collector, and payrun results
+    - preview accepts any `RetroPayMode` to match production behavior; returns HTTP 422 if retro is triggered
+    - new `PayrunPreviewRetroException` with employee identifier and retro date context
+    - runs in-memory only — no payrun job or result records written to the database
+  - Refactored `PayrunJobInvocation` from id-based to name/identifier-based references **breaking change**
+    - removed `PayrunId` and `UserId` properties from API and domain models
+    - `PayrunName` and `UserIdentifier` are now the required fields
+    - payrun and user resolution by name/identifier in `PayrunProcessor` and controller
+    - retro job invocations use `Payrun.Name` and `User.Identifier` instead of ids
+  - Asynchronous payrun job processing with background queue
+    - `PayrunJobQueue` with bounded channel for backpressure (capacity: 100)
+    - `PayrunJobWorkerService` as `BackgroundService` for job dequeuing and processing
+    - job pre-created and persisted before enqueue, returns HTTP 202 with location header
+    - infrastructure abort on unhandled exceptions or service shutdown
+    - webhook notification on job completion or abort
+  - Configurable parallel employee processing (`MaxParallelEmployees`)
+    - values: `0`/`off` (sequential, default), `half`, `max`, `-1` (automatic), `1`–`N` (explicit)
+    - per-employee `PayrunEmployeeScope` for mutable state isolation in parallel mode
+    - thread-safe progress reporting with batched DB persistence (every 10 employees)
+    - payroll calculator cache with `Lazy<T>` and composite key (calendar+culture) for thread-safe reuse
+  - Employee processing timing logs (`LogEmployeeTiming`)
+    - per-employee duration and summary (mode, total, average) logged at Information level
+  - Bulk employee creation endpoint (`POST .../employees/bulk`)
+    - accepts `Employee[]`, uses `SqlBulkCopy` for high-throughput insert (5'000 item chunks)
+    - generic `CreateBulkAsync` in `RepositoryChildObjectController` for reuse across entity types
+    - returns created item count (no individual IDs); duplicate identifiers caught by DB unique constraint
+  - Retro payrun period limit (`MaxRetroPayrunPeriods`, default: 0/unlimited)
+    - safety guard to prevent runaway retro calculations with `RetroTimeType.Anytime`
+  - CORS configuration (`Cors`)
+    - configurable AllowedOrigins, AllowedMethods, AllowedHeaders, AllowCredentials, PreflightMaxAgeSeconds
+    - inactive by default (no cross-origin requests allowed)
+  - Rate limiting (`RateLimiting`)
+    - global policy for all endpoints and dedicated policy for payrun job start endpoint
+    - configurable PermitLimit and WindowSeconds per policy
+  - Configurable authentication (`Authentication`)
+    - supports three modes: `None`, `ApiKey`, `OAuth`
+    - OAuth with Authority, Audience, RequireHttpsMetadata, ClientSecret
+    - startup validation for OAuth authority and audience to prevent token confusion
+    - environment variable fallback for API key
+  - Explicit Swagger toggle (`EnableSwagger`, default: false)
+  - Per-category audit trail configuration (`AuditTrail`)
+    - replaced single `AuditTrailDisabled` bool with granular flags: Script, Lookup, Input, Payrun, Report
+  - Script safety analysis (`ScriptSafetyAnalysis`, default: false)
+    - static analysis of user scripts for banned API usage (System.IO, System.Net, System.Diagnostics, System.Reflection)
+    - opt-in via appsettings due to compilation overhead
+  - Configurable database collation check (`DbCollation`, default: SQL_Latin1_General_CP1_CS_AS)
+    - verified on startup in `TestVersionAsync` before the schema version check
+    - prevents silent data integrity issues from mismatched collation
+  - Added `ConsolidatedPayrunResultQuery` for consolidated payrun result queries
+  - Updated database scripts (ModelCreate, ModelDrop, ModelUpdate) for schema version 0.9.6
+  - Added database script history — previous schema versions archived under `Database/History/v{version}`
+  - Added production `UseExceptionHandler` middleware for structured JSON error responses
+
+- [Console](https://github.com/Payroll-Engine/PayrollEngine.PayrollConsole)
+  - New `PayrunEmployeePreviewTest` command for testing payrun job preview results
+  - New `PayrollMerge` command — merges multiple payroll files (JSON or YAML) into a single file
+    - supports file masks (e.g. `*.yaml`, `*.json`)
+    - toggle `/top` (default) or `/recursive` for directory scope
+  - Built-in load test commands for payrun performance testing
+    - `LoadTestGenerate` generates scaled exchange files from any regulation template
+    - `LoadTestSetup` bulk-imports employees via `CreateEmployeesBulkAsync`
+    - `LoadTestSetupCases` bulk-imports case changes via `AddCasesBulkAsync` (replaces slow `PayrollImport` for load test setup)
+    - `PayrunLoadTest` executes payrun with warmup, measured repetitions, and CSV report (client + server timing)
+  - New `.pecmd` file type registration scripts included in the release package
+    - `Register-PecmdExtension.ps1` — Windows (user-level, no admin required)
+    - `register-pecmd.sh` — Linux (MIME + desktop integration) and macOS (shell wrapper)
+
+- [Web App](https://github.com/Payroll-Engine/PayrollEngine.WebApp)
+  - Updated MudBlazor to v9.1.0
+  - Fixed SSL certificate validation bypass with config-controlled `AllowInsecureSsl` setting
+  - Fixed `HttpClient` singleton disposal in `BackendServiceBase`
+  - Fixed `NullReferenceException` in `SetupUserTasks`
+  - Fixed `TaskService` injection in `UserSession` from `[Inject]` attribute to constructor injection
+  - Enabled `UseHsts` in production pipeline
+
+- Libraries
+  - [Client Services](https://github.com/Payroll-Engine/PayrollEngine.Client.Services)
+    - Removed `PayrunRuntimeBase.GetConsolidatedCollectorCustomResults` **breaking change**
+    - Removed `PayrunRuntimeBase.GetConsolidatedCollectorResults` **breaking change**
+    - Removed `PayrunRuntimeBase.GetConsolidatedWageTypeCustomResults` **breaking change**
+    - Removed `PayrunRuntimeBase.GetConsolidatedWageTypeResults` **breaking change**
+    - Removed `CaseController.GetCase` **breaking change**
+  - [Client Test](https://github.com/Payroll-Engine/PayrollEngine.Client.Test)
+    - New `PayrunEmployeePreviewTestRunner` for testing payrun jobs via preview without persisting results
+  - [Client Scripting](https://github.com/Payroll-Engine/PayrollEngine.Client.Scripting)
+    - Changed `Date.Tomorrow` and `Date.Yesterday` from static readonly to computed properties
+    - Updated `IPayrunRuntime` for async payrun job support
+  - [Client Core](https://github.com/Payroll-Engine/PayrollEngine.Client.Core)
+    - New `NamespaceUpdateTool` for exchange namespace handling
+    - New `AddCasesBulkAsync` in `IPayrollService` and `PayrollService` (client support for backend bulk employee creation)
+    - Updated `PayrunJobService` and `IPayrunJobService` for async payrun job support (client support for backend async payrun job processing)
+    - Updated collector and wage type result models with custom result properties
+    - Implemented ownership pattern for `HttpClient` disposal in `PayrollHttpClient`
+  - [Core](https://github.com/Payroll-Engine/PayrollEngine.Core)
+    - New `PayrunPreviewRetroException` for preview retro detection with employee and retro date context
+    - Changed retro pay mode enum order
+    - Replaced SHA1 with SHA256 in `HashSaltExtensions` and added constant-time comparison to prevent timing attacks
+    - Added regex timeout to `UserPassword.IsValid` to prevent ReDoS attacks
+
+---
+
+### Bug Fixes
+
+- [Backend](https://github.com/Payroll-Engine/PayrollEngine.Backend)
+  - Fixed inverted slot filter logic in `GetCaseValuesAsync` — values matching the requested slot were excluded instead of kept
+  - Fixed `NullReferenceException` in timeless case value path
+  - Fixed sort lookup values by `RangeValue` in `BuildRangeBrackets`
+  - Fixed calculator cache key to include culture, preventing wrong calculator for same-calendar employees with different cultures (e.g. de-CH vs fr-CH)
+  - Fixed deterministic culture fallback in `CalculateEmployeeAsync` from `CultureInfo.CurrentCulture.Name` to `en-US`
+  - Fixed `CodeFactory.CodeFiles` race condition by replacing `Dictionary` with `ConcurrentDictionary`
+  - Fixed thread-safe timer initialization in `AssemblyCache` to prevent duplicate timer leak
+  - Fixed sync-over-async bridge in scripting layer: replaced `.Result` with `.ConfigureAwait(false).GetAwaiter().GetResult()`
+
+- [Console](https://github.com/Payroll-Engine/PayrollEngine.PayrollConsole)
+  - Fixed case relation validate script publisher comparing build expression instead of validate expression
+  - Fixed collector custom result culture validation using parent result instead of custom result
+
+- [Web App](https://github.com/Payroll-Engine/PayrollEngine.WebApp)
+  - Fixed SSL certificate validation bypass with config-controlled `AllowInsecureSsl` setting
+  - Fixed `HttpClient` singleton disposal in `BackendServiceBase`
+  - Fixed `NullReferenceException` in `SetupUserTasks` by reordering `LoginAsync` to set tenant first
+  - Fixed `TaskService` injection in `UserSession` from `[Inject]` attribute to constructor injection
+
+- Libraries
+  - [Client Services](https://github.com/Payroll-Engine/PayrollEngine.Client.Services)
+    - Fixed inverted condition in `ReportParameterParser.ParseParametersAsync` preventing parameter resolution
+    - Fixed `GetContinuePeriods` loop termination checking immutable source period instead of current period
+    - Fixed `WeekPayrollCycle.GetPayrollPeriod` using `AddYears` instead of `AddDays` for week offset
+  - [Client Test](https://github.com/Payroll-Engine/PayrollEngine.Client.Test)
+    - Fixed null reference in `PayrunTestRunnerBase` when actual wage type or collector result is missing
+    - Fixed collector custom results using expected id instead of actual result id
+    - Fixed `ReportTestRunner` crash when `CustomTestFiles` is null
+    - Fixed `CleanupTenant` not resolving tenant by identifier when id is zero
+  - [Client Scripting](https://github.com/Payroll-Engine/PayrollEngine.Client.Scripting)
+    - Fixed `JsonElement` null handling in `Function.ChangeValueType` without unwrapping `Nullable` types
+    - Fixed deep copy tags and attributes in `CaseValue` copy constructor
+    - Fixed off-by-one in `HasOverlapping` skipping first element in `DatePeriod` and `HourPeriod` extensions
+    - Fixed period creation for open-ended date ranges in `PeriodValue` constructor
+    - Fixed period-matching in `CasePayrollValue` modulo operator to prevent `IndexOutOfRangeException`
+  - [Client Core](https://github.com/Payroll-Engine/PayrollEngine.Client.Core)
+    - Fixed inverted validation logic in `ExchangeImport` constructor
+    - Fixed case relation duplicate detection using wrong property in `ExchangeMerge`
+    - Fixed sort lookup values by `RangeValue` in `GetLookupRanges`
+  - [Core](https://github.com/Payroll-Engine/PayrollEngine.Core)
+    - Fixed double `CopyToAsync` and missing stream position reset in `StreamExtensions.WriteToFile`
+    - Fixed `TryGetCellValue` return value inconsistency in `DataTable`

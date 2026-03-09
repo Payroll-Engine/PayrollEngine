@@ -1,0 +1,292 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2025-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "WageTracingPayroll",
+      "users": [
+        {
+          "identifier": "hr@tracedemo.com",
+          "firstName": "HR",
+          "lastName": "Admin",
+          "userType": "TenantAdministrator"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TraceDemo.Operations",
+          "culture": "en-US"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "alex.brown@tracedemo.com",
+          "firstName": "Alex",
+          "lastName": "Brown",
+          "divisions": [ "TraceDemo.Operations" ]
+        },
+        {
+          "identifier": "sam.green@tracedemo.com",
+          "firstName": "Sam",
+          "lastName": "Green",
+          "divisions": [ "TraceDemo.Operations" ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "WageTracingRegulation",
+          "description": "Demonstrates clusterSetWageTypePeriod: one Wage Type Custom Result per case value split within a pay period.",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "defaultReason": "Change monthly salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            },
+            {
+              "name": "EmploymentLevel",
+              "caseType": "Employee",
+              "defaultReason": "Change employment level",
+              "fields": [
+                {
+                  "name": "EmploymentLevel",
+                  "valueType": "Percent",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "GrossIncome"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "GrossSalary",
+              "description": "Monthly gross salary scaled by employment level. With clusterSetWageTypePeriod active, one Custom Result per case value split is stored.",
+              "valueExpression": "var v = GetCaseValues(\"Salary\", \"EmploymentLevel\"); return v[\"Salary\"] * v[\"EmploymentLevel\"];",
+              "collectors": [ "GrossIncome" ],
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 200,
+              "name": "IncomeTax",
+              "description": "Flat-rate income tax of 20% on gross salary.",
+              "valueExpression": "WageType[100] * 0.20M",
+              "clusters": [ "Legal" ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "WageTracingPayroll",
+          "divisionName": "TraceDemo.Operations",
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypePeriod": "Legal",
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [ "Legal" ]
+            }
+          ],
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "WageTracingRegulation"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "hr@tracedemo.com",
+              "divisionName": "TraceDemo.Operations",
+              "employeeIdentifier": "alex.brown@tracedemo.com",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4000",
+                    "start": "2025-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@tracedemo.com",
+              "divisionName": "TraceDemo.Operations",
+              "employeeIdentifier": "alex.brown@tracedemo.com",
+              "reason": "Salary increase effective February 10",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5600",
+                    "start": "2025-02-10T00:00:00.0Z",
+                    "created": "2025-02-07T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@tracedemo.com",
+              "divisionName": "TraceDemo.Operations",
+              "employeeIdentifier": "alex.brown@tracedemo.com",
+              "reason": "Initial employment level - full-time",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2025-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@tracedemo.com",
+              "divisionName": "TraceDemo.Operations",
+              "employeeIdentifier": "sam.green@tracedemo.com",
+              "reason": "Initial salary",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "3600",
+                    "start": "2025-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@tracedemo.com",
+              "divisionName": "TraceDemo.Operations",
+              "employeeIdentifier": "sam.green@tracedemo.com",
+              "reason": "Initial employment level - 80% part-time",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "0.8",
+                    "start": "2025-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "hr@tracedemo.com",
+              "divisionName": "TraceDemo.Operations",
+              "employeeIdentifier": "sam.green@tracedemo.com",
+              "reason": "Level increase to full-time effective February 15",
+              "case": {
+                "caseName": "EmploymentLevel",
+                "values": [
+                  {
+                    "caseFieldName": "EmploymentLevel",
+                    "value": "1.0",
+                    "start": "2025-02-15T00:00:00.0Z",
+                    "created": "2025-02-12T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "name": "WageTracingPayrun",
+          "payrollName": "WageTracingPayroll",
+          "defaultReason": "Monthly payroll run"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "WageTracingPayrun.Jan25",
+          "payrunName": "WageTracingPayrun",
+          "payrollName": "WageTracingPayroll",
+          "userIdentifier": "hr@tracedemo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2025-01-01T00:00:00.0Z",
+          "evaluationDate": "2025-01-31T00:00:00.0Z",
+          "reason": "January 2025 — baseline, no splits"
+        },
+        {
+          "name": "WageTracingPayrun.Feb25",
+          "payrunName": "WageTracingPayrun",
+          "payrollName": "WageTracingPayroll",
+          "userIdentifier": "hr@tracedemo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2025-02-01T00:00:00.0Z",
+          "evaluationDate": "2025-02-28T00:00:00.0Z",
+          "reason": "February 2025 — Alex: Salary split Feb 10 / Sam: EmploymentLevel split Feb 15"
+        }
+      ],
+      "payrollResults": [
+
+        {
+          "payrunJobName": "WageTracingPayrun.Jan25",
+          "employeeIdentifier": "alex.brown@tracedemo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 4000 },
+            { "wageTypeNumber": 200, "value": 800 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 4000 }
+          ]
+        },
+
+        {
+          "payrunJobName": "WageTracingPayrun.Jan25",
+          "employeeIdentifier": "sam.green@tracedemo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 2880 },
+            { "wageTypeNumber": 200, "value": 576 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 2880 }
+          ]
+        },
+
+        {
+          "payrunJobName": "WageTracingPayrun.Feb25",
+          "employeeIdentifier": "alex.brown@tracedemo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 5085.714286 },
+            { "wageTypeNumber": 200, "value": 1017.142857 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 5085.714286 }
+          ]
+        },
+
+        {
+          "payrunJobName": "WageTracingPayrun.Feb25",
+          "employeeIdentifier": "sam.green@tracedemo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 3240 },
+            { "wageTypeNumber": 200, "value": 648 }
+          ],
+          "collectorResults": [
+            { "collectorName": "GrossIncome", "value": 3240 }
+          ]
+        }
+
+      ]
+    }
+  ]
+}

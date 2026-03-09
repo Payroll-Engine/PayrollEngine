@@ -1,0 +1,613 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-12-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "PayrunEdge",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "EdgeDivision",
+          "culture": "de-CH"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "edge.employee@foo.com",
+          "firstName": "Edge",
+          "lastName": "Employee",
+          "divisions": [
+            "EdgeDivision"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "PayrunEdge",
+          "description": "Payrun edge case tests: period boundaries, case value overlap/touching/splitting, eval-date edges (period-start, period-end, cycle-end), retro, forecast",
+          "cases": [
+            {
+              "name": "BaseSalary",
+              "caseType": "Employee",
+              "defaultReason": "Set base salary",
+              "fields": [
+                {
+                  "name": "BaseSalary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "description": "CalendarPeriod field — used for period-boundary and retro tests"
+                }
+              ]
+            },
+            {
+              "name": "Supplement",
+              "caseType": "Employee",
+              "defaultReason": "Set supplement",
+              "fields": [
+                {
+                  "name": "Supplement",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "description": "Period field — used for touching-boundary test (value A end == value B start)"
+                }
+              ]
+            },
+            {
+              "name": "SplitBonus",
+              "caseType": "Employee",
+              "defaultReason": "Set split bonus",
+              "fields": [
+                {
+                  "name": "SplitBonus",
+                  "valueType": "Money",
+                  "timeType": "Period",
+                  "description": "Period field starting mid-period (Feb 15) — tests time-data splitting behaviour"
+                }
+              ]
+            },
+            {
+              "name": "OverlapAllowance",
+              "caseType": "Employee",
+              "defaultReason": "Set overlap allowance",
+              "fields": [
+                {
+                  "name": "OverlapAllowance",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "description": "CalendarPeriod field — two entries for the same period, different created timestamps; latest created must win"
+                }
+              ]
+            },
+            {
+              "name": "EvalDateEdgeValue",
+              "caseType": "Employee",
+              "defaultReason": "Set eval-date edge value",
+              "fields": [
+                {
+                  "name": "EvalDateEdgeValue",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "description": "Case value with created == evaluationDate. PE uses strict < for visibility: created=Jun1, evalDate=Jun1 => NOT visible (actual=0). End=Jun30 (inclusive) keeps value out of Jul."
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "BaseSalary",
+              "description": "Scenario: CalendarPeriod boundary. Direct case value read. Used in retro cluster so retro recalculates it.",
+              "valueExpression": "CaseValue[\"BaseSalary\"]",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Supplement",
+              "description": "Scenario: Period touching. Two Period entries where end-of-A == start-of-B (Apr 1). Apr run must return value B (200).",
+              "valueExpression": "CaseValue[\"Supplement\"]",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "SplitBonus",
+              "description": "Scenario: Time-data splitting. Period value starts Feb 15 (mid-period). Jan run: 0 (not yet active). Feb run: 300 (start within period).",
+              "valueExpression": "var v = CaseValue[\"SplitBonus\"]; return v != null ? (decimal)v : 0m;",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "OverlapAllowance",
+              "description": "Scenario: Overlapping case values. Two entries for Apr (same CalendarPeriod), created Mar 1 (500) and Apr 1 (600). Latest created (600) must win.",
+              "valueExpression": "var v = CaseValue[\"OverlapAllowance\"]; return v != null ? (decimal)v : 0m;",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "EvalDateDay",
+              "description": "Exposes EvaluationDate.Day. Used to verify edge runs: EvalStart run => 1, EvalEnd run => 31, CycleEnd run => 31.",
+              "valueExpression": "return (decimal)EvaluationDate.Day;",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 106,
+              "name": "IsRetroIndicator",
+              "description": "Returns 1 in retro recalculation sub-runs, 0 in all main runs. In Retro cluster so it is computed during retro.",
+              "valueExpression": "return IsRetroPayrun ? 1m : 0m;",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 107,
+              "name": "IsForecastIndicator",
+              "description": "Returns 1 when Forecast property is non-empty (forecast run), 0 otherwise.",
+              "valueExpression": "return !string.IsNullOrEmpty(Forecast) ? 1m : 0m;",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 108,
+              "name": "EvalDateEdgeCaseValue",
+              "description": "Scenario: case value with created == evaluationDate. PE uses strict < for case value visibility: created=Jun1, evalDate=Jun1 => NOT visible => 0. Documents actual PE behaviour.",
+              "valueExpression": "var v = CaseValue[\"EvalDateEdgeValue\"]; return v != null ? (decimal)v : 0m;",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 109,
+              "name": "EvalDateEdgeWageType",
+              "description": "Scenario: wage type with created == evaluationDate of Jun24-EvalStart run. PE uses <= for WageType derivation. Must be derived for evalDate >= Jun 1 (value 42).",
+              "valueExpression": "return 42m;",
+              "created": "2024-06-01T00:00:00.0Z",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 202,
+              "name": "BaseSalaryRetroDiff",
+              "description": "Scenario: retro diff. Aggregates retro delta of WT 101 across all retro sub-runs of the current job. Mar24: +1000 (Feb retroactively raised 3000->4000).",
+              "valueExpression": "GetWageTypeRetroResultSum(101)",
+              "clusters": [
+                "Legal"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "PayrunEdge",
+          "divisionName": "EdgeDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "PayrunEdge"
+            }
+          ],
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypeRetro": "Retro",
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [
+                "Legal"
+              ]
+            },
+            {
+              "name": "Retro",
+              "includeClusters": [
+                "Retro"
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "BaseSalary",
+                "values": [
+                  {
+                    "caseFieldName": "BaseSalary",
+                    "value": "3000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "BaseSalary",
+                "values": [
+                  {
+                    "caseFieldName": "BaseSalary",
+                    "value": "4000",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-03-05T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "BaseSalary",
+                "values": [
+                  {
+                    "caseFieldName": "BaseSalary",
+                    "value": "5000",
+                    "start": "2024-03-01T00:00:00.0Z",
+                    "created": "2024-03-06T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "Supplement",
+                "values": [
+                  {
+                    "caseFieldName": "Supplement",
+                    "value": "100",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "end": "2024-04-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "Supplement",
+                "values": [
+                  {
+                    "caseFieldName": "Supplement",
+                    "value": "200",
+                    "start": "2024-04-01T00:00:00.0Z",
+                    "created": "2023-12-02T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "SplitBonus",
+                "values": [
+                  {
+                    "caseFieldName": "SplitBonus",
+                    "value": "300",
+                    "start": "2024-02-15T00:00:00.0Z",
+                    "created": "2024-02-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "OverlapAllowance",
+                "values": [
+                  {
+                    "caseFieldName": "OverlapAllowance",
+                    "value": "500",
+                    "start": "2024-04-01T00:00:00.0Z",
+                    "end": "2024-05-01T00:00:00.0Z",
+                    "created": "2024-03-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "OverlapAllowance",
+                "values": [
+                  {
+                    "caseFieldName": "OverlapAllowance",
+                    "value": "600",
+                    "start": "2024-04-01T00:00:00.0Z",
+                    "end": "2024-05-01T00:00:00.0Z",
+                    "created": "2024-04-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "EvalDateEdgeValue",
+                "values": [
+                  {
+                    "caseFieldName": "EvalDateEdgeValue",
+                    "value": "999",
+                    "start": "2024-06-01T00:00:00.0Z",
+                    "end": "2024-06-30T00:00:00.0Z",
+                    "created": "2024-06-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "PayrunEdge",
+          "name": "PayrunEdgePayrun",
+          "culture": "de-CH",
+          "defaultReason": "Run payrun edge test"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "PayrunEdge.Jan24",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "reason": "Standard run Jan 2024",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Feb24",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-28T00:00:00.0Z",
+          "reason": "Standard run Feb 2024 — BaseSalary 4000 (created=Mar5) not yet visible, uses 3000",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Mar24",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-28T00:00:00.0Z",
+          "reason": "Standard run Mar 2024 — BaseSalary 5000 (start=Mar1, created=Mar6) wins over 4000 (start=Feb1, created=Mar5) by later start. Retro for Feb triggered: 4000 now visible.",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Apr24",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-04-01T00:00:00.0Z",
+          "evaluationDate": "2024-04-28T00:00:00.0Z",
+          "reason": "Standard run Apr 2024 — Supplement touching (200 from Apr1) and OverlapAllowance overlap (600 wins over 500)",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Jun24.EvalStart",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-06-01T00:00:00.0Z",
+          "evaluationDate": "2024-06-01T00:00:00.0Z",
+          "reason": "Edge: evaluationDate == PeriodStart (Jun 1). CaseValue created=Jun1 NOT visible (strict <) => WT108=0. WageType created=Jun1 IS derived (<=) => WT109=42. WT105=1.",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Jul24.EvalEnd",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-07-01T00:00:00.0Z",
+          "evaluationDate": "2024-07-31T00:00:00.0Z",
+          "reason": "Edge: evaluationDate == last day of period (Jul 31). EvalDateEdgeValue ends Jun30 (inclusive) => not active in Jul => WT108=0. WT105=31.",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Dec24.CycleEnd",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "jobStatus": "Complete",
+          "periodStart": "2024-12-01T00:00:00.0Z",
+          "evaluationDate": "2024-12-31T00:00:00.0Z",
+          "reason": "Edge: evaluationDate == CycleEnd (Dec 31 = last day of yearly cycle). WT105=31.",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Aug24.Forecast",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "forecast": "EdgeForecast",
+          "jobStatus": "Complete",
+          "periodStart": "2024-08-01T00:00:00.0Z",
+          "evaluationDate": "2024-07-28T00:00:00.0Z",
+          "reason": "Forecast run Aug 2024 — period is ahead of evaluationDate. WT107=1 (IsForecast).",
+          "storeEmptyResults": true
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "PayrunEdge.Jan24",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 100 },
+            { "wageTypeNumber": 103, "value": 0 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 28 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Feb24",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 3000 },
+            { "wageTypeNumber": 102, "value": 100 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 28 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Mar24",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 100 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 28 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 202, "value": 1000 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Mar24",
+          "retroPeriodStart": "2024-02-01T00:00:00.0Z",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4000 },
+            { "wageTypeNumber": 106, "value": 1 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Apr24",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 600 },
+            { "wageTypeNumber": 105, "value": 28 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Jun24.EvalStart",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 1 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Jul24.EvalEnd",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 31 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Dec24.CycleEnd",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 31 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Aug24.Forecast",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 28 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 1 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        }
+      ]
+    }
+  ]
+}

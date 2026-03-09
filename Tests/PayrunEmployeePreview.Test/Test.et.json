@@ -1,0 +1,402 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "EmployeePreview.Test",
+      "updateMode": "NoUpdate",
+      "payrunJobInvocations": [
+        {
+          "name": "EmployeePreview.TestPayrun1.Jan19",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "logLevel": "Verbose",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2019-01-01T00:00:00.0Z",
+          "evaluationDate": "2019-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 19"
+        },
+        {
+          "name": "EmployeePreview.TestPayrun1.Feb19",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2019-02-01T00:00:00.0Z",
+          "evaluationDate": "2019-03-01T00:00:00.0Z",
+          "reason": "Demo Payrun Feb 19"
+        },
+        {
+          "name": "EmployeePreview.TestPayrun1.Mrz19",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2019-03-01T00:00:00.0Z",
+          "evaluationDate": "2019-04-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mrz 19"
+        },
+        {
+          "name": "EmployeePreview.TestPayrun1.Apr19",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2019-04-01T00:00:00.0Z",
+          "evaluationDate": "2019-05-01T00:00:00.0Z",
+          "reason": "Demo Payrun Apr 19"
+        },
+        {
+          "name": "EmployeePreview.TestPayrun1.Mai19",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2019-05-01T00:00:00.0Z",
+          "evaluationDate": "2019-06-01T00:00:00.0Z",
+          "reason": "Demo Payrun Mai 19"
+        },
+        {
+          "name": "EmployeePreview.TestPayrun1.Dez19",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2019-12-01T00:00:00.0Z",
+          "evaluationDate": "2020-01-01T00:00:00.0Z",
+          "reason": "Demo Payrun Dez 19"
+        },
+        {
+          "name": "EmployeePreview.TestPayrun1.Jan20",
+          "payrunName": "EmployeePreview.TestPayrun1",
+          "payrollName": "EmployeePreview.Test",
+          "userIdentifier": "peter.schmid@foo.com",
+          "employeeIdentifiers": [
+            "višnja.müller@foo.com"
+          ],
+          "jobStatus": "Complete",
+          "periodStart": "2020-01-01T00:00:00.0Z",
+          "evaluationDate": "2020-02-01T00:00:00.0Z",
+          "reason": "Demo Payrun Jan 20"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Jan19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2500
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 275
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 99999
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 5138.7
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 125
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 102774
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 102774
+            },
+            {
+              "collectorName": "Credit",
+              "value": 250
+            },
+            {
+              "collectorName": "Debit",
+              "value": -250
+            }
+          ]
+        },
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Feb19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2925
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 125
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 152.5
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 146.25
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 3050
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 3050
+            }
+          ]
+        },
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Mrz19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 150
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 90
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 3000
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 3000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Apr19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5555
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 427.75
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 90
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 8555
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 8555
+            }
+          ]
+        },
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Mai19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 562.5
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 450
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 178.125
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 90
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 3562.5
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 3562.5
+            }
+          ]
+        },
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Dez19",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 450
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 240
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 90
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 3000
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 3000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "EmployeePreview.TestPayrun1.Jan20",
+          "employeeIdentifier": "višnja.müller@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 450
+            },
+            {
+              "wageTypeNumber": 206,
+              "value": 240
+            },
+            {
+              "wageTypeNumber": 207,
+              "value": 90
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "AHV Base",
+              "value": 3000
+            },
+            {
+              "collectorName": "QST Base",
+              "value": 3000
+            }
+          ],
+          "payrunResults": [
+            {
+              "name": "MonthlyWage",
+              "valueType": "Money",
+              "start": "2020-01-01T00:00:00.0Z",
+              "end": "2020-01-31T23:59:59.9Z",
+              "value": "6000"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
