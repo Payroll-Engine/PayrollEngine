@@ -288,35 +288,45 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Wait for Core release
+      - name: Wait for Core NuGet package
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
-            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
-              console.log('⚠️ Dry-run: skipping release poll, trusting dispatch succeeded');
-              await new Promise(r => setTimeout(r, 15000));
-              return;
-            }
             const org = '${{ env.ORG }}';
-            const tag = `v${{ needs.prepare.outputs.lib_version }}`;
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
+            const repos = isDryRun
+              ? [{ repo: 'PayrollEngine.Core', type: 'nuget' }]
+              : [{ repo: 'PayrollEngine.Core', type: 'release' }];
             const maxAttempts = 60;
             const delay = 15000;
-            for (let i = 0; i < maxAttempts; i++) {
-              try {
-                const releases = await github.rest.repos.listReleases({
-                  owner: org, repo: 'PayrollEngine.Core', per_page: 10
-                });
-                if (releases.data.find(r => r.tag_name === tag)) {
-                  console.log('✅ PayrollEngine.Core release found');
-                  await new Promise(r => setTimeout(r, 10000));
-                  return;
+
+            for (const { repo, type } of repos) {
+              let found = false;
+              for (let i = 0; i < maxAttempts && !found; i++) {
+                try {
+                  if (type === 'nuget') {
+                    const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                      package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                      state: 'active', per_page: 30
+                    });
+                    found = pkgs.data.some(p => p.name === version);
+                    if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
+                  } else {
+                    const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
+                    found = releases.data.some(r => r.tag_name === `v${version}`);
+                    if (found) console.log(`✅ ${repo} release found`);
+                  }
+                } catch (e) { /* retry */ }
+                if (!found) {
+                  console.log(`⏳ ${repo}: attempt ${i + 1}/${maxAttempts}...`);
+                  await new Promise(r => setTimeout(r, delay));
                 }
-              } catch (e) { /* retry */ }
-              console.log(`⏳ Attempt ${i + 1}/${maxAttempts} – waiting for Core...`);
-              await new Promise(r => setTimeout(r, delay));
+              }
+              if (!found) throw new Error(`❌ Timeout waiting for ${repo} ${version}`);
             }
-            throw new Error('❌ Timeout waiting for PayrollEngine.Core');
+            await new Promise(r => setTimeout(r, 10000));
 
   # ═══════════════════════════════════════════════════════
   # WAVE 2: Serilog, Document, Client.Core (parallel)
@@ -385,28 +395,34 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Wait for Wave 2 releases
+      - name: Wait for Wave 2 NuGet packages
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
-            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
-              console.log('⚠️ Dry-run: skipping release poll');
-              await new Promise(r => setTimeout(r, 15000));
-              return;
-            }
             const org = '${{ env.ORG }}';
-            const tag = `v${{ needs.prepare.outputs.lib_version }}`;
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
             const repos = ['PayrollEngine.Serilog', 'PayrollEngine.Document', 'PayrollEngine.Client.Core'];
             const maxAttempts = 60;
             const delay = 15000;
+
             for (const repo of repos) {
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
-                  found = releases.data.some(r => r.tag_name === tag);
-                  if (found) console.log(`✅ ${repo} release found`);
+                  if (isDryRun) {
+                    const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                      package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                      state: 'active', per_page: 30
+                    });
+                    found = pkgs.data.some(p => p.name === version);
+                    if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
+                  } else {
+                    const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
+                    found = releases.data.some(r => r.tag_name === `v${version}`);
+                    if (found) console.log(`✅ ${repo} release found`);
+                  }
                 } catch (e) { /* retry */ }
                 if (!found) {
                   console.log(`⏳ Waiting for ${repo}... (${i + 1}/${maxAttempts})`);
@@ -465,28 +481,34 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Wait for Wave 3 releases
+      - name: Wait for Wave 3 NuGet packages
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
-            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
-              console.log('⚠️ Dry-run: skipping release poll');
-              await new Promise(r => setTimeout(r, 15000));
-              return;
-            }
             const org = '${{ env.ORG }}';
-            const tag = `v${{ needs.prepare.outputs.lib_version }}`;
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
             const repos = ['PayrollEngine.Client.Scripting', 'PayrollEngine.Client.Test'];
             const maxAttempts = 60;
             const delay = 15000;
+
             for (const repo of repos) {
               let found = false;
               for (let i = 0; i < maxAttempts && !found; i++) {
                 try {
-                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
-                  found = releases.data.some(r => r.tag_name === tag);
-                  if (found) console.log(`✅ ${repo} release found`);
+                  if (isDryRun) {
+                    const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                      package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                      state: 'active', per_page: 30
+                    });
+                    found = pkgs.data.some(p => p.name === version);
+                    if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
+                  } else {
+                    const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
+                    found = releases.data.some(r => r.tag_name === `v${version}`);
+                    if (found) console.log(`✅ ${repo} release found`);
+                  }
                 } catch (e) { /* retry */ }
                 if (!found) {
                   console.log(`⏳ Waiting for ${repo}... (${i + 1}/${maxAttempts})`);
@@ -524,35 +546,43 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Wait for Client.Services release
+      - name: Wait for Client.Services NuGet package
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
-            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
-              console.log('⚠️ Dry-run: skipping release poll');
-              await new Promise(r => setTimeout(r, 15000));
-              return;
-            }
             const org = '${{ env.ORG }}';
-            const tag = `v${{ needs.prepare.outputs.lib_version }}`;
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
+            const repo = 'PayrollEngine.Client.Services';
             const maxAttempts = 60;
             const delay = 15000;
-            for (let i = 0; i < maxAttempts; i++) {
+
+            let found = false;
+            for (let i = 0; i < maxAttempts && !found; i++) {
               try {
-                const releases = await github.rest.repos.listReleases({
-                  owner: org, repo: 'PayrollEngine.Client.Services', per_page: 10
-                });
-                if (releases.data.some(r => r.tag_name === tag)) {
-                  console.log('✅ Client.Services release found');
-                  await new Promise(r => setTimeout(r, 10000));
-                  return;
+                if (isDryRun) {
+                  const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: repo.toLowerCase(), org,
+                    state: 'active', per_page: 30
+                  });
+                  found = pkgs.data.some(p => p.name === version);
+                  if (found) console.log(`✅ ${repo} NuGet package ${version} found`);
+                } else {
+                  const releases = await github.rest.repos.listReleases({
+                    owner: org, repo, per_page: 10
+                  });
+                  found = releases.data.some(r => r.tag_name === `v${version}`);
+                  if (found) console.log(`✅ ${repo} release found`);
                 }
               } catch (e) { /* retry */ }
-              console.log(`⏳ Attempt ${i + 1}/${maxAttempts}...`);
-              await new Promise(r => setTimeout(r, delay));
+              if (!found) {
+                console.log(`⏳ Attempt ${i + 1}/${maxAttempts}...`);
+                await new Promise(r => setTimeout(r, delay));
+              }
             }
-            throw new Error('❌ Timeout: Client.Services');
+            if (!found) throw new Error(`❌ Timeout: ${repo} ${version}`);
+            await new Promise(r => setTimeout(r, 10000));
 
   # ═══════════════════════════════════════════════════════
   # WAVE 5: Apps – Docker Images (parallel, conditional)
@@ -649,7 +679,7 @@ jobs:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
             if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
-              console.log('⚠️ Dry-run: skipping release poll');
+              console.log('⚠️ Dry-run: skipping app release poll');
               await new Promise(r => setTimeout(r, 15000));
               return;
             }
