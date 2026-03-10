@@ -1,0 +1,113 @@
+# PayrollEngine Docker Stack — pre-built images from GitHub Container Registry
+#
+# Prerequisites:
+#   1. Login to ghcr.io:
+#      echo "<your-pat>" | docker login ghcr.io -u <github-username> --password-stdin
+#   2. Create a .env file with:
+#      DB_PASSWORD=PayrollStrongPass789
+#
+# Usage:
+#   docker compose -f docker-compose.ghcr.yml up -d
+#   docker compose -f docker-compose.ghcr.yml down
+#   docker compose -f docker-compose.ghcr.yml down -v   # also removes database volume
+
+name: payroll-engine
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: payroll-db
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: '${DB_PASSWORD}'
+      MSSQL_PID: 'Developer'
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+  # Extract DB scripts from Backend image into shared volume
+  sql-copy:
+    image: ghcr.io/payroll-engine/payrollengine.backend:latest
+    container_name: payrollengine-sql-copy
+    entrypoint: /bin/sh
+    command: -c "cp /sql/ModelCreate.sql /sql/ModelUpdate.sql /shared/"
+    volumes:
+      - sql-scripts:/shared
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: payrollengine-db-init
+    depends_on:
+      db:
+        condition: service_started
+      sql-copy:
+        condition: service_completed_successfully
+    entrypoint: /bin/sh
+    command: >
+      -c "
+        echo 'Waiting for database to be ready...'
+        sleep 30
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
+          -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
+
+        DB_EXISTS=$(/opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -h -1 \
+          -Q \"SET NOCOUNT ON; SELECT COUNT(*) FROM sys.databases WHERE name = 'PayrollEngine'\")
+        DB_EXISTS=$(echo \$DB_EXISTS | tr -d ' ')
+
+        if [ \"\$DB_EXISTS\" = \"0\" ]; then
+          echo 'Database not found - running ModelCreate.sql...'
+          /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
+            -Q \"CREATE DATABASE PayrollEngine\"
+          /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
+            -d PayrollEngine -i /sql/ModelCreate.sql
+          echo 'Database created.'
+        else
+          echo 'Database exists - running ModelUpdate.sql...'
+          /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
+            -d PayrollEngine -i /sql/ModelUpdate.sql
+          echo 'Database update completed.'
+        fi
+      "
+    volumes:
+      - sql-scripts:/sql:ro
+
+  backend-api:
+    image: ghcr.io/payroll-engine/payrollengine.backend:latest
+    container_name: payroll-backend-api
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_URLS: 'http://+:8080'
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      ConnectionStrings__PayrollDatabaseConnection: >-
+        Server=db;Database=PayrollEngine;User Id=sa;
+        Password=${DB_PASSWORD};TrustServerCertificate=True;
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    volumes:
+      - backend-logs:/app/logs
+
+  webapp:
+    image: ghcr.io/payroll-engine/payrollengine.webapp:latest
+    container_name: payroll-webapp
+    ports:
+      - "8081:8080"
+    environment:
+      ASPNETCORE_URLS: 'http://+:8080'
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      ApiSettings__BaseUrl: 'http://backend-api:8080'
+    depends_on:
+      - backend-api
+    restart: unless-stopped
+    volumes:
+      - webapp-logs:/app/logs
+
+volumes:
+  mssql-data:
+  sql-scripts:
+  backend-logs:
+  webapp-logs:

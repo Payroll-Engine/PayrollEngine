@@ -97,28 +97,40 @@ The Payroll Engine serves three distinct roles:
 
 The Payroll Engine runs as a Docker container stack. [Docker](https://docs.docker.com/get-docker/) is the only prerequisite for the hosted setup.
 
-**1. Create the project directory and environment file:**
+**1. Login to the GitHub Container Registry:**
+
+Create a GitHub [Personal Access Token](https://github.com/settings/tokens) with the `read:packages` scope, then login:
 
 ```sh
-# Linux / macOS
-mkdir payroll-engine && cd payroll-engine
+echo "<your-pat>" | docker login ghcr.io -u <github-username> --password-stdin
+```
+
+This is a one-time step per machine.
+
+**2. Clone the repository and create the environment file:**
+
+```sh
+git clone https://github.com/Payroll-Engine/PayrollEngine.git
+cd PayrollEngine
 echo "DB_PASSWORD=PayrollStrongPass789" > .env
 ```
 
 ```powershell
 # Windows (PowerShell)
-New-Item -ItemType Directory payroll-engine; Set-Location payroll-engine
+git clone https://github.com/Payroll-Engine/PayrollEngine.git
+Set-Location PayrollEngine
 "DB_PASSWORD=PayrollStrongPass789" | Out-File .env -Encoding utf8
 ```
 
-**2. Download and start the stack:**
+> Use alphanumeric characters only for the password — special characters can cause misleading authentication errors.
+
+**3. Start the stack:**
 
 ```sh
-curl -O https://raw.githubusercontent.com/Payroll-Engine/PayrollEngine/main/docker-compose.yml
-docker compose up -d
+docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-**3. Access the applications:**
+**4. Access the applications:**
 
 | Service             | URL                   |
 |--------------------|----------------------|
@@ -186,7 +198,8 @@ This is the main repository containing setup files, examples, tests, and documen
 
 ```
 PayrollEngine/                  ← You are here
-├── docker-compose.yml          Docker stack configuration
+├── docker-compose.yml          Docker stack for local source builds
+├── docker-compose.ghcr.yml     Docker stack using pre-built ghcr.io images
 ├── Setup/                      Setup and configuration files
 ├── Examples/                   Payroll examples (JSON/YAML)
 ├── Tests/                      Automated payroll tests
