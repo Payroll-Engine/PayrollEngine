@@ -99,7 +99,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
                 }
                 else
                 {
-                    employeeWageTypeResults.Columns.Add($"M{month}");
+                    employeeWageTypeResults.Columns.Add($"M{month}", typeof(decimal));
                 }
 
                 // query collector results (cleanup previous query data)
@@ -116,7 +116,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
                 }
                 else
                 {
-                    employeeCollectorResults.Columns.Add($"M{month}");
+                    employeeCollectorResults.Columns.Add($"M{month}", typeof(decimal));
                 }
             }
 
