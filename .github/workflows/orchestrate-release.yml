@@ -133,7 +133,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check all versions across repos
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -301,7 +301,7 @@ jobs:
       (needs.breaking-change-guard.result == 'success' || needs.breaking-change-guard.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Core
@@ -321,7 +321,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Wait for Core NuGet package
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -360,7 +360,7 @@ jobs:
     if: always() && needs.wait-wave-1.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Serilog
@@ -378,7 +378,7 @@ jobs:
     if: always() && needs.wait-wave-1.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Document
@@ -396,7 +396,7 @@ jobs:
     if: always() && needs.wait-wave-1.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Client.Core
@@ -420,7 +420,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Wait for Wave 2 NuGet packages
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -461,7 +461,7 @@ jobs:
     if: always() && needs.wait-wave-2.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Client.Scripting
@@ -479,7 +479,7 @@ jobs:
     if: always() && needs.wait-wave-2.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Client.Test
@@ -502,7 +502,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Wait for Wave 3 NuGet packages
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -543,7 +543,7 @@ jobs:
     if: always() && needs.wait-wave-3.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Client.Services
@@ -563,7 +563,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Wait for Client.Services NuGet package
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -610,7 +610,7 @@ jobs:
           else
             echo "version=${{ inputs.backend_version }}" >> $GITHUB_OUTPUT
           fi
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Backend
@@ -635,7 +635,7 @@ jobs:
           else
             echo "version=${{ inputs.console_version }}" >> $GITHUB_OUTPUT
           fi
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.PayrollConsole
@@ -660,7 +660,7 @@ jobs:
           else
             echo "version=${{ inputs.webapp_version }}" >> $GITHUB_OUTPUT
           fi
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.WebApp
@@ -685,7 +685,7 @@ jobs:
           else
             echo "version=${{ inputs.mcpserver_version }}" >> $GITHUB_OUTPUT
           fi
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.McpServer
@@ -710,7 +710,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: Wait for app releases
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -784,7 +784,7 @@ jobs:
         id: notes
         env:
           RELEASE_NOTES_CONTENT: ${{ steps.release_notes.outputs.content }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const libVersion = '${{ needs.prepare.outputs.lib_version }}';
@@ -835,7 +835,7 @@ jobs:
 
       - name: Download swagger.json from Backend release
         if: needs.prepare.outputs.build_backend == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -895,7 +895,7 @@ jobs:
           path: wiki
 
       - name: Update Releases page
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
