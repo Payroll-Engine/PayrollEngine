@@ -1,0 +1,233 @@
+﻿{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-12-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "ConsolidatedEdge.Test",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "admin@consolidatededge.test",
+          "firstName": "Admin",
+          "lastName": "ConsolidatedEdge"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "ConsolidatedEdgeDivision"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "ConsolidatedEdge.Test",
+          "description": "Tests GetConsolidatedWageTypeResults with NoRetro=false (default) vs NoRetro=true",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "defaultReason": "Change salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Salary",
+              "description": "Base salary — re-executed in retro sub-runs",
+              "valueExpression": "CaseValue[\"Salary\"]",
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "SalaryRetroDiff",
+              "description": "Retro delta — Legal only",
+              "valueExpression": "GetWageTypeRetroResultSum(101)",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "ConsolidatedWithRetro",
+              "description": "GetConsolidatedWageTypeResults NoRetro=false (default): retro sub-run results included",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "ConsolidatedNoRetro",
+              "description": "GetConsolidatedWageTypeResults NoRetro=true: main-run results only",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Complete) { NoRetro = true }).Sum(x => x.Value)",
+              "clusters": [ "Legal" ]
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "anna.bauer@consolidatededge.test",
+          "firstName": "Anna",
+          "lastName": "Bauer",
+          "divisions": [ "ConsolidatedEdgeDivision" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "ConsolidatedEdge.Test",
+          "divisionName": "ConsolidatedEdgeDivision",
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypeRetro": "Retro",
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [ "Legal" ]
+            },
+            {
+              "name": "Retro",
+              "includeClusters": [ "Retro" ]
+            }
+          ],
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "ConsolidatedEdge.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@consolidatededge.test",
+              "employeeIdentifier": "anna.bauer@consolidatededge.test",
+              "divisionName": "ConsolidatedEdgeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@consolidatededge.test",
+              "employeeIdentifier": "anna.bauer@consolidatededge.test",
+              "divisionName": "ConsolidatedEdgeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-01-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@consolidatededge.test",
+              "employeeIdentifier": "anna.bauer@consolidatededge.test",
+              "divisionName": "ConsolidatedEdgeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-02-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@consolidatededge.test",
+              "employeeIdentifier": "anna.bauer@consolidatededge.test",
+              "divisionName": "ConsolidatedEdgeDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-02-20T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "ConsolidatedEdge.Test",
+          "name": "ConsolidatedEdge.Payrun",
+          "culture": "de-CH",
+          "defaultReason": "ConsolidatedEdge test"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "ConsolidatedEdge.Jan24",
+          "payrunName": "ConsolidatedEdge.Payrun",
+          "payrollName": "ConsolidatedEdge.Test",
+          "userIdentifier": "admin@consolidatededge.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "Baseline: Salary=5000, retro change (created Feb 15) not yet visible"
+        },
+        {
+          "name": "ConsolidatedEdge.Feb24",
+          "payrunName": "ConsolidatedEdge.Payrun",
+          "payrollName": "ConsolidatedEdge.Test",
+          "userIdentifier": "admin@consolidatededge.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-28T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "Key run: Jan retro (Salary=6000 created Feb 15) triggers sub-run; Feb stays 5000 (override created Feb 20)"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "ConsolidatedEdge.Jan24",
+          "employeeIdentifier": "anna.bauer@consolidatededge.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 0 },
+            { "wageTypeNumber": 103, "value": 0 },
+            { "wageTypeNumber": 104, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "ConsolidatedEdge.Feb24",
+          "employeeIdentifier": "anna.bauer@consolidatededge.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 1000 },
+            { "wageTypeNumber": 103, "value": 6000 },
+            { "wageTypeNumber": 104, "value": 5000 }
+          ]
+        },
+        {
+          "payrunJobName": "ConsolidatedEdge.Feb24",
+          "retroPeriodStart": "2024-01-01T00:00:00.0Z",
+          "employeeIdentifier": "anna.bauer@consolidatededge.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 6000 }
+          ]
+        }
+      ]
+    }
+  ]
+}

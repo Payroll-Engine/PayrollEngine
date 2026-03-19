@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -70,8 +70,8 @@
           "payrunName": "TestIncrementalPayrun",
           "payrollName": "IncrementalPayroll.Test",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
           "jobResult": "Full",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-01-28T00:00:00.0Z",
           "reason": "Test Full Payroll"
@@ -81,8 +81,8 @@
           "payrunName": "TestIncrementalPayrun",
           "payrollName": "IncrementalPayroll.Test",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
           "jobResult": "Incremental",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-01-29T00:00:00.0Z",
           "reason": "Test Increment Payroll"

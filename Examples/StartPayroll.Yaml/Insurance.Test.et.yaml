@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+﻿# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
 tenants:
 - identifier: StartTenant
   payrolls:
@@ -30,7 +30,7 @@ tenants:
   - name: StartPayrunJob.Jan23
     payrunName: StartPayrun
     userIdentifier: lucy.smith@foo.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2023-01-01T00:00:00Z
     evaluationDate: 2023-02-01T00:00:00Z
     reason: Test Payrun Jan 23
@@ -39,7 +39,7 @@ tenants:
   - name: StartPayrunJob.Jul23
     payrunName: StartPayrun
     userIdentifier: lucy.smith@foo.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2023-07-01T00:00:00Z
     evaluationDate: 2023-08-01T00:00:00Z
     reason: Test Payrun Jul 23

@@ -1,0 +1,298 @@
+﻿# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+# TemporalPayroll — TemporalAG
+# Demonstrates: the two time axes of case value resolution.
+# valueDate (periodStart) selects which value is active.
+# evaluationDate controls which entries are visible (knowledge cutoff).
+# Seven payrun jobs cover four retro and three forecast temporal perspectives.
+createdObjectDate: 2026-01-01T00:00:00Z
+tenants:
+- identifier: TemporalAG
+  culture: en-US
+  users:
+  - identifier: hr@temporalag.com
+    firstName: HR
+    lastName: Admin
+    culture: en-US
+    userType: TenantAdministrator
+  divisions:
+  - name: TemporalAG.HR
+  employees:
+  - identifier: alex.meyer@temporalag.com
+    firstName: Alex
+    lastName: Meyer
+    divisions:
+    - TemporalAG.HR
+  regulations:
+  - name: TemporalRegulation
+    description: >
+      Minimal regulation for temporal perspective demonstration.
+      One case field, one wage type. All complexity lives in the payrun invocations.
+    cases:
+    - name: Salary
+      description: Monthly base salary — three entries with different creation and start dates.
+      caseType: Employee
+      defaultReason: Change monthly salary
+      fields:
+      - name: Salary
+        valueType: Money
+        timeType: CalendarPeriod
+
+    collectors:
+    - name: GrossIncome
+      description: Base salary
+
+    wageTypes:
+    - wageTypeNumber: 100
+      name: Salary
+      description: >
+        Monthly salary resolved at the payrun period date and evaluation date.
+        The resolved value shows which database entry wins for each combination
+        of valueDate (periodStart) and evaluationDate.
+      valueActions:
+      - ^^Salary
+      collectors:
+      - GrossIncome
+
+  payrolls:
+  - name: TemporalPayroll
+    divisionName: TemporalAG.HR
+    layers:
+    - level: 1
+      priority: 1
+      regulationName: TemporalRegulation
+
+    # ── Case data: three Salary entries ──────────────────────────────────────
+    #
+    #  #1  created 2026-01-12  valid from 2026-02-01           value: 5000
+    #  #2  created 2026-05-17  valid from 2026-04-01  (open)   value: 5500
+    #  #3  created 2026-07-13  valid 2026-10-01..11-30          value: 6000  forecast: Budget2026
+    #
+    cases:
+    - userIdentifier: hr@temporalag.com
+      employeeIdentifier: alex.meyer@temporalag.com
+      divisionName: TemporalAG.HR
+      reason: "Entry #1 — initial salary"
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "5000"
+          start: 2026-02-01T00:00:00Z
+          created: 2026-01-12T00:00:00Z
+
+    - userIdentifier: hr@temporalag.com
+      employeeIdentifier: alex.meyer@temporalag.com
+      divisionName: TemporalAG.HR
+      reason: "Entry #2 — salary adjustment, entered retroactively in May"
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "5500"
+          start: 2026-04-01T00:00:00Z
+          created: 2026-05-17T00:00:00Z
+
+    - userIdentifier: hr@temporalag.com
+      employeeIdentifier: alex.meyer@temporalag.com
+      divisionName: TemporalAG.HR
+      reason: "Entry #3 — planned Q4 salary (Budget2026 forecast, Oct–Nov only)"
+      forecast: Budget2026
+      case:
+        caseName: Salary
+        values:
+        - caseFieldName: Salary
+          value: "6000"
+          start: 2026-10-01T00:00:00Z
+          end: 2026-11-30T00:00:00Z
+          created: 2026-07-13T00:00:00Z
+
+  payruns:
+  - name: TemporalPayrun
+    payrollName: TemporalPayroll
+    defaultReason: Temporal perspective test run
+
+  # ── Payrun invocations ────────────────────────────────────────────────────
+  #
+  # Reference point: Now = 2026-09-30 (evaluationDate for "Today" scenarios)
+  #                  Feb = 2026-02-01 (evaluationDate for "Past knowledge" scenarios)
+  #
+  # Retro scenarios — production (no forecast)
+  # ──────────────────────────────────────────
+  #  A  evalDate=Today  valueDate=Sep  → #1+#2 visible  → #2 from Apr → 5500
+  #  B  evalDate=Feb    valueDate=Jun  → #1 only         → #1 open     → 5000
+  #  C  evalDate=Feb    valueDate=Sep  → #1 only         → #1 open     → 5000
+  #  D  evalDate=Today  valueDate=Jun  → #1+#2 visible  → #2 from Apr → 5500
+  #
+  # Forecast scenarios
+  # ──────────────────
+  #  A  evalDate=Oct  valueDate=Oct  forecast=null        → #1+#2        → 5500
+  #  B  evalDate=Oct  valueDate=Oct  forecast=Budget2026  → #1+#2+#3     → 6000
+  #  C  evalDate=Dec  valueDate=Dec  forecast=Budget2026  → #3 expired   → 5500
+
+  payrunJobInvocations:
+
+  # ── Retro A — EvalDate=Today · ValueDate=Today ───────────────────────────
+  - name: TemporalPayrun.Retro.A
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    completedJobStatus: Complete
+    periodStart: 2026-09-01T00:00:00Z
+    evaluationDate: 2026-09-30T00:00:00Z
+    reason: "Retro A — EvalDate=Today, ValueDate=Today: what is the salary now?"
+    storeEmptyResults: true
+
+  # ── Retro B — EvalDate=Feb · ValueDate=Jun ───────────────────────────────
+  # evaluationDate < periodStart: intentional — demonstrates knowledge-cutoff isolation.
+  # Entry #2 (created 2026-05-17) is invisible because 2026-05-17 > 2026-02-01.
+  - name: TemporalPayrun.Retro.B
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    completedJobStatus: Complete
+    periodStart: 2026-06-01T00:00:00Z
+    evaluationDate: 2026-02-01T00:00:00Z
+    reason: "Retro B — EvalDate=Feb, ValueDate=Jun: what did we know about June on Feb 1?"
+    storeEmptyResults: true
+
+  # ── Retro C — EvalDate=Feb · ValueDate=Today ─────────────────────────────
+  - name: TemporalPayrun.Retro.C
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    completedJobStatus: Complete
+    periodStart: 2026-09-01T00:00:00Z
+    evaluationDate: 2026-02-01T00:00:00Z
+    reason: "Retro C — EvalDate=Feb, ValueDate=Today: Feb knowledge projected to today"
+    storeEmptyResults: true
+
+  # ── Retro D — EvalDate=Today · ValueDate=Jun ─────────────────────────────
+  - name: TemporalPayrun.Retro.D
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    completedJobStatus: Complete
+    periodStart: 2026-06-01T00:00:00Z
+    evaluationDate: 2026-09-30T00:00:00Z
+    reason: "Retro D — EvalDate=Today, ValueDate=Jun: what do we know today about June?"
+    storeEmptyResults: true
+
+  # ── Forecast A — Oct period, no forecast ─────────────────────────────────
+  - name: TemporalPayrun.Forecast.A
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    completedJobStatus: Complete
+    periodStart: 2026-10-01T00:00:00Z
+    evaluationDate: 2026-10-31T00:00:00Z
+    reason: "Forecast A — Oct, no forecast: entry #3 excluded, production value only"
+    storeEmptyResults: true
+
+  # ── Forecast B — Oct period, forecast = Budget2026 ───────────────────────
+  - name: TemporalPayrun.Forecast.B
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    forecast: Budget2026
+    periodStart: 2026-10-01T00:00:00Z
+    evaluationDate: 2026-10-31T00:00:00Z
+    reason: "Forecast B — Oct + Budget2026: entry #3 active Oct 1–Nov 30 → 6000"
+    storeEmptyResults: true
+
+  # ── Forecast C — Dec period, forecast = Budget2026 ───────────────────────
+  - name: TemporalPayrun.Forecast.C
+    payrunName: TemporalPayrun
+    payrollName: TemporalPayroll
+    userIdentifier: hr@temporalag.com
+    forecast: Budget2026
+    periodStart: 2026-12-01T00:00:00Z
+    evaluationDate: 2026-12-31T00:00:00Z
+    reason: "Forecast C — Dec + Budget2026: entry #3 expired Nov 30, falls back to #2 → 5500"
+    storeEmptyResults: true
+
+  # ── Expected test results ─────────────────────────────────────────────────
+  payrollResults:
+
+  # Retro A — EvalDate=Sep 30 · ValueDate=Sep
+  # Visible: #1 (Jan 12 ≤ Sep 30) · #2 (May 17 ≤ Sep 30)
+  # Valid on Sep 1: #2 starts Apr 1 → wins
+  - payrunJobName: TemporalPayrun.Retro.A
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500
+
+  # Retro B — EvalDate=Feb 1 · ValueDate=Jun
+  # Visible: #1 (Jan 12 ≤ Feb 1) only — #2 created May 17 > Feb 1 → hidden
+  # Valid on Jun 1: #1 starts Feb 1, open-ended → wins
+  - payrunJobName: TemporalPayrun.Retro.B
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5000
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+
+  # Retro C — EvalDate=Feb 1 · ValueDate=Sep
+  # Visible: #1 only — same knowledge cutoff as Retro B
+  # Valid on Sep 1: #1 open-ended → still wins (no awareness of #2)
+  - payrunJobName: TemporalPayrun.Retro.C
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5000
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5000
+
+  # Retro D — EvalDate=Sep 30 · ValueDate=Jun
+  # Visible: #1 + #2 (today's knowledge)
+  # Valid on Jun 1: #2 starts Apr 1 ≤ Jun 1 → wins
+  - payrunJobName: TemporalPayrun.Retro.D
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500
+
+  # Forecast A — EvalDate=Oct 31 · ValueDate=Oct · no forecast
+  # Visible: #1 + #2 — #3 excluded (forecast tag, no forecast name on job)
+  # Valid on Oct 1: #2 starts Apr 1, open-ended → wins
+  - payrunJobName: TemporalPayrun.Forecast.A
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500
+
+  # Forecast B — EvalDate=Oct 31 · ValueDate=Oct · forecast=Budget2026
+  # Visible: #1 + #2 + #3 (Budget2026 entries included)
+  # Valid on Oct 1: #3 starts Oct 1, ends Nov 30 → wins over #2
+  - payrunJobName: TemporalPayrun.Forecast.B
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 6000
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 6000
+
+  # Forecast C — EvalDate=Dec 31 · ValueDate=Dec · forecast=Budget2026
+  # Visible: #1 + #2 + #3 (Budget2026 entries included)
+  # Valid on Dec 1: #3 ends Nov 30 < Dec 1 → expired → #2 wins
+  - payrunJobName: TemporalPayrun.Forecast.C
+    employeeIdentifier: alex.meyer@temporalag.com
+    wageTypeResults:
+    - wageTypeNumber: 100
+      value: 5500
+    collectorResults:
+    - collectorName: GrossIncome
+      value: 5500

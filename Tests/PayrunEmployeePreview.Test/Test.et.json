@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -14,7 +14,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-02-01T00:00:00.0Z",
           "reason": "Demo Payrun Jan 19"
@@ -27,7 +27,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-02-01T00:00:00.0Z",
           "evaluationDate": "2019-03-01T00:00:00.0Z",
           "reason": "Demo Payrun Feb 19"
@@ -40,7 +40,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-03-01T00:00:00.0Z",
           "evaluationDate": "2019-04-01T00:00:00.0Z",
           "reason": "Demo Payrun Mrz 19"
@@ -53,7 +53,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-04-01T00:00:00.0Z",
           "evaluationDate": "2019-05-01T00:00:00.0Z",
           "reason": "Demo Payrun Apr 19"
@@ -66,7 +66,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-05-01T00:00:00.0Z",
           "evaluationDate": "2019-06-01T00:00:00.0Z",
           "reason": "Demo Payrun Mai 19"
@@ -79,7 +79,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-12-01T00:00:00.0Z",
           "evaluationDate": "2020-01-01T00:00:00.0Z",
           "reason": "Demo Payrun Dez 19"
@@ -92,7 +92,7 @@
           "employeeIdentifiers": [
             "višnja.müller@foo.com"
           ],
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2020-01-01T00:00:00.0Z",
           "evaluationDate": "2020-02-01T00:00:00.0Z",
           "reason": "Demo Payrun Jan 20"

@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2023-12-01T00:00:00.0Z",
   "tenants": [
@@ -29,8 +29,22 @@
       ],
       "regulations": [
         {
+          "name": "PayrunEdge.ValidFrom",
+          "description": "Bug fix test: Regulation.ValidFrom == PeriodEnd. SQL filter ValidFrom < @regulationDate excludes this regulation when ValidFrom exactly equals PeriodEnd. Fix: ValidFrom <= @regulationDate. ValidFrom = 2024-10-31T23:59:59.9999999Z = PeriodEnd of Oct 2024.",
+          "validFrom": "2024-10-31T23:59:59.9999999Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 111,
+              "name": "ValidFromBoundary",
+              "description": "Bug fix: Regulation ValidFrom == PeriodEnd. Before fix: ValidFrom < PeriodEnd => false => not loaded => no result. After fix: ValidFrom <= PeriodEnd => true => loaded => 111. Derived for Oct24+ only.",
+              "valueExpression": "return 111m;",
+              "clusters": [ "Legal" ]
+            }
+          ]
+        },
+        {
           "name": "PayrunEdge",
-          "description": "Payrun edge case tests: period boundaries, case value overlap/touching/splitting, eval-date edges (period-start, period-end, cycle-end), retro, forecast",
+          "description": "Payrun edge case tests: period boundaries, case value overlap/touching/splitting, eval-date edges (period-start, period-end, cycle-end), retro, forecast, Start==EvalDate boundary fix",
           "cases": [
             {
               "name": "BaseSalary",
@@ -93,7 +107,20 @@
                   "name": "EvalDateEdgeValue",
                   "valueType": "Money",
                   "timeType": "CalendarPeriod",
-                  "description": "Case value with created == evaluationDate. PE uses strict < for visibility: created=Jun1, evalDate=Jun1 => NOT visible (actual=0). End=Jun30 (inclusive) keeps value out of Jul."
+                  "description": "Case value with created == evaluationDate. PE uses strict < for Created visibility: created=Jun1, evalDate=Jun1 => NOT visible (actual=0). End=Jun30 (inclusive) keeps value out of Jul."
+                }
+              ]
+            },
+            {
+              "name": "StartEqualsEvalSalary",
+              "caseType": "Employee",
+              "defaultReason": "Set start-equals-eval salary",
+              "fields": [
+                {
+                  "name": "StartEqualsEvalSalary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "description": "Bug fix: CaseValue Start == EvaluationDate. created=Aug15 (well before eval), start=Sep1 (== evalDate=Sep1). Fix changes Start filter from < to <=, making this value visible. WT110 = 7777."
                 }
               ]
             }
@@ -167,7 +194,7 @@
             {
               "wageTypeNumber": 108,
               "name": "EvalDateEdgeCaseValue",
-              "description": "Scenario: case value with created == evaluationDate. PE uses strict < for case value visibility: created=Jun1, evalDate=Jun1 => NOT visible => 0. Documents actual PE behaviour.",
+              "description": "Scenario: case value with created == evaluationDate. PE uses strict < for Created: created=Jun1, evalDate=Jun1 => NOT visible => 0. Documents intentional PE behaviour (by design).",
               "valueExpression": "var v = CaseValue[\"EvalDateEdgeValue\"]; return v != null ? (decimal)v : 0m;",
               "clusters": [
                 "Legal"
@@ -179,6 +206,16 @@
               "description": "Scenario: wage type with created == evaluationDate of Jun24-EvalStart run. PE uses <= for WageType derivation. Must be derived for evalDate >= Jun 1 (value 42).",
               "valueExpression": "return 42m;",
               "created": "2024-06-01T00:00:00.0Z",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "StartEqualsEvalSalary",
+              "description": "Bug fix test: CaseValue Start == EvaluationDate. created=Sep1 so only derived from evalDate >= Sep1 (same <= derivation rule as WT109). CaseValue has created=Aug15 (< evalDate, always visible via Created filter) and start=Sep1 (== evalDate). Before fix: Start < EvalDate => start=Sep1 < Sep1 = false => value invisible => 0. After fix: Start <= EvalDate => Sep1 <= Sep1 = true => visible => 7777.",
+              "valueExpression": "var v = CaseValue[\"StartEqualsEvalSalary\"]; return v != null ? (decimal)v : 0m;",
+              "created": "2024-09-01T00:00:00.0Z",
               "clusters": [
                 "Legal"
               ]
@@ -204,6 +241,11 @@
               "level": 1,
               "priority": 1,
               "regulationName": "PayrunEdge"
+            },
+            {
+              "level": 2,
+              "priority": 1,
+              "regulationName": "PayrunEdge.ValidFrom"
             }
           ],
           "clusterSetWageType": "Legal",
@@ -370,6 +412,22 @@
                   }
                 ]
               }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "edge.employee@foo.com",
+              "divisionName": "EdgeDivision",
+              "case": {
+                "caseName": "StartEqualsEvalSalary",
+                "values": [
+                  {
+                    "caseFieldName": "StartEqualsEvalSalary",
+                    "value": "7777",
+                    "start": "2024-09-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -388,7 +446,7 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-01-28T00:00:00.0Z",
           "reason": "Standard run Jan 2024",
@@ -399,7 +457,7 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-02-01T00:00:00.0Z",
           "evaluationDate": "2024-02-28T00:00:00.0Z",
           "reason": "Standard run Feb 2024 — BaseSalary 4000 (created=Mar5) not yet visible, uses 3000",
@@ -410,7 +468,7 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-03-01T00:00:00.0Z",
           "evaluationDate": "2024-03-28T00:00:00.0Z",
           "reason": "Standard run Mar 2024 — BaseSalary 5000 (start=Mar1, created=Mar6) wins over 4000 (start=Feb1, created=Mar5) by later start. Retro for Feb triggered: 4000 now visible.",
@@ -421,7 +479,7 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-04-01T00:00:00.0Z",
           "evaluationDate": "2024-04-28T00:00:00.0Z",
           "reason": "Standard run Apr 2024 — Supplement touching (200 from Apr1) and OverlapAllowance overlap (600 wins over 500)",
@@ -432,7 +490,7 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-06-01T00:00:00.0Z",
           "evaluationDate": "2024-06-01T00:00:00.0Z",
           "reason": "Edge: evaluationDate == PeriodStart (Jun 1). CaseValue created=Jun1 NOT visible (strict <) => WT108=0. WageType created=Jun1 IS derived (<=) => WT109=42. WT105=1.",
@@ -443,10 +501,10 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-07-01T00:00:00.0Z",
           "evaluationDate": "2024-07-31T00:00:00.0Z",
-          "reason": "Edge: evaluationDate == last day of period (Jul 31). EvalDateEdgeValue ends Jun30 (inclusive) => not active in Jul => WT108=0. WT105=31.",
+          "reason": "Edge: evaluationDate == last day of period (Jul 31). EvalDateEdgeValue ends Jun30 (inclusive) => not active in Jul => WT108=0. WT105=31. WT110 not derived (created=Sep1 > evalDate=Jul31).",
           "storeEmptyResults": true
         },
         {
@@ -454,10 +512,10 @@
           "payrunName": "PayrunEdgePayrun",
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-12-01T00:00:00.0Z",
           "evaluationDate": "2024-12-31T00:00:00.0Z",
-          "reason": "Edge: evaluationDate == CycleEnd (Dec 31 = last day of yearly cycle). WT105=31.",
+          "reason": "Edge: evaluationDate == CycleEnd (Dec 31). WT105=31. WT110: created=Sep1<=Dec31 => derived, CaseValue start=Sep1<=Dec31 => visible => 7777.",
           "storeEmptyResults": true
         },
         {
@@ -466,10 +524,32 @@
           "payrollName": "PayrunEdge",
           "userIdentifier": "peter.schmid@foo.com",
           "forecast": "EdgeForecast",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-08-01T00:00:00.0Z",
           "evaluationDate": "2024-07-28T00:00:00.0Z",
-          "reason": "Forecast run Aug 2024 — period is ahead of evaluationDate. WT107=1 (IsForecast).",
+          "reason": "Forecast run Aug 2024 — period is ahead of evaluationDate. WT107=1 (IsForecast). WT110 not derived (created=Sep1 > evalDate=Jul28).",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Sep24.StartEqualsEval",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-09-01T00:00:00.0Z",
+          "evaluationDate": "2024-09-01T00:00:00.0Z",
+          "reason": "Bug fix: CaseValue Start == EvaluationDate (Sep 1). CaseValue: created=Aug15 (< evalDate => visible via Created filter), start=Sep1 (== evalDate). Fix: Start<=EvalDate => visible => WT110=7777. WT109 derived (created=Jun1<=Sep1). WT105=1.",
+          "storeEmptyResults": true
+        },
+        {
+          "name": "PayrunEdge.Oct24.ValidFrom",
+          "payrunName": "PayrunEdgePayrun",
+          "payrollName": "PayrunEdge",
+          "userIdentifier": "peter.schmid@foo.com",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-10-01T00:00:00.0Z",
+          "evaluationDate": "2024-10-28T00:00:00.0Z",
+          "reason": "Bug fix: Regulation ValidFrom == PeriodEnd. PeriodEnd(Oct) = 2024-10-31T23:59:59.9999999. Regulation PayrunEdge.ValidFrom has validFrom = that exact value. Before fix: ValidFrom < PeriodEnd = false => not loaded => WT111 missing. After fix: ValidFrom <= PeriodEnd = true => loaded => WT111=111.",
           "storeEmptyResults": true
         }
       ],
@@ -588,6 +668,8 @@
             { "wageTypeNumber": 107, "value": 0 },
             { "wageTypeNumber": 108, "value": 0 },
             { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 110, "value": 7777 },
+            { "wageTypeNumber": 111, "value": 111 },
             { "wageTypeNumber": 202, "value": 0 }
           ]
         },
@@ -604,6 +686,41 @@
             { "wageTypeNumber": 107, "value": 1 },
             { "wageTypeNumber": 108, "value": 0 },
             { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Sep24.StartEqualsEval",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 1 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 110, "value": 7777 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunEdge.Oct24.ValidFrom",
+          "employeeIdentifier": "edge.employee@foo.com",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 5000 },
+            { "wageTypeNumber": 102, "value": 200 },
+            { "wageTypeNumber": 103, "value": 300 },
+            { "wageTypeNumber": 104, "value": 0 },
+            { "wageTypeNumber": 105, "value": 28 },
+            { "wageTypeNumber": 106, "value": 0 },
+            { "wageTypeNumber": 107, "value": 0 },
+            { "wageTypeNumber": 108, "value": 0 },
+            { "wageTypeNumber": 109, "value": 42 },
+            { "wageTypeNumber": 110, "value": 7777 },
+            { "wageTypeNumber": 111, "value": 111 },
             { "wageTypeNumber": 202, "value": 0 }
           ]
         }

@@ -1,0 +1,82 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2025-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Report.Tenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Report.Regulation",
+          "updateMode": "Update",
+          "reports": [
+            {
+              "name": "Payslip",
+              "nameLocalizations": {
+                "en": "Payslip Report"
+              },
+              "clusters": [
+                "Month",
+                "Employee",
+                "Pay"
+              ],
+              "endExpressionFile": "Script.cs",
+              "queries": {
+                "Employees": "QueryEmployees"
+              },
+              "parameters": [
+                {
+                  "name": "TenantId",
+                  "valueType": "Integer",
+                  "parameterType": "TenantId",
+                  "hidden": true
+                },
+                {
+                  "name": "PayslipYear",
+                  "valueType": "Year",
+                  "value": "2025",
+                  "mandatory": true,
+                  "attributes": {
+                    "input.minvalue": 2000
+                  }
+                },
+                {
+                  "name": "PayslipMonth",
+                  "valueType": "Integer",
+                  "value": "3",
+                  "mandatory": true,
+                  "attributes": {
+                    "input.minvalue": 1,
+                    "input.maxvalue": 12
+                  }
+                },
+                {
+                  "name": "EmployeeIdentifier",
+                  "nameLocalizations": {
+                    "en": "Employee"
+                  },
+                  "description": "Employee identifier (leave empty for all employees)",
+                  "descriptionLocalizations": {
+                    "en": "Employee identifier (leave empty for all employees)"
+                  }
+                }
+              ],
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "culture": "de",
+                  "contentFile": "Report.frx"
+                },
+                {
+                  "name": "DefaultEnglish",
+                  "culture": "en",
+                  "contentFile": "Report.frx"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

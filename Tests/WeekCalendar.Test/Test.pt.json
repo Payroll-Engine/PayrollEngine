@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2018-11-05T00:00:00.0Z",
   "tenants": [
@@ -155,7 +155,7 @@
           "payrunName": "WeekCalendar.Week.Payrun",
           "payrollName": "WeekCalendar.Week",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-02-01T00:00:00.0Z",
           "reason": "Demo Payrun First Week Jan 19"
@@ -165,7 +165,7 @@
           "payrunName": "WeekCalendar.Week.Payrun",
           "payrollName": "WeekCalendar.Week",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-12-31T00:00:00.0Z",
           "evaluationDate": "2020-01-15T00:00:00.0Z",
           "reason": "Demo Payrun Last Week Dez 19"
@@ -175,7 +175,7 @@
           "payrunName": "WeekCalendar.BiWeek.Payrun",
           "payrollName": "WeekCalendar.BiWeek",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-02-01T00:00:00.0Z",
           "reason": "Demo Payrun First BiWeek Jan 19"
@@ -185,7 +185,7 @@
           "payrunName": "WeekCalendar.BiWeek.Payrun",
           "payrollName": "WeekCalendar.BiWeek",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-12-31T00:00:00.0Z",
           "evaluationDate": "2020-01-15T00:00:00.0Z",
           "reason": "Demo Payrun Last BiWeek Dez 19"

@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -250,7 +250,7 @@
           "payrunName": "DerivedPayroll.TestPayrun1",
           "payrollName": "DerivedPayroll.Test.Derived",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-02-01T00:00:00.0Z",
           "evaluationDate": "2020-02-01T00:00:00.0Z",
           "reason": "Demo Payrun"

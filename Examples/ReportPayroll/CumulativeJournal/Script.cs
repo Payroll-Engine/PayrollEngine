@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data;
 using PayrollEngine.Client.Scripting;
 using PayrollEngine.Client.Scripting.Runtime;
@@ -28,7 +28,7 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
     [ReportEndScript(
         reportName: "CumulativeJournal",
         culture: "de-CH",
-        parameters: "{ \"JournalYear\": \"2023\"}")]
+        parameters: "{ \"JournalYear\": \"2025\"}")]
     public object Execute()
     {
         // employees
@@ -62,6 +62,10 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
             {
                 throw new ScriptException("Missing employee id.");
             }
+
+            // employee name for report display
+            var firstName = employee["FirstName"] as string;
+            var lastName = employee["LastName"] as string;
 
             // temporary tables for employee
             DataTable employeeWageTypeResults = AddTable("EmployeeWageTypeResults");
@@ -120,6 +124,37 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
                 }
             }
 
+            // add employee name columns and populate them for template display
+            if (employeeWageTypeResults.Rows.Count > 0)
+            {
+                employeeWageTypeResults.Columns.Add("FirstName", typeof(string));
+                employeeWageTypeResults.Columns.Add("LastName", typeof(string));
+                foreach (DataRow row in employeeWageTypeResults.Rows)
+                {
+                    row["FirstName"] = firstName;
+                    row["LastName"] = lastName;
+                }
+            }
+            if (employeeCollectorResults.Rows.Count > 0)
+            {
+                employeeCollectorResults.Columns.Add("FirstName", typeof(string));
+                employeeCollectorResults.Columns.Add("LastName", typeof(string));
+                foreach (DataRow row in employeeCollectorResults.Rows)
+                {
+                    row["FirstName"] = firstName;
+                    row["LastName"] = lastName;
+                }
+            }
+
+            // mark summary rows before merge
+            if (!employeeWageTypeResults.Columns.Contains("IsSummary"))
+                employeeWageTypeResults.Columns.Add("IsSummary", typeof(int));
+            foreach (DataRow row in employeeWageTypeResults.Rows)
+            {
+                var wtn = Convert.ToDecimal(row["WageTypeNumber"]);
+                row["IsSummary"] = (wtn == 200m || wtn == 300m) ? 1 : 0;
+            }
+
             // merge employee results to overall wage type results (remove primary key to append records)
             employeeWageTypeResults.RemovePrimaryKey();
             wageTypeResults.Merge(employeeWageTypeResults);
@@ -139,6 +174,28 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
             wageTypeResults.AddColumn<decimal>("Total", "IIF(M1 IS NULL, 0, M1) + IIF(M2 IS NULL, 0, M2) + IIF(M3 IS NULL, 0, M3) + IIF(M4 IS NULL, 0, M4) + IIF(M5 IS NULL, 0, M5) + IIF(M6 IS NULL, 0, M6) + IIF(M7 IS NULL, 0, M7) + IIF(M8 IS NULL, 0, M8) + IIF(M9 IS NULL, 0, M9) + IIF(M10 IS NULL, 0, M10) + IIF(M11 IS NULL, 0, M11) + IIF(M12 IS NULL, 0, M12)");
             // remove empty rows
             wageTypeResults.DeleteRows("Total = 0");
+            // sort by employee and wage type number (in-place to preserve table reference)
+            var sortedView = new DataView(wageTypeResults) { Sort = "EmployeeId ASC, WageTypeNumber ASC" };
+            var sortedRows = sortedView.ToTable();
+            wageTypeResults.Clear();
+            foreach (DataRow row in sortedRows.Rows)
+                wageTypeResults.ImportRow(row);
+            // per-employee, per-month presence flags: HasM1..HasM12 = 1 when the
+            // employee has at least one non-zero value in that month column.
+            // Used by the template to keep zeros visible in months that already
+            // show numbers for that employee (instead of hiding all zeros).
+            for (var m = 1; m <= 12; m++)
+                wageTypeResults.Columns.Add($"HasM{m}", typeof(int));
+            foreach (var empGroup in wageTypeResults.AsEnumerable().GroupBy(r => r["EmployeeId"]))
+            {
+                for (var m = 1; m <= 12; m++)
+                {
+                    var col = $"M{m}";
+                    var hasValue = empGroup.Any(r => r[col] != DBNull.Value && Convert.ToDecimal(r[col]) != 0m);
+                    foreach (var row in empGroup)
+                        row[$"HasM{m}"] = hasValue ? 1 : 0;
+                }
+            }
             // report relations: results are related toward employee
             AddRelation("EmployeeWageTypeResults", employees.TableName, wageTypeResults.TableName, "EmployeeId");
         }
@@ -150,6 +207,19 @@ public class ReportEndFunction : PayrollEngine.Client.Scripting.Function.ReportE
             collectorResults.AddColumn<decimal>("Total", "IIF(M1 IS NULL, 0, M1) + IIF(M2 IS NULL, 0, M2) + IIF(M3 IS NULL, 0, M3) + IIF(M4 IS NULL, 0, M4) + IIF(M5 IS NULL, 0, M5) + IIF(M6 IS NULL, 0, M6) + IIF(M7 IS NULL, 0, M7) + IIF(M8 IS NULL, 0, M8) + IIF(M9 IS NULL, 0, M9) + IIF(M10 IS NULL, 0, M10) + IIF(M11 IS NULL, 0, M11) + IIF(M12 IS NULL, 0, M12)");
             // remove empty rows
             collectorResults.DeleteRows("Total = 0");
+            // per-employee, per-month presence flags (same logic as wageTypeResults)
+            for (var m = 1; m <= 12; m++)
+                collectorResults.Columns.Add($"HasM{m}", typeof(int));
+            foreach (var empGroup in collectorResults.AsEnumerable().GroupBy(r => r["EmployeeId"]))
+            {
+                for (var m = 1; m <= 12; m++)
+                {
+                    var col = $"M{m}";
+                    var hasValue = empGroup.Any(r => r[col] != DBNull.Value && Convert.ToDecimal(r[col]) != 0m);
+                    foreach (var row in empGroup)
+                        row[$"HasM{m}"] = hasValue ? 1 : 0;
+                }
+            }
             // report relations: results are related toward employee
             AddRelation("EmployeeCollectorResults", employees.TableName, collectorResults.TableName, "EmployeeId");
         }

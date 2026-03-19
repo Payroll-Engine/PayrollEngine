@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2023-12-01T00:00:00.0Z",
   "tenants": [
@@ -252,7 +252,7 @@
           "payrunName": "Collector.Test.Payrun",
           "payrollName": "Collector.Test.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-01-28T00:00:00.0Z",
           "reason": "Collector test Jan 2024 — minResult active (Salary 1000 < min 2000)"
@@ -262,7 +262,7 @@
           "payrunName": "Collector.Test.Payrun",
           "payrollName": "Collector.Test.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-02-01T00:00:00.0Z",
           "evaluationDate": "2024-02-28T00:00:00.0Z",
           "reason": "Collector test Feb 2024 — all collectors in normal range"
@@ -272,7 +272,7 @@
           "payrunName": "Collector.Test.Payrun",
           "payrollName": "Collector.Test.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-03-01T00:00:00.0Z",
           "evaluationDate": "2024-03-28T00:00:00.0Z",
           "reason": "Collector test Mar 2024 — maxResult active (Salary 4000 > max 3000)"

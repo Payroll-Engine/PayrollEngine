@@ -219,3 +219,18 @@ Delete.pecmd
 |:--|:--|
 | User | `lucy.smith@foo.com` |
 | Password | `@ayroll3nginE` |
+
+---
+
+## Features Demonstrated
+
+- **All value types** — every engine `ValueType` (String, Money, Percent, Boolean, Date, Lookup, None …) demonstrated with practical input attributes
+- **All time types** — Moment, Period, ClosedPeriod, CalendarPeriod, ClosedCalendarPeriod, Timeless side-by-side
+- **Inline lists and alias mapping** — `StringAliasList`, `IntegerAliasList` etc. map display labels to different stored values
+- **Lookup binding** — object lookup (`Location`) and range lookup (`Commission`) with object field access
+- **Case slot hierarchy** — three-level parent/child/grandchild slots driven by a `ChildCount` field
+- **Case relations with conditions** — `buildExpression` on relations activates or suppresses child cases dynamically
+- **No-Code build and validate actions** — `Range`, `SetFieldValue`, `Input.DisableValue`, `ValueGreaterThan`, `Email` and custom conditional chains
+- **Available actions** — `CaseAvailableAction` hides a case from the UI when a toggle field is set
+- **Override and cancel patterns** — `overrideType: Inactive`, `cancellationType: Case`
+- **Culture-specific formatting** — `culture: de-DE` on a Money field renders German decimal separators

@@ -18,6 +18,10 @@ on:
         description: 'WebApp version (leave empty to skip)'
         required: false
         default: ''
+      mcpserver_version:
+        description: 'McpServer version (leave empty to skip)'
+        required: false
+        default: ''
       update_wiki:
         description: 'Update Wiki release notes (deprecated)'
         type: boolean
@@ -45,9 +49,11 @@ jobs:
       build_backend: ${{ steps.resolve.outputs.build_backend }}
       build_console: ${{ steps.resolve.outputs.build_console }}
       build_webapp: ${{ steps.resolve.outputs.build_webapp }}
+      build_mcpserver: ${{ steps.resolve.outputs.build_mcpserver }}
       backend_prerelease: ${{ steps.resolve.outputs.backend_prerelease }}
       console_prerelease: ${{ steps.resolve.outputs.console_prerelease }}
       webapp_prerelease: ${{ steps.resolve.outputs.webapp_prerelease }}
+      mcpserver_prerelease: ${{ steps.resolve.outputs.mcpserver_prerelease }}
       any_prerelease: ${{ steps.resolve.outputs.any_prerelease }}
       dry_run: ${{ steps.resolve.outputs.dry_run }}
     steps:
@@ -73,11 +79,12 @@ jobs:
 
           ANY_PRE="false"
 
-          for APP in backend console webapp; do
+          for APP in backend console webapp mcpserver; do
             case $APP in
-              backend) RAW_VERSION="${{ inputs.backend_version }}" ;;
-              console) RAW_VERSION="${{ inputs.console_version }}" ;;
-              webapp)  RAW_VERSION="${{ inputs.webapp_version }}" ;;
+              backend)   RAW_VERSION="${{ inputs.backend_version }}" ;;
+              console)   RAW_VERSION="${{ inputs.console_version }}" ;;
+              webapp)    RAW_VERSION="${{ inputs.webapp_version }}" ;;
+              mcpserver) RAW_VERSION="${{ inputs.mcpserver_version }}" ;;
             esac
 
             if [ "${DRY_RUN}" = "true" ]; then
@@ -113,6 +120,7 @@ jobs:
           echo "  Backend:       ${{ inputs.backend_version || '(skip)' }} (prerelease: ${{ steps.resolve.outputs.backend_prerelease }})"
           echo "  Console:       ${{ inputs.console_version || '(skip)' }} (prerelease: ${{ steps.resolve.outputs.console_prerelease }})"
           echo "  WebApp:        ${{ inputs.webapp_version || '(skip)' }} (prerelease: ${{ steps.resolve.outputs.webapp_prerelease }})"
+          echo "  McpServer:     ${{ inputs.mcpserver_version || '(skip)' }} (prerelease: ${{ steps.resolve.outputs.mcpserver_prerelease }})"
           echo "  Wiki update:   ${{ inputs.update_wiki }}"
           echo "═══════════════════════════════════════════"
 
@@ -163,7 +171,8 @@ jobs:
             const apps = [
               { repo: 'PayrollEngine.Backend',       version: '${{ inputs.backend_version }}' },
               { repo: 'PayrollEngine.PayrollConsole', version: '${{ inputs.console_version }}' },
-              { repo: 'PayrollEngine.WebApp',         version: '${{ inputs.webapp_version }}' }
+              { repo: 'PayrollEngine.WebApp',         version: '${{ inputs.webapp_version }}' },
+              { repo: 'PayrollEngine.McpServer',      version: '${{ inputs.mcpserver_version }}' }
             ].filter(a => a.version);
 
             if (apps.length > 0) console.log(`\n🐳 Checking app versions\n`);
@@ -663,13 +672,39 @@ jobs:
               "dry_run": "${{ needs.prepare.outputs.dry_run }}"
             }
 
+  wave-5-mcpserver:
+    needs: [prepare, wait-wave-4]
+    if: always() && needs.wait-wave-4.result == 'success' && needs.prepare.outputs.build_mcpserver == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve app version
+        id: ver
+        run: |
+          if [ "${{ needs.prepare.outputs.dry_run }}" = "true" ]; then
+            echo "version=0.0.0-dryrun.${{ github.run_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ inputs.mcpserver_version }}" >> $GITHUB_OUTPUT
+          fi
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.McpServer
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ steps.ver.outputs.version }}",
+              "is_prerelease": "${{ needs.prepare.outputs.mcpserver_prerelease }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
   wait-wave-5:
-    needs: [prepare, wave-5-backend, wave-5-console, wave-5-webapp]
+    needs: [prepare, wave-5-backend, wave-5-console, wave-5-webapp, wave-5-mcpserver]
     if: |
       always() && (
         needs.wave-5-backend.result == 'success' ||
         needs.wave-5-console.result == 'success' ||
-        needs.wave-5-webapp.result == 'success'
+        needs.wave-5-webapp.result == 'success' ||
+        needs.wave-5-mcpserver.result == 'success'
       )
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -693,6 +728,8 @@ jobs:
               apps.push({ repo: 'PayrollEngine.PayrollConsole', tag: `v${{ inputs.console_version }}` });
             if ('${{ needs.wave-5-webapp.result }}' === 'success')
               apps.push({ repo: 'PayrollEngine.WebApp',         tag: `v${{ inputs.webapp_version }}` });
+            if ('${{ needs.wave-5-mcpserver.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.McpServer',      tag: `v${{ inputs.mcpserver_version }}` });
 
             const maxAttempts = 90;
             const delay = 15000;
@@ -772,9 +809,10 @@ jobs:
               body += ` |\n`;
             }
             const apps = [
-              { name: 'Backend',       version: '${{ inputs.backend_version }}', pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
-              { name: 'PayrollConsole', version: '${{ inputs.console_version }}', pre: '${{ needs.prepare.outputs.console_prerelease }}' },
-              { name: 'WebApp',         version: '${{ inputs.webapp_version }}',  pre: '${{ needs.prepare.outputs.webapp_prerelease }}' }
+              { name: 'Backend',       version: '${{ inputs.backend_version }}',   pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
+              { name: 'PayrollConsole', version: '${{ inputs.console_version }}',   pre: '${{ needs.prepare.outputs.console_prerelease }}' },
+              { name: 'WebApp',         version: '${{ inputs.webapp_version }}',    pre: '${{ needs.prepare.outputs.webapp_prerelease }}' },
+              { name: 'McpServer',      version: '${{ inputs.mcpserver_version }}', pre: '${{ needs.prepare.outputs.mcpserver_prerelease }}' }
             ].filter(a => a.version);
             if (apps.length > 0) {
               body += `\n## 🐳 Docker Images (Linux)\n\n| App | Version | Pull Command |\n|-----|---------|-------------|\n`;

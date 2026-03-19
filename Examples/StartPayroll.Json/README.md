@@ -186,3 +186,16 @@ Delete.pecmd
 - [StartPayroll.Yaml](../StartPayroll.Yaml) — identical tutorial in YAML format
 - [Basic Payroll](https://github.com/Payroll-Engine/PayrollEngine/wiki/Basic-Payroll) — wiki tutorial (Steps 1–2)
 - [Advanced Payroll](https://github.com/Payroll-Engine/PayrollEngine/wiki/Advanced-Payroll) — wiki tutorial (Step 3)
+
+---
+
+## Features Demonstrated
+
+- **Incremental regulation layers** — `StartRegulation` (Level 1), `InsuranceRegulation` (Level 2, shared), `CompanyRegulation` (Level 3) each add new wage types and cases without modifying prior layers
+- **`sharedRegulation: true`** — `InsuranceRegulation` is reusable across tenants and referenced by multiple payrolls without duplication
+- **Range lookup** — `InsuranceRate` brackets salary into three flat-rate deduction tiers; added at Level 2 without touching the base regulation
+- **`Moment` time type** — `Benefit` case places one-time payments in exactly one pay period; multiple Moment entries in the same month accumulate
+- **No-Code range guard** — `Range(^:Salary, 500, 25000)` in `buildActions` clamps input; `Within(^:Salary, 500, 25000)` in `validateActions` rejects out-of-range values
+- **Case test** — `Test.Salary.ct.json` validates the salary boundary values (499 → invalid, 500 → valid)
+- **Payslip report** — bilingual (EN/DE) report on Step 3 results; Excel, PDF, and XML output via PayrollConsole
+- **Excel regulation import** — `Regulation.xlsx` imported directly via `RegulationExcelImport` as an alternative to hand-crafted JSON

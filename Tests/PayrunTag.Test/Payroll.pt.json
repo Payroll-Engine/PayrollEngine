@@ -1,0 +1,163 @@
+﻿{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2018-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "PayrunTag.Test",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "admin@payruntag.test",
+          "firstName": "Admin",
+          "lastName": "PayrunTag"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "PayrunTagDivision"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "PayrunTag.Test",
+          "description": "Tests GetWageTypeResults with Tag filter — verifies tag isolation for retro sub-runs scheduled via ScheduleRetroPayrun",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "defaultReason": "Set salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "Salary",
+              "description": "Salary — schedules an Alpha-tagged retro sub-run for the prior period (Legal only, never runs in retro)",
+              "valueExpression": "ScheduleRetroPayrun(PeriodStart.SubtractMonths(1), new[] { \"Alpha\" }); return CaseValue[\"Salary\"];",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "RetroMarker",
+              "description": "Returns 750 inside any retro sub-run, 0 in main runs — the tagged result queried by WT201/202",
+              "valueExpression": "IsRetroPayrun ? 750m : 0m",
+              "clusters": [ "Legal", "Retro" ]
+            },
+            {
+              "wageTypeNumber": 201,
+              "name": "TagAlphaResult",
+              "description": "Queries WT110 for the prior period with Tag=Alpha — expects 750 from the Alpha retro sub-run",
+              "valueExpression": "GetWageTypeResults(new(110m, PeriodStart.SubtractMonths(1), PeriodEnd) { Tag = \"Alpha\" }).Sum()",
+              "clusters": [ "Legal" ]
+            },
+            {
+              "wageTypeNumber": 202,
+              "name": "TagBetaResult",
+              "description": "Queries WT110 for the prior period with Tag=Beta — expects 0 (no Beta retro was ever scheduled)",
+              "valueExpression": "GetWageTypeResults(new(110m, PeriodStart.SubtractMonths(1), PeriodEnd) { Tag = \"Beta\" }).Sum()",
+              "clusters": [ "Legal" ]
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "kai.vogel@payruntag.test",
+          "firstName": "Kai",
+          "lastName": "Vogel",
+          "divisions": [ "PayrunTagDivision" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "PayrunTag.Test",
+          "divisionName": "PayrunTagDivision",
+          "clusterSetWageType": "Legal",
+          "clusterSetWageTypeRetro": "Retro",
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [ "Legal" ]
+            },
+            {
+              "name": "Retro",
+              "includeClusters": [ "Retro" ]
+            }
+          ],
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "PayrunTag.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@payruntag.test",
+              "employeeIdentifier": "kai.vogel@payruntag.test",
+              "divisionName": "PayrunTagDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2018-01-01T00:00:00.0Z",
+                    "created": "2018-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "PayrunTag.Test",
+          "name": "PayrunTag.Payrun",
+          "culture": "de-CH",
+          "defaultReason": "PayrunTag test"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "PayrunTag.Nov18",
+          "payrunName": "PayrunTag.Payrun",
+          "payrollName": "PayrunTag.Test",
+          "userIdentifier": "admin@payruntag.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2018-11-01T00:00:00.0Z",
+          "evaluationDate": "2018-11-28T00:00:00.0Z",
+          "reason": "Key run: schedules Oct Alpha retro; WT201 Tag=Alpha expects 750, WT202 Tag=Beta expects 0"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "PayrunTag.Nov18",
+          "employeeIdentifier": "kai.vogel@payruntag.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 100, "value": 5000 },
+            { "wageTypeNumber": 110, "value": 0 },
+            { "wageTypeNumber": 201, "value": 750 },
+            { "wageTypeNumber": 202, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "PayrunTag.Nov18",
+          "retroPeriodStart": "2018-10-01T00:00:00.0Z",
+          "employeeIdentifier": "kai.vogel@payruntag.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 110, "value": 750 }
+          ]
+        }
+      ]
+    }
+  ]
+}

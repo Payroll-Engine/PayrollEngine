@@ -173,3 +173,14 @@ TaxTablePayroll/
 1 TaxTable.Payroll.yaml         → regulation, tenant, employees, payroll, payrun
 2 LookupTextImport              → bulk-fill TaxTable.Monthly (~7,100 records)
 ```
+
+---
+
+## Features Demonstrated
+
+- **Bulk lookup import** — `LookupTextImport` loads thousands of records from a fixed-width text file directly into a regulation lookup via the backend API
+- **Sliced import** — `SliceSize` splits the import into chunks; first slice uses `UpdateMode: Update` (reset existing values), subsequent slices use `NoUpdate` (append); sequencing managed automatically
+- **Regulation / data separation** — lookup schema declared once in the regulation; data filled by `LookupTextImport`; only the text file changes on annual tax table update
+- **Range lookup with named columns** — `GetRangeObjectLookup` finds the income bracket covering the employee’s salary, then reads the column matching their taxpayer category
+- **Composite lookup key** — period type and tax table number combined as `"30 " + tableNumber`; the map file defines all field positions for the fixed-width format
+- **Country-neutral map file** — `TaxTable.Monthly.map.json` works with any fixed-width tax table following the defined record layout; no regulation change for different national formats

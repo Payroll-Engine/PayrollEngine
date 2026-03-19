@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -192,7 +192,7 @@
             "višnja.müller@foo.com"
           ],
           "reason": "Test Payrun Week 8 - 2025",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-02-17T00:00:00.0Z"
         }
       ],

@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2024-01-01T00:00:00.0Z",
   "tenants": [
@@ -301,7 +301,7 @@
           "payrunName": "RetroPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "hr@retropayroll.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-01-31T00:00:00.0Z",
           "reason": "January 2024 — baseline, no retro",
@@ -312,7 +312,7 @@
           "payrunName": "RetroPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "hr@retropayroll.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-02-01T00:00:00.0Z",
           "evaluationDate": "2024-02-29T00:00:00.0Z",
           "reason": "February 2024 — baseline, no retro",
@@ -323,7 +323,7 @@
           "payrunName": "RetroPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "hr@retropayroll.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-03-01T00:00:00.0Z",
           "evaluationDate": "2024-03-31T00:00:00.0Z",
           "reason": "March 2024 — retro: Emma salary raise (Jan+Feb), Ben bonus (Jan)",
@@ -338,7 +338,7 @@
           "payrunName": "RetroPayrun",
           "payrollName": "RetroPayroll",
           "userIdentifier": "hr@retropayroll.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-04-01T00:00:00.0Z",
           "evaluationDate": "2024-04-30T00:00:00.0Z",
           "reason": "April 2024 — retro: Emma part-time reduction (Feb+Mar), negative deltas",

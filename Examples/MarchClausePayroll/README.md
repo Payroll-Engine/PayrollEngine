@@ -203,3 +203,13 @@ Test.pecmd
 # Teardown
 Delete.pecmd
 ```
+
+---
+
+## Features Demonstrated
+
+- **Märzklausel detection** — `NeedsMarchClauseRetro()` evaluates all three statutory conditions (Q1 period, bonus > 0, exceeds BBG remainder) in a single reusable method
+- **Low-Code extension methods** — `MarchClauseFunctions.cs` adds pure calculation methods directly to `WageTypeValueFunction` via C# extension methods
+- **`Period` time type for late-entered bonuses** — open `start` date makes the bonus active in a past retro period while `created ≤ evaluationDate` controls visibility
+- **`Timeless` case for annual baseline data** — `PreviousYearEarnings` set once after year-end; always available regardless of evaluation period
+- **Exchange import limitation** — `ScheduleRetroPayrun()` must be omitted in Exchange test imports to avoid job deadlocks; production pattern documented in comments

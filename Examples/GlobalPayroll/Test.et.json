@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -127,7 +127,7 @@
           "name": "GlobalTechPayrun.Test.Jan24",
           "payrunName": "GlobalTechPayrun",
           "userIdentifier": "admin@globaltech.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-02-01T00:00:00.0Z",
           "reason": "January 2024 Payroll Test",
@@ -140,7 +140,7 @@
           "name": "GlobalTechPayrun.Test.Feb24",
           "payrunName": "GlobalTechPayrun",
           "userIdentifier": "admin@globaltech.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-02-01T00:00:00.0Z",
           "evaluationDate": "2024-03-01T00:00:00.0Z",
           "reason": "February 2024 Payroll Test — verifies Moment bonus is not carried into subsequent periods",

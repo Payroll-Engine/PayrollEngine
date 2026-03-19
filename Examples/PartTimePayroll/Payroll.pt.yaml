@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+﻿# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
 # PartTimePayroll — FlexWork AG
 # Demonstrates: employment level scaling, overtime (full-time only), retroactive level correction.
 # Fully implemented with No-Code actions.
@@ -250,7 +250,7 @@ tenants:
     payrunName: FlexWorkPayrun
     payrollName: FlexWorkPayroll
     userIdentifier: hr@flexwork.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2025-01-01T00:00:00Z
     evaluationDate: 2025-01-31T00:00:00Z
     reason: January 2025 - baseline, no retro
@@ -260,7 +260,7 @@ tenants:
     payrunName: FlexWorkPayrun
     payrollName: FlexWorkPayroll
     userIdentifier: hr@flexwork.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2025-02-01T00:00:00Z
     evaluationDate: 2025-02-28T00:00:00Z
     # Anna's retro change (created 2025-03-05) is not yet visible here
@@ -271,7 +271,7 @@ tenants:
     payrunName: FlexWorkPayrun
     payrollName: FlexWorkPayroll
     userIdentifier: hr@flexwork.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2025-03-01T00:00:00Z
     evaluationDate: 2025-03-31T00:00:00Z
     # Anna's level change now visible — triggers retro recalculation for February

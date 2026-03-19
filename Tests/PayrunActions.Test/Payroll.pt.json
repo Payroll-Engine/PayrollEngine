@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2025-01-01T00:00:00.0Z",
   "tenants": [
@@ -296,7 +296,7 @@
           "payrollName": "PayrunAction.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
           "consolidatedPayMode": "ValueChange",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-10-01T00:00:00.0Z",
           "evaluationDate": "2025-10-28T00:00:00.0Z",
           "reason": "Consolidated Payrun Oct 25",
@@ -308,7 +308,7 @@
           "payrollName": "PayrunAction.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
           "consolidatedPayMode": "ValueChange",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-11-01T00:00:00.0Z",
           "evaluationDate": "2025-11-28T00:00:00.0Z",
           "reason": "Consolidated Payrun Nov 25",
@@ -320,7 +320,7 @@
           "payrollName": "PayrunAction.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
           "consolidatedPayMode": "ValueChange",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-12-01T00:00:00.0Z",
           "evaluationDate": "2025-12-28T00:00:00.0Z",
           "reason": "Consolidated Payrun Dec 25",

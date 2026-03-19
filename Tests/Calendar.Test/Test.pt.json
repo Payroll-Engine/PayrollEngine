@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2025-01-01T00:00:00.0Z",
   "tenants": [
@@ -156,7 +156,7 @@
           "name": "Calendar.TestPayrun1.Aug25",
           "payrunName": "Calendar.TestPayrun1",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-08-01T00:00:00.0Z",
           "evaluationDate": "2025-09-01T00:00:00.0Z",
           "reason": "Demo Payrun Aug 25"

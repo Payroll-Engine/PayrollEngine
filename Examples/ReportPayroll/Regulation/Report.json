@@ -68,6 +68,11 @@
                   "name": "DefaultGerman",
                   "culture": "de",
                   "contentFile": "Report.frx"
+                },
+                {
+                  "name": "DefaultEnglish",
+                  "culture": "en",
+                  "contentFile": "Report.frx"
                 }
               ]
             }

@@ -276,3 +276,15 @@ Delete.pecmd
 | `lucy.smith@foo.com` | `@ayroll3nginE` | Tenant Administrator |
 | `višnja.müller@foo.com` | `@ayroll3nginE` | Employee 1 (permanent) |
 | `leon.stark@foo.com` | `@ayroll3nginE` | Employee 2 (casual) |
+
+---
+
+## Features Demonstrated
+
+- **`CaseObject` pattern** — `Timesheet` base class and `TimesheetCalculator` map payroll case fields to typed C# model objects; customer subclasses override only what differs
+- **`[TimesheetPeriod]` attribute** — declaratively adds early/regular/late hour phases; each phase generates a `Duration` and `Factor` case field pair with an `order` parameter that positions it in the working day
+- **Customer subclass** — `MyTimesheet` (3 period slots + `WeekendRateFactor`) and `MyTimesheetCalculator` (weekend rate override) demonstrate the extension point without touching the shared module
+- **Calendar-driven periods** — payroll calendar (weekly, bi-weekly, monthly) determines the period; `Workdays` lookup defines holidays and special days to exclude or include
+- **Casual vs. permanent worker** — `CasualRateFactor` scales the regular rate; the same wage types handle both employment types without branching logic
+- **Excel import** — `Workdays.2025.xlsx` (lookup data) and `WorkTimes.2025.Week8.xlsx` (case data) can replace the JSON imports
+- **Integrated report scripts** — `WorkTime` and `Wage` reports each use shared `ReportBuild` and `ReportEnd` scripts from the `Timesheet/` module

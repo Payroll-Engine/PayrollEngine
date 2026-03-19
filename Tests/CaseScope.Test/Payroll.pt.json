@@ -1,0 +1,249 @@
+﻿{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "CaseScope.Test",
+      "created": "2024-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "admin@casescope.test",
+          "firstName": "Admin",
+          "lastName": "CaseScope",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "CaseScopeDivision",
+          "culture": "de-CH",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "CaseScope.Test",
+          "description": "Tests National, Company and Employee case scope isolation",
+          "created": "2024-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "LegalMinimum",
+              "caseType": "National",
+              "created": "2024-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "MinWageRate",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "created": "2024-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "CompanySettings",
+              "caseType": "Company",
+              "created": "2024-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "EmployerRate",
+                  "valueType": "Percent",
+                  "timeType": "CalendarPeriod",
+                  "created": "2024-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "EmployeeContract",
+              "caseType": "Employee",
+              "created": "2024-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "created": "2024-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "GuardedSalary",
+              "description": "National scope: applies MinWageRate floor from National case",
+              "valueExpression": "var salary = CaseValue[\"Salary\"]; var minWage = CaseValue[\"MinWageRate\"]; return salary > minWage ? salary : minWage;",
+              "created": "2024-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "EmployerContribution",
+              "description": "Company scope: Salary multiplied by EmployerRate from Company case",
+              "valueExpression": "return CaseValue[\"Salary\"] * CaseValue[\"EmployerRate\"];",
+              "created": "2024-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "BaseSalary",
+              "description": "Employee scope: direct read of Salary from Employee case",
+              "valueExpression": "return CaseValue[\"Salary\"];",
+              "created": "2024-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "lena.frank@casescope.test",
+          "firstName": "Lena",
+          "lastName": "Frank",
+          "divisions": [
+            "CaseScopeDivision"
+          ],
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "CaseScope.Test",
+          "divisionName": "CaseScopeDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "CaseScope.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@casescope.test",
+              "divisionName": "CaseScopeDivision",
+              "case": {
+                "caseName": "LegalMinimum",
+                "values": [
+                  {
+                    "caseFieldName": "MinWageRate",
+                    "value": "24.50",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@casescope.test",
+              "divisionName": "CaseScopeDivision",
+              "case": {
+                "caseName": "CompanySettings",
+                "values": [
+                  {
+                    "caseFieldName": "EmployerRate",
+                    "value": "0.05",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@casescope.test",
+              "divisionName": "CaseScopeDivision",
+              "case": {
+                "caseName": "CompanySettings",
+                "values": [
+                  {
+                    "caseFieldName": "EmployerRate",
+                    "value": "0.08",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-01-20T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@casescope.test",
+              "employeeIdentifier": "lena.frank@casescope.test",
+              "divisionName": "CaseScopeDivision",
+              "case": {
+                "caseName": "EmployeeContract",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "5000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "CaseScope.Test",
+          "name": "CaseScopePayrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "CaseScope.Test.Jan24",
+          "payrunName": "CaseScopePayrun",
+          "payrollName": "CaseScope.Test",
+          "userIdentifier": "admin@casescope.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-31T00:00:00.0Z",
+          "reason": "CaseScope Test Jan 2024"
+        },
+        {
+          "name": "CaseScope.Test.Feb24",
+          "payrunName": "CaseScopePayrun",
+          "payrollName": "CaseScope.Test",
+          "userIdentifier": "admin@casescope.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-29T00:00:00.0Z",
+          "reason": "CaseScope Test Feb 2024"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "CaseScope.Test.Jan24",
+          "employeeIdentifier": "lena.frank@casescope.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 250
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "CaseScope.Test.Feb24",
+          "employeeIdentifier": "lena.frank@casescope.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 5000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 400
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 5000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

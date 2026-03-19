@@ -1,7 +1,7 @@
 CumulativeJournal/Import.pecmd
 EmployeeCaseValues/Import.pecmd
 EmployeesXml/Import.pecmd
+Payslip/Import.pecmd
 Regulation/Import.pecmd
-RegulationsSimple/Import.pecmd
-TenantsSimple/Import.pecmd
-UsersSimple/Import.pecmd
+Tenants/Import.pecmd
+Users/Import.pecmd

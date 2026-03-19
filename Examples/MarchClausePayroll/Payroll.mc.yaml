@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+﻿# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
 # MarchClausePayroll — ClearPay GmbH
 # Demonstrates: March clause (Märzklausel) — Q1 bonus check against the annual
 # BBG remainder of the previous year.
@@ -258,7 +258,7 @@ tenants:
     payrunName: ClearPayPayrun
     payrollName: ClearPayPayroll
     userIdentifier: hr@clearpay.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2024-12-01T00:00:00Z
     evaluationDate: 2024-12-31T00:00:00Z
     reason: December 2024 — salary baseline, no bonus visible yet
@@ -268,7 +268,7 @@ tenants:
     payrunName: ClearPayPayrun
     payrollName: ClearPayPayroll
     userIdentifier: hr@clearpay.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2025-01-01T00:00:00Z
     evaluationDate: 2025-01-31T00:00:00Z
     reason: January 2025 — salary only, no bonus visible yet
@@ -278,7 +278,7 @@ tenants:
     payrunName: ClearPayPayrun
     payrollName: ClearPayPayroll
     userIdentifier: hr@clearpay.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2025-02-01T00:00:00Z
     evaluationDate: 2025-02-28T00:00:00Z
     reason: >

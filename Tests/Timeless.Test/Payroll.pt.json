@@ -1,0 +1,251 @@
+﻿{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Timeless.Test",
+      "created": "2024-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "admin@timeless.test",
+          "firstName": "Admin",
+          "lastName": "Timeless",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "TimelessDivision",
+          "culture": "de-CH",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Timeless.Test",
+          "description": "Regression test: timeless case value codepath (NullRef fix)",
+          "created": "2024-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "PersonalData",
+              "caseType": "Employee",
+              "created": "2024-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "BirthDate",
+                  "valueType": "Date",
+                  "timeType": "Timeless",
+                  "created": "2024-01-01T00:00:00.0Z"
+                },
+                {
+                  "name": "TaxCode",
+                  "valueType": "String",
+                  "timeType": "Timeless",
+                  "created": "2024-01-01T00:00:00.0Z"
+                }
+              ]
+            },
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "created": "2024-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "created": "2024-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "AgeAllowance",
+              "description": "Reads BirthDate (Timeless) each period — must never throw NullRef",
+              "valueExpression": "var bd = CaseValue[\"BirthDate\"]; if (bd == null) return 0M; var age = bd.ValueAs<DateTime>().Age(PeriodEnd); return age >= 50 ? CaseValue[\"Salary\"] * 0.075M : 0M;",
+              "created": "2024-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "TaxAmount",
+              "description": "Reads TaxCode (Timeless, optional) — null-safe; returns 0 when absent",
+              "valueExpression": "var tc = CaseValue[\"TaxCode\"]; if (tc == null) return 0M; var code = tc.ValueAs<string>(); if (string.IsNullOrEmpty(code)) return 0M; return code == \"A\" ? CaseValue[\"Salary\"] * 0.05M : code == \"B\" ? CaseValue[\"Salary\"] * 0.08M : 0M;",
+              "created": "2024-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "maja.berger@timeless.test",
+          "firstName": "Maja",
+          "lastName": "Berger",
+          "divisions": [
+            "TimelessDivision"
+          ],
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Timeless.Test",
+          "divisionName": "TimelessDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Timeless.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@timeless.test",
+              "employeeIdentifier": "maja.berger@timeless.test",
+              "divisionName": "TimelessDivision",
+              "case": {
+                "caseName": "PersonalData",
+                "values": [
+                  {
+                    "caseFieldName": "BirthDate",
+                    "value": "1971-03-12T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@timeless.test",
+              "employeeIdentifier": "maja.berger@timeless.test",
+              "divisionName": "TimelessDivision",
+              "case": {
+                "caseName": "PersonalData",
+                "values": [
+                  {
+                    "caseFieldName": "TaxCode",
+                    "value": "A",
+                    "created": "2024-02-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@timeless.test",
+              "employeeIdentifier": "maja.berger@timeless.test",
+              "divisionName": "TimelessDivision",
+              "case": {
+                "caseName": "PersonalData",
+                "values": [
+                  {
+                    "caseFieldName": "TaxCode",
+                    "value": "B",
+                    "created": "2024-03-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@timeless.test",
+              "employeeIdentifier": "maja.berger@timeless.test",
+              "divisionName": "TimelessDivision",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Timeless.Test",
+          "name": "TimelessPayrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Timeless.Test.Jan24",
+          "payrunName": "TimelessPayrun",
+          "payrollName": "Timeless.Test",
+          "userIdentifier": "admin@timeless.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-31T00:00:00.0Z",
+          "reason": "Timeless Test Jan 2024"
+        },
+        {
+          "name": "Timeless.Test.Feb24",
+          "payrunName": "TimelessPayrun",
+          "payrollName": "Timeless.Test",
+          "userIdentifier": "admin@timeless.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-29T00:00:00.0Z",
+          "reason": "Timeless Test Feb 2024"
+        },
+        {
+          "name": "Timeless.Test.Mar24",
+          "payrunName": "TimelessPayrun",
+          "payrollName": "Timeless.Test",
+          "userIdentifier": "admin@timeless.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-31T00:00:00.0Z",
+          "reason": "Timeless Test Mar 2024"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Timeless.Test.Jan24",
+          "employeeIdentifier": "maja.berger@timeless.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 450
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Timeless.Test.Feb24",
+          "employeeIdentifier": "maja.berger@timeless.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 450
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 300
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Timeless.Test.Mar24",
+          "employeeIdentifier": "maja.berger@timeless.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 450
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 480
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

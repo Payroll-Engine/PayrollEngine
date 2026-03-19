@@ -78,6 +78,14 @@ Step-by-step tutorial across 3 incremental regulation layers:
 - Country-specific deduction wage types per regulation layer
 - Employee payroll test with 5 result sets across 3 payrun jobs
 
+### Temporal Payroll
+- Two independent time axes: `periodStart` (valueDate) and `evaluationDate` operated independently
+- Retro 2×2 matrix: four scenarios cover past/today for both axes — knowledge cutoff vs. value date isolation
+- Forecast entry with validity window: `End` date enforced; Forecast C demonstrates fallback after expiry
+- Forecast vs production isolation: same period, same evaluation date — `forecast` parameter is the sole differentiator
+- Minimal regulation (one case field, one wage type) — temporal mechanism is the sole subject
+- Self-contained payroll test `Payroll.tp.yaml`
+
 ### Retro Payroll
 - Retroactive salary raise across multiple periods (positive deltas)
 - Late bonus entry via `Moment` time type (auto-triggers retro for correct period)

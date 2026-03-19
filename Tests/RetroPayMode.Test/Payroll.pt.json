@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2023-12-01T00:00:00.0Z",
   "tenants": [
@@ -189,7 +189,7 @@
           "payrunName": "RetroPayMode.Test.Payrun",
           "payrollName": "RetroPayMode.Test.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-01-28T00:00:00.0Z",
           "storeEmptyResults": true,
@@ -200,7 +200,7 @@
           "payrunName": "RetroPayMode.Test.Payrun",
           "payrollName": "RetroPayMode.Test.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "retroPayMode": "None",
           "periodStart": "2024-02-01T00:00:00.0Z",
           "evaluationDate": "2024-02-28T00:00:00.0Z",
@@ -212,7 +212,7 @@
           "payrunName": "RetroPayMode.Test.Payrun",
           "payrollName": "RetroPayMode.Test.Payroll",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-03-01T00:00:00.0Z",
           "evaluationDate": "2024-03-28T00:00:00.0Z",
           "storeEmptyResults": true,

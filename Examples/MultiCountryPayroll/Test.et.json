@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -173,7 +173,7 @@
           "name": "ACME.Payrun.DE.Test.Jan24",
           "payrunName": "ACME.Payrun.DE",
           "userIdentifier": "admin@acme-international.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-02-01T00:00:00.0Z",
           "reason": "Germany — January 2024 Test",
@@ -186,7 +186,7 @@
           "name": "ACME.Payrun.FR.Test.Jan24",
           "payrunName": "ACME.Payrun.FR",
           "userIdentifier": "admin@acme-international.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-02-01T00:00:00.0Z",
           "reason": "France — January 2024 Test",
@@ -199,7 +199,7 @@
           "name": "ACME.Payrun.NL.Test.Jan24",
           "payrunName": "ACME.Payrun.NL",
           "userIdentifier": "admin@acme-international.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-02-01T00:00:00.0Z",
           "reason": "Netherlands — January 2024 Test",

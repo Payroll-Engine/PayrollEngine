@@ -130,50 +130,38 @@ Git Changes. Only processes repositories with uncommitted changes.
 
 ## Database
 
-Scripts for SQL Server schema export, formatting, diff and version composition.
+Scripts for SQL Server and MySQL schema formatting, diff and version composition.
 All scripts handle large `.sql` files (280 KB+) and operate on:
 
 | File | Purpose |
 |------|---------|
-| `Create-Model.sql` | Full CREATE script for a fresh database |
-| `Update-Model.sql` | Incremental migration between two versions |
-| `Drop-Model.sql` | DROP script for all schema objects |
+| `Create-Model.sql` / `Create-Model.mysql.sql` | Full CREATE script for a fresh database |
+| `Update-Model.sql` / `Update-Model.mysql.sql` | Incremental migration between two versions |
+| `Drop-Model.sql` / `Drop-Model.mysql.sql` | DROP script for all schema objects |
 | `DbVersion.json` | Version metadata (OldVersion, NewVersion, Descriptions) |
 
 Default location: `C:\...\PayrollEngine.Backend\Database\`
 
+### SQL Server
+
 | Script | README | Purpose |
 |--------|--------|---------|
-| `Export-DbScript.ps1` | [README](Export-DbScript.README.md) | Export the live database schema to a `.sql` file |
 | `Format-DbScript.ps1` | [README](Format-DbScript.README.md) | Format a `.sql` file and resolve object dependency order |
 | `Compare-DbScript.ps1` | [README](Compare-DbScript.README.md) | Diff two formatted `.sql` files and generate an update script |
 | `Generate-DbUpdate.ps1` | [README](Generate-DbUpdate.README.md) | Generate an update script from two SQL files (Format + Compare in one step) |
 | `Compose-DbScript.ps1` | [README](Compose-DbScript.README.md) | Full workflow: diff history, replace all regions in-place from `DbVersion.json` |
 
-### Export-DbScript
+### MySQL
 
-**Export-DbScript.ps1** connects to SQL Server and exports the live database schema to a
-`.sql` file. The connection string is read from the environment variable
-`PayrollDatabaseConnection`.
+| Script | README | Purpose |
+|--------|--------|---------|
+| `Compare-DbScript.mysql.ps1` | [README](Compare-DbScript.mysql.README.md) | Diff two `Create-Model.mysql.sql` files and generate a delta script |
+| `Generate-DbUpdate.mysql.ps1` | — | Generate a MySQL delta script from two SQL files (Compare only, no Format step needed) |
+| `Compose-DbScript.mysql.ps1` | — | Full workflow: diff history + update version header + regenerate `Update-Model.mysql.sql` |
 
-Modes:
-- **Create** — generates `CREATE TABLE`, indexes, foreign keys, stored procedures,
-  functions and views for the full schema
-- **Delete** — generates safe `DROP` statements in dependency order
-  (procedures and functions first, then tables)
+---
 
-The output is unordered; pipe it through `Format-DbScript.ps1` to normalise style and
-resolve dependency order before committing as a snapshot.
-
-```powershell
-# set connection string
-$env:PayrollDatabaseConnection = 'Server=.;Database=PayrollEngine;Integrated Security=True;'
-
-.\Export-DbScript.ps1 -Mode Create -TargetFile Snapshot_Create.sql
-.\Export-DbScript.ps1 -Mode Delete -TargetFile Snapshot_Delete.sql
-```
-
-### Format-DbScript
+### Format-DbScript (SQL Server)
 
 **Format-DbScript.ps1** formats a `.sql` file and resolves forward-reference dependency
 warnings. `SourceFile` is never modified; the result is written to `TargetFile`.
@@ -188,12 +176,9 @@ What it does:
 
 ```powershell
 .\Format-DbScript.ps1 -SourceFile Create-Model.sql -TargetFile Create-Model.Formatted.sql
-.\Format-DbScript.ps1 `
-    -SourceFile  C:\...\Database\Create-Model.sql `
-    -TargetFile  C:\...\Database\Create-Model.Formatted.sql
 ```
 
-### Compare-DbScript
+### Compare-DbScript (SQL Server)
 
 **Compare-DbScript.ps1** compares two formatted `.sql` files and generates a delta script
 that migrates a database from the baseline state to the current state. Both input files
@@ -212,7 +197,7 @@ Diff categories:
     -TargetFile   Update-Model.sql
 ```
 
-### Compose-DbScript
+### Compose-DbScript (SQL Server)
 
 **Compose-DbScript.ps1** orchestrates the full DB script composition workflow in one step.
 It diffs `History\v<OldVersion>\Create-Model.sql` against the current `Create-Model.sql`,
@@ -241,10 +226,28 @@ Compose-DbScript.ps1 -DryRun
 Compose-DbScript.ps1 -KeepTemp
 ```
 
-### Typical Workflow
+### Compose-DbScript.mysql (MySQL)
+
+**Compose-DbScript.mysql.ps1** orchestrates the MySQL workflow in one step. Unlike the
+SQL Server counterpart it fully regenerates `Update-Model.mysql.sql` (no region-patching)
+and does not require a Format step (MySQL files have no SSMS-style headers).
+
+See [Compare-DbScript.mysql.README.md](Compare-DbScript.mysql.README.md) for full documentation.
 
 ```powershell
-$env:PayrollDatabaseConnection = 'Server=.;Database=PayrollEngine;Integrated Security=True;'
+# Run from the Database directory (all defaults)
+cd Backend\Database
+..\..\devops\scripts\Compose-DbScript.mysql.ps1
+
+# Preview without writing
+Compose-DbScript.mysql.ps1 -DryRun
+```
+
+---
+
+### Typical Workflow — SQL Server
+
+```powershell
 cd Backend\Database
 
 # 1. Compose: diff history + update all regions in-place
@@ -259,4 +262,21 @@ copy Update-Model.sql  History\v0.9.6\Update-Model.sql
 copy Drop-Model.sql    History\v0.9.6\Drop-Model.sql
 copy DbVersion.json    History\v0.9.6\DbVersion.json
 # Update DbVersion.json: OldVersion="0.9.6", NewVersion="0.9.7"
+```
+
+### Typical Workflow — MySQL
+
+```powershell
+cd Backend\Database
+
+# 0. Before starting new version work: save the current state as baseline
+copy Create-Model.mysql.sql History\v0.9.6\Create-Model.mysql.sql
+
+# 1. Edit Create-Model.mysql.sql (new tables, columns, SPs)
+# 2. Update DbVersion.json (OldVersion: "0.9.6", NewVersion: "0.9.7")
+
+# 3. Compose: diff + update version header + regenerate Update-Model.mysql.sql
+..\..\devops\scripts\Compose-DbScript.mysql.ps1
+
+# 4. Review Update-Model.mysql.sql — replace TODO comments with ALTER TABLE statements
 ```

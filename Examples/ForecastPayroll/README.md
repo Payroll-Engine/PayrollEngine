@@ -160,3 +160,15 @@ Test.pecmd
 # Teardown
 Delete.pecmd
 ```
+
+---
+
+## Features Demonstrated
+
+- **Forecast data isolation** — case values tagged with a scenario name are invisible to production payruns; the `forecast` field on the payrun job activates the matching scenario
+- **Parallel what-if scenarios** — multiple forecast scenarios share one regulation and payroll; no duplication required
+- **`^^` operator in forecast context** — reads scenario-scoped case data; falls back to production value when no forecast override exists
+- **No-Code condition guard** — `? ^^PlannedBonus > 0` stops the wage type action chain when no bonus is planned
+- **Dedicated net output wage type** — WT 300 exposes the bottom-line figure directly without a collector aggregation step
+- **No-Code regulation** — entire regulation implemented with action expressions; no C# scripting required
+

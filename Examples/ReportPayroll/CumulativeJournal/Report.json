@@ -1,6 +1,6 @@
 {
   "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
-  "createdObjectDate": "2023-01-01T00:00:00.0Z",
+  "createdObjectDate": "2025-01-01T00:00:00.0Z",
   "tenants": [
     {
       "identifier": "Report.Tenant",
@@ -8,7 +8,7 @@
       "regulations": [
         {
           "name": "Report.Regulation",
-          "updateMode": "NoUpdate",
+          "updateMode": "Update",
            "reports": [
             {
               "name": "CumulativeJournal",
@@ -34,7 +34,7 @@
                 {
                   "name": "JournalYear",
                   "valueType": "Year",
-                  "value": "2023",
+                  "value": "2025",
                   "mandatory": true,
                   "attributes": {
                     "input.minvalue": 2000

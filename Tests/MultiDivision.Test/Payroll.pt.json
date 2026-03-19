@@ -1,0 +1,183 @@
+﻿{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "MultiDivision.Test",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "admin@multidivision.test",
+          "firstName": "Admin",
+          "lastName": "MultiDivision"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "DE",
+          "culture": "de-DE"
+        },
+        {
+          "name": "CH",
+          "culture": "de-CH"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "MultiDivision.Test",
+          "description": "Tests division-scoped case value isolation: same employee, two divisions, each with its own salary",
+          "cases": [
+            {
+              "name": "EmployeeContract",
+              "caseType": "Employee",
+              "defaultReason": "Set division salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Salary",
+              "description": "Reads division-scoped Salary — must return the value for the current payroll's division",
+              "valueExpression": "CaseValue[\"Salary\"]"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "SalaryDoubled",
+              "description": "Salary × 2 — provides a second assertion point to confirm the correct base was used",
+              "valueExpression": "WageType[101] * 2"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "max.keller@multidivision.test",
+          "firstName": "Max",
+          "lastName": "Keller",
+          "divisions": [ "DE", "CH" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "MultiDivision.DE.Payroll",
+          "divisionName": "DE",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "MultiDivision.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@multidivision.test",
+              "employeeIdentifier": "max.keller@multidivision.test",
+              "divisionName": "DE",
+              "case": {
+                "caseName": "EmployeeContract",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "MultiDivision.CH.Payroll",
+          "divisionName": "CH",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "MultiDivision.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@multidivision.test",
+              "employeeIdentifier": "max.keller@multidivision.test",
+              "divisionName": "CH",
+              "case": {
+                "caseName": "EmployeeContract",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "6000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "MultiDivision.DE.Payroll",
+          "name": "MultiDivision.DE.Payrun",
+          "culture": "de-DE",
+          "defaultReason": "MultiDivision DE test"
+        },
+        {
+          "payrollName": "MultiDivision.CH.Payroll",
+          "name": "MultiDivision.CH.Payrun",
+          "culture": "de-CH",
+          "defaultReason": "MultiDivision CH test"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "MultiDivision.DE.Jan24",
+          "payrunName": "MultiDivision.DE.Payrun",
+          "payrollName": "MultiDivision.DE.Payroll",
+          "userIdentifier": "admin@multidivision.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "reason": "DE division Jan 2024 — expects Salary=4000"
+        },
+        {
+          "name": "MultiDivision.CH.Jan24",
+          "payrunName": "MultiDivision.CH.Payrun",
+          "payrollName": "MultiDivision.CH.Payroll",
+          "userIdentifier": "admin@multidivision.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "reason": "CH division Jan 2024 — expects Salary=6000"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "MultiDivision.DE.Jan24",
+          "employeeIdentifier": "max.keller@multidivision.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4000 },
+            { "wageTypeNumber": 102, "value": 8000 }
+          ]
+        },
+        {
+          "payrunJobName": "MultiDivision.CH.Jan24",
+          "employeeIdentifier": "max.keller@multidivision.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 6000 },
+            { "wageTypeNumber": 102, "value": 12000 }
+          ]
+        }
+      ]
+    }
+  ]
+}

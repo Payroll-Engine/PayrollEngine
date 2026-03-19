@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -125,7 +125,7 @@
           "payrollName": "ForecastPayroll",
           "userIdentifier": "peter.schmid@foo.com",
           "forecast": "Forecast2022",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2021-01-01T00:00:00.0Z",
           "evaluationDate": "2020-12-28T00:00:00.0Z",
           "reason": "Forecast Payrun Jan 22"
@@ -136,8 +136,8 @@
           "payrollName": "ForecastPayroll",
           "userIdentifier": "peter.schmid@foo.com",
           "forecast": "Forecast2022",
-          "jobStatus": "Complete",
           "evaluationDate": "2020-12-28T00:00:00.0Z",
+          "completedJobStatus": "Complete",
           "periodStart": "2022-01-01T00:00:00.0Z",
           "reason": "Forecast Payrun Jan 22"
         }

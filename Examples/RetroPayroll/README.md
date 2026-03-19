@@ -266,3 +266,15 @@ Test.pecmd
 # Teardown
 Delete.pecmd
 ```
+
+---
+
+## Features Demonstrated
+
+- **Retroactive salary raise** — multi-period positive delta correction; the engine automatically schedules retro runs for all affected prior periods
+- **Late bonus via `Moment` time type** — bonus attributed to the period containing its date; late entry auto-triggers a retro run for the correct historical period
+- **Retroactive part-time reduction** — negative deltas recover overpayment across previously-corrected periods
+- **Cascading retro corrections** — Event C corrects values that Event A already corrected; the engine always diffs against the most recently stored value
+- **ClusterSet design** — `Legal` / `Retro` separation prevents delta wage types from re-executing inside retro runs and avoids double-counting
+- **`storeEmptyResults: true`** — baseline results must be stored before retro runs so `GetWageTypeRetroResultSum()` has an "old value" to diff against
+- **`GetWageTypeRetroResultSum()`** — collects the accumulated diff between stored and recalculated retro values for all affected prior periods

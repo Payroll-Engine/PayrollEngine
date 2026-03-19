@@ -160,3 +160,14 @@ Delete.pecmd
 ## See Also
 
 - [Extended Functions](https://github.com/Payroll-Engine/PayrollEngine/wiki/Extended-Functions) — wiki tutorial this example accompanies
+
+---
+
+## Features Demonstrated
+
+- **Composite function pattern** — business logic encapsulated in a plain C# class injected via constructor into the engine's function
+- **`partial` class extension** — `WageTypeValueFunction` extended with a named property (`MyRegulation`) that exposes the composite class
+- **Lazy initialization** — `??=` creates the composite instance on first access; no manual lifecycle management
+- **No-Code call site** — `valueExpression: "MyRegulation.GetSalary()"` reads the composite method directly without boilerplate
+- **Regulation-level reuse** — the composite class is available in every wage type expression of the regulation; derived regulations can subclass or wrap it
+

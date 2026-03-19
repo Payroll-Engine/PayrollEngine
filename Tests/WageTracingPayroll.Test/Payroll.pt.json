@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "createdObjectDate": "2025-01-01T00:00:00.0Z",
   "tenants": [
@@ -220,7 +220,7 @@
           "payrunName": "WageTracingPayrun",
           "payrollName": "WageTracingPayroll",
           "userIdentifier": "hr@tracedemo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-01-01T00:00:00.0Z",
           "evaluationDate": "2025-01-31T00:00:00.0Z",
           "reason": "January 2025 — baseline, no splits"
@@ -230,7 +230,7 @@
           "payrunName": "WageTracingPayrun",
           "payrollName": "WageTracingPayroll",
           "userIdentifier": "hr@tracedemo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2025-02-01T00:00:00.0Z",
           "evaluationDate": "2025-02-28T00:00:00.0Z",
           "reason": "February 2025 — Alex: Salary split Feb 10 / Sam: EmploymentLevel split Feb 15"

@@ -1,0 +1,165 @@
+﻿{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "VersionEdge.Test",
+      "created": "2023-12-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "admin@versionedge.test",
+          "firstName": "Admin",
+          "lastName": "VersionEdge",
+          "created": "2023-12-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "VersionEdgeDivision",
+          "culture": "de-CH",
+          "created": "2023-12-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "VersionEdge.Test",
+          "version": 1,
+          "description": "Version 1 — baseline, no validFrom restriction",
+          "created": "2023-12-01T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "MonthlyWage",
+              "valueExpression": "1000",
+              "created": "2023-12-01T00:00:00.0Z"
+            }
+          ]
+        },
+        {
+          "name": "VersionEdge.Test",
+          "version": 2,
+          "description": "Version 2 — validFrom == 2024-02-01: active when evaluationDate >= 2024-02-01",
+          "validFrom": "2024-02-01T00:00:00.0Z",
+          "created": "2024-01-15T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "MonthlyWage",
+              "valueExpression": "2000",
+              "created": "2024-01-15T00:00:00.0Z"
+            }
+          ]
+        },
+        {
+          "name": "VersionEdge.Test",
+          "version": 3,
+          "description": "Version 3 — validFrom == 2024-03-01: active when PeriodEnd > 2024-03-01 (i.e. from March period onward)",
+          "validFrom": "2024-03-01T00:00:00.0Z",
+          "created": "2024-02-10T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "MonthlyWage",
+              "valueExpression": "3000",
+              "created": "2024-02-10T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "felix.huber@versionedge.test",
+          "firstName": "Felix",
+          "lastName": "Huber",
+          "divisions": [
+            "VersionEdgeDivision"
+          ],
+          "created": "2023-12-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "VersionEdge.Test",
+          "divisionName": "VersionEdgeDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "VersionEdge.Test"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "VersionEdge.Test",
+          "name": "VersionEdgePayrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "VersionEdge.Test.Jan24",
+          "payrunName": "VersionEdgePayrun",
+          "payrollName": "VersionEdge.Test",
+          "userIdentifier": "admin@versionedge.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "reason": "VersionEdge Test Jan 2024 — Version 1 active"
+        },
+        {
+          "name": "VersionEdge.Test.Feb24",
+          "payrunName": "VersionEdgePayrun",
+          "payrollName": "VersionEdge.Test",
+          "userIdentifier": "admin@versionedge.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "VersionEdge Test Feb 2024 — evaluationDate == validFrom: Version 2 active (<=)"
+        },
+        {
+          "name": "VersionEdge.Test.Mar24",
+          "payrunName": "VersionEdgePayrun",
+          "payrollName": "VersionEdge.Test",
+          "userIdentifier": "admin@versionedge.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-03-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-28T00:00:00.0Z",
+          "reason": "VersionEdge Test Mar 2024 — PeriodEnd (2024-04-01) > validFrom V3 (2024-03-01): Version 3 active"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "VersionEdge.Test.Jan24",
+          "employeeIdentifier": "felix.huber@versionedge.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "VersionEdge.Test.Feb24",
+          "employeeIdentifier": "felix.huber@versionedge.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "VersionEdge.Test.Mar24",
+          "employeeIdentifier": "felix.huber@versionedge.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 3000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

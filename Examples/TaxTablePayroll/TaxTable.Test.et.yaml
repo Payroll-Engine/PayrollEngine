@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+﻿# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
 # TaxTablePayroll — Payrun Tests
 #
 # WT 100 (MonthlySalary) assertions are exact and always verifiable.
@@ -67,7 +67,7 @@ tenants:
   - name: TaxTablePayrunJob.Jan26
     payrunName: TaxTablePayrun
     userIdentifier: admin@taxtabletenant.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2026-01-01T00:00:00Z
     evaluationDate: 2026-02-01T00:00:00Z
     reason: Test Payrun Jan 2026

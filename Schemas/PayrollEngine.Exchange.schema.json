@@ -3815,6 +3815,14 @@
                 }
               ]
             },
+            "reportIsolation": {
+              "description": "The report isolation level",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/ReportIsolation"
+                }
+              ]
+            },
             "buildExpression": {
               "type": [
                 "null",
@@ -3917,6 +3925,24 @@
       "enum": [
         "Json",
         "Table"
+      ]
+    },
+    "ReportIsolation": {
+      "type": "string",
+      "description": "The report data isolation level.\n            Controls which context data (division, employee) is automatically\n            injected into the report request.",
+      "x-enumNames": [
+        "None",
+        "Global",
+        "Company",
+        "Division",
+        "Employee"
+      ],
+      "enum": [
+        "None",
+        "Global",
+        "Company",
+        "Division",
+        "Employee"
       ]
     },
     "DataRelation": {
@@ -4934,13 +4960,6 @@
                 }
               ]
             },
-            "culture": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The culture including the calendar"
-            },
             "cycleName": {
               "type": "string",
               "description": "The cycle name (immutable)",
@@ -5240,6 +5259,17 @@
         "jobStatus": {
           "description": "The target payrun job status",
           "oneOf": [
+            {
+              "$ref": "#/definitions/PayrunJobStatus"
+            }
+          ]
+        },
+        "completedJobStatus": {
+          "description": "The completed payrun job status, used by test runner to bypass the manual workflow.\n            If set, the background processor finalizes the job with this status instead of leaving it in Draft.\n            Null (default) means the job stays in Draft after calculation, following the normal workflow.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
             {
               "$ref": "#/definitions/PayrunJobStatus"
             }
@@ -5617,6 +5647,41 @@
               ],
               "description": "Custom object attributes",
               "additionalProperties": {}
+            },
+            "tenantId": {
+              "type": "integer",
+              "description": "The tenant id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "employeeId": {
+              "type": "integer",
+              "description": "The employee id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "divisionId": {
+              "type": "integer",
+              "description": "The division id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "payrunJobId": {
+              "type": "integer",
+              "description": "The payrun job id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "forecast": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The forecast name (denormalized, immutable)"
+            },
+            "parentJobId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "The parent payrun job id (denormalized, immutable)",
+              "format": "int32"
             }
           }
         }
@@ -5836,6 +5901,41 @@
               "type": "integer",
               "description": "The collector id (immutable)",
               "format": "int32"
+            },
+            "tenantId": {
+              "type": "integer",
+              "description": "The tenant id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "employeeId": {
+              "type": "integer",
+              "description": "The employee id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "divisionId": {
+              "type": "integer",
+              "description": "The division id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "payrunJobId": {
+              "type": "integer",
+              "description": "The payrun job id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "forecast": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The forecast name (denormalized, immutable)"
+            },
+            "parentJobId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "The parent payrun job id (denormalized, immutable)",
+              "format": "int32"
             }
           }
         }
@@ -5943,6 +6043,41 @@
               ],
               "description": "Custom object attributes",
               "additionalProperties": {}
+            },
+            "tenantId": {
+              "type": "integer",
+              "description": "The tenant id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "employeeId": {
+              "type": "integer",
+              "description": "The employee id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "divisionId": {
+              "type": "integer",
+              "description": "The division id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "payrunJobId": {
+              "type": "integer",
+              "description": "The payrun job id (denormalized, immutable)",
+              "format": "int32"
+            },
+            "forecast": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The forecast name (denormalized, immutable)"
+            },
+            "parentJobId": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "The parent payrun job id (denormalized, immutable)",
+              "format": "int32"
             }
           }
         }

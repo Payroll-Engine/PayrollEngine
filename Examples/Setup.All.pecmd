@@ -12,4 +12,5 @@ RetroPayroll/Setup.pecmd
 StartPayroll.Json/Setup.pecmd
 StartPayroll.Yaml/Setup.pecmd
 TaxTablePayroll/Setup.pecmd
+TemporalPayroll/Setup.pecmd
 TimesheetPayroll/Setup.pecmd

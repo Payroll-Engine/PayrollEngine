@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Report.Tenant",
+      "updateMode": "NoUpdate",
+      "regulations": [
+        {
+          "name": "Report.Regulation",
+          "updateMode": "NoUpdate",
+          "reports": [
+            {
+              "name": "Tenants",
+              "attributeMode": "Table",
+              "nameLocalizations": {
+                "en": "Tenants Report"
+              },
+              "clusters": [
+                "Tenant"
+              ],
+              "queries": {
+                "Tenants": "QueryTenants"
+              },
+              "templates": [
+                {
+                  "name": "DefaultGerman",
+                  "culture": "de",
+                  "contentFile": "Report.frx",
+                  "attributes": {
+                    "input.attachmentExtensions": ".frx"
+                  }
+                },
+                {
+                  "name": "DefaultEnglish",
+                  "culture": "en",
+                  "contentFile": "Report.frx",
+                  "attributes": {
+                    "input.attachmentExtensions": ".frx"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -10,7 +10,7 @@
           "payrunName": "GlobalTechPayrun",
           "payrollName": "GlobalTechPayroll",
           "userIdentifier": "admin@globaltech.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-01-01T00:00:00.0Z",
           "evaluationDate": "2024-02-01T00:00:00.0Z",
           "reason": "January 2024 Payroll"
@@ -20,7 +20,7 @@
           "payrunName": "GlobalTechPayrun",
           "payrollName": "GlobalTechPayroll",
           "userIdentifier": "admin@globaltech.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-02-01T00:00:00.0Z",
           "evaluationDate": "2024-03-01T00:00:00.0Z",
           "reason": "February 2024 Payroll"
@@ -30,7 +30,7 @@
           "payrunName": "GlobalTechPayrun",
           "payrollName": "GlobalTechPayroll",
           "userIdentifier": "admin@globaltech.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2024-03-01T00:00:00.0Z",
           "evaluationDate": "2024-04-01T00:00:00.0Z",
           "reason": "March 2024 Payroll"

@@ -124,3 +124,14 @@ Delete.pecmd
 |:--|:--|
 | User | `lucy.smith@foo.com` |
 | Password | `@ayroll3nginE` |
+
+---
+
+## Features Demonstrated
+
+- **Custom `CaseValidate` action** — `[CaseValidateAction]` registers a named, reusable validation method callable from No-Code `validateActions`
+- **ISO 7064 check digit** — `CheckDigit(modulus, radix, ...)` API validates structured registration numbers
+- **Localized action issues** — issue messages stored in a lookup with `valueLocalizations`; the engine resolves the active culture at runtime
+- **Input mask** — `input.valueMask: "REG-000.000.000"` enforces the structured input format
+- **No-Code action call** — `? CheckRegistrationNumber('RegistrationNumber', ^:RegistrationNumber)` invokes the custom action without any expression scripting at the call site
+- **Case test** — `Test.ct.json` covers both valid and invalid registration numbers

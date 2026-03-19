@@ -229,3 +229,14 @@ base salary logic propagates automatically to all countries.
 `Gross Income` and `Deductions` are defined once in ACME.Global and inherited by all
 country regulations. Country-specific deduction wage types write into `Deductions`,
 making per-payroll net pay trivially computable as `Gross Income − Deductions`.
+
+---
+
+## Features Demonstrated
+
+- **Multi-regulation layering** — `ACME.Global` as shared base (level 1) with country-specific override regulations (level 2) per payroll
+- **`sharedRegulation: true`** — marks the global regulation as reusable infrastructure; changes propagate automatically to all country payrolls
+- **`valueScope: Global`** — a single `Salary` case value set in one country payroll is readable by all others without duplication
+- **Per-division `EmploymentLevel`** — intentionally NOT global, enabling independent percentage splits per country for a split-country employee
+- **Split-country employee** — Sophie Klein receives salary from two national payrolls simultaneously using different employment levels
+- **Wage type numbering convention** — 100–199 for global income, 200–299 for country deductions; no namespace collision across payrolls

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
+﻿# yaml-language-server: $schema=../../Schemas/PayrollEngine.Exchange.schema.json
 # MinWagePayroll — FairPay GmbH
 # Demonstrates: minimum wage compliance via company case for the statutory rate,
 # automatic top-up for underpaid hourly workers, fully No-Code.
@@ -234,7 +234,7 @@ tenants:
     payrunName: FairPayPayrun
     payrollName: FairPayPayroll
     userIdentifier: hr@fairpay.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2026-01-01T00:00:00Z
     evaluationDate: 2026-01-31T00:00:00Z
     reason: January 2026 — Leo below minimum, top-up triggered
@@ -244,7 +244,7 @@ tenants:
     payrunName: FairPayPayrun
     payrollName: FairPayPayroll
     userIdentifier: hr@fairpay.com
-    jobStatus: Complete
+    completedJobStatus: Complete
     periodStart: 2026-02-01T00:00:00Z
     evaluationDate: 2026-02-28T00:00:00Z
     reason: February 2026 — Leo raised, no top-up for either employee

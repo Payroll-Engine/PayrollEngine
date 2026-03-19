@@ -139,3 +139,14 @@ Test.pecmd
 # Teardown
 Delete.pecmd
 ```
+
+---
+
+## Features Demonstrated
+
+- **Year-versioned lookup** — statutory minimum wage stored per year key; HR adds a new entry annually without changing the regulation
+- **`PeriodStartYear` runtime variable** — selects the correct lookup entry automatically for every payrun period
+- **Minimum wage top-up pattern** — intermediate WT 110 computes the statutory minimum; WT 120 fires only when the agreed pay falls short
+- **No-Code condition guard** — `? ^$MinWageBase > ^$BasePay` stops WT 120 when the employee’s rate already meets the minimum
+- **`storeEmptyResults`** — stores WT 120 = 0 for compliant employees; payroll compliance tools can query any non-zero result as a top-up flag
+- **Intermediate wage type excluded from collectors** — WT 110 is not assigned to `GrossIncome`; avoids double-counting while keeping the value queryable for audits

@@ -73,9 +73,10 @@ function Write-Mod([string]$msg)  { Write-Host "  MOD:     $msg" -ForegroundColo
 
 class DiffObject {
     [string]$ObjectType
-    [string]$FullName
-    [string]$NormalisedBody   # whitespace-normalised, used for equality
-    [string]$RawBody          # original text, used for output
+    [string]$FullName          # lowercase key, used for dictionary lookups and comparison
+    [string]$OriginalFullName  # original casing, used for SQL output
+    [string]$NormalisedBody    # whitespace-normalised, used for equality
+    [string]$RawBody           # original text, used for output
 }
 
 function Split-SqlBlocks([string]$sql) {
@@ -102,6 +103,8 @@ function Parse-SqlFile([string]$path) {
     $headerPattern = [regex]'(?i)/\*+\s*Object:\s+(\w+)\s+\[(\w+)\]\.\[(\w+)\]'
     $createPattern = [regex]'(?im)^\s*CREATE\s+(TABLE|VIEW|FUNCTION|PROCEDURE|UNIQUE\s+INDEX|NONCLUSTERED\s+INDEX|CLUSTERED\s+INDEX|INDEX)\s+(?:\[?(\w+)\]?\.)?\[?(\w+)\]?'
 
+    $currentOriginalKey = $null
+
     $objects = [System.Collections.Generic.Dictionary[string, DiffObject]]::new(
         [System.StringComparer]::OrdinalIgnoreCase)
 
@@ -115,12 +118,14 @@ function Parse-SqlFile([string]$path) {
             $dobj  = [DiffObject]::new()
             $dobj.ObjectType      = $currentType
             $dobj.FullName        = $currentKey
+            $dobj.OriginalFullName = $currentOriginalKey
             $dobj.RawBody         = $raw
             $dobj.NormalisedBody  = Normalize-Body $raw
             $objects[$currentKey] = $dobj
         }
-        $currentKey    = $null
-        $currentType   = $null
+        $currentKey         = $null
+        $currentOriginalKey = $null
+        $currentType        = $null
         $currentBlocks.Clear()
     }
 
@@ -128,20 +133,34 @@ function Parse-SqlFile([string]$path) {
         $hm = $headerPattern.Match($block)
         if ($hm.Success) {
             & $flushCurrent
-            $currentKey  = "$($hm.Groups[2].Value.ToLower()).$($hm.Groups[3].Value.ToLower())"
-            $currentType = $hm.Groups[1].Value.ToUpper()
+            $currentKey         = "$($hm.Groups[2].Value.ToLower()).$($hm.Groups[3].Value.ToLower())"
+            $currentOriginalKey = "$($hm.Groups[2].Value).$($hm.Groups[3].Value)"
+            $currentType        = $hm.Groups[1].Value.ToUpper()
             $currentBlocks.Add($block)
             continue
         }
 
         $cm = $createPattern.Match($block)
         if ($cm.Success) {
+            $cmSchema      = if ($cm.Groups[2].Success -and $cm.Groups[2].Value) { $cm.Groups[2].Value } else { 'dbo' }
+            $cmName        = $cm.Groups[3].Value
+            $cmKey         = "$($cmSchema.ToLower()).$($cmName.ToLower())"
+            $cmOriginalKey = "$cmSchema.$cmName"
+            $cmType        = $cm.Groups[1].Value.ToUpper() -replace '\s+', '_'
+
             if (-not $currentKey) {
-                # CREATE without preceding header
-                $schema      = if ($cm.Groups[2].Success -and $cm.Groups[2].Value) { $cm.Groups[2].Value.ToLower() } else { 'dbo' }
-                $currentKey  = "$schema.$($cm.Groups[3].Value.ToLower())"
-                $currentType = $cm.Groups[1].Value.ToUpper() -replace '\s+', '_'
+                # No active object -- start a new one from this CREATE
+                $currentKey         = $cmKey
+                $currentOriginalKey = $cmOriginalKey
+                $currentType        = $cmType
+            } elseif ($currentKey -ne $cmKey) {
+                # Different object -- flush current and start a new one
+                & $flushCurrent
+                $currentKey         = $cmKey
+                $currentOriginalKey = $cmOriginalKey
+                $currentType        = $cmType
             }
+            # else: same object (CREATE follows its SSMS header) -- just append
             $currentBlocks.Add($block)
             continue
         }
@@ -163,6 +182,102 @@ function Parse-SqlFile([string]$path) {
 }
 
 # ---------------------------------------------------------------------------
+# Column parser  (extracts column definitions from CREATE TABLE body)
+# ---------------------------------------------------------------------------
+
+function Parse-TableColumns([string]$rawBody) {
+    # Extract content between outermost parentheses of CREATE TABLE (...)
+    $start = $rawBody.IndexOf('(')
+    $end   = $rawBody.LastIndexOf(')')
+    if ($start -lt 0 -or $end -le $start) { return @{} }
+    $inner = $rawBody.Substring($start + 1, $end - $start - 1)
+
+    # Split by commas that are NOT inside nested parentheses
+    $defs   = [System.Collections.Generic.List[string]]::new()
+    $depth  = 0
+    $current = [System.Text.StringBuilder]::new()
+    foreach ($ch in $inner.ToCharArray()) {
+        if     ($ch -eq '(') { $depth++; [void]$current.Append($ch) }
+        elseif ($ch -eq ')') { $depth--; [void]$current.Append($ch) }
+        elseif ($ch -eq ',' -and $depth -eq 0) {
+            $t = $current.ToString().Trim()
+            if ($t) { [void]$defs.Add($t) }
+            [void]$current.Clear()
+        } else {
+            [void]$current.Append($ch)
+        }
+    }
+    $t = $current.ToString().Trim()
+    if ($t) { [void]$defs.Add($t) }
+
+    # Build name -> definition map; skip constraints
+    $constraintPattern = [regex]'(?i)^\s*(PRIMARY\s+KEY|UNIQUE|CONSTRAINT|INDEX|FOREIGN\s+KEY|CHECK)'
+    $columns = [System.Collections.Generic.Dictionary[string, string]]::new(
+        [System.StringComparer]::OrdinalIgnoreCase)
+
+    foreach ($def in $defs) {
+        if ($constraintPattern.IsMatch($def)) { continue }
+        # Column name is the first token (strip brackets)
+        $nameMatch = [regex]::Match($def, '^\s*\[?(\w+)\]?')
+        if ($nameMatch.Success) {
+            $columns[$nameMatch.Groups[1].Value] = $def.Trim()
+        }
+    }
+    return $columns
+}
+
+function Build-AlterTableStatements([DiffObject]$baselineObj, [DiffObject]$currentObj) {
+    # Use OriginalFullName for proper casing (CS collation requires exact case)
+    $sourceName = if ($currentObj.OriginalFullName) { $currentObj.OriginalFullName } else { $currentObj.FullName }
+    $parts  = $sourceName -split '\.'
+    $schema = $parts[0]
+    $name   = $parts[1]
+    $table  = "[$schema].[$name]"
+
+    $baseCols = Parse-TableColumns $baselineObj.RawBody
+    $curCols  = Parse-TableColumns $currentObj.RawBody
+
+    $sb = [System.Text.StringBuilder]::new()
+
+    # Added columns
+    foreach ($col in $curCols.Keys) {
+        if (-not $baseCols.ContainsKey($col)) {
+            [void]$sb.AppendLine("ALTER TABLE $table ADD $($curCols[$col]);")
+            [void]$sb.AppendLine("GO")
+        }
+    }
+
+    # Dropped columns
+    foreach ($col in $baseCols.Keys) {
+        if (-not $curCols.ContainsKey($col)) {
+            [void]$sb.AppendLine("ALTER TABLE $table DROP COLUMN [$col];")
+            [void]$sb.AppendLine("GO")
+        }
+    }
+
+    # Modified columns
+    foreach ($col in $curCols.Keys) {
+        if ($baseCols.ContainsKey($col)) {
+            $baseNorm = ($baseCols[$col] -replace '\s+', ' ').Trim().ToLower()
+            $curNorm  = ($curCols[$col]  -replace '\s+', ' ').Trim().ToLower()
+            if ($baseNorm -ne $curNorm) {
+                [void]$sb.AppendLine("ALTER TABLE $table ALTER COLUMN $($curCols[$col]);")
+                [void]$sb.AppendLine("GO")
+            }
+        }
+    }
+
+    if ($sb.Length -eq 0) {
+        # Fallback: parser found no column diff (e.g. constraint-only change)
+        [void]$sb.AppendLine("-- TODO: Table $table was modified (constraint/index change).")
+        [void]$sb.AppendLine("-- Review differences and write ALTER TABLE statements manually.")
+        [void]$sb.AppendLine("GO")
+    }
+
+    return $sb.ToString()
+}
+
+# ---------------------------------------------------------------------------
 # DROP statement builder
 # ---------------------------------------------------------------------------
 
@@ -174,11 +289,12 @@ function Build-DropStatement([DiffObject]$obj) {
         '*FUNCTION*'          { 'FUNCTION'  }
         'VIEW'                { 'VIEW'      }
         'TABLE'               { 'TABLE'     }
-        '*INDEX*'             { $null       }   # handled via ALTER TABLE
         default               { $null       }
     }
 
-    $parts  = $obj.FullName -split '\.'
+    # Use OriginalFullName for proper casing (CS collation requires exact case)
+    $sourceName = if ($obj.OriginalFullName) { $obj.OriginalFullName } else { $obj.FullName }
+    $parts  = $sourceName -split '\.'
     $schema = $parts[0]
     $name   = $parts[1]
 
@@ -198,7 +314,21 @@ GO
 "@
     }
 
-    # Index: cannot generate without table name in this context
+    # Index: extract table name from ON [schema].[table] in raw body
+    $onMatch = [regex]::Match($obj.RawBody, '(?i)\bON\s+\[?(\w+)\]?\.\[?(\w+)\]?')
+    if ($onMatch.Success) {
+        $tSchema = $onMatch.Groups[1].Value
+        $tName   = $onMatch.Groups[2].Value
+        # Index name: use the full name from the CREATE statement (may contain dots)
+        $ixMatch = [regex]::Match($obj.RawBody, '(?i)CREATE\s+(?:UNIQUE\s+)?(?:NONCLUSTERED\s+|CLUSTERED\s+)?INDEX\s+\[?([\w.]+)\]?')
+        $ixName  = if ($ixMatch.Success) { $ixMatch.Groups[1].Value } else { $name }
+        return @"
+IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = '$ixName' AND object_id = OBJECT_ID('[$tSchema].[$tName]'))
+    DROP INDEX [$ixName] ON [$tSchema].[$tName];
+GO
+"@
+    }
+
     return "-- NOTE: manual DROP required for $($obj.ObjectType) [$schema].[$name]`r`nGO`r`n"
 }
 
@@ -334,10 +464,8 @@ if ($modified.Count -gt 0) {
     foreach ($obj in $modified) {
         # Only drop/recreate programmable objects; for tables emit ALTER TABLE stubs
         if ($obj.ObjectType -eq 'TABLE') {
-            [void]$sb.AppendLine("-- TODO: Table [$($obj.FullName)] was modified.")
-            [void]$sb.AppendLine("-- Review column differences and write ALTER TABLE statements manually.")
-            [void]$sb.AppendLine("GO")
-            [void]$sb.AppendLine("")
+            $alterStatements = Build-AlterTableStatements -baselineObj $baseline[$obj.FullName] -currentObj $obj
+            [void]$sb.AppendLine($alterStatements)
         } else {
             [void]$sb.AppendLine((Build-DropStatement $obj))
             [void]$sb.AppendLine("")

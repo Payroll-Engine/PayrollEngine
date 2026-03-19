@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
   "tenants": [
     {
@@ -101,7 +101,7 @@
           "payrunName": "TestVersionPayrun",
           "payrollName": "VersionPayroll.Test",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-01-01T00:00:00.0Z",
           "evaluationDate": "2019-01-28T00:00:00.0Z",
           "reason": "Test Version Payroll"
@@ -111,7 +111,7 @@
           "payrunName": "TestVersionPayrun",
           "payrollName": "VersionPayroll.Test",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-02-01T00:00:00.0Z",
           "evaluationDate": "2019-02-26T00:00:00.0Z",
           "reason": "Test Version Payroll"
@@ -121,7 +121,7 @@
           "payrunName": "TestVersionPayrun",
           "payrollName": "VersionPayroll.Test",
           "userIdentifier": "peter.schmid@foo.com",
-          "jobStatus": "Complete",
+          "completedJobStatus": "Complete",
           "periodStart": "2019-03-01T00:00:00.0Z",
           "evaluationDate": "2019-03-24T00:00:00.0Z",
           "reason": "Test Version Payroll"

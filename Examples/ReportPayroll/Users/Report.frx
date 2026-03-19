@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/13/2026 00:00:00" ReportInfo.Modified="03/13/2026 00:00:00" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Users" ReferenceName="Data.Users" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Identifier" DataType="System.String"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="Culture" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Layout — "Clean Lines" — A4 Portrait, content width 718.4 units
+
+       Design philosophy:
+         · No vertical cell borders in data rows — horizontal separator lines only
+         · Gold underline on column headers (no heavy fill)
+         · Muted blue identifiers / labels
+
+       Column layout (left margin 18.9):
+         Identifier : Left=18.9,  Width=220  → right 238.9
+         First Name : Left=238.9, Width=220  → right 458.9
+         Last Name  : Left=458.9, Width=240.6 → right 699.5 (≈ 718.4 - 18.9)
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <ReportPage Name="Page1" PaperWidth="210" PaperHeight="297" RawPaperSize="9" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15">
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Report Title Band — dark navy, logo left · report title right
+         ──────────────────────────────────────────────────────────────────── -->
+    <ReportTitleBand Name="ReportTitle1" Width="718.4" Height="60" Fill.Color="13, 34, 64">
+      <PictureObject Name="PicLogoMark" Left="18.9" Top="16" Width="28" Height="28" ImageFormat="Png" Image="iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHhe7dvBTQNBEAVRx0EopEAC5EAKnIiGUMgKtJbW0pZX/O3p20yN9G72l7oOvvl2u/BeXj9+Z8Q7y4+Ds+Ld8XFgFexw+vil1bDH4fHDq2KX++OHVsc+BgLjXGCgwDgXGCgwUGCgwEBBO9DP91sL9+jr872Fe1WtQDx2FHd3PHYUdyuGA/HILu7zyC7uX2WgwECBgQIDBQYKDBQYKDBQYKDAQIGBAgMFBgoMFBgoGA604ZGjuLvjkaO4W9EKtOGxVdwjHlvFvap2oNkZKDBQYKCgHYg/ilXcI/6oV3GvqhWIx47i7o7HjuJuxXAgHtnFfR7Zxf2rDBQYKDBQYKDAQIGBAgMFBgoMFBgoMFBgoMBAgYECAwXDgTY8chR3dzxyFHcrWoE2PLaKe8Rjq7hX1Q40OwMFBgoMFBgo8J/P//B/88EjkJGeHeIY6Bn73B8/tCp2OTx+eDXscfr4pVWwQ3wcmBXvLj8OzoJ3nr0/Sf4icliT3SsAAAAASUVORK5CYII="/>
+      <TextObject Name="TextLogoName" Left="54" Top="16" Width="180" Height="28" Text="Acme Corp" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="200, 168, 75"/>
+      <TextObject Name="TextReportTitle" Left="234" Top="16" Width="465.4" Height="28" Text="Users" HorzAlign="Right" VertAlign="Center" Font="Arial, 13pt, style=Bold" TextFill.Color="White"/>
+    </ReportTitleBand>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Page Header Band — breathing space (37.8) + column headers below
+         Total Height=75.6 so data rows begin at the same y-offset as
+         TenantsSimple (empty PageHeader 37.8 + card accent 4 + card bg 44).
+         Column headers sit at Top=37.8 within the band (gold underline).
+         ──────────────────────────────────────────────────────────────────── -->
+    <PageHeaderBand Name="PageHeader1" Top="54" Width="718.4" Height="75.6">
+      <TextObject Name="TextHdrIdentifier" Left="0"   Top="37.8" Width="240" Height="22"
+                  Text="Identifier" VertAlign="Center" Font="Arial, 8.5pt, style=Bold"
+                  TextFill.Color="13, 34, 64" Padding="8, 0, 0, 0"
+                  Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"/>
+      <TextObject Name="TextHdrFirstName" Left="240" Top="37.8" Width="240" Height="22"
+                  Text="First Name" VertAlign="Center" Font="Arial, 8.5pt, style=Bold"
+                  TextFill.Color="13, 34, 64" Padding="8, 0, 0, 0"
+                  Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"/>
+      <TextObject Name="TextHdrLastName" Left="480" Top="37.8" Width="238.4" Height="22"
+                  Text="Last Name" VertAlign="Center" Font="Arial, 8.5pt, style=Bold"
+                  TextFill.Color="13, 34, 64" Padding="8, 0, 0, 0"
+                  Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"/>
+    </PageHeaderBand>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Data Band — one row per user, horizontal separator only
+         ──────────────────────────────────────────────────────────────────── -->
+    <DataBand Name="Data1" Top="120.4" Width="718.4" Height="20" DataSource="Users">
+      <TextObject Name="TextIdentifier" Left="0"   Top="1" Width="240" Height="18"
+                  Text="[Users.Identifier]" VertAlign="Center" Font="Arial, 9pt"
+                  TextFill.Color="120, 148, 185" Padding="8, 0, 0, 0"
+                  Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"/>
+      <TextObject Name="TextFirstName" Left="240" Top="1" Width="240" Height="18"
+                  Text="[Users.FirstName]" VertAlign="Center" Font="Arial, 9pt"
+                  TextFill.Color="40, 55, 75" Padding="8, 0, 0, 0"
+                  Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"/>
+      <TextObject Name="TextLastName" Left="480" Top="1" Width="238.4" Height="18"
+                  Text="[Users.LastName]" VertAlign="Center" Font="Arial, 9pt"
+                  TextFill.Color="40, 55, 75" Padding="8, 0, 0, 0"
+                  Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"/>
+    </DataBand>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Page Footer Band — dark navy, date left · page right
+         ──────────────────────────────────────────────────────────────────── -->
+    <PageFooterBand Name="PageFooter1" Top="750" Width="718.4" Height="28.35" Fill.Color="13, 34, 64">
+      <TextObject Name="TextDate" Left="18.9" Top="5" Width="200" Height="18"
+                  Text="[Date]" VertAlign="Center" Font="Arial, 8pt"
+                  TextFill.Color="122, 153, 191"/>
+      <TextObject Name="TextPage" Left="540.74" Top="5" Width="158.76" Height="18"
+                  Text="Page [Page#] of [TotalPages#]" HorzAlign="Right" VertAlign="Center"
+                  Font="Arial, 8pt" TextFill.Color="122, 153, 191"/>
+    </PageFooterBand>
+
+  </ReportPage>
+</Report>

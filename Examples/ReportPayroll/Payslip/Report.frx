@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/13/2026 00:00:00" ReportInfo.Modified="03/13/2026 00:00:00" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <TableDataSource Name="Employees" ReferenceName="Data.Employees" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Status" DataType="System.String"/>
+      <Column Name="Created" DataType="System.DateTime"/>
+      <Column Name="Updated" DataType="System.DateTime"/>
+      <Column Name="Identifier" DataType="System.String"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="Language" DataType="System.String"/>
+      <Column Name="Culture" DataType="System.String"/>
+      <Column Name="Divisions" DataType="System.String"/>
+      <Column Name="Attributes" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="WageTypeResults" ReferenceName="Data.WageTypeResults" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="EmployeeId" DataType="System.Int32"/>
+      <Column Name="WageTypeId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="WageTypeName" DataType="System.String"/>
+      <Column Name="WageTypeNumber" DataType="System.Decimal"/>
+      <Column Name="Value" DataType="System.Decimal"/>
+      <Column Name="RetroValue" DataType="System.Decimal"/>
+      <Column Name="YtdValue" DataType="System.Decimal"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="CollectorResults" ReferenceName="Data.CollectorResults" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="EmployeeId" DataType="System.Int32"/>
+      <Column Name="CollectorId" DataType="System.Int32"/>
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="CollectorName" DataType="System.String"/>
+      <Column Name="Value" DataType="System.Decimal"/>
+      <Column Name="RetroValue" DataType="System.Decimal"/>
+      <Column Name="YtdValue" DataType="System.Decimal"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+    </TableDataSource>
+    <Relation Name="EmployeeWageTypeResults" ParentDataSource="Employees" ChildDataSource="WageTypeResults" ParentColumns="Id" ChildColumns="EmployeeId" Enabled="true"/>
+    <Relation Name="EmployeeCollectorResults" ParentDataSource="Employees" ChildDataSource="CollectorResults" ParentColumns="Id" ChildColumns="EmployeeId" Enabled="true"/>
+    <Parameter Name="PayslipYear" DataType="System.String" AsString=""/>
+    <Parameter Name="PayslipMonth" DataType="System.String" AsString=""/>
+    <Parameter Name="EmployeeIdentifier" DataType="System.String" AsString=""/>
+  </Dictionary>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Layout v2 — "Clean Lines" — A4 Portrait, content width 718.4 units
+
+       Design philosophy:
+         · No vertical cell borders in data rows — horizontal separator lines only
+         · Full-width employee card with teal top-stripe accent
+         · Gold underline on column headers (no heavy navy fill)
+         · Collector rows: italic, light blue-gray background
+         · Retro: green for positive, red for negative, light gray for zero
+
+       Column layout (left margin 18.9):
+         Wage Type : Left=18.9,  Width=308   → right 326.9
+         Current   : Left=326.9, Width=122   → right 448.9
+         Retro     : Left=448.9, Width=122   → right 570.9
+         YTD       : Left=570.9, Width=147.5 → right 718.4
+
+       Employee band static area = 88 units:
+         y= 0, h= 4  — teal top accent stripe
+         y= 4, h=54  — employee card (light bg)
+         y=58, h= 8  — breathing space
+         y=66, h=22  — column headers (gold underline)
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <ReportPage Name="Page1" PaperWidth="210" PaperHeight="297" RawPaperSize="9" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15">
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Report Title Band — dark navy, logo left · report title right
+         ──────────────────────────────────────────────────────────────────── -->
+    <ReportTitleBand Name="ReportTitle1" Width="718.4" Height="60" Fill.Color="13, 34, 64">
+      <PictureObject Name="PicLogoMark" Left="18.9" Top="16" Width="28" Height="28" ImageFormat="Png" Image="iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHhe7dvBTQNBEAVRx0EopEAC5EAKnIiGUMgKtJbW0pZX/O3p20yN9G72l7oOvvl2u/BeXj9+Z8Q7y4+Ds+Ld8XFgFexw+vil1bDH4fHDq2KX++OHVsc+BgLjXGCgwDgXGCgwUGCgwEBBO9DP91sL9+jr872Fe1WtQDx2FHd3PHYUdyuGA/HILu7zyC7uX2WgwECBgQIDBQYKDBQYKDBQYKDAQIGBAgMFBgoMFBgoGA604ZGjuLvjkaO4W9EKtOGxVdwjHlvFvap2oNkZKDBQYKCgHYg/ilXcI/6oV3GvqhWIx47i7o7HjuJuxXAgHtnFfR7Zxf2rDBQYKDBQYKDAQIGBAgMFBgoMFBgoMFBgoMBAgYECAwXDgTY8chR3dzxyFHcrWoE2PLaKe8Rjq7hX1Q40OwMFBgoMFBgo8J/P//B/88EjkJGeHeIY6Bn73B8/tCp2OTx+eDXscfr4pVWwQ3wcmBXvLj8OzoJ3nr0/Sf4icliT3SsAAAAASUVORK5CYII="/>
+      <TextObject Name="TextLogoName" Left="54" Top="16" Width="180" Height="28" Text="Acme Corp" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="200, 168, 75"/>
+      <TextObject Name="TextReportTitle" Left="234" Top="16" Width="465.4" Height="28" Text="Employee Payslip" HorzAlign="Right" VertAlign="Center" Font="Arial, 13pt, style=Bold" TextFill.Color="White"/>
+    </ReportTitleBand>
+
+    <PageHeaderBand Name="PageHeader1" Top="54" Width="718.4" Height="37.8"/>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Employee DataBand — static header (88 units) + nested detail rows
+         ──────────────────────────────────────────────────────────────────── -->
+    <DataBand Name="Employee" Top="56" Width="718.4" Height="100" CanGrow="true" DataSource="Employees">
+
+      <!-- ── Teal top accent stripe (y=0, h=4) ── -->
+      <TextObject Name="TextTopAccent"
+                  Left="0" Top="0" Width="718.4" Height="4"
+                  Fill.Color="45, 130, 140" Border.Lines="None" Text=""/>
+
+      <!-- ── Employee card background (y=4, h=54) ── -->
+      <TextObject Name="TextCardBg"
+                  Left="0" Top="4" Width="718.4" Height="54"
+                  Fill.Color="245, 248, 252" Border.Lines="All" Border.Color="215, 225, 240" Border.Width="0.5"
+                  Text=""/>
+
+      <!-- ── Employee full name ── -->
+      <TextObject Name="TextEmployeeName"
+                  Left="10" Top="12" Width="360" Height="22"
+                  Text="[Employees.FirstName] [Employees.LastName]"
+                  VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="13, 34, 64"/>
+
+      <!-- ── Employee identifier / email ── -->
+      <TextObject Name="TextEmployeeIdentifier"
+                  Left="10" Top="34" Width="360" Height="17"
+                  Text="[Employees.Identifier]"
+                  VertAlign="Center" Font="Arial, 8pt" TextFill.Color="120, 148, 185"/>
+
+      <!-- ── Pay Period label (right-aligned, small muted) ── -->
+      <TextObject Name="TextPeriodLabel"
+                  Left="370" Top="12" Width="348.4" Height="15"
+                  Text="Pay Period"
+                  HorzAlign="Right" VertAlign="Center" Font="Arial, 7.5pt" TextFill.Color="120, 148, 185"/>
+
+      <!-- ── Pay Period value (right-aligned, bold) ── -->
+      <TextObject Name="TextPeriodValue"
+                  Left="370" Top="27" Width="348.4" Height="26"
+                  Text="[PayslipYear]-[PayslipMonth]"
+                  HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold" TextFill.Color="13, 34, 64"/>
+
+      <!-- ── Column headers (y=66, h=22) — white bg, gold underline ── -->
+      <TextObject Name="TextHdrWageType"
+                  Left="0" Top="78" Width="326.9" Height="22"
+                  Fill.Color="White" Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"
+                  Padding="8, 0, 0, 0" Text="Name"
+                  VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="60, 85, 120"/>
+      <TextObject Name="TextHdrCurrent"
+                  Left="326.9" Top="78" Width="122" Height="22"
+                  Fill.Color="White" Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"
+                  Padding="0, 0, 5, 0" Text="Amount"
+                  HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="60, 85, 120"/>
+      <TextObject Name="TextHdrRetro"
+                  Left="448.9" Top="78" Width="122" Height="22"
+                  Fill.Color="White" Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"
+                  Padding="0, 0, 5, 0" Text="Retro"
+                  HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="60, 85, 120"/>
+      <TextObject Name="TextHdrYtd"
+                  Left="570.9" Top="78" Width="147.5" Height="22"
+                  Fill.Color="White" Border.Lines="Bottom" Border.Color="200, 168, 75" Border.Width="1.5"
+                  Padding="0, 0, 5, 0" Text="YTD"
+                  HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="60, 85, 120"/>
+
+      <!-- ───────────────────────────────────────────────────────────────────
+           WageTypeResults — horizontal separator lines only, no vertical grid
+           ─────────────────────────────────────────────────────────────────── -->
+      <DataBand Name="WageTypeResult" Top="180" Width="718.4" Height="22.68" DataSource="WageTypeResults">
+
+        <TextObject Name="TextWtName"
+                    Left="0" Width="326.9" Height="22.68"
+                    Border.Lines="Bottom" Border.Color="220, 228, 240" Border.Width="0.5"
+                    Padding="8, 0, 0, 0"
+                    Text="[WageTypeResults.WageTypeName] - [FormatNumber([WageTypeResults.WageTypeNumber], 0)]"
+                    VertAlign="Center" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+
+        <!-- Current: hidden when zero -->
+        <TextObject Name="TextWtValue"
+                    Left="326.9" Width="122" Height="22.68"
+                    Border.Lines="Bottom" Border.Color="220, 228, 240" Border.Width="0.5"
+                    Padding="0, 0, 5, 0"
+                    Text="[WageTypeResults.Value]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2"
+                    HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt">
+          <Highlight>
+            <Condition Expression="[WageTypeResults.Value] &lt; 0" TextFill.Color="196, 48, 48" Font="Arial, 8pt"/>
+            <Condition Expression="[WageTypeResults.Value] == 0" Visible="false" Font="Arial, 8pt"/>
+          </Highlight>
+        </TextObject>
+
+        <!-- Retro: green=positive, red=negative, light gray=zero -->
+        <TextObject Name="TextWtRetro"
+                    Left="448.9" Width="122" Height="22.68"
+                    Border.Lines="Bottom" Border.Color="220, 228, 240" Border.Width="0.5"
+                    Padding="0, 0, 5, 0"
+                    Text="[WageTypeResults.RetroValue]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2"
+                    HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt">
+          <Highlight>
+            <Condition Expression="[WageTypeResults.RetroValue] &lt; 0" TextFill.Color="196, 48, 48" Font="Arial, 8pt, style=Bold"/>
+            <Condition Expression="[WageTypeResults.RetroValue] &gt; 0" TextFill.Color="34, 100, 60" Font="Arial, 8pt, style=Bold"/>
+            <Condition Expression="[WageTypeResults.RetroValue] == 0" TextFill.Color="195, 205, 220" Font="Arial, 8pt"/>
+          </Highlight>
+        </TextObject>
+
+        <!-- YTD: always shown, bold -->
+        <TextObject Name="TextWtYtd"
+                    Left="570.9" Width="147.5" Height="22.68"
+                    Border.Lines="Bottom" Border.Color="220, 228, 240" Border.Width="0.5"
+                    Padding="0, 0, 5, 0"
+                    Text="[WageTypeResults.YtdValue]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2"
+                    HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold">
+          <Highlight>
+            <Condition Expression="[WageTypeResults.YtdValue] &lt; 0" TextFill.Color="196, 48, 48" Font="Arial, 8pt, style=Bold"/>
+          </Highlight>
+        </TextObject>
+
+      </DataBand>
+
+      <!-- ───────────────────────────────────────────────────────────────────
+           CollectorResults — italic, light blue-gray background
+           ─────────────────────────────────────────────────────────────────── -->
+      <DataBand Name="CollectorResult" Top="200" Width="718.4" Height="22.68" DataSource="CollectorResults">
+
+        <TextObject Name="TextColName"
+                    Left="0" Width="326.9" Height="22.68"
+                    Fill.Color="237, 243, 250" Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"
+                    Padding="8, 0, 0, 0"
+                    Text="[CollectorResults.CollectorName]"
+                    VertAlign="Center" Font="Arial, 8pt, style=Italic" TextFill.Color="60, 85, 120" Trimming="EllipsisCharacter"/>
+
+        <!-- Current: hidden when zero -->
+        <TextObject Name="TextColValue"
+                    Left="326.9" Width="122" Height="22.68"
+                    Fill.Color="237, 243, 250" Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"
+                    Padding="0, 0, 5, 0"
+                    Text="[CollectorResults.Value]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2"
+                    HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Italic" TextFill.Color="60, 85, 120">
+          <Highlight>
+            <Condition Expression="[CollectorResults.Value] &lt; 0" TextFill.Color="196, 48, 48" Font="Arial, 8pt, style=Italic"/>
+            <Condition Expression="[CollectorResults.Value] == 0" Visible="false" Font="Arial, 8pt, style=Italic"/>
+          </Highlight>
+        </TextObject>
+
+        <!-- Retro: same highlighting as WageType rows -->
+        <TextObject Name="TextColRetro"
+                    Left="448.9" Width="122" Height="22.68"
+                    Fill.Color="237, 243, 250" Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"
+                    Padding="0, 0, 5, 0"
+                    Text="[CollectorResults.RetroValue]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2"
+                    HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Italic">
+          <Highlight>
+            <Condition Expression="[CollectorResults.RetroValue] &lt; 0" TextFill.Color="196, 48, 48" Font="Arial, 8pt, style=Bold, Italic"/>
+            <Condition Expression="[CollectorResults.RetroValue] &gt; 0" TextFill.Color="34, 100, 60" Font="Arial, 8pt, style=Bold, Italic"/>
+            <Condition Expression="[CollectorResults.RetroValue] == 0" TextFill.Color="195, 205, 220" Font="Arial, 8pt, style=Italic"/>
+          </Highlight>
+        </TextObject>
+
+        <!-- YTD: always shown, bold italic -->
+        <TextObject Name="TextColYtd"
+                    Left="570.9" Width="147.5" Height="22.68"
+                    Fill.Color="237, 243, 250" Border.Lines="Bottom" Border.Color="215, 225, 240" Border.Width="0.5"
+                    Padding="0, 0, 5, 0"
+                    Text="[CollectorResults.YtdValue]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2"
+                    HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold, Italic" TextFill.Color="60, 85, 120">
+          <Highlight>
+            <Condition Expression="[CollectorResults.YtdValue] &lt; 0" TextFill.Color="196, 48, 48" Font="Arial, 8pt, style=Bold, Italic"/>
+          </Highlight>
+        </TextObject>
+
+      </DataBand>
+    </DataBand>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Page footer — dark navy, date left · page right
+         ──────────────────────────────────────────────────────────────────── -->
+    <PageFooterBand Name="PageFooter1" Top="750" Width="718.4" Height="28.35" Fill.Color="13, 34, 64">
+      <TextObject Name="TextFooterDate" Left="18.9" Top="0" Width="200" Height="28.35"
+                  Text="[Date]" VertAlign="Center" Font="Arial, 8pt" TextFill.Color="122, 153, 191"/>
+      <TextObject Name="TextFooterPage" Left="540.74" Top="0" Width="158.76" Height="28.35"
+                  Text="Page [Page#] of [TotalPages#]" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt" TextFill.Color="122, 153, 191"/>
+    </PageFooterBand>
+
+  </ReportPage>
+</Report>
