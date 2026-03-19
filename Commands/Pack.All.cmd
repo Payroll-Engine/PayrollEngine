@@ -27,6 +27,12 @@ if %ERRORLEVEL% neq 0 goto error
 rem pack client services
 call Pack PayrollEngine.Client.Services\Client.Services\PayrollEngine.Client.Services.csproj %PackAllConfiguration%
 if %ERRORLEVEL% neq 0 goto error
+rem mcp core
+call Pack PayrollEngine.Mcp.Core\Core\PayrollEngine.Mcp.Core.csproj %PackAllConfiguration%
+if %ERRORLEVEL% neq 0 goto error
+rem mcp tools
+call Pack PayrollEngine.Mcp.Tools\Tools\PayrollEngine.Mcp.Tools.csproj %PackAllConfiguration%
+if %ERRORLEVEL% neq 0 goto error
 goto exit
 
 :error

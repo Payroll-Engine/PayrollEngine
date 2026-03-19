@@ -223,7 +223,7 @@ PayrollEngine/                  ← You are here
 | [Core](https://github.com/Payroll-Engine/PayrollEngine.Core) | Core payroll objects | [![NuGet](https://img.shields.io/nuget/vpre/PayrollEngine.Core?label=&logo=nuget&color=blue)](https://www.nuget.org/packages/PayrollEngine.Core) |
 | [Serilog](https://github.com/Payroll-Engine/PayrollEngine.Serilog) | Structured logging | [![NuGet](https://img.shields.io/nuget/vpre/PayrollEngine.Serilog?label=&logo=nuget&color=blue)](https://www.nuget.org/packages/PayrollEngine.Serilog) |
 | [Document](https://github.com/Payroll-Engine/PayrollEngine.Document) | Report generation | [![NuGet](https://img.shields.io/nuget/vpre/PayrollEngine.Document?label=&logo=nuget&color=blue)](https://www.nuget.org/packages/PayrollEngine.Document) |
-| [McpServer](https://github.com/Payroll-Engine/PayrollEngine.McpServer) | MCP server for AI integration | [![release](https://img.shields.io/github/v/release/Payroll-Engine/PayrollEngine.McpServer?include_prereleases&label=&logo=github)](https://github.com/Payroll-Engine/PayrollEngine.McpServer/releases) |
+| [Mcp.Server](https://github.com/Payroll-Engine/PayrollEngine.Mcp.Server) | MCP server for AI integration | [![release](https://img.shields.io/github/v/release/Payroll-Engine/PayrollEngine.Mcp.Server?include_prereleases&label=&logo=github)](https://github.com/Payroll-Engine/PayrollEngine.Mcp.Server/releases) |
 
 > See [Repositories ↗](https://payrollengine.org/docs/Repositories) for the full map including third-party dependencies.
 
