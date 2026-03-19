@@ -11,6 +11,9 @@
   - Fixed report template encoding: changed ASCII to UTF-8 for XSL, XSD and FRX streams
   - Fixed payrun job workflow: Draft panel now displayed correctly after job start and on page reload
 
+- [Client.Services](https://github.com/Payroll-Engine/PayrollEngine.Client.Services)
+  - `WeekPayrollCycle`: migrated from removed `IPayrollCalendar` to `CultureInfo`/`Calendar` — aligns with `WeekPayrollPeriod`, `MonthPayrollPeriod`, and `YearPayrollCycle`
+
 - [Examples](https://github.com/Payroll-Engine/PayrollEngine/tree/main/Examples/ReportPayroll)
   - `CumulativeJournal`: fixed monthly result columns typed as decimal
 
