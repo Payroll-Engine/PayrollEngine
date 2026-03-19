@@ -29,7 +29,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Download and push packages
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           NUGET_ORG_API_KEY: ${{ secrets.NUGET_ORG_API_KEY }}
         with:
@@ -102,55 +102,58 @@ jobs:
                 throw e;
               }
 
-              // Find .nupkg asset
-              const nupkg = release.assets.find(a => a.name.endsWith('.nupkg'));
-              if (!nupkg) {
+              // Find all .nupkg assets
+              const nupkgs = release.assets.filter(a => a.name.endsWith('.nupkg'));
+              if (nupkgs.length === 0) {
                 const msg = `${pkg}: No .nupkg asset in release ${tag}`;
                 errors.push(msg);
                 console.log(`  ❌ ${msg}`);
                 continue;
               }
-              console.log(`  📎 Asset: ${nupkg.name} (${(nupkg.size / 1024).toFixed(0)} KB)`);
 
-              // Download asset
-              const downloadPath = path.join(workDir, nupkg.name);
-              const dlResponse = await github.request(
-                'GET /repos/{owner}/{repo}/releases/assets/{asset_id}',
-                {
-                  owner: org,
-                  repo: pkg,
-                  asset_id: nupkg.id,
-                  headers: { accept: 'application/octet-stream' }
-                }
-              );
-              fs.writeFileSync(downloadPath, Buffer.from(dlResponse.data));
-              console.log(`  ⬇️  Downloaded`);
+              for (const nupkg of nupkgs) {
+                console.log(`  📎 Asset: ${nupkg.name} (${(nupkg.size / 1024).toFixed(0)} KB)`);
 
-              // Push to NuGet.org.
-              // `dotnet nuget push` has no env-var alternative for --api-key;
-              // the key must be passed as a CLI argument. spawnSync does not
-              // log its argv array to the Actions log, so the key is not
-              // exposed in the run output.
-              console.log(`  🚀 Pushing to NuGet.org...`);
-              const result = spawnSync(
-                'dotnet',
-                [
-                  'nuget', 'push', downloadPath,
-                  '--source', 'https://api.nuget.org/v3/index.json',
-                  '--api-key', nugetKey,
-                  '--skip-duplicate'
-                ],
-                {
-                  stdio: 'inherit',
-                  env: { ...process.env }
+                // Download asset
+                const downloadPath = path.join(workDir, nupkg.name);
+                const dlResponse = await github.request(
+                  'GET /repos/{owner}/{repo}/releases/assets/{asset_id}',
+                  {
+                    owner: org,
+                    repo: pkg,
+                    asset_id: nupkg.id,
+                    headers: { accept: 'application/octet-stream' }
+                  }
+                );
+                fs.writeFileSync(downloadPath, Buffer.from(dlResponse.data));
+                console.log(`  ⬇️  Downloaded`);
+
+                // Push to NuGet.org.
+                // `dotnet nuget push` has no env-var alternative for --api-key;
+                // the key must be passed as a CLI argument. spawnSync does not
+                // log its argv array to the Actions log, so the key is not
+                // exposed in the run output.
+                console.log(`  🚀 Pushing to NuGet.org...`);
+                const result = spawnSync(
+                  'dotnet',
+                  [
+                    'nuget', 'push', downloadPath,
+                    '--source', 'https://api.nuget.org/v3/index.json',
+                    '--api-key', nugetKey,
+                    '--skip-duplicate'
+                  ],
+                  {
+                    stdio: 'inherit',
+                    env: { ...process.env }
+                  }
+                );
+                if (result.status !== 0) {
+                  const msg = `${pkg}: Push failed for ${nupkg.name} (exit ${result.status})`;
+                  errors.push(msg);
+                  console.log(`  ❌ ${msg}`);
+                } else {
+                  console.log(`  ✅ Pushed ${nupkg.name}`);
                 }
-              );
-              if (result.status !== 0) {
-                const msg = `${pkg}: Push failed (exit ${result.status})`;
-                errors.push(msg);
-                console.log(`  ❌ ${msg}`);
-              } else {
-                console.log(`  ✅ Pushed`);
               }
             }
 
