@@ -727,7 +727,7 @@ jobs:
       - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
-          repository: ${{ env.ORG }}/PayrollEngine.McpServer
+          repository: ${{ env.ORG }}/PayrollEngine.Mcp.Server
           event-type: release
           client-payload: '{"version":"${{ needs.prepare.outputs.lib_version }}","is_prerelease":"true","nuget_source":"github","dry_run":"true"}'
 
@@ -809,7 +809,7 @@ jobs:
               'payrollengine.backend',
               'payrollengine.payrollconsole',
               'payrollengine.webapp',
-              'payrollengine.mcpserver'
+              'payrollengine.mcp.server'
             ];
 
             console.log(`\n🧹 Cleanup: deleting dryrun container images (${version})\n`);

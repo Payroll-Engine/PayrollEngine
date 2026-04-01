@@ -212,7 +212,7 @@ jobs:
               { repo: 'PayrollEngine.Backend',       version: '${{ inputs.backend_version }}' },
               { repo: 'PayrollEngine.PayrollConsole', version: '${{ inputs.console_version }}' },
               { repo: 'PayrollEngine.WebApp',         version: '${{ inputs.webapp_version }}' },
-              { repo: 'PayrollEngine.McpServer',      version: '${{ inputs.mcpserver_version }}' }
+              { repo: 'PayrollEngine.Mcp.Server',     version: '${{ inputs.mcpserver_version }}' }
             ].filter(a => a.version);
 
             console.log(`\n🐳 Checking app version conflicts\n`);
@@ -435,7 +435,7 @@ jobs:
       - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
-          repository: ${{ env.ORG }}/PayrollEngine.McpServer
+          repository: ${{ env.ORG }}/PayrollEngine.Mcp.Server
           event-type: release
           client-payload: >-
             {
@@ -475,7 +475,7 @@ jobs:
             if ('${{ needs.wave-5-webapp.result }}' === 'success')
               apps.push({ repo: 'PayrollEngine.WebApp',         tag: 'v${{ inputs.webapp_version }}' });
             if ('${{ needs.wave-5-mcpserver.result }}' === 'success')
-              apps.push({ repo: 'PayrollEngine.McpServer',      tag: 'v${{ inputs.mcpserver_version }}' });
+              apps.push({ repo: 'PayrollEngine.Mcp.Server',     tag: 'v${{ inputs.mcpserver_version }}' });
 
             for (const { repo, tag } of apps) {
               let found = false;
@@ -553,7 +553,7 @@ jobs:
               { name: 'Backend',        version: '${{ inputs.backend_version }}',   pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
               { name: 'PayrollConsole',  version: '${{ inputs.console_version }}',   pre: '${{ needs.prepare.outputs.console_prerelease }}' },
               { name: 'WebApp',          version: '${{ inputs.webapp_version }}',    pre: '${{ needs.prepare.outputs.webapp_prerelease }}' },
-              { name: 'McpServer',       version: '${{ inputs.mcpserver_version }}', pre: '${{ needs.prepare.outputs.mcpserver_prerelease }}' }
+              { name: 'Mcp.Server',      version: '${{ inputs.mcpserver_version }}', pre: '${{ needs.prepare.outputs.mcpserver_prerelease }}' }
             ].filter(a => a.version);
             if (apps.length > 0) {
               body += `\n## 🐳 Docker Images (Linux)\n\n| App | Version | Pull Command |\n|-----|---------|-------------|\n`;
