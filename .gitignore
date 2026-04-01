@@ -352,3 +352,4 @@ _site
 # Environment variables file for local development
 .env
 /Commands/VSBackup.All.cmd
+/Commands/Pack.All.Mcp.cmd

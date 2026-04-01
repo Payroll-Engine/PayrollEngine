@@ -1,0 +1,591 @@
+name: Orchestrate Libs
+
+# ─────────────────────────────────────────────────────────────────────
+# Lib Orchestrator — OSS Libraries (Wave 1 → 2 → 3 → 4 → M)
+#
+# Publishes all 9 PE library packages to GitHub Packages.
+# After this workflow completes, manually trigger sync-nuget-org.yml,
+# verify all packages on nuget.org, then trigger orchestrate-apps.yml.
+#
+# Fallback: orchestrate-release.yml (legacy, kept until post-Beta.4 cleanup)
+# ─────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      lib_version:
+        description: 'Library version — all 9 libs (e.g. 1.5.0 or 1.5.0-beta.1)'
+        required: true
+      dry_run:
+        description: 'Dry run: publish test version, draft releases, no NuGet.org sync'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  packages: read
+
+env:
+  ORG: Payroll-Engine
+  DOTNET_VERSION: '10.0.x'
+
+jobs:
+  # ═══════════════════════════════════════════════════════
+  # PREPARE
+  # ═══════════════════════════════════════════════════════
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      lib_version:           ${{ steps.resolve.outputs.lib_version }}
+      intended_lib_version:  ${{ steps.resolve.outputs.intended_lib_version }}
+      lib_prerelease:        ${{ steps.resolve.outputs.lib_prerelease }}
+      dry_run:               ${{ steps.resolve.outputs.dry_run }}
+    steps:
+      - name: Resolve parameters
+        id: resolve
+        run: |
+          DRY_RUN="${{ inputs.dry_run }}"
+          echo "dry_run=${DRY_RUN}" >> $GITHUB_OUTPUT
+          echo "intended_lib_version=${{ inputs.lib_version }}" >> $GITHUB_OUTPUT
+
+          if [ "${DRY_RUN}" = "true" ]; then
+            LIB_VERSION="0.0.0-dryrun.${{ github.run_number }}"
+          else
+            LIB_VERSION="${{ inputs.lib_version }}"
+          fi
+          echo "lib_version=${LIB_VERSION}" >> $GITHUB_OUTPUT
+
+          if [[ "${LIB_VERSION}" == *-* ]]; then
+            echo "lib_prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "lib_prerelease=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print release plan
+        run: |
+          echo "═══════════════════════════════════════════"
+          echo "  Lib Orchestrator"
+          echo "═══════════════════════════════════════════"
+          echo "  Dry run:        ${{ inputs.dry_run }}"
+          echo "  Target version: ${{ inputs.lib_version }}"
+          echo "  Build version:  ${{ steps.resolve.outputs.lib_version }}"
+          echo "  Libraries:      Core, Serilog, Document, Client.Core,"
+          echo "                  Client.Scripting, Client.Test, Client.Services,"
+          echo "                  Mcp.Core, Mcp.Tools"
+          echo "═══════════════════════════════════════════"
+
+  # ═══════════════════════════════════════════════════════
+  # VERSION GUARD — always runs (dry-run and live)
+  # Checks intended_lib_version (real input), never 0.0.0-dryrun.N
+  # ═══════════════════════════════════════════════════════
+  version-guard:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check lib versions across all 9 repos
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const version = '${{ needs.prepare.outputs.intended_lib_version }}';
+            const tag = `v${version}`;
+            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
+            const errors = [];
+
+            if (isDryRun) {
+              console.log(`ℹ️ Dry-run: checking real target version ${version} for conflicts`);
+            }
+
+            const libs = [
+              'PayrollEngine.Core',
+              'PayrollEngine.Serilog',
+              'PayrollEngine.Document',
+              'PayrollEngine.Client.Core',
+              'PayrollEngine.Client.Scripting',
+              'PayrollEngine.Client.Test',
+              'PayrollEngine.Client.Services',
+              'PayrollEngine.Mcp.Core',
+              'PayrollEngine.Mcp.Tools'
+            ];
+
+            console.log(`\n📦 Version guard: ${version} across ${libs.length} repos\n`);
+
+            for (const repo of libs) {
+              // Git tag must not exist
+              try {
+                await github.rest.git.getRef({ owner: org, repo, ref: `tags/${tag}` });
+                errors.push(`${repo}: git tag '${tag}' already exists`);
+              } catch (e) { if (e.status !== 404) throw e; }
+
+              // GitHub Release must not exist
+              try {
+                await github.rest.repos.getReleaseByTag({ owner: org, repo, tag });
+                errors.push(`${repo}: GitHub Release '${tag}' already exists`);
+              } catch (e) { if (e.status !== 404) throw e; }
+
+              // NuGet.org — must not exist (checked via package name pattern)
+              // GitHub Packages — must not exist
+              try {
+                const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'nuget',
+                  package_name: repo.toLowerCase(),
+                  org,
+                  per_page: 100
+                });
+                if (pkgs.data.some(p => p.name === version)) {
+                  errors.push(`${repo}: NuGet version '${version}' already exists on GitHub Packages`);
+                }
+              } catch (e) {
+                if (e.status === 401 || e.status === 403) throw e;
+                if (e.status !== 404) console.warn(`  ⚠️ ${repo}: ${e.message}`);
+              }
+
+              if (!errors.some(err => err.startsWith(repo))) {
+                console.log(`  ✅ ${repo}`);
+              }
+            }
+
+            // Umbrella release must not exist
+            try {
+              await github.rest.repos.getReleaseByTag({
+                owner: org, repo: 'PayrollEngine', tag
+              });
+              errors.push(`PayrollEngine: umbrella release '${tag}' already exists`);
+            } catch (e) { if (e.status !== 404) throw e; }
+
+            if (errors.length > 0) {
+              core.setFailed([
+                `❌ Version guard failed (${errors.length} conflict(s)):`,
+                '', ...errors.map(e => `  - ${e}`), '',
+                'Use a new version number or clean up existing artifacts.'
+              ].join('\n'));
+            } else {
+              console.log(`\n✅ Version ${version} is clean across all repos — safe to proceed\n`);
+            }
+
+  # ═══════════════════════════════════════════════════════
+  # BREAKING CHANGE GUARD — always runs (dry-run and live)
+  # Covers: Scripting API + Client Services API
+  # Must run on windows-latest (script uses Windows path separators)
+  # ═══════════════════════════════════════════════════════
+  breaking-change-guard:
+    needs: [prepare, version-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          fetch-depth: 0
+
+      - name: Checkout API surface repos
+        shell: bash
+        run: |
+          for REPO in PayrollEngine.Client.Scripting PayrollEngine.Client.Services; do
+            git clone --depth=2 \
+              "https://x-access-token:${{ secrets.PAT_DISPATCH }}@github.com/${{ env.ORG }}/${REPO}.git" \
+              "../${REPO}"
+          done
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Run breaking change detection (Scripting + Client.Services)
+        shell: pwsh
+        id: detect
+        continue-on-error: true
+        run: |
+          $reposRoot = Resolve-Path ".."
+          ./devops/scripts/Update-BreakingChanges.ps1 `
+            -ReposRoot $reposRoot `
+            -BaselineRef "HEAD~1" `
+            -SkipReleaseNotes `
+            -ReportPath "breaking-changes-libs.md"
+          $ec = $LASTEXITCODE
+          "exit_code=$ec" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          exit $ec
+
+      - name: Check for undocumented breaking changes
+        if: steps.detect.outcome == 'failure'
+        shell: pwsh
+        run: |
+          if ('${{ steps.detect.outputs.exit_code }}' -eq '2') {
+            Write-Host "::error::Breaking change detection failed (infrastructure error). Check the artifact."
+            exit 1
+          }
+          $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
+          if (-not $notes -or $notes -notmatch 'breaking change') {
+            Write-Host "::error::Breaking changes detected in Scripting/Client.Services API but not documented in RELEASE_NOTES.md"
+            exit 1
+          }
+          Write-Host "Breaking changes are documented in RELEASE_NOTES.md — proceeding"
+
+      - name: Upload breaking change report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: breaking-change-report-libs
+          path: breaking-changes-libs.md
+          if-no-files-found: ignore
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE 1: PayrollEngine.Core
+  # ═══════════════════════════════════════════════════════
+  wave-1-core:
+    needs: [prepare, version-guard, breaking-change-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success' &&
+      needs.breaking-change-guard.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Core
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ needs.prepare.outputs.lib_version }}",
+              "wave": "1",
+              "is_prerelease": "${{ needs.prepare.outputs.lib_prerelease }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
+  wait-wave-1:
+    needs: [prepare, wave-1-core]
+    if: always() && needs.wave-1-core.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Wait for PayrollEngine.Core on GitHub Packages
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const pkg = 'payrollengine.core';
+            const maxAttempts = 60;
+            const delay = 15000;
+            let found = false;
+            for (let i = 0; i < maxAttempts && !found; i++) {
+              try {
+                const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'nuget', package_name: pkg, org, state: 'active', per_page: 100
+                });
+                found = pkgs.data.some(p => p.name === version);
+                if (found) console.log(`✅ ${pkg} ${version} available`);
+              } catch (e) {
+                if (e.status === 401 || e.status === 403) throw e;
+                if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.message}`);
+              }
+              if (!found) {
+                console.log(`⏳ Attempt ${i+1}/${maxAttempts} — waiting for Core...`);
+                await new Promise(r => setTimeout(r, delay));
+              }
+            }
+            if (!found) throw new Error(`❌ Timeout: ${pkg} ${version}`);
+            await new Promise(r => setTimeout(r, 10000));
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE 2: Serilog, Document, Client.Core (parallel)
+  # ═══════════════════════════════════════════════════════
+  wave-2-serilog:
+    needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Serilog
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"2",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wave-2-document:
+    needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Document
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"2",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wave-2-client-core:
+    needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Client.Core
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"2",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wait-wave-2:
+    needs: [prepare, wave-2-serilog, wave-2-document, wave-2-client-core]
+    if: |
+      always() &&
+      needs.wave-2-serilog.result == 'success' &&
+      needs.wave-2-document.result == 'success' &&
+      needs.wave-2-client-core.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Wait for Wave 2 packages on GitHub Packages
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const pkgs = [
+              'payrollengine.serilog',
+              'payrollengine.document',
+              'payrollengine.client.core'
+            ];
+            for (const pkg of pkgs) {
+              let found = false;
+              for (let i = 0; i < 60 && !found; i++) {
+                try {
+                  const res = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: pkg, org, state: 'active', per_page: 100
+                  });
+                  found = res.data.some(p => p.name === version);
+                  if (found) console.log(`✅ ${pkg} ${version} available`);
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  if (e.status !== 404) console.warn(`⚠️ ${pkg} attempt ${i+1}: ${e.message}`);
+                }
+                if (!found) {
+                  console.log(`⏳ Waiting for ${pkg}... (${i+1}/60)`);
+                  await new Promise(r => setTimeout(r, 15000));
+                }
+              }
+              if (!found) throw new Error(`❌ Timeout: ${pkg} ${version}`);
+            }
+            await new Promise(r => setTimeout(r, 10000));
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE 3: Client.Scripting, Client.Test (parallel)
+  # ═══════════════════════════════════════════════════════
+  wave-3-scripting:
+    needs: [prepare, wait-wave-2]
+    if: always() && needs.wait-wave-2.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Client.Scripting
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"3",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wave-3-test:
+    needs: [prepare, wait-wave-2]
+    if: always() && needs.wait-wave-2.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Client.Test
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"3",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wait-wave-3:
+    needs: [prepare, wave-3-scripting, wave-3-test]
+    if: |
+      always() &&
+      needs.wave-3-scripting.result == 'success' &&
+      needs.wave-3-test.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Wait for Wave 3 packages on GitHub Packages
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const pkgs = [
+              'payrollengine.client.scripting',
+              'payrollengine.client.test'
+            ];
+            for (const pkg of pkgs) {
+              let found = false;
+              for (let i = 0; i < 60 && !found; i++) {
+                try {
+                  const res = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: pkg, org, state: 'active', per_page: 100
+                  });
+                  found = res.data.some(p => p.name === version);
+                  if (found) console.log(`✅ ${pkg} ${version} available`);
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  if (e.status !== 404) console.warn(`⚠️ ${pkg} attempt ${i+1}: ${e.message}`);
+                }
+                if (!found) {
+                  console.log(`⏳ Waiting for ${pkg}... (${i+1}/60)`);
+                  await new Promise(r => setTimeout(r, 15000));
+                }
+              }
+              if (!found) throw new Error(`❌ Timeout: ${pkg} ${version}`);
+            }
+            await new Promise(r => setTimeout(r, 10000));
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE 4: Client.Services
+  # ═══════════════════════════════════════════════════════
+  wave-4-services:
+    needs: [prepare, wait-wave-3]
+    if: always() && needs.wait-wave-3.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Client.Services
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"4",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wait-wave-4:
+    needs: [prepare, wave-4-services]
+    if: always() && needs.wave-4-services.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Wait for Client.Services on GitHub Packages
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const pkg = 'payrollengine.client.services';
+            let found = false;
+            for (let i = 0; i < 60 && !found; i++) {
+              try {
+                const res = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'nuget', package_name: pkg, org, state: 'active', per_page: 100
+                });
+                found = res.data.some(p => p.name === version);
+                if (found) console.log(`✅ ${pkg} ${version} available`);
+              } catch (e) {
+                if (e.status === 401 || e.status === 403) throw e;
+                if (e.status !== 404) console.warn(`⚠️ Attempt ${i+1}: ${e.message}`);
+              }
+              if (!found) {
+                console.log(`⏳ Attempt ${i+1}/60...`);
+                await new Promise(r => setTimeout(r, 15000));
+              }
+            }
+            if (!found) throw new Error(`❌ Timeout: ${pkg} ${version}`);
+            await new Promise(r => setTimeout(r, 10000));
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE M: Mcp.Core, Mcp.Tools (parallel)
+  # ═══════════════════════════════════════════════════════
+  wave-m-mcp-core:
+    needs: [prepare, wait-wave-4]
+    if: always() && needs.wait-wave-4.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Mcp.Core
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"M",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wave-m-mcp-tools:
+    needs: [prepare, wait-wave-4]
+    if: always() && needs.wait-wave-4.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Mcp.Tools
+          event-type: release
+          client-payload: >-
+            {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"M",
+             "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
+             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+
+  wait-wave-m:
+    needs: [prepare, wave-m-mcp-core, wave-m-mcp-tools]
+    if: |
+      always() &&
+      needs.wave-m-mcp-core.result == 'success' &&
+      needs.wave-m-mcp-tools.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Wait for Wave M packages on GitHub Packages
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const version = '${{ needs.prepare.outputs.lib_version }}';
+            const pkgs = [
+              'payrollengine.mcp.core',
+              'payrollengine.mcp.tools'
+            ];
+            for (const pkg of pkgs) {
+              let found = false;
+              for (let i = 0; i < 60 && !found; i++) {
+                try {
+                  const res = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: pkg, org, state: 'active', per_page: 100
+                  });
+                  found = res.data.some(p => p.name === version);
+                  if (found) console.log(`✅ ${pkg} ${version} available`);
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  if (e.status !== 404) console.warn(`⚠️ ${pkg} attempt ${i+1}: ${e.message}`);
+                }
+                if (!found) {
+                  console.log(`⏳ Waiting for ${pkg}... (${i+1}/60)`);
+                  await new Promise(r => setTimeout(r, 15000));
+                }
+              }
+              if (!found) throw new Error(`❌ Timeout: ${pkg} ${version}`);
+            }
+            await new Promise(r => setTimeout(r, 10000));
+            console.log('\n✅ All 9 lib packages available on GitHub Packages');
+            console.log('   Next step: trigger sync-nuget-org.yml manually');

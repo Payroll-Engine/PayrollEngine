@@ -15,6 +15,7 @@ Lookup.Test/Test.pecmd
 LunisoralCalendar.Test/Test.pecmd
 MultiDivision.Test/Test.pecmd
 Payrun.Test/Test.pecmd
+PayrunJobImport.Test/Test.pecmd
 PayrunActions.Test/Test.pecmd
 PayrunEdge.Test/Test.pecmd
 PayrunEmployee.Test/Test.pecmd

@@ -1,0 +1,163 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "tenants": [
+    {
+      "identifier": "PayrunJobImport.Test",
+      "created": "2024-01-01T00:00:00.0Z",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "admin@import.test",
+          "firstName": "Admin",
+          "lastName": "Import",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "ImportDivision",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "PayrunJobImport.Test",
+          "description": "Minimal regulation for PayrunJob import integration test",
+          "created": "2024-01-01T00:00:00.0Z",
+          "cases": [
+            {
+              "name": "BasicWage",
+              "caseType": "Employee",
+              "created": "2024-01-01T00:00:00.0Z",
+              "fields": [
+                {
+                  "name": "BasicWage",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod",
+                  "created": "2024-01-01T00:00:00.0Z"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "Gross",
+              "created": "2024-01-01T00:00:00.0Z"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 1000,
+              "name": "BasicWage",
+              "valueExpression": "CaseValue[\"BasicWage\"]",
+              "collectors": [ "Gross" ],
+              "created": "2024-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "anna.mueller@import.test",
+          "firstName": "Anna",
+          "lastName": "Müller",
+          "divisions": [ "ImportDivision" ],
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Import.Payroll",
+          "divisionName": "ImportDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "PayrunJobImport.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@import.test",
+              "employeeIdentifier": "anna.mueller@import.test",
+              "divisionName": "ImportDivision",
+              "case": {
+                "caseName": "BasicWage",
+                "values": [
+                  {
+                    "caseFieldName": "BasicWage",
+                    "value": "4000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Import.Payroll",
+          "name": "Import.Payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Import.Payrun.Jan24",
+          "payrunName": "Import.Payrun",
+          "payrollName": "Import.Payroll",
+          "userIdentifier": "admin@import.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-01T00:00:00.0Z",
+          "reason": "Import Integration Test Jan 2024"
+        },
+        {
+          "name": "Import.Payrun.Feb24",
+          "payrunName": "Import.Payrun",
+          "payrollName": "Import.Payroll",
+          "userIdentifier": "admin@import.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-03-01T00:00:00.0Z",
+          "reason": "Import Integration Test Feb 2024"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Import.Payrun.Jan24",
+          "employeeIdentifier": "anna.mueller@import.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 1000,
+              "value": 4000
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "Gross",
+              "value": 4000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "Import.Payrun.Feb24",
+          "employeeIdentifier": "anna.mueller@import.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 1000,
+              "value": 4000
+            }
+          ],
+          "collectorResults": [
+            {
+              "collectorName": "Gross",
+              "value": 4000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

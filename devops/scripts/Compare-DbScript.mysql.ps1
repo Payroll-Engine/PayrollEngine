@@ -89,6 +89,10 @@ function Normalize-MySqlBody([string]$body) {
     $s = $s -replace '/\*[\s\S]*?\*/', ''
     # Collapse whitespace
     $s = $s -replace '\s+', ' '
+    # Normalise spaces inside parentheses:
+    # History files may use multi-line IF ( \n  expr \n  ) style while
+    # current files use single-line IF (expr) -- strip the inner spaces.
+    $s = $s -replace '\(\s+', '(' -replace '\s+\)', ')'
     return $s.Trim().ToLower()
 }
 

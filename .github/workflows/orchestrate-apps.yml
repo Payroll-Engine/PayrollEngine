@@ -1,0 +1,629 @@
+name: Orchestrate Apps
+
+# ─────────────────────────────────────────────────────────────────────
+# App Orchestrator — OSS Apps (Wave W + Wave 5 + Umbrella Release)
+#
+# Precondition (live): lib_version must be available on NuGet.org.
+# Precondition (dry-run): lib_version must be available on GitHub Packages.
+#
+# nuget_source controls which NuGet feed app repos use during build:
+#   nuget.org — live mode (default): identical to external PE users
+#   github    — dry-run mode: resolves dryrun lib packages from GitHub Packages
+#
+# Fallback: orchestrate-release.yml (legacy, kept until post-Beta.4 cleanup)
+# ─────────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      lib_version:
+        description: 'Library version (must be available on NuGet.org for live, GitHub Packages for dry-run)'
+        required: true
+      backend_version:
+        description: 'Backend version (leave empty to skip)'
+        required: false
+        default: ''
+      console_version:
+        description: 'PayrollConsole version (leave empty to skip)'
+        required: false
+        default: ''
+      webapp_version:
+        description: 'WebApp version (leave empty to skip)'
+        required: false
+        default: ''
+      mcpserver_version:
+        description: 'McpServer version (leave empty to skip)'
+        required: false
+        default: ''
+      nuget_source:
+        description: 'NuGet source for app builds: nuget.org (live) | github (dry-run only)'
+        required: false
+        default: 'nuget.org'
+      dry_run:
+        description: 'Dry run: build test version, draft releases, skip umbrella release'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  packages: read
+
+env:
+  ORG: Payroll-Engine
+  DOTNET_VERSION: '10.0.x'
+
+jobs:
+  # ═══════════════════════════════════════════════════════
+  # PREPARE
+  # ═══════════════════════════════════════════════════════
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      lib_version:           ${{ steps.resolve.outputs.lib_version }}
+      intended_lib_version:  ${{ steps.resolve.outputs.intended_lib_version }}
+      build_backend:         ${{ steps.resolve.outputs.build_backend }}
+      build_console:         ${{ steps.resolve.outputs.build_console }}
+      build_webapp:          ${{ steps.resolve.outputs.build_webapp }}
+      build_mcpserver:       ${{ steps.resolve.outputs.build_mcpserver }}
+      backend_prerelease:    ${{ steps.resolve.outputs.backend_prerelease }}
+      console_prerelease:    ${{ steps.resolve.outputs.console_prerelease }}
+      webapp_prerelease:     ${{ steps.resolve.outputs.webapp_prerelease }}
+      mcpserver_prerelease:  ${{ steps.resolve.outputs.mcpserver_prerelease }}
+      any_prerelease:        ${{ steps.resolve.outputs.any_prerelease }}
+      nuget_source:          ${{ steps.resolve.outputs.nuget_source }}
+      dry_run:               ${{ steps.resolve.outputs.dry_run }}
+    steps:
+      - name: Resolve parameters
+        id: resolve
+        run: |
+          DRY_RUN="${{ inputs.dry_run }}"
+          echo "dry_run=${DRY_RUN}" >> $GITHUB_OUTPUT
+          echo "intended_lib_version=${{ inputs.lib_version }}" >> $GITHUB_OUTPUT
+          echo "lib_version=${{ inputs.lib_version }}" >> $GITHUB_OUTPUT
+
+          NUGET_SOURCE="${{ inputs.nuget_source }}"
+          if [ -z "${NUGET_SOURCE}" ]; then
+            NUGET_SOURCE="nuget.org"
+          fi
+          echo "nuget_source=${NUGET_SOURCE}" >> $GITHUB_OUTPUT
+
+          ANY_PRE="false"
+          for APP in backend console webapp mcpserver; do
+            case $APP in
+              backend)   RAW_VERSION="${{ inputs.backend_version }}" ;;
+              console)   RAW_VERSION="${{ inputs.console_version }}" ;;
+              webapp)    RAW_VERSION="${{ inputs.webapp_version }}" ;;
+              mcpserver) RAW_VERSION="${{ inputs.mcpserver_version }}" ;;
+            esac
+
+            if [ "${DRY_RUN}" = "true" ]; then
+              RAW_VERSION="0.0.0-dryrun.${{ github.run_number }}"
+            fi
+
+            if [ -n "${RAW_VERSION}" ]; then
+              echo "build_${APP}=true" >> $GITHUB_OUTPUT
+            else
+              echo "build_${APP}=false" >> $GITHUB_OUTPUT
+            fi
+
+            if [[ "${RAW_VERSION}" == *-* ]]; then
+              echo "${APP}_prerelease=true" >> $GITHUB_OUTPUT
+              ANY_PRE="true"
+            else
+              echo "${APP}_prerelease=false" >> $GITHUB_OUTPUT
+            fi
+          done
+
+          echo "any_prerelease=${ANY_PRE}" >> $GITHUB_OUTPUT
+
+      - name: Print release plan
+        run: |
+          echo "═══════════════════════════════════════════"
+          echo "  App Orchestrator"
+          echo "═══════════════════════════════════════════"
+          echo "  Dry run:        ${{ inputs.dry_run }}"
+          echo "  lib_version:    ${{ inputs.lib_version }}"
+          echo "  NuGet source:   ${{ steps.resolve.outputs.nuget_source }}"
+          echo "  Backend:        ${{ inputs.backend_version || '(skip)' }}"
+          echo "  Console:        ${{ inputs.console_version || '(skip)' }}"
+          echo "  WebApp:         ${{ inputs.webapp_version || '(skip)' }}"
+          echo "  McpServer:      ${{ inputs.mcpserver_version || '(skip)' }}"
+          echo "═══════════════════════════════════════════"
+
+  # ═══════════════════════════════════════════════════════
+  # VERSION GUARD — always runs (dry-run and live)
+  # Live:     lib_version must be on NuGet.org (all 9 packages)
+  # Dry-run:  lib_version must be on GitHub Packages (all 9 packages)
+  # Always:   app tags and ghcr.io images must not yet exist
+  # ═══════════════════════════════════════════════════════
+  version-guard:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check lib availability and app version conflicts
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = '${{ env.ORG }}';
+            const libVersion = '${{ needs.prepare.outputs.intended_lib_version }}';
+            const nugetSource = '${{ needs.prepare.outputs.nuget_source }}';
+            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
+            const errors = [];
+
+            const libs = [
+              'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
+              'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
+              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services',
+              'PayrollEngine.Mcp.Core', 'PayrollEngine.Mcp.Tools'
+            ];
+
+            // ── Lib Precondition ──────────────────────────────────
+            if (nugetSource === 'nuget.org') {
+              console.log(`\n📦 Checking lib_version ${libVersion} on NuGet.org\n`);
+              for (const lib of libs) {
+                const url = `https://api.nuget.org/v3-flatcontainer/${lib.toLowerCase()}/${libVersion}/${lib.toLowerCase()}.${libVersion}.nupkg`;
+                try {
+                  const res = await fetch(url, { method: 'HEAD' });
+                  if (res.ok) {
+                    console.log(`  ✅ ${lib} ${libVersion} — NuGet.org`);
+                  } else {
+                    errors.push(`${lib}: version ${libVersion} not found on NuGet.org (HTTP ${res.status})`);
+                  }
+                } catch (e) {
+                  errors.push(`${lib}: NuGet.org check failed — ${e.message}`);
+                }
+              }
+            } else {
+              console.log(`\n📦 Checking lib_version ${libVersion} on GitHub Packages (dry-run)\n`);
+              for (const lib of libs) {
+                try {
+                  const pkgs = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                    package_type: 'nuget', package_name: lib.toLowerCase(), org,
+                    state: 'active', per_page: 100
+                  });
+                  if (pkgs.data.some(p => p.name === libVersion)) {
+                    console.log(`  ✅ ${lib} ${libVersion} — GitHub Packages`);
+                  } else {
+                    errors.push(`${lib}: version ${libVersion} not found on GitHub Packages — run Lib Orchestrator (dry-run) first`);
+                  }
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                  errors.push(`${lib}: GitHub Packages check failed — ${e.message}`);
+                }
+              }
+            }
+
+            if (errors.length > 0) {
+              core.setFailed([
+                `❌ Lib precondition failed — ${nugetSource} not ready:`,
+                '', ...errors.map(e => `  - ${e}`), ''
+              ].join('\n'));
+              return;
+            }
+
+            // ── App Version Conflicts ─────────────────────────────
+            if (isDryRun) {
+              console.log('\n⚠️ Dry-run: skipping app version conflict checks (dryrun.N tags)\n');
+              return;
+            }
+
+            const apps = [
+              { repo: 'PayrollEngine.Backend',       version: '${{ inputs.backend_version }}' },
+              { repo: 'PayrollEngine.PayrollConsole', version: '${{ inputs.console_version }}' },
+              { repo: 'PayrollEngine.WebApp',         version: '${{ inputs.webapp_version }}' },
+              { repo: 'PayrollEngine.McpServer',      version: '${{ inputs.mcpserver_version }}' }
+            ].filter(a => a.version);
+
+            console.log(`\n🐳 Checking app version conflicts\n`);
+            for (const { repo, version } of apps) {
+              const tag = `v${version}`;
+              try {
+                await github.rest.git.getRef({ owner: org, repo, ref: `tags/${tag}` });
+                errors.push(`${repo}: git tag '${tag}' already exists`);
+              } catch (e) { if (e.status !== 404) throw e; }
+              try {
+                await github.rest.repos.getReleaseByTag({ owner: org, repo, tag });
+                errors.push(`${repo}: GitHub Release '${tag}' already exists`);
+              } catch (e) { if (e.status !== 404) throw e; }
+              try {
+                const images = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                  package_type: 'container', package_name: repo.toLowerCase(), org
+                });
+                if (images.data.some(v => v.metadata?.container?.tags?.includes(version))) {
+                  errors.push(`${repo}: Docker image '${version}' already exists on ghcr.io`);
+                }
+              } catch (e) {
+                if (e.status === 401 || e.status === 403) throw e;
+                if (e.status !== 404) console.warn(`  ⚠️ ${repo}: ${e.message}`);
+              }
+              if (!errors.some(err => err.startsWith(repo))) {
+                console.log(`  ✅ ${repo} v${version}`);
+              }
+            }
+
+            if (errors.length > 0) {
+              core.setFailed([
+                `❌ App version guard failed (${errors.length} conflict(s)):`,
+                '', ...errors.map(e => `  - ${e}`), ''
+              ].join('\n'));
+            } else {
+              console.log('\n✅ All checks passed — safe to proceed\n');
+            }
+
+  # ═══════════════════════════════════════════════════════
+  # BREAKING CHANGE GUARD — REST API (swagger.json diff)
+  # Runs before app builds. Backend checkout needed for baseline.
+  # ═══════════════════════════════════════════════════════
+  breaking-change-guard:
+    needs: [prepare, version-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          fetch-depth: 0
+
+      - name: Checkout Backend repo (for swagger baseline)
+        shell: bash
+        run: |
+          git clone --depth=2 \
+            "https://x-access-token:${{ secrets.PAT_DISPATCH }}@github.com/${{ env.ORG }}/PayrollEngine.Backend.git" \
+            "../PayrollEngine.Backend"
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Run breaking change detection (REST API)
+        shell: pwsh
+        id: detect
+        continue-on-error: true
+        run: |
+          $reposRoot = Resolve-Path ".."
+          ./devops/scripts/Update-BreakingChanges.ps1 `
+            -ReposRoot $reposRoot `
+            -BaselineRef "HEAD~1" `
+            -SkipReleaseNotes `
+            -ReportPath "breaking-changes-apps.md"
+          $ec = $LASTEXITCODE
+          "exit_code=$ec" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          exit $ec
+
+      - name: Check for undocumented REST API breaking changes
+        if: steps.detect.outcome == 'failure'
+        shell: pwsh
+        run: |
+          if ('${{ steps.detect.outputs.exit_code }}' -eq '2') {
+            Write-Host "::error::Breaking change detection failed (infrastructure error). Check the artifact."
+            exit 1
+          }
+          $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
+          if (-not $notes -or $notes -notmatch 'breaking change') {
+            Write-Host "::error::REST API breaking changes detected but not documented in RELEASE_NOTES.md"
+            exit 1
+          }
+          Write-Host "Breaking changes are documented in RELEASE_NOTES.md — proceeding"
+
+      - name: Upload breaking change report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: breaking-change-report-apps
+          path: breaking-changes-apps.md
+          if-no-files-found: ignore
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE W: Website Deploy (parallel with Wave 5)
+  # ═══════════════════════════════════════════════════════
+  wave-website:
+    needs: [prepare, version-guard, breaking-change-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success' &&
+      needs.breaking-change-guard.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Website
+          event-type: deploy
+          client-payload: >-
+            {
+              "lib_version": "${{ needs.prepare.outputs.lib_version }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
+  # ═══════════════════════════════════════════════════════
+  # WAVE 5: Apps — Docker Images (parallel, conditional)
+  # nuget_source controls which feed app repos restore from
+  # ═══════════════════════════════════════════════════════
+  wave-5-backend:
+    needs: [prepare, version-guard, breaking-change-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success' &&
+      needs.breaking-change-guard.result == 'success' &&
+      needs.prepare.outputs.build_backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve app version
+        id: ver
+        run: |
+          if [ "${{ needs.prepare.outputs.dry_run }}" = "true" ]; then
+            echo "version=0.0.0-dryrun.${{ github.run_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ inputs.backend_version }}" >> $GITHUB_OUTPUT
+          fi
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Backend
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ steps.ver.outputs.version }}",
+              "is_prerelease": "${{ needs.prepare.outputs.backend_prerelease }}",
+              "nuget_source": "${{ needs.prepare.outputs.nuget_source }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
+  wave-5-console:
+    needs: [prepare, version-guard, breaking-change-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success' &&
+      needs.breaking-change-guard.result == 'success' &&
+      needs.prepare.outputs.build_console == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve app version
+        id: ver
+        run: |
+          if [ "${{ needs.prepare.outputs.dry_run }}" = "true" ]; then
+            echo "version=0.0.0-dryrun.${{ github.run_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ inputs.console_version }}" >> $GITHUB_OUTPUT
+          fi
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.PayrollConsole
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ steps.ver.outputs.version }}",
+              "is_prerelease": "${{ needs.prepare.outputs.console_prerelease }}",
+              "nuget_source": "${{ needs.prepare.outputs.nuget_source }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
+  wave-5-webapp:
+    needs: [prepare, version-guard, breaking-change-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success' &&
+      needs.breaking-change-guard.result == 'success' &&
+      needs.prepare.outputs.build_webapp == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve app version
+        id: ver
+        run: |
+          if [ "${{ needs.prepare.outputs.dry_run }}" = "true" ]; then
+            echo "version=0.0.0-dryrun.${{ github.run_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ inputs.webapp_version }}" >> $GITHUB_OUTPUT
+          fi
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.WebApp
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ steps.ver.outputs.version }}",
+              "is_prerelease": "${{ needs.prepare.outputs.webapp_prerelease }}",
+              "nuget_source": "${{ needs.prepare.outputs.nuget_source }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
+  wave-5-mcpserver:
+    needs: [prepare, version-guard, breaking-change-guard]
+    if: |
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.version-guard.result == 'success' &&
+      needs.breaking-change-guard.result == 'success' &&
+      needs.prepare.outputs.build_mcpserver == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve app version
+        id: ver
+        run: |
+          if [ "${{ needs.prepare.outputs.dry_run }}" = "true" ]; then
+            echo "version=0.0.0-dryrun.${{ github.run_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ inputs.mcpserver_version }}" >> $GITHUB_OUTPUT
+          fi
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.McpServer
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ steps.ver.outputs.version }}",
+              "is_prerelease": "${{ needs.prepare.outputs.mcpserver_prerelease }}",
+              "nuget_source": "${{ needs.prepare.outputs.nuget_source }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
+  wait-wave-5:
+    needs: [prepare, wave-5-backend, wave-5-console, wave-5-webapp, wave-5-mcpserver]
+    if: |
+      always() && (
+        needs.wave-5-backend.result == 'success' ||
+        needs.wave-5-console.result == 'success' ||
+        needs.wave-5-webapp.result == 'success' ||
+        needs.wave-5-mcpserver.result == 'success'
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Wait for app releases
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            if ('${{ needs.prepare.outputs.dry_run }}' === 'true') {
+              console.log('⚠️ Dry-run: skipping app release poll (releases are drafted)');
+              return;
+            }
+            const org = '${{ env.ORG }}';
+            const apps = [];
+            if ('${{ needs.wave-5-backend.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.Backend',       tag: 'v${{ inputs.backend_version }}' });
+            if ('${{ needs.wave-5-console.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.PayrollConsole', tag: 'v${{ inputs.console_version }}' });
+            if ('${{ needs.wave-5-webapp.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.WebApp',         tag: 'v${{ inputs.webapp_version }}' });
+            if ('${{ needs.wave-5-mcpserver.result }}' === 'success')
+              apps.push({ repo: 'PayrollEngine.McpServer',      tag: 'v${{ inputs.mcpserver_version }}' });
+
+            for (const { repo, tag } of apps) {
+              let found = false;
+              for (let i = 0; i < 90 && !found; i++) {
+                try {
+                  const releases = await github.rest.repos.listReleases({ owner: org, repo, per_page: 10 });
+                  found = releases.data.some(r => r.tag_name === tag);
+                  if (found) console.log(`✅ ${repo} ${tag}`);
+                } catch (e) {
+                  if (e.status === 401 || e.status === 403) throw e;
+                }
+                if (!found) {
+                  console.log(`⏳ Waiting for ${repo} ${tag}... (${i+1}/90)`);
+                  await new Promise(r => setTimeout(r, 15000));
+                }
+              }
+              if (!found) throw new Error(`❌ Timeout: ${repo} ${tag}`);
+            }
+
+  # ═══════════════════════════════════════════════════════
+  # UMBRELLA RELEASE (live only)
+  # ═══════════════════════════════════════════════════════
+  create-umbrella-release:
+    needs: [prepare, wave-website, wait-wave-5]
+    if: |
+      always() &&
+      needs.prepare.outputs.dry_run == 'false' &&
+      (needs.wave-website.result == 'success' || needs.wave-website.result == 'skipped') &&
+      (needs.wait-wave-5.result == 'success' || needs.wait-wave-5.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read RELEASE_NOTES.md
+        id: release_notes
+        run: |
+          if [ -f RELEASE_NOTES.md ] && [ -s RELEASE_NOTES.md ]; then
+            {
+              echo "content<<RELEASE_NOTES_EOF"
+              cat RELEASE_NOTES.md
+              echo ""
+              echo "RELEASE_NOTES_EOF"
+            } >> $GITHUB_OUTPUT
+            echo "✅ RELEASE_NOTES.md found"
+          else
+            echo "content=Release v${{ needs.prepare.outputs.lib_version }}" >> $GITHUB_OUTPUT
+            echo "⚠️ RELEASE_NOTES.md not found — using fallback"
+          fi
+
+      - name: Generate release body
+        id: notes
+        env:
+          RELEASE_NOTES_CONTENT: ${{ steps.release_notes.outputs.content }}
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const libVersion = '${{ needs.prepare.outputs.lib_version }}';
+            const libPre = '${{ needs.prepare.outputs.any_prerelease }}' === 'true';
+            let body = (process.env.RELEASE_NOTES_CONTENT || '').trim() + '\n';
+            body += `\n---\n\n## 📦 NuGet Packages (v${libVersion})\n\n`;
+            body += `| Package | GitHub Packages | NuGet.org |\n|---------|----------------|----------|\n`;
+            const libs = [
+              'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
+              'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
+              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services',
+              'PayrollEngine.Mcp.Core', 'PayrollEngine.Mcp.Tools'
+            ];
+            for (const lib of libs) {
+              const ghUrl = `https://github.com/Payroll-Engine/${lib}/packages`;
+              const nugetUrl = `https://www.nuget.org/packages/${lib}/${libVersion}`;
+              body += `| ${lib} | [${libVersion}](${ghUrl}) | `;
+              body += libPre ? '_pending sync_' : `[${libVersion}](${nugetUrl})`;
+              body += ` |\n`;
+            }
+            const apps = [
+              { name: 'Backend',        version: '${{ inputs.backend_version }}',   pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
+              { name: 'PayrollConsole',  version: '${{ inputs.console_version }}',   pre: '${{ needs.prepare.outputs.console_prerelease }}' },
+              { name: 'WebApp',          version: '${{ inputs.webapp_version }}',    pre: '${{ needs.prepare.outputs.webapp_prerelease }}' },
+              { name: 'McpServer',       version: '${{ inputs.mcpserver_version }}', pre: '${{ needs.prepare.outputs.mcpserver_prerelease }}' }
+            ].filter(a => a.version);
+            if (apps.length > 0) {
+              body += `\n## 🐳 Docker Images (Linux)\n\n| App | Version | Pull Command |\n|-----|---------|-------------|\n`;
+              for (const app of apps) {
+                const image = `ghcr.io/payroll-engine/payrollengine.${app.name.toLowerCase()}`;
+                const preTag = app.pre === 'true' ? ' _(pre-release)_' : '';
+                body += `| PayrollEngine.${app.name} | ${app.version}${preTag} | \`docker pull ${image}:${app.version}\` |\n`;
+              }
+            }
+            return body;
+          result-encoding: string
+
+      - name: Create umbrella release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.prepare.outputs.lib_version }}
+          name: PayrollEngine v${{ needs.prepare.outputs.lib_version }}
+          body: ${{ steps.notes.outputs.result }}
+          prerelease: ${{ needs.prepare.outputs.any_prerelease }}
+
+      - name: Download swagger.json from Backend release
+        if: needs.prepare.outputs.build_backend == 'true'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const fs = require('fs');
+            const tag = `v${{ inputs.backend_version }}`;
+            const releases = await github.rest.repos.listReleases({
+              owner: '${{ env.ORG }}', repo: 'PayrollEngine.Backend', per_page: 10
+            });
+            const release = releases.data.find(r => r.tag_name === tag);
+            if (!release) { console.log(`⚠️ Backend release ${tag} not found`); return; }
+            const asset = release.assets.find(a => a.name === 'swagger.json');
+            if (!asset) { console.log('⚠️ swagger.json not found in release'); return; }
+            const response = await github.request(
+              'GET /repos/{owner}/{repo}/releases/assets/{asset_id}',
+              { owner: '${{ env.ORG }}', repo: 'PayrollEngine.Backend', asset_id: asset.id,
+                headers: { accept: 'application/octet-stream' } }
+            );
+            fs.writeFileSync('swagger.json', Buffer.from(response.data));
+            console.log(`✅ swagger.json downloaded`);
+
+      - name: Attach swagger.json to umbrella release
+        if: needs.prepare.outputs.build_backend == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.prepare.outputs.lib_version }}
+          files: swagger.json

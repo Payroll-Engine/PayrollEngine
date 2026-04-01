@@ -4695,13 +4695,10 @@
               ],
               "description": "The payrun end expression file"
             },
-            "retroTimeType": {
-              "description": "The payrun retro time type",
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/RetroTimeType"
-                }
-              ]
+            "retroBackCycles": {
+              "type": "integer",
+              "description": "The number of previous cycles allowed for retro calculation.\n0  = current cycle only (no back cycles).\nn  = retro may reach back n complete cycles before the current one.\n-1 = unlimited (no cycle boundary) — default.",
+              "format": "int32"
             },
             "payrollId": {
               "type": "integer",
@@ -4725,18 +4722,6 @@
             }
           }
         }
-      ]
-    },
-    "RetroTimeType": {
-      "type": "string",
-      "description": "The payrun retro type",
-      "x-enumNames": [
-        "Anytime",
-        "Cycle"
-      ],
-      "enum": [
-        "Anytime",
-        "Cycle"
       ]
     },
     "PayrunParameter": {
@@ -6224,7 +6209,7 @@
         },
         {
           "type": "object",
-          "description": "The tenant client object",
+          "description": "The regulation share client object",
           "properties": {
             "providerTenantId": {
               "type": "integer",
@@ -6277,6 +6262,14 @@
               ],
               "description": "The consumer division name (client only)"
             },
+            "isolationLevel": {
+              "description": "The isolation level granted to the consumer tenant.\n            Consolidation: cross-tenant result access for report scripts — regulation not added as payroll layer.\n            Write: regulation available as full payroll layer (default).",
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/TenantIsolationLevel"
+                }
+              ]
+            },
             "attributes": {
               "type": [
                 "null",
@@ -6287,6 +6280,22 @@
             }
           }
         }
+      ]
+    },
+    "TenantIsolationLevel": {
+      "type": "string",
+      "description": "Server-wide policy controlling cross-tenant access on a backend instance.\n            Configured once at startup in PayrollServerConfiguration — not changeable at runtime.\n            Applied by TenantIsolationFilter before every request.",
+      "x-enumNames": [
+        "None",
+        "Consolidation",
+        "Read",
+        "Write"
+      ],
+      "enum": [
+        "None",
+        "Consolidation",
+        "Read",
+        "Write"
       ]
     }
   }

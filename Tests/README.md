@@ -220,6 +220,26 @@ Both payruns use the same regulation and run the same period (Jan 2024). The div
 
 ---
 
+### PayrunJobImport.Test
+**Tenant:** `PayrunJobImport.Test`  
+**What it tests:** Archive restore via the `POST /payruns/jobs/import` endpoint. Full export → delete → import → verify cycle:
+
+1. Run 2 payrun jobs (`Import.Payrun.Jan24`, `Import.Payrun.Feb24`) for employee `anna.mueller@import.test`
+2. Export payrun jobs and payroll result sets via `GET`
+3. Delete all payrun jobs (simulates archiving)
+4. Import via `POST /payruns/jobs/import` with a composed `PayrunJobSet[]` payload
+5. Verify that both jobs are present after import
+
+| Job | Employee | WT 1000 (BasicWage) | Collector Gross |
+|:----|:---------|--------------------:|----------------:|
+| Jan24 | anna.mueller@import.test | 4 000 | 4 000 |
+| Feb24 | anna.mueller@import.test | 4 000 | 4 000 |
+
+The `Import.PayrunJobSets.json` payload is composed client-side from the two exports (matching via `payrunJobName`). See the `PayrunJobSetCompose` console command.  
+**Special flags:** none
+
+---
+
 ### PayrunActions.Test
 **Tenant:** `PayrunAction.Tenant`  
 **What it tests:** No-Code action syntax for wage type value expressions across 9 wage types:

@@ -10,7 +10,7 @@
   Build multi-country, multi-industry payroll applications with configurable regulation layers.
 </p>
 <p align="center">
-  <a href="https://github.com/Payroll-Engine/PayrollEngine/actions"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/Payroll-Engine/PayrollEngine/build.yml?logo=github" /></a>
+  <a href="https://github.com/Payroll-Engine/PayrollEngine/actions"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/Payroll-Engine/PayrollEngine/orchestrate-release.yml?logo=github" /></a>
   <a href="https://github.com/Payroll-Engine/PayrollEngine/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
   <a href="https://github.com/Payroll-Engine/PayrollEngine/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/Payroll-Engine/PayrollEngine?include_prereleases&logo=github" /></a>
   <a href="https://www.nuget.org/packages/PayrollEngine.Client.Services"><img alt="NuGet" src="https://img.shields.io/nuget/vpre/PayrollEngine.Client.Services?logo=nuget&color=blue" /></a>

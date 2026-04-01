@@ -1,43 +1,37 @@
-<#
-.SYNOPSIS
-    Compares two formatted SQL script files and generates a delta (update) script.
-
-.DESCRIPTION
-    Parses BaselineFile and CurrentFile into named DDL objects using the same
-    block-grouping logic as Format-DbScript and computes the difference:
-
-      Added    -- objects in Current but not in Baseline  → CREATE statements
-      Removed  -- objects in Baseline but not in Current  → DROP statements
-      Modified -- objects in both but with different body  → DROP + CREATE
-
-    Both files should be pre-processed by Format-DbScript.ps1 so that object
-    ordering and whitespace are normalised before comparison.  Without prior
-    formatting the diff may produce false positives caused by comment or
-    whitespace differences.
-
-    The generated delta script can be applied directly to a database that
-    matches the Baseline schema to bring it to the Current schema.
-
-.PARAMETER BaselineFile
-    Formatted SQL file representing the old / source state.
-
-.PARAMETER CurrentFile
-    Formatted SQL file representing the new / target state.
-
-.PARAMETER TargetFile
-    Path where the delta .sql script is written.  Created or overwritten.
-
-.EXAMPLE
-    .\Compare-DbScript.ps1 `
-        -BaselineFile ModelCreate.Formatted.sql `
-        -CurrentFile  ModelCreate.New.Formatted.sql `
-        -TargetFile   ModelUpdate.sql
-
-    .\Compare-DbScript.ps1 `
-        -BaselineFile Snapshot_Create.sql `
-        -CurrentFile  ModelCreate.sql `
-        -TargetFile   ModelUpdate_$(Get-Date -Format 'yyyyMMdd').sql
-#>
+#
+# .SYNOPSIS
+#     Compares two formatted SQL script files and generates a delta (update) script.
+#
+# .DESCRIPTION
+#     Parses BaselineFile and CurrentFile into named DDL objects using the same
+#     block-grouping logic as Format-DbScript and computes the difference:
+#
+#       Added    -- objects in Current but not in Baseline  -> CREATE statements
+#       Removed  -- objects in Baseline but not in Current  -> DROP statements
+#       Modified -- objects in both but with different body  -> DROP + CREATE
+#
+#     Both files should be pre-processed by Format-DbScript.ps1 so that object
+#     ordering and whitespace are normalised before comparison.  Without prior
+#     formatting the diff may produce false positives caused by comment or
+#     whitespace differences.
+#
+#     The generated delta script can be applied directly to a database that
+#     matches the Baseline schema to bring it to the Current schema.
+#
+# .PARAMETER BaselineFile
+#     Formatted SQL file representing the old / source state.
+#
+# .PARAMETER CurrentFile
+#     Formatted SQL file representing the new / target state.
+#
+# .PARAMETER TargetFile
+#     Path where the delta .sql script is written.  Created or overwritten.
+#
+# .EXAMPLE
+#     .\Compare-DbScript.ps1 `
+#         -BaselineFile ModelCreate.Formatted.sql `
+#         -CurrentFile  ModelCreate.New.Formatted.sql `
+#         -TargetFile   ModelUpdate.sql
 
 [CmdletBinding()]
 param(
@@ -90,10 +84,24 @@ function Split-SqlBlocks([string]$sql) {
 }
 
 function Normalize-Body([string]$body) {
-    # Strip SSMS header comments (contain date stamps), normalise whitespace
-    $noHeader  = $body -replace '/\*+.*?\*+/', '' -replace '--[^\r\n]*', ''
-    $noSpace   = $noHeader -replace '\s+', ' '
-    return $noSpace.Trim().ToLower()
+    # Strip SSMS header comments (contain date stamps) and single-line comments
+    $s = $body -replace '/\*+.*?\*+/', '' -replace '--[^\r\n]*', ''
+    # Strip SET ANSI_NULLS / SET QUOTED_IDENTIFIER -- boilerplate that may or may not
+    # appear depending on whether the source is an SSMS export or a rebuild-style file.
+    $s = $s -replace '(?i)\bSET\s+(ANSI_NULLS|QUOTED_IDENTIFIER)\s+(ON|OFF)\b', ''
+    # Strip standalone GO batch separators.
+    # SSMS-style objects have multiple blocks (header + SET opts + CREATE) joined with
+    # \r\nGO\r\n, while rebuild-style objects have only a single CREATE block.
+    # Stripping the GO separators ensures both produce the same normalised body.
+    $s = $s -replace '\r\nGO\r\n', ' ' -replace '\nGO\n', ' '
+    # Collapse all whitespace sequences to a single space
+    $s = $s -replace '\s+', ' '
+    # Normalise spaces inside parentheses:
+    # SSMS-exported files often format multi-line IF conditions as  IF ( \n  expr \n  )
+    # while rebuilt files use                                        IF (expr)
+    # After whitespace collapse this produces  "( expr )" vs "(expr)" -- strip the spaces.
+    $s = $s -replace '\(\s+', '(' -replace '\s+\)', ')'
+    return $s.Trim().ToLower()
 }
 
 function Parse-SqlFile([string]$path) {
@@ -259,7 +267,7 @@ function Build-AlterTableStatements([DiffObject]$baselineObj, [DiffObject]$curre
     foreach ($col in $curCols.Keys) {
         if ($baseCols.ContainsKey($col)) {
             $baseNorm = ($baseCols[$col] -replace '\s+', ' ').Trim().ToLower()
-            $curNorm  = ($curCols[$col]  -replace '\s+', ' ').Trim().ToLower()
+            $curNorm  = ($curCols[$col]  -replace '  \s+', ' ').Trim().ToLower()
             if ($baseNorm -ne $curNorm) {
                 [void]$sb.AppendLine("ALTER TABLE $table ALTER COLUMN $($curCols[$col]);")
                 [void]$sb.AppendLine("GO")
@@ -283,13 +291,12 @@ function Build-AlterTableStatements([DiffObject]$baselineObj, [DiffObject]$curre
 
 function Build-DropStatement([DiffObject]$obj) {
     $typeKw = switch -Wildcard ($obj.ObjectType) {
-        'PROCEDURE'           { 'PROCEDURE' }
-        'STOREDPROCEDURE'     { 'PROCEDURE' }   # SSMS header style
-        'FUNCTION'            { 'FUNCTION'  }
-        '*FUNCTION*'          { 'FUNCTION'  }
-        'VIEW'                { 'VIEW'      }
-        'TABLE'               { 'TABLE'     }
-        default               { $null       }
+        'PROCEDURE'           { 'PROCEDURE'; break }
+        'STOREDPROCEDURE'     { 'PROCEDURE'; break }   # SSMS header style
+        '*FUNCTION*'          { 'FUNCTION';  break }   # covers FUNCTION, INLINE_TABLE-VALUED_FUNCTION, etc.
+        'VIEW'                { 'VIEW';      break }
+        'TABLE'               { 'TABLE';     break }
+        default               { $null;       break }
     }
 
     # Use OriginalFullName for proper casing (CS collation requires exact case)

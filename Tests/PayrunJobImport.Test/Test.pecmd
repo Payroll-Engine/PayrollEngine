@@ -1,0 +1,40 @@
+# PayrunJob Import Integration Test
+# Tests POST /api/tenants/{tenantId}/payruns/jobs/import
+#
+# Test scenario:
+#   1. Set up tenant with 2 completed payrun jobs (Jan/Feb 2024)
+#   2. Export payrun jobs via GET (→ Export.PayrunJobs.json)
+#   3. Export payroll result sets via GET (→ Export.ResultSets.json)
+#   4. DELETE all payrun jobs (simulates archiving — removes jobs + results)
+#   5. Import via POST /payruns/jobs/import using a pre-composed PayrunJobSet file
+#   6. Verify payrun jobs are present after import
+#
+# Note: The import endpoint expects PayrunJobSet[] (job + resultSets combined).
+# Composing Export.PayrunJobs.json + Export.ResultSets.json into Import.PayrunJobSets.json
+# must be done by a client service outside this script — see PayrollArchiving-Concept.md.
+#
+# URL placeholders:
+#   {tenant:PayrunJobImport.Test} → resolved to numeric tenant id at runtime
+
+Delete.pecmd
+PayrunTest Test.pt.json /keeptest
+
+# --- Export payrun jobs from Primary-DB ---
+HttpGet api/tenants/{tenant:PayrunJobImport.Test}/payruns/jobs Export.PayrunJobs.json
+
+# --- Export payroll result sets from Primary-DB ---
+HttpGet api/tenants/{tenant:PayrunJobImport.Test}/payrollresults/sets Export.ResultSets.json
+
+# --- Simulate archive: delete all payrun jobs (cascades to results) ---
+PayrunJobDelete PayrunJobImport.Test
+
+# --- Import payrun job sets back into Primary-DB ---
+# Prerequisite: Import.PayrunJobSets.json must be composed client-side
+# from Export.PayrunJobs.json + Export.ResultSets.json before running this step.
+# Expected return value: 2 (Jan24 + Feb24)
+HttpPost api/tenants/{tenant:PayrunJobImport.Test}/payruns/jobs/import Import.PayrunJobSets.json
+
+# --- Verify payrun jobs are present after import ---
+HttpGet api/tenants/{tenant:PayrunJobImport.Test}/payruns/jobs Verify.PayrunJobs.json
+
+Delete.pecmd
