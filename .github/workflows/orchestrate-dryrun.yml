@@ -678,9 +678,7 @@ jobs:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.Backend
           event-type: release
-          client-payload: >-
-            {"version":"${{ needs.prepare.outputs.lib_version }}",
-             "is_prerelease":"true","nuget_source":"github","dry_run":"true"}
+          client-payload: '{"version":"${{ needs.prepare.outputs.lib_version }}","is_prerelease":"true","nuget_source":"github","dry_run":"true"}'
 
   app-wave-5-console:
     needs: [prepare, app-version-guard, app-breaking-change-guard]
@@ -697,9 +695,7 @@ jobs:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.PayrollConsole
           event-type: release
-          client-payload: >-
-            {"version":"${{ needs.prepare.outputs.lib_version }}",
-             "is_prerelease":"true","nuget_source":"github","dry_run":"true"}
+          client-payload: '{"version":"${{ needs.prepare.outputs.lib_version }}","is_prerelease":"true","nuget_source":"github","dry_run":"true"}'
 
   app-wave-5-webapp:
     needs: [prepare, app-version-guard, app-breaking-change-guard]
@@ -716,9 +712,7 @@ jobs:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.WebApp
           event-type: release
-          client-payload: >-
-            {"version":"${{ needs.prepare.outputs.lib_version }}",
-             "is_prerelease":"true","nuget_source":"github","dry_run":"true"}
+          client-payload: '{"version":"${{ needs.prepare.outputs.lib_version }}","is_prerelease":"true","nuget_source":"github","dry_run":"true"}'
 
   app-wave-5-mcpserver:
     needs: [prepare, app-version-guard, app-breaking-change-guard]
@@ -735,9 +729,7 @@ jobs:
           token: ${{ secrets.PAT_DISPATCH }}
           repository: ${{ env.ORG }}/PayrollEngine.McpServer
           event-type: release
-          client-payload: >-
-            {"version":"${{ needs.prepare.outputs.lib_version }}",
-             "is_prerelease":"true","nuget_source":"github","dry_run":"true"}
+          client-payload: '{"version":"${{ needs.prepare.outputs.lib_version }}","is_prerelease":"true","nuget_source":"github","dry_run":"true"}'
 
   app-wait-wave-5:
     needs: [prepare, app-wave-5-backend, app-wave-5-console, app-wave-5-webapp, app-wave-5-mcpserver]
