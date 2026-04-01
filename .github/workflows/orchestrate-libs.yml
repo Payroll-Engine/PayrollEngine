@@ -16,11 +16,6 @@ on:
       lib_version:
         description: 'Library version — all 9 libs (e.g. 1.5.0 or 1.5.0-beta.1)'
         required: true
-      dry_run:
-        description: 'Dry run: publish test version, draft releases, no NuGet.org sync'
-        type: boolean
-        default: false
-
 permissions:
   contents: write
   packages: read
@@ -39,23 +34,14 @@ jobs:
       lib_version:           ${{ steps.resolve.outputs.lib_version }}
       intended_lib_version:  ${{ steps.resolve.outputs.intended_lib_version }}
       lib_prerelease:        ${{ steps.resolve.outputs.lib_prerelease }}
-      dry_run:               ${{ steps.resolve.outputs.dry_run }}
     steps:
       - name: Resolve parameters
         id: resolve
         run: |
-          DRY_RUN="${{ inputs.dry_run }}"
-          echo "dry_run=${DRY_RUN}" >> $GITHUB_OUTPUT
           echo "intended_lib_version=${{ inputs.lib_version }}" >> $GITHUB_OUTPUT
+          echo "lib_version=${{ inputs.lib_version }}" >> $GITHUB_OUTPUT
 
-          if [ "${DRY_RUN}" = "true" ]; then
-            LIB_VERSION="0.0.0-dryrun.${{ github.run_number }}"
-          else
-            LIB_VERSION="${{ inputs.lib_version }}"
-          fi
-          echo "lib_version=${LIB_VERSION}" >> $GITHUB_OUTPUT
-
-          if [[ "${LIB_VERSION}" == *-* ]]; then
+          if [[ "${{ inputs.lib_version }}" == *-* ]]; then
             echo "lib_prerelease=true" >> $GITHUB_OUTPUT
           else
             echo "lib_prerelease=false" >> $GITHUB_OUTPUT
@@ -66,17 +52,14 @@ jobs:
           echo "═══════════════════════════════════════════"
           echo "  Lib Orchestrator"
           echo "═══════════════════════════════════════════"
-          echo "  Dry run:        ${{ inputs.dry_run }}"
-          echo "  Target version: ${{ inputs.lib_version }}"
-          echo "  Build version:  ${{ steps.resolve.outputs.lib_version }}"
+          echo "  Version: ${{ inputs.lib_version }}"
           echo "  Libraries:      Core, Serilog, Document, Client.Core,"
           echo "                  Client.Scripting, Client.Test, Client.Services,"
           echo "                  Mcp.Core, Mcp.Tools"
           echo "═══════════════════════════════════════════"
 
   # ═══════════════════════════════════════════════════════
-  # VERSION GUARD — always runs (dry-run and live)
-  # Checks intended_lib_version (real input), never 0.0.0-dryrun.N
+  # VERSION GUARD
   # ═══════════════════════════════════════════════════════
   version-guard:
     needs: prepare
@@ -90,12 +73,7 @@ jobs:
             const org = '${{ env.ORG }}';
             const version = '${{ needs.prepare.outputs.intended_lib_version }}';
             const tag = `v${version}`;
-            const isDryRun = '${{ needs.prepare.outputs.dry_run }}' === 'true';
             const errors = [];
-
-            if (isDryRun) {
-              console.log(`ℹ️ Dry-run: checking real target version ${version} for conflicts`);
-            }
 
             const libs = [
               'PayrollEngine.Core',
@@ -255,7 +233,7 @@ jobs:
               "version": "${{ needs.prepare.outputs.lib_version }}",
               "wave": "1",
               "is_prerelease": "${{ needs.prepare.outputs.lib_prerelease }}",
-              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+              "dry_run": "false"
             }
 
   wait-wave-1:
@@ -310,7 +288,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"2",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wave-2-document:
     needs: [prepare, wait-wave-1]
@@ -325,7 +303,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"2",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wave-2-client-core:
     needs: [prepare, wait-wave-1]
@@ -340,7 +318,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"2",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wait-wave-2:
     needs: [prepare, wave-2-serilog, wave-2-document, wave-2-client-core]
@@ -402,7 +380,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"3",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wave-3-test:
     needs: [prepare, wait-wave-2]
@@ -417,7 +395,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"3",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wait-wave-3:
     needs: [prepare, wave-3-scripting, wave-3-test]
@@ -477,7 +455,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"4",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wait-wave-4:
     needs: [prepare, wave-4-services]
@@ -529,7 +507,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"M",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wait-wave-m:
     needs: [prepare, wave-m-mcp-core]
@@ -581,7 +559,7 @@ jobs:
           client-payload: >-
             {"version":"${{ needs.prepare.outputs.lib_version }}","wave":"M2",
              "is_prerelease":"${{ needs.prepare.outputs.lib_prerelease }}",
-             "dry_run":"${{ needs.prepare.outputs.dry_run }}"}
+             "dry_run":"false"}
 
   wait-wave-m2:
     needs: [prepare, wave-m2-mcp-tools]
