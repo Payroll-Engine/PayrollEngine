@@ -245,6 +245,12 @@ function Update-SwaggerJson {
     $pinfo.RedirectStandardError = $true
     $pinfo.UseShellExecute = $false
     $pinfo.CreateNoWindow = $true
+    # Env vars required by Startup.ConfigureServices -- mirrors the Orchestrator release.yml
+    $pinfo.EnvironmentVariables["ConnectionStrings__PayrollDatabaseConnection"] = `
+        "Server=localhost;Database=PayrollEngine;Integrated Security=false;"
+    $pinfo.EnvironmentVariables["PayrollServerConfiguration__DbCommandTimeout"] = "00:02:00"
+    $pinfo.EnvironmentVariables["PayrollServerConfiguration__EnableSwagger"] = "true"
+    $pinfo.EnvironmentVariables["PAYROLL_SWAGGER_GENERATION"] = "true"
     $proc = [System.Diagnostics.Process]::Start($pinfo)
     $stdout = $proc.StandardOutput.ReadToEnd()
     $stderr = $proc.StandardError.ReadToEnd()

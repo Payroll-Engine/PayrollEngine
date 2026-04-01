@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v0.9.0-beta.dev",
+    "description": "Payroll Engine API v0.10.0-beta.dev",
     "version": "1"
   },
   "paths": {
@@ -55,6 +55,26 @@
         }
       }
     },
+    "/api/admin/information": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "operationId": "GetBackendInformation",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackendInformation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/admin": {
       "options": {
         "tags": [
@@ -82,6 +102,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -716,6 +743,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -1164,6 +1198,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -1619,6 +1660,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -2068,6 +2116,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -2522,6 +2577,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -2713,6 +2775,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -2864,6 +2933,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -3058,6 +3134,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -3290,6 +3373,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -3852,6 +3942,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -4069,6 +4166,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -4238,6 +4342,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -4458,6 +4569,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -4724,6 +4842,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -5360,6 +5485,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -5551,6 +5683,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -5702,6 +5841,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -5896,6 +6042,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -6128,6 +6281,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -6417,6 +6577,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -6936,6 +7103,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -7339,6 +7513,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -7626,6 +7807,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -7817,6 +8005,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "culture",
             "in": "query",
             "schema": {
@@ -7968,6 +8163,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -8162,6 +8364,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -8873,6 +9082,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -9486,6 +9702,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -9664,6 +9887,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -9777,6 +10007,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -9878,6 +10115,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -9994,6 +10238,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -10098,6 +10349,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -10193,11 +10451,26 @@
             }
           },
           {
+            "name": "divisionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "employeeId",
             "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -10283,6 +10556,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -10428,6 +10708,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -11137,6 +11424,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -13336,6 +13630,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -13541,6 +13842,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -13699,6 +14007,99 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/payruns/jobs/import": {
+      "post": {
+        "tags": [
+          "Payrun jobs"
+        ],
+        "operationId": "ImportPayrunJobSets",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PayrunJobSet"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PayrunJobSet"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PayrunJobSet"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/ModelStateEntry"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -14141,6 +14542,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -14393,7 +14801,7 @@
         "tags": [
           "Payrun parameters"
         ],
-        "operationId": "UpdatePayrun",
+        "operationId": "UpdatePayrunParameter",
         "parameters": [
           {
             "name": "tenantId",
@@ -14481,7 +14889,7 @@
         "tags": [
           "Payrun parameters"
         ],
-        "operationId": "DeletePayrun",
+        "operationId": "DeletePayrunParameter",
         "parameters": [
           {
             "name": "tenantId",
@@ -14532,6 +14940,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -14908,490 +15323,6 @@
         }
       }
     },
-    "/api/shares/regulations/{shareId}": {
-      "get": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "GetRegulationShare",
-        "parameters": [
-          {
-            "name": "shareId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegulationShare"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "UpdateRegulationShare",
-        "parameters": [
-          {
-            "name": "shareId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegulationShare"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegulationShare"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegulationShare"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegulationShare"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "DeleteRegulationShare",
-        "parameters": [
-          {
-            "name": "shareId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/shares/regulations": {
-      "get": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "QueryRegulationShares",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "orderBy",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "result",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/QueryResultType"
-            }
-          },
-          {
-            "name": "select",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectStatus"
-            }
-          },
-          {
-            "name": "top",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "CreateRegulationShare",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegulationShare"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegulationShare"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegulationShare"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegulationShare"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "options": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "GetOptions",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/shares/regulations/{shareId}/attributes/{attributeName}": {
-      "get": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "GetRegulationShareAttribute",
-        "parameters": [
-          {
-            "name": "shareId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "attributeName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "SetRegulationShareAttribute",
-        "parameters": [
-          {
-            "name": "shareId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "attributeName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ModelStateEntry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Regulation shares"
-        ],
-        "operationId": "DeleteRegulationShareAttribute",
-        "parameters": [
-          {
-            "name": "shareId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "attributeName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/tenants/{tenantId}/regulations": {
       "get": {
         "tags": [
@@ -15406,6 +15337,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -16000,6 +15938,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -16286,6 +16231,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -16742,6 +16694,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -17203,6 +17162,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -18156,6 +18122,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -18547,6 +18520,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -19082,6 +19062,13 @@
         ],
         "operationId": "QueryTenants",
         "parameters": [
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "filter",
             "in": "query",
@@ -19801,6 +19788,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -20494,6 +20488,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -20946,6 +20947,13 @@
             }
           },
           {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "filter",
             "in": "query",
             "schema": {
@@ -21337,6 +21345,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "apply",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -22078,6 +22093,184 @@
           },
           "securityRuleSet": {
             "$ref": "#/components/schemas/SecurityRuleSet"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendAuditTrailInformation": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "type": "boolean"
+          },
+          "lookup": {
+            "type": "boolean"
+          },
+          "input": {
+            "type": "boolean"
+          },
+          "payrun": {
+            "type": "boolean"
+          },
+          "report": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendAuthInformation": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "oAuthAuthority": {
+            "type": "string",
+            "nullable": true
+          },
+          "oAuthAudience": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendCorsInformation": {
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "type": "boolean"
+          },
+          "allowedOrigins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendDatabaseInformation": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "edition": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendInformation": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "buildDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "apiVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "apiName": {
+            "type": "string",
+            "nullable": true
+          },
+          "authentication": {
+            "$ref": "#/components/schemas/BackendAuthInformation"
+          },
+          "database": {
+            "$ref": "#/components/schemas/BackendDatabaseInformation"
+          },
+          "runtime": {
+            "$ref": "#/components/schemas/BackendRuntimeInformation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendRateLimitingInformation": {
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "type": "boolean"
+          },
+          "globalPermitLimit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "globalWindowSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "payrunJobStartPermitLimit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "payrunJobStartWindowSeconds": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BackendRuntimeInformation": {
+        "type": "object",
+        "properties": {
+          "maxParallelEmployees": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxRetroPayrunPeriods": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dbCommandTimeoutSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dbTransactionTimeoutSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "assemblyCacheTimeoutSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "webhookTimeoutSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scriptSafetyAnalysis": {
+            "type": "boolean"
+          },
+          "auditTrail": {
+            "$ref": "#/components/schemas/BackendAuditTrailInformation"
+          },
+          "cors": {
+            "$ref": "#/components/schemas/BackendCorsInformation"
+          },
+          "rateLimiting": {
+            "$ref": "#/components/schemas/BackendRateLimitingInformation"
+          },
+          "tenantIsolationLevel": {
+            "$ref": "#/components/schemas/TenantIsolationLevel"
           }
         },
         "additionalProperties": false
@@ -24137,6 +24330,19 @@
             "type": "integer",
             "format": "int32"
           },
+          "payrunJobId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecast": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentJobId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "collectorId": {
             "type": "integer",
             "format": "int32"
@@ -24238,6 +24444,19 @@
           "divisionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "payrunJobId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecast": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentJobId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "collectorId": {
             "type": "integer",
@@ -26306,21 +26525,41 @@
             "type": "integer",
             "format": "int32"
           },
+          "payrollName": {
+            "type": "string",
+            "nullable": true
+          },
           "payrunId": {
             "type": "integer",
             "format": "int32"
+          },
+          "payrunName": {
+            "type": "string",
+            "nullable": true
           },
           "payrunJobId": {
             "type": "integer",
             "format": "int32"
           },
+          "payrunJobName": {
+            "type": "string",
+            "nullable": true
+          },
           "employeeId": {
             "type": "integer",
             "format": "int32"
           },
+          "employeeIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
           "divisionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "divisionName": {
+            "type": "string",
+            "nullable": true
           },
           "cycleName": {
             "minLength": 1,
@@ -26382,21 +26621,41 @@
             "type": "integer",
             "format": "int32"
           },
+          "payrollName": {
+            "type": "string",
+            "nullable": true
+          },
           "payrunId": {
             "type": "integer",
             "format": "int32"
+          },
+          "payrunName": {
+            "type": "string",
+            "nullable": true
           },
           "payrunJobId": {
             "type": "integer",
             "format": "int32"
           },
+          "payrunJobName": {
+            "type": "string",
+            "nullable": true
+          },
           "employeeId": {
             "type": "integer",
             "format": "int32"
           },
+          "employeeIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
           "divisionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "divisionName": {
+            "type": "string",
+            "nullable": true
           },
           "cycleName": {
             "minLength": 1,
@@ -26520,8 +26779,9 @@
             "type": "string",
             "nullable": true
           },
-          "retroTimeType": {
-            "$ref": "#/components/schemas/RetroTimeType"
+          "retroBackCycles": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -26623,10 +26883,6 @@
           "forecast": {
             "maxLength": 128,
             "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "culture": {
             "type": "string",
             "nullable": true
           },
@@ -26836,6 +27092,9 @@
           "jobStatus": {
             "$ref": "#/components/schemas/PayrunJobStatus"
           },
+          "completedJobStatus": {
+            "$ref": "#/components/schemas/PayrunJobStatus"
+          },
           "periodStart": {
             "type": "string",
             "format": "date-time"
@@ -26878,6 +27137,226 @@
           "Incremental"
         ],
         "type": "string"
+      },
+      "PayrunJobSet": {
+        "required": [
+          "createdReason",
+          "createdUserId",
+          "cycleEnd",
+          "cycleName",
+          "cycleStart",
+          "evaluationDate",
+          "jobStart",
+          "name",
+          "payrollId",
+          "payrunId",
+          "periodEnd",
+          "periodName",
+          "periodStart"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ObjectStatus"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string"
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "payrunId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "payrollId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentJobId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "releasedUserId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "processedUserId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "finishedUserId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "retroPayMode": {
+            "$ref": "#/components/schemas/RetroPayMode"
+          },
+          "jobStatus": {
+            "$ref": "#/components/schemas/PayrunJobStatus"
+          },
+          "jobResult": {
+            "$ref": "#/components/schemas/PayrunJobResult"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "forecast": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "cycleName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "cycleStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cycleEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "periodStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "evaluationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "released": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "processed": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finished": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdReason": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "releasedReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "processedReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "finishedReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalEmployeeCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "processedEmployeeCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "jobEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "employees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrunJobEmployee"
+            },
+            "nullable": true
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "payrunName": {
+            "type": "string",
+            "nullable": true
+          },
+          "divisionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "resultSets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollResultSet"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "PayrunJobStatus": {
         "enum": [
@@ -26998,6 +27477,19 @@
           "divisionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "payrunJobId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecast": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentJobId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "source": {
             "minLength": 1,
@@ -27260,56 +27752,6 @@
         },
         "additionalProperties": false
       },
-      "RegulationShare": {
-        "required": [
-          "consumerTenantId",
-          "providerRegulationId",
-          "providerTenantId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ObjectStatus"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "providerTenantId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "providerRegulationId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "consumerTenantId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "consumerDivisionId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "attributes": {
-            "type": "object",
-            "additionalProperties": {
-              "nullable": true
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Report": {
         "required": [
           "name"
@@ -27366,6 +27808,9 @@
           "userType": {
             "$ref": "#/components/schemas/UserType"
           },
+          "reportIsolation": {
+            "$ref": "#/components/schemas/ReportIsolation"
+          },
           "queries": {
             "type": "object",
             "additionalProperties": {
@@ -27417,6 +27862,16 @@
         "enum": [
           "Json",
           "Table"
+        ],
+        "type": "string"
+      },
+      "ReportIsolation": {
+        "enum": [
+          "None",
+          "Global",
+          "Company",
+          "Division",
+          "Employee"
         ],
         "type": "string"
       },
@@ -27674,6 +28129,9 @@
           "userType": {
             "$ref": "#/components/schemas/UserType"
           },
+          "reportIsolation": {
+            "$ref": "#/components/schemas/ReportIsolation"
+          },
           "queries": {
             "type": "object",
             "additionalProperties": {
@@ -27846,13 +28304,6 @@
         },
         "additionalProperties": false
       },
-      "RetroTimeType": {
-        "enum": [
-          "Anytime",
-          "Cycle"
-        ],
-        "type": "string"
-      },
       "RuntimeFieldHandle": {
         "type": "object",
         "properties": {
@@ -27917,6 +28368,9 @@
           "value": {
             "minLength": 1,
             "type": "string"
+          },
+          "overrideType": {
+            "$ref": "#/components/schemas/OverrideType"
           }
         },
         "additionalProperties": false
@@ -28063,6 +28517,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "TenantIsolationLevel": {
+        "enum": [
+          "None",
+          "Consolidation",
+          "Read",
+          "Write"
+        ],
+        "type": "string"
       },
       "Type": {
         "type": "object",
@@ -28798,12 +29261,6 @@
             "minLength": 0,
             "type": "string"
           },
-          "password": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
           "firstName": {
             "maxLength": 128,
             "minLength": 0,
@@ -29125,6 +29582,19 @@
             "type": "integer",
             "format": "int32"
           },
+          "payrunJobId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecast": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentJobId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "wageTypeId": {
             "type": "integer",
             "format": "int32"
@@ -29222,6 +29692,19 @@
           "divisionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "payrunJobId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecast": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentJobId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "wageTypeId": {
             "type": "integer",
@@ -29497,9 +29980,6 @@
     },
     {
       "name": "Payruns"
-    },
-    {
-      "name": "Regulation shares"
     },
     {
       "name": "Regulations"
