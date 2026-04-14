@@ -90,8 +90,10 @@
         {
           "name": "WageTracingPayroll",
           "divisionName": "TraceDemo.Operations",
-          "clusterSetWageType": "Legal",
-          "clusterSetWageTypePeriod": "Legal",
+          "clusterSet": {
+            "clusterSetWageType": "Legal",
+            "clusterSetWageTypePeriod": "Legal"
+          },
           "clusterSets": [
             {
               "name": "Legal",

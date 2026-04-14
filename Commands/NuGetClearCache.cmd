@@ -1,20 +1,20 @@
 @ECHO off
 
-rem --- clear .net cache
-echo Clearing .NET NuGet local cache...
-dotnet nuget locals all --clear
-if %ERRORLEVEL% neq 0 goto error
+rem --- clear only PayrollEngine packages from the global NuGet cache
+rem --- (external packages like FastReport, NPOI, Roslyn are preserved)
+echo Clearing PayrollEngine NuGet packages from global cache...
+for /d %%d in ("%userprofile%\.nuget\packages\payrollengine.*") do rd /s /q "%%d" 2>nul
 
-rem --- clear build cache
+rem --- clear build cache (local Packages folder)
 echo.
 echo Clearing local NuGet build cache...
 if exist ..\Packages\PayrollEngine.Core.*.* del ..\Packages\PayrollEngine.Core.*.* /Q
 if exist ..\Packages\PayrollEngine.Serilog.*.* del ..\Packages\PayrollEngine.Serilog.*.* /Q
 if exist ..\Packages\PayrollEngine.Document.*.* del ..\Packages\PayrollEngine.Document.*.* /Q
 if exist ..\Packages\PayrollEngine.Client.Core.*.* del ..\Packages\PayrollEngine.Client.Core.*.* /Q
-if exist ..\Packages\PayrollEngine.Client.Scripting.*.* del ..\Packages\PayrollEngine.Scripting.*.* /Q
-if exist ..\Packages\PayrollEngine.Client.Test.*.* del ..\Packages\PayrollEngine.Test.*.* /Q
-if exist ..\Packages\PayrollEngine.Client.Services.*.* del ..\Packages\PayrollEngine.Services.*.* /Q
+if exist ..\Packages\PayrollEngine.Client.Scripting.*.* del ..\Packages\PayrollEngine.Client.Scripting.*.* /Q
+if exist ..\Packages\PayrollEngine.Client.Test.*.* del ..\Packages\PayrollEngine.Client.Test.*.* /Q
+if exist ..\Packages\PayrollEngine.Client.Services.*.* del ..\Packages\PayrollEngine.Client.Services.*.* /Q
 if %ERRORLEVEL% neq 0 goto error
 goto exit
 

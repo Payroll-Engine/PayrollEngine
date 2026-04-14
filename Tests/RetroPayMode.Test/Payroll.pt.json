@@ -72,8 +72,10 @@
         {
           "name": "RetroPayMode.Test.Payroll",
           "divisionName": "RetroPayModeDivision",
-          "clusterSetWageType": "Legal",
-          "clusterSetWageTypeRetro": "Retro",
+          "clusterSet": {
+            "clusterSetWageType": "Legal",
+            "clusterSetWageTypeRetro": "Retro"
+          },
           "clusterSets": [
             {
               "name": "Legal",

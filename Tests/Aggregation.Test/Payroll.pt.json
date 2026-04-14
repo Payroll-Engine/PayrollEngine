@@ -86,7 +86,9 @@
         {
           "name": "Aggregation.Test.Derived",
           "divisionName": "Aggregation.Division",
-          "clusterSetCaseValue": "*",
+          "clusterSet": {
+            "clusterSetCaseValue": "*"
+          },
           "layers": [
             {
               "level": 1,

@@ -4438,77 +4438,16 @@
               ],
               "description": "The division name (client only)"
             },
-            "clusterSetCase": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The case cluster set (undefined: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetCaseField": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The case field cluster set (undefined: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetCollector": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The collector cluster set (undefined: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetCollectorRetro": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The collector cluster set for retro payrun jobs (undefined: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetWageType": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The wage type cluster set (undefined: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetWageTypeRetro": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The wage type cluster set for retro payrun jobs (undefined: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetCaseValue": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The case value cluster set (undefined: none, *: all)",
-              "maxLength": 128,
-              "minLength": 0
-            },
-            "clusterSetWageTypePeriod": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "description": "The wage type period result cluster set (undefined: none)",
-              "maxLength": 128,
-              "minLength": 0
+            "clusterSet": {
+              "description": "Typed cluster set name references for this payroll",
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/PayrollClusterSets"
+                }
+              ]
             },
             "clusterSets": {
               "type": [
@@ -4531,6 +4470,82 @@
           }
         }
       ]
+    },
+    "PayrollClusterSets": {
+      "type": "object",
+      "description": "Typed cluster set name references for a payroll.\n            Each property holds the name of a ClusterSet entry defined in\n            ClusterSets. An empty or null value means no cluster\n            filtering is applied for that context.",
+      "properties": {
+        "clusterSetCase": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The case cluster set name (undefined: all)."
+        },
+        "clusterSetCaseField": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The case field cluster set name (undefined: all)."
+        },
+        "clusterSetCollector": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The collector cluster set name (undefined: all)."
+        },
+        "clusterSetCollectorRetro": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The collector cluster set name for retro payrun jobs (undefined: all)."
+        },
+        "clusterSetWageType": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The wage type cluster set name (undefined: all)."
+        },
+        "clusterSetWageTypeRetro": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The wage type cluster set name for retro payrun jobs (undefined: all)."
+        },
+        "clusterSetCaseValue": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The case value cluster set name (undefined: none, *: all)."
+        },
+        "clusterSetWageTypePeriod": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The wage type period result cluster set name (undefined: none)."
+        },
+        "clusterSetWageTypeCycle": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The wage type cycle cache cluster set name (undefined: no cycle cache pre-loading).\n            Works for any calendar cycle type (annual, quarterly, monthly, etc.)."
+        },
+        "clusterSetWageTypeCons": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The wage type consolidated cache cluster set name (undefined: no Cons preloading)."
+        }
+      }
     },
     "ClusterSet": {
       "type": "object",

@@ -353,7 +353,9 @@
         {
           "name": "Employee.Test",
           "divisionName": "TestDivision",
-          "clusterSetCaseValue": "*",
+          "clusterSet": {
+            "clusterSetCaseValue": "*"
+          },
           "layers": [
             {
               "level": 1,

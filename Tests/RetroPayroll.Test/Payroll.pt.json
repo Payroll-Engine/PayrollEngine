@@ -184,8 +184,10 @@
               "regulationName": "RetroPayroll"
             }
           ],
-          "clusterSetWageType": "Legal",
-          "clusterSetWageTypeRetro": "Retro",
+          "clusterSet": {
+            "clusterSetWageType": "Legal",
+            "clusterSetWageTypeRetro": "Retro"
+          },
           "clusterSets": [
             {
               "name": "Legal",

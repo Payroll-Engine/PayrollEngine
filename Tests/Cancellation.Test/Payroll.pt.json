@@ -194,7 +194,9 @@
         {
           "name": "Cancellation.Test.Derived",
           "divisionName": "TestDivision",
-          "clusterSetCaseValue": "*",
+          "clusterSet": {
+            "clusterSetCaseValue": "*"
+          },
           "layers": [
             {
               "level": 1,
