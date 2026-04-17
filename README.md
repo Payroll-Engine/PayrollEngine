@@ -89,9 +89,9 @@ The Payroll Engine serves three distinct roles:
 
 | Requirement    | Version                                    |
 |:--------------|:-------------------------------------------|
-| **Docker**     | 20.10+ (for container-based setup)         |
-| **SQL Server** | 2019+ or Azure SQL (for source builds)     |
-| **.NET SDK**   | 8.0+ (for Client Services / source builds) |
+| **Docker**     | 20.10+ (for container-based setup)          |
+| **SQL Server** | 2019+ or Azure SQL (for source builds)      |
+| **.NET SDK**   | 10.0+ (for Client Services / source builds) |
 
 ## Quick Start
 
