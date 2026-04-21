@@ -353,3 +353,6 @@ _site
 .env
 /Commands/VSBackup.All.cmd
 /Commands/Pack.All.Mcp.cmd
+/Tests/PayrunJobImport.Test/Export.PayrunJobs.json
+/Tests/PayrunJobImport.Test/Export.ResultSets.json
+/Tests/PayrunJobImport.Test/Verify.PayrunJobs.json
