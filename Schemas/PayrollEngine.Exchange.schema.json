@@ -263,6 +263,10 @@
               "maxLength": 128,
               "minLength": 0
             },
+            "passwordAvailable": {
+              "type": "boolean",
+              "description": "Indicates whether a password is set for this user"
+            },
             "firstName": {
               "type": "string",
               "description": "The first name of the user",
