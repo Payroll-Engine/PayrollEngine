@@ -12,7 +12,9 @@ name: Orchestrate DryRun
 #
 # Hinweis: GitHub Actions hat keine native "trigger and wait"-Unterstützung
 # für workflow_dispatch. Beide Orchestratoren sind daher inline als Jobs
-# in diesem Workflow implementiert.
+# in diesem Workflow implementiert. App-Jobs pollen release.yml-Runs bis
+# Abschluss — Cleanup darf erst danach laufen (sonst fehlen dryrun-NuGets
+# beim Backend-Swagger-/restore).
 #
 # Fallback: orchestrate-release.yml (legacy, kept until post-Beta.4 cleanup)
 # ─────────────────────────────────────────────────────────────────────
@@ -743,12 +745,73 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Wait for app draft releases
-        run: |
-          echo "⚠️ DryRun: app releases are drafted — skipping release poll"
-          echo "   Waiting 3 min for app workflows to complete..."
-          sleep 180
-          echo "✅ Phase 2 complete"
+      - name: Wait for dispatched app release workflows to complete
+        uses: actions/github-script@v8
+        env:
+          ORG: ${{ env.ORG }}
+          WAIT_BACKEND: ${{ needs.prepare.outputs.build_backend }}
+          WAIT_CONSOLE: ${{ needs.prepare.outputs.build_console }}
+          WAIT_WEBAPP: ${{ needs.prepare.outputs.build_webapp }}
+          WAIT_MCPSERVER: ${{ needs.prepare.outputs.build_mcpserver }}
+        with:
+          github-token: ${{ secrets.PAT_DISPATCH }}
+          script: |
+            const org = process.env.ORG;
+            const orchRepo = 'PayrollEngine';
+            const pairs = [
+              [process.env.WAIT_BACKEND === 'true', 'PayrollEngine.Backend'],
+              [process.env.WAIT_CONSOLE === 'true', 'PayrollEngine.PayrollConsole'],
+              [process.env.WAIT_WEBAPP === 'true', 'PayrollEngine.WebApp'],
+              [process.env.WAIT_MCPSERVER === 'true', 'PayrollEngine.Mcp.Server'],
+            ].filter(([on]) => on).map(([, r]) => r);
+
+            const { data: orchRun } = await github.rest.actions.getWorkflowRun({
+              owner: org, repo: orchRepo, run_id: context.runId,
+            });
+            const minCreated = new Date(orchRun.created_at);
+            console.log(`DryRun: orchestrator run ${context.runId} created at ${minCreated.toISOString()}`);
+            console.log(`Polling repository_dispatch release.yml until complete for: ${pairs.join(', ') || '(none)'}`);
+
+            const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+            const maxAttempts = 150;
+            const intervalMs = 15000;
+
+            for (const repo of pairs) {
+              let matched = null;
+              for (let i = 0; i < maxAttempts; i++) {
+                const { data } = await github.rest.actions.listWorkflowRuns({
+                  owner: org, repo, workflow_id: 'release.yml', per_page: 20,
+                });
+                matched = data.workflow_runs.find((r) =>
+                  r.event === 'repository_dispatch' &&
+                  new Date(r.created_at) >= minCreated
+                );
+                if (!matched) {
+                  console.log(`⏳ ${repo}: no repository_dispatch run yet (${i + 1}/${maxAttempts})...`);
+                  await sleep(intervalMs);
+                  continue;
+                }
+                if (matched.status === 'completed') {
+                  if (matched.conclusion !== 'success') {
+                    core.setFailed(`❌ ${repo}: release workflow ${matched.id} concluded with ${matched.conclusion}`);
+                    return;
+                  }
+                  console.log(`✅ ${repo}: release ${matched.id} success`);
+                  break;
+                }
+                console.log(`⏳ ${repo}: run ${matched.id} status=${matched.status} (${i + 1}/${maxAttempts})...`);
+                await sleep(intervalMs);
+              }
+              if (!matched) {
+                core.setFailed(`❌ ${repo}: timed out waiting for a repository_dispatch release run`);
+                return;
+              }
+              if (matched.status !== 'completed') {
+                core.setFailed(`❌ ${repo}: run ${matched.id} still not completed after poll loop`);
+                return;
+              }
+            }
+            console.log('✅ Phase 2 — all dispatched app release workflows completed');
 
   # ═══════════════════════════════════════════════════════
   # PHASE 3 — CLEANUP (automatic)
