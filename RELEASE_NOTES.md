@@ -14,6 +14,8 @@
 * **docker-compose.ghcr.yml** — robust database existence check (`-W` flag + `tr -d '[:space:]'`), correct `COLLATE SQL_Latin1_General_CP1_CS_AS` on `CREATE DATABASE`
 * **docker-compose.yml** — `NUGET_SOURCE: nuget.org` build arg for Backend and WebApp (enables build-from-source without GitHub token), corrected SQL file path (`Create-Model.sql`)
 
+No breaking change — REST API surface is unchanged from v1.0.0.
+
 ---
 
 ## Docker Images (Linux)
