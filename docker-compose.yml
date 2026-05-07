@@ -26,18 +26,20 @@ services:
         echo 'Testing database connection...'
         /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
         echo 'Creating database...'
-        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine\"
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PayrollEngine') CREATE DATABASE PayrollEngine COLLATE SQL_Latin1_General_CP1_CS_AS\"
         echo 'Executing SQL script...'
         /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -d PayrollEngine -i /sql/ModelCreate.sql
         echo 'Database initialization completed.'
       "
     volumes:
-      - ../PayrollEngine.Backend/Database/ModelCreate.sql:/sql/ModelCreate.sql:ro
+      - ../PayrollEngine.Backend/Database/Create-Model.sql:/sql/ModelCreate.sql:ro
 
   backend-api:
     build:
       context: ../PayrollEngine.Backend
       dockerfile: Dockerfile
+      args:
+        NUGET_SOURCE: nuget.org
     platform: linux/amd64
     container_name: payroll-backend-api
     ports:
@@ -56,6 +58,8 @@ services:
     build:
       context: ../PayrollEngine.WebApp
       dockerfile: Dockerfile
+      args:
+        NUGET_SOURCE: nuget.org
     platform: linux/amd64
     container_name: payroll-webapp
     ports:

@@ -53,14 +53,14 @@ services:
         /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
           -Q \"SELECT @@VERSION\" || { echo 'Database connection failed'; exit 1; }
 
-        DB_EXISTS=$(/opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -h -1 \
+        DB_EXISTS=$(/opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C -h -1 -W \
           -Q \"SET NOCOUNT ON; SELECT COUNT(*) FROM sys.databases WHERE name = 'PayrollEngine'\")
-        DB_EXISTS=$(echo \$DB_EXISTS | tr -d ' ')
+        DB_EXISTS=$(echo \$DB_EXISTS | tr -d '[:space:]')
 
         if [ \"\$DB_EXISTS\" = \"0\" ]; then
           echo 'Database not found - running ModelCreate.sql...'
           /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
-            -Q \"CREATE DATABASE PayrollEngine\"
+            -Q \"CREATE DATABASE PayrollEngine COLLATE SQL_Latin1_General_CP1_CS_AS\"
           /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P \"${DB_PASSWORD}\" -C \
             -d PayrollEngine -i /sql/ModelCreate.sql
           echo 'Database created.'
