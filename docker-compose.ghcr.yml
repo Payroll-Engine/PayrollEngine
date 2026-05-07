@@ -82,6 +82,7 @@ services:
     environment:
       ASPNETCORE_URLS: 'http://+:8080'
       ASPNETCORE_ENVIRONMENT: 'Development'
+      PayrollServerConfiguration__EnableSwagger: 'true'
       ConnectionStrings__PayrollDatabaseConnection: >-
         Server=db;Database=PayrollEngine;User Id=sa;
         Password=${DB_PASSWORD};TrustServerCertificate=True;
