@@ -29,7 +29,7 @@
 
 The Payroll Engine is a framework for developing payroll applications. It is designed for software companies, payroll service providers, and enterprises that need to automate and scale payroll processing across countries and industries.
 
-The key idea: **payroll logic is not hardcoded**. Instead, business rules are defined in configurable [regulation layers ↗](https://payrollengine.org/docs/Regulations) that can be stacked, overridden, and shared between tenants. This separation of business rules from application code makes the engine adaptable to any country, any industry, and any HR platform.
+The key idea: **payroll logic is not hardcoded**. Instead, business rules are defined in configurable [regulation layers ↗](https://payrollengine.org/Concepts/Regulations/) that can be stacked, overridden, and shared between tenants. This separation of business rules from application code makes the engine adaptable to any country, any industry, and any HR platform.
 
 ### Why Payroll Engine?
 
@@ -53,8 +53,8 @@ The Payroll Engine serves three distinct roles:
 | **Regulator** | Payroll domain experts who define and maintain country- or industry-specific calculation rules                  | No-Code (Actions) · Low-Code (C#) |
 | **Automator** | DevOps and integration engineers who connect the engine to HR platforms, data pipelines, or custom applications | Client Services (.NET SDK)         |
 
-> If you're a payroll domain expert who wants to define rules without writing application code, start with [No-Code & Low-Code Development ↗](https://payrollengine.org/docs/NoCodeLowCodeDevelopment).
-> If you're a .NET developer integrating the engine into an existing system, start with [Client Services ↗](https://payrollengine.org/docs/ClientServices).
+> If you're a payroll domain expert who wants to define rules without writing application code, start with [No-Code & Low-Code Development ↗](https://payrollengine.org/Roles/Regulator/NoCodeLowCodeDevelopment/).
+> If you're a .NET developer integrating the engine into an existing system, start with [Client Services ↗](https://payrollengine.org/Api/ClientSdk/).
 
 ## How It Works
 
@@ -83,7 +83,7 @@ The Payroll Engine serves three distinct roles:
 
 **Payrun** processes case data through the wage types and collectors defined in the regulation layers, producing payslips, reports, and data exports.
 
-> 📖 Read more in the [Overview ↗](https://payrollengine.org/docs/Overview) or explore the [Payroll Model ↗](https://payrollengine.org/docs/PayrollModel).
+> 📖 Read more in the [Overview ↗](https://payrollengine.org/GetStarted/Overview/) or explore the [Payroll Model ↗](https://payrollengine.org/Concepts/PayrollModel/).
 
 ## Prerequisites
 
@@ -137,7 +137,7 @@ docker compose -f docker-compose.ghcr.yml up -d
 | **Web Application** | http://localhost:8081 |
 | **Backend API**     | http://localhost:5001 |
 
-The database is initialized automatically on first run. See [Container Setup ↗](https://payrollengine.org/docs/ContainerSetup) for the full configuration including version pinning and upgrades.
+The database is initialized automatically on first run. See [Container Setup ↗](https://payrollengine.org/GetStarted/ContainerSetup/) for the full configuration including version pinning and upgrades.
 
 ## Docker Images
 
@@ -174,7 +174,7 @@ foreach (var tenant in tenants)
 
 All library packages are available on [NuGet.org](https://www.nuget.org/packages?q=PayrollEngine) and [GitHub Packages](https://github.com/orgs/Payroll-Engine/packages).
 
-> See [Client Services ↗](https://payrollengine.org/docs/ClientServices) and [API Usage ↗](https://payrollengine.org/docs/ApiUsage) for full integration guides.
+> See [Client Services ↗](https://payrollengine.org/Api/ClientSdk/) and [API Usage ↗](https://payrollengine.org/Roles/Provider/ApiUsage/) for full integration guides.
 
 ## Key Features
 
@@ -225,7 +225,7 @@ PayrollEngine/                  ← You are here
 | [Document](https://github.com/Payroll-Engine/PayrollEngine.Document) | Report generation | [![NuGet](https://img.shields.io/nuget/vpre/PayrollEngine.Document?label=&logo=nuget&color=blue)](https://www.nuget.org/packages/PayrollEngine.Document) |
 | [Mcp.Server](https://github.com/Payroll-Engine/PayrollEngine.Mcp.Server) | MCP server for AI integration | [![release](https://img.shields.io/github/v/release/Payroll-Engine/PayrollEngine.Mcp.Server?include_prereleases&label=&logo=github)](https://github.com/Payroll-Engine/PayrollEngine.Mcp.Server/releases) |
 
-> See [Repositories ↗](https://payrollengine.org/docs/Repositories) for the full map including third-party dependencies.
+> See [Repositories ↗](https://payrollengine.org/Resources/Repositories/) for the full map including third-party dependencies.
 
 ## Examples and Tests
 
@@ -259,11 +259,11 @@ docker run --rm --network payroll-engine_default \
 
 | Article                                     |                                                                                                                                                                               |
 |:-------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Payroll Software rethought                  | [payrollengine.org ↗](https://payrollengine.org/docs/PayrollSoftwareRethought)                                                                                                |
-| Design of a scalable Payroll Software       | [payrollengine.org ↗](https://payrollengine.org/docs/DesignScalablePayrollSoftware)                                                                                           |
-| Test Driven Payroll Software                | [payrollengine.org ↗](https://payrollengine.org/docs/TestDrivenPayrollSoftware)                                                                                               |
-| No-Code and Low-Code for Payroll Software   | [payrollengine.org ↗](https://payrollengine.org/docs/NoCodeLowCodeDevelopment) · [dev.to](https://dev.to/giannoudis/no-code-and-low-code-for-payroll-software-development-1c35) |
-| Travel through Time Data                    | [payrollengine.org ↗](https://payrollengine.org/docs/TravelThroughTimeData) · [dev.to](https://dev.to/giannoudis/travel-through-time-data-2op1)                               |
+| Payroll Software rethought                  | [payrollengine.org ↗](https://payrollengine.org/Resources/Blogs/PayrollSoftwareRethought/)                                                                                                |
+| Design of a scalable Payroll Software       | [payrollengine.org ↗](https://payrollengine.org/Resources/Blogs/DesignScalablePayrollSoftware/)                                                                                           |
+| Test Driven Payroll Software                | [payrollengine.org ↗](https://payrollengine.org/Resources/Blogs/TestDrivenPayrollSoftware/)                                                                                               |
+| No-Code and Low-Code for Payroll Software   | [payrollengine.org ↗](https://payrollengine.org/Roles/Regulator/NoCodeLowCodeDevelopment/) · [dev.to](https://dev.to/giannoudis/no-code-and-low-code-for-payroll-software-development-1c35) |
+| Travel through Time Data                    | [payrollengine.org ↗](https://payrollengine.org/Resources/Blogs/TravelThroughTimeData/) · [dev.to](https://dev.to/giannoudis/travel-through-time-data-2op1)                               |
 | High-performance backend scripting for .NET | [dev.to](https://dev.to/giannoudis/high-performance-backend-scripting-for-net-1jpg)                                                                                           |
 
 ## Contributing
