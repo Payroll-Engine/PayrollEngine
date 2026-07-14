@@ -36,10 +36,16 @@ A Trusted Publishing policy on nuget.org must exist for this workflow:
 
 | Field | Value |
 |-------|-------|
-| Owner | PayrollEngine nuget.org account / organisation |
+| Policy owner | PayrollEngine (organisation — owns the packages) |
 | Repository owner | `Payroll-Engine` |
 | Repository | `PayrollEngine` |
 | Workflow file | `sync-nuget-org.yml` |
+| Environment | *(empty)* |
+
+**Important:** `NUGET_USER` in GitHub Secrets must be the **nuget.org profile name**
+of whoever **created** this policy (visible in the URL at
+`https://www.nuget.org/profiles/XXXXX`). NuGet returns HTTP 401 with
+*"No matching trust policy owned by user …"* when the wrong username is used.
 
 The policy authorises this workflow to exchange a GitHub OIDC token for a
 short-lived NuGet API key (~1 hour). The workflow requests that key immediately

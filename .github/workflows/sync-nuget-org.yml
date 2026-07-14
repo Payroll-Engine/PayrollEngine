@@ -29,7 +29,6 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      # Request the temp API key immediately before push — it expires after ~1 hour.
       - name: NuGet login (OIDC → temp API key)
         uses: NuGet/login@v1
         id: login
