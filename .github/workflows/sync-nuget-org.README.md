@@ -5,6 +5,9 @@ This workflow is intentionally separate from the release orchestrator — NuGet.
 synchronisation is a deliberate, manual step that happens after a GitHub release
 has been verified.
 
+Publishing uses [NuGet.org Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
+via GitHub Actions OIDC — no long-lived NuGet API key is stored in GitHub Secrets.
+
 ---
 
 ## Trigger
@@ -22,8 +25,27 @@ has been verified.
 
 | Secret | Scope | Purpose |
 |--------|-------|---------|
-| `PAT_DISPATCH` | Organisation-level | Read GitHub Packages and GitHub Release assets |
-| `NUGET_ORG_API_KEY` | `PayrollEngine` repo only | Push packages to NuGet.org |
+| `PAT_DISPATCH` | Organisation `Payroll-Engine` | Read GitHub Packages and GitHub Release assets |
+| `NUGET_USER` | Organisation `Payroll-Engine` (visibility: `PayrollEngine` repo) | nuget.org profile name (`PayrollEngine`) for `NuGet/login@v1` |
+
+---
+
+## Trusted Publishing Policy
+
+A Trusted Publishing policy on nuget.org must exist for this workflow:
+
+| Field | Value |
+|-------|-------|
+| Owner | PayrollEngine nuget.org account / organisation |
+| Repository owner | `Payroll-Engine` |
+| Repository | `PayrollEngine` |
+| Workflow file | `sync-nuget-org.yml` |
+
+The policy authorises this workflow to exchange a GitHub OIDC token for a
+short-lived NuGet API key (~1 hour). The workflow requests that key immediately
+before pushing.
+
+Local or unsupported CI/CD publishing still requires a conventional NuGet API key.
 
 ---
 
@@ -33,7 +55,7 @@ The `packages` input accepts a suffix of the package name after `PayrollEngine.`
 
 | Value | Packages synced |
 |-------|-----------------|
-| `all` | All 7 packages |
+| `all` | All 9 packages |
 | `Core` | `PayrollEngine.Core` only |
 | `Serilog` | `PayrollEngine.Serilog` only |
 | `Document` | `PayrollEngine.Document` only |
@@ -42,6 +64,8 @@ The `packages` input accepts a suffix of the package name after `PayrollEngine.`
 | `Client.Scripting` | `PayrollEngine.Client.Scripting` only |
 | `Client.Test` | `PayrollEngine.Client.Test` only |
 | `Client.Services` | `PayrollEngine.Client.Services` only |
+| `Mcp.Core` | `PayrollEngine.Mcp.Core` only |
+| `Mcp.Tools` | `PayrollEngine.Mcp.Tools` only |
 
 The filter uses suffix matching: `Core` matches only `PayrollEngine.Core`, not
 `PayrollEngine.Client.Core`. `Client` matches all four `Client.*` packages.
@@ -64,9 +88,8 @@ For each matched package:
    API with `application/octet-stream` accept header. Writes to a temp directory.
 
 4. **Push to NuGet.org** — calls `dotnet nuget push` via `spawnSync` with
-   `--skip-duplicate`. The NuGet API key is passed as a CLI argument; `spawnSync`
-   does not write its argv array to the Actions log, so the key is not exposed in
-   run output.
+   `--skip-duplicate`. Authentication uses a short-lived API key obtained from
+   `NuGet/login@v1` (Trusted Publishing) immediately before the push step.
 
 Packages are processed sequentially. A failure on one package is recorded but does not
 stop the remaining packages — all errors are collected and reported together at the end.
@@ -107,7 +130,7 @@ orchestrate-release.yml
   └── publishes to GitHub Packages (ghcr.io / nuget.pkg.github.com)
         └── [manual, after verification]
               sync-nuget-org.yml
-                └── pushes to NuGet.org
+                └── pushes to NuGet.org (Trusted Publishing)
 ```
 
 The separation is intentional: NuGet.org packages are immutable once published.
@@ -121,7 +144,8 @@ The GitHub Packages release is verified first; only then is NuGet.org updated.
 permissions:
   contents: read     # read release assets from this repo
   packages: read     # read GitHub Packages metadata
+  id-token: write    # GitHub OIDC token for Trusted Publishing
 ```
 
-GitHub Release asset downloads and NuGet pushes use `PAT_DISPATCH` and
-`NUGET_ORG_API_KEY` respectively.
+GitHub Release asset downloads use `PAT_DISPATCH`. NuGet.org authentication uses
+Trusted Publishing via `NuGet/login@v1` — no stored NuGet API key.

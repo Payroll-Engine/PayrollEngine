@@ -14,6 +14,7 @@ on:
 permissions:
   contents: read
   packages: read
+  id-token: write
 
 env:
   DOTNET_VERSION: '10.0.x'
@@ -28,10 +29,17 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      # Request the temp API key immediately before push — it expires after ~1 hour.
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Download and push packages
         uses: actions/github-script@v8
         env:
-          NUGET_ORG_API_KEY: ${{ secrets.NUGET_ORG_API_KEY }}
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         with:
           github-token: ${{ secrets.PAT_DISPATCH }}
           script: |
@@ -43,7 +51,7 @@ jobs:
             const org = '${{ env.ORG }}';
             const version = '${{ inputs.lib_version }}';
             const filter = '${{ inputs.packages }}';
-            const nugetKey = process.env.NUGET_ORG_API_KEY;
+            const nugetKey = process.env.NUGET_API_KEY;
 
             const allPackages = [
               'PayrollEngine.Core',
@@ -130,11 +138,9 @@ jobs:
                 fs.writeFileSync(downloadPath, Buffer.from(dlResponse.data));
                 console.log(`  ⬇️  Downloaded`);
 
-                // Push to NuGet.org.
-                // `dotnet nuget push` has no env-var alternative for --api-key;
-                // the key must be passed as a CLI argument. spawnSync does not
-                // log its argv array to the Actions log, so the key is not
-                // exposed in the run output.
+                // Push to NuGet.org using the short-lived key from Trusted Publishing.
+                // The key must be passed as a CLI argument; spawnSync does not log
+                // its argv array to the Actions log.
                 console.log(`  🚀 Pushing to NuGet.org...`);
                 const result = spawnSync(
                   'dotnet',

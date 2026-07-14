@@ -17,7 +17,7 @@
   <a href="https://github.com/orgs/Payroll-Engine/packages"><img alt="Docker" src="https://img.shields.io/badge/ghcr.io-images-blue?logo=docker" /></a>
 </p>
 <p align="center">
-  <a href="https://payrollengine.org/docs"><strong>Docs</strong></a> · <a href="https://payrollengine.org/docs/ContainerSetup"><strong>Quick Start</strong></a> · <a href="https://payrollengine.org/docs/Resources"><strong>Resources</strong></a> · <a href="https://github.com/Payroll-Engine/PayrollEngine/releases"><strong>Releases</strong></a> · <a href="https://github.com/Payroll-Engine/PayrollEngine/discussions"><strong>Discussions</strong></a>
+  <a href="https://payrollengine.org/GetStarted/Overview/"><strong>Docs</strong></a> · <a href="https://payrollengine.org/GetStarted/ContainerSetup/"><strong>Quick Start</strong></a> · <a href="https://payrollengine.org/Resources/"><strong>Resources</strong></a> · <a href="https://github.com/Payroll-Engine/PayrollEngine/releases"><strong>Releases</strong></a> · <a href="https://github.com/Payroll-Engine/PayrollEngine/discussions"><strong>Discussions</strong></a>
 </p>
 
 > **This repository** contains the Docker stack, payroll examples, automated tests, JSON schemas, and release artifacts. 
@@ -190,7 +190,7 @@ All library packages are available on [NuGet.org](https://www.nuget.org/packages
 
 **Embedded & API-First** — REST API with Swagger/OpenAPI. .NET Client SDK. Docker containers for Backend, WebApp, and Console. OAuth 2.0 and API key authentication.
 
-> 📖 Full feature list in the [Documentation ↗](https://payrollengine.org/docs).
+> 📖 Full feature list in the [Documentation ↗](https://payrollengine.org/GetStarted/Overview/).
 
 ## Repository Structure
 
@@ -253,7 +253,7 @@ docker run --rm --network payroll-engine_default \
 | [ReportPayroll](Examples/ReportPayroll)     | Reporting         | [ForecastPayroll](Tests/ForecastPayroll.Test) | Forecast payrun        |
 | [ExtendedPayroll](Examples/ExtendedPayroll) | Extended tutorial | [DerivedPayroll](Tests/DerivedPayroll.Test)   | Regulation inheritance |
 
-> See [Resources ↗](https://payrollengine.org/docs/Resources) for the complete list of examples, tests, and client tutorials.
+> See [Resources ↗](https://payrollengine.org/Resources/) for the complete list of examples, tests, and client tutorials.
 
 ## Articles
 
