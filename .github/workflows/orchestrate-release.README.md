@@ -5,6 +5,11 @@ dependency order. A single manual trigger dispatches builds to up to 10 reposito
 waits for each wave to publish its NuGet packages before starting the next, and
 finally creates an umbrella GitHub Release in this repository.
 
+> **Legacy fallback.** The regular release flow is `orchestrate-libs.yml` (all 9 libraries
+> including MCP) → `sync-nuget-org.yml` → `orchestrate-apps.yml` (apps built against NuGet.org).
+> This workflow releases the 7 client libraries only (no MCP libraries) and builds the apps
+> against GitHub Packages.
+
 ---
 
 ## Trigger
@@ -17,6 +22,7 @@ finally creates an umbrella GitHub Release in this repository.
 | `backend_version` | — | _(skip)_ | Version for `PayrollEngine.Backend` — leave empty to skip |
 | `console_version` | — | _(skip)_ | Version for `PayrollEngine.PayrollConsole` — leave empty to skip |
 | `webapp_version` | — | _(skip)_ | Version for `PayrollEngine.WebApp` — leave empty to skip |
+| `mcpserver_version` | — | _(skip)_ | Version for `PayrollEngine.Mcp.Server` — leave empty to skip |
 | `update_wiki` | — | `false` | Update the Wiki Releases page _(deprecated — website replaces wiki)_ |
 | `dry_run` | — | `false` | Run in dry-run mode (see [Dry Run](#dry-run)) |
 
@@ -55,10 +61,11 @@ prepare
   ├── wave-4-services
   │     wait-wave-4  ─── NuGet: Client.Services ✓
   │
-  ├── wave-5-backend ──┐
-  ├── wave-5-console ──┼── parallel, conditional
-  ├── wave-5-webapp ───┘
-  │     wait-wave-5  ─── GitHub Releases: Backend, Console, WebApp ✓
+  ├── wave-5-backend ────┐
+  ├── wave-5-console ────┤
+  ├── wave-5-webapp ─────┼── parallel, conditional
+  ├── wave-5-mcpserver ──┘
+  │     wait-wave-5  ─── GitHub Releases: Backend, Console, WebApp, Mcp.Server ✓
   │
   └── create-umbrella-release
         update-wiki  (deprecated, skipped unless update_wiki=true)
@@ -76,8 +83,8 @@ Resolves and validates all input parameters. Sets outputs consumed by every down
 |--------|-------------|
 | `lib_version` | Effective library version (`0.0.0-dryrun.{run}` in dry-run) |
 | `lib_prerelease` | `true` if `lib_version` contains a hyphen |
-| `build_backend/console/webapp` | `true` if the corresponding version input was provided |
-| `backend/console/webapp_prerelease` | Pre-release flag per app |
+| `build_backend/console/webapp/mcpserver` | `true` if the corresponding version input was provided |
+| `backend/console/webapp/mcpserver_prerelease` | Pre-release flag per app |
 | `any_prerelease` | `true` if any component is pre-release |
 | `dry_run` | Passed through from input |
 
@@ -119,7 +126,7 @@ Runs `devops/scripts/Update-BreakingChanges.ps1` against `HEAD~1` across:
 | Exit code | Meaning | Action |
 |-----------|---------|--------|
 | `0` | No breaking changes | Continue |
-| `1` | Breaking changes detected | Check `RELEASE_NOTES.md` for `breaking change` — block if absent |
+| `1` | Breaking changes detected | Check `RELEASE_NOTES.md` for the `**breaking change**` marker written by `Update-BreakingChanges.ps1` — block if absent |
 | `2` | Infrastructure failure (build/git/tool error) | Always block — detection result unreliable |
 
 The breaking-change report is uploaded as artifact `breaking-change-report` regardless of outcome.
@@ -170,7 +177,7 @@ Single dispatch to `PayrollEngine.Client.Services`.
 
 ### `wave-5-*` / `wait-wave-5`
 
-Conditional parallel dispatch to the three app repos — only if the corresponding version
+Conditional parallel dispatch to the four app repos — only if the corresponding version
 input was provided. Each app resolves its own version independently (dry-run version or
 real input).
 
@@ -231,7 +238,7 @@ When `dry_run = true`:
 | Behaviour | Description |
 |-----------|-------------|
 | Version | All repos receive `0.0.0-dryrun.{run_number}` instead of real inputs |
-| Apps | All 3 app repos are always built regardless of version inputs |
+| Apps | All 4 app repos are always built regardless of version inputs |
 | `version-guard` | Skipped |
 | `breaking-change-guard` | Skipped |
 | Releases | All repos create **draft** releases with the synthetic version |
@@ -248,7 +255,7 @@ and is safe to accumulate across repeated test runs.
 | Scope | Rule |
 |-------|------|
 | Libraries (7 repos) | Single shared `lib_version` for all |
-| Apps (3 repos) | Independent version per app — omit input to skip that app |
+| Apps (4 repos) | Independent version per app — omit input to skip that app |
 | Pre-release detection | Per component — stable libraries can coexist with pre-release apps in the same run |
 
 ---

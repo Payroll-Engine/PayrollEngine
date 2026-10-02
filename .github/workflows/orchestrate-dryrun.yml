@@ -181,7 +181,7 @@ jobs:
       needs.lib-version-guard.result == 'success'
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           fetch-depth: 0
@@ -195,7 +195,7 @@ jobs:
               "../${REPO}"
           done
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -223,7 +223,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch 'breaking change') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
             Write-Host "::error::Breaking changes detected but not documented in RELEASE_NOTES.md"
             exit 1
           }
@@ -231,7 +231,7 @@ jobs:
 
       - name: Upload report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: breaking-change-report-dryrun-libs
           path: breaking-changes-libs-dryrun.md
@@ -607,7 +607,7 @@ jobs:
       needs.app-version-guard.result == 'success'
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           fetch-depth: 0
@@ -619,7 +619,7 @@ jobs:
             "https://x-access-token:${{ secrets.PAT_DISPATCH }}@github.com/${{ env.ORG }}/PayrollEngine.Backend.git" \
             "../PayrollEngine.Backend"
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -647,7 +647,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch 'breaking change') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
             Write-Host "::error::REST API breaking changes detected but not documented in RELEASE_NOTES.md"
             exit 1
           }
@@ -655,7 +655,7 @@ jobs:
 
       - name: Upload report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: breaking-change-report-dryrun-apps
           path: breaking-changes-apps-dryrun.md

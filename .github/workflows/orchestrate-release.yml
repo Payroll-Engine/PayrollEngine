@@ -172,7 +172,7 @@ jobs:
               { repo: 'PayrollEngine.Backend',       version: '${{ inputs.backend_version }}' },
               { repo: 'PayrollEngine.PayrollConsole', version: '${{ inputs.console_version }}' },
               { repo: 'PayrollEngine.WebApp',         version: '${{ inputs.webapp_version }}' },
-              { repo: 'PayrollEngine.McpServer',      version: '${{ inputs.mcpserver_version }}' }
+              { repo: 'PayrollEngine.Mcp.Server',     version: '${{ inputs.mcpserver_version }}' }
             ].filter(a => a.version);
 
             if (apps.length > 0) console.log(`\n🐳 Checking app versions\n`);
@@ -228,7 +228,7 @@ jobs:
       (needs.version-guard.result == 'success' || needs.version-guard.result == 'skipped')
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           fetch-depth: 0
@@ -243,7 +243,7 @@ jobs:
               "../${REPO}"
           done
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -275,7 +275,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch 'breaking change') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
             Write-Host "::error::Breaking changes detected but not documented in RELEASE_NOTES.md"
             Write-Host "Run Update-BreakingChanges.ps1 locally to review and document the changes."
             exit 1
@@ -284,7 +284,7 @@ jobs:
 
       - name: Upload report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: breaking-change-report
           path: breaking-changes.md
@@ -688,7 +688,7 @@ jobs:
       - uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT_DISPATCH }}
-          repository: ${{ env.ORG }}/PayrollEngine.McpServer
+          repository: ${{ env.ORG }}/PayrollEngine.Mcp.Server
           event-type: release
           client-payload: >-
             {
@@ -729,7 +729,7 @@ jobs:
             if ('${{ needs.wave-5-webapp.result }}' === 'success')
               apps.push({ repo: 'PayrollEngine.WebApp',         tag: `v${{ inputs.webapp_version }}` });
             if ('${{ needs.wave-5-mcpserver.result }}' === 'success')
-              apps.push({ repo: 'PayrollEngine.McpServer',      tag: `v${{ inputs.mcpserver_version }}` });
+              apps.push({ repo: 'PayrollEngine.Mcp.Server',     tag: `v${{ inputs.mcpserver_version }}` });
 
             const maxAttempts = 90;
             const delay = 15000;
@@ -760,7 +760,7 @@ jobs:
     if: always() && needs.wait-wave-4.result == 'success' && needs.prepare.outputs.dry_run == 'false'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Read RELEASE_NOTES.md
         id: release_notes
@@ -812,7 +812,7 @@ jobs:
               { name: 'Backend',       version: '${{ inputs.backend_version }}',   pre: '${{ needs.prepare.outputs.backend_prerelease }}' },
               { name: 'PayrollConsole', version: '${{ inputs.console_version }}',   pre: '${{ needs.prepare.outputs.console_prerelease }}' },
               { name: 'WebApp',         version: '${{ inputs.webapp_version }}',    pre: '${{ needs.prepare.outputs.webapp_prerelease }}' },
-              { name: 'McpServer',      version: '${{ inputs.mcpserver_version }}', pre: '${{ needs.prepare.outputs.mcpserver_prerelease }}' }
+              { name: 'Mcp.Server',     version: '${{ inputs.mcpserver_version }}', pre: '${{ needs.prepare.outputs.mcpserver_prerelease }}' }
             ].filter(a => a.version);
             if (apps.length > 0) {
               body += `\n## 🐳 Docker Images (Linux)\n\n| App | Version | Pull Command |\n|-----|---------|-------------|\n`;
@@ -826,7 +826,7 @@ jobs:
           result-encoding: string
 
       - name: Create umbrella release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ needs.prepare.outputs.lib_version }}
           name: PayrollEngine v${{ needs.prepare.outputs.lib_version }}
@@ -871,7 +871,7 @@ jobs:
 
       - name: Attach swagger.json to umbrella release
         if: needs.prepare.outputs.build_backend == 'true' && needs.wait-wave-5.result == 'success' && steps.swagger_check.outputs.exists == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ needs.prepare.outputs.lib_version }}
           files: swagger.json
@@ -884,11 +884,11 @@ jobs:
     if: always() && needs.create-umbrella-release.result == 'success' && inputs.update_wiki == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: main
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: Payroll-Engine/PayrollEngine.wiki
           token: ${{ secrets.PAT_DISPATCH }}

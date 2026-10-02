@@ -155,7 +155,7 @@ jobs:
       needs.version-guard.result == 'success'
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           fetch-depth: 0
@@ -169,7 +169,7 @@ jobs:
               "../${REPO}"
           done
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -197,7 +197,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch 'breaking change') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
             Write-Host "::error::Breaking changes detected in Scripting/Client.Services API but not documented in RELEASE_NOTES.md"
             exit 1
           }
@@ -205,7 +205,7 @@ jobs:
 
       - name: Upload breaking change report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: breaking-change-report-libs
           path: breaking-changes-libs.md

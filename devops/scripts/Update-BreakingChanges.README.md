@@ -103,6 +103,9 @@ Entries are formatted as:
 
 Only new entries are added; existing content is never modified or removed.
 
+The release orchestrators accept detected breaking changes only if `RELEASE_NOTES.md`
+contains this `**breaking change**` marker. Plain text such as "No breaking change" does not count.
+
 ## Prerequisites
 
 - .NET SDK 8+ (for `MetadataLoadContext` and `git archive` baseline build)

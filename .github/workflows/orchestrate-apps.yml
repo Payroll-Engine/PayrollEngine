@@ -263,7 +263,7 @@ jobs:
       needs.version-guard.result == 'success'
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PAT_DISPATCH }}
           fetch-depth: 0
@@ -275,7 +275,7 @@ jobs:
             "https://x-access-token:${{ secrets.PAT_DISPATCH }}@github.com/${{ env.ORG }}/PayrollEngine.Backend.git" \
             "../PayrollEngine.Backend"
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -303,7 +303,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch 'breaking change') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
             Write-Host "::error::REST API breaking changes detected but not documented in RELEASE_NOTES.md"
             exit 1
           }
@@ -311,7 +311,7 @@ jobs:
 
       - name: Upload breaking change report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: breaking-change-report-apps
           path: breaking-changes-apps.md
@@ -506,7 +506,7 @@ jobs:
       (needs.wait-wave-5.result == 'success' || needs.wait-wave-5.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Read RELEASE_NOTES.md
         id: release_notes
@@ -567,7 +567,7 @@ jobs:
           result-encoding: string
 
       - name: Create umbrella release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ needs.prepare.outputs.lib_version }}
           name: PayrollEngine v${{ needs.prepare.outputs.lib_version }}
@@ -599,7 +599,7 @@ jobs:
 
       - name: Attach swagger.json to umbrella release
         if: needs.prepare.outputs.build_backend == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ needs.prepare.outputs.lib_version }}
           files: swagger.json
