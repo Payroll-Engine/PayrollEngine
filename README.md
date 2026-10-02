@@ -97,17 +97,7 @@ The Payroll Engine serves three distinct roles:
 
 The Payroll Engine runs as a Docker container stack. [Docker](https://docs.docker.com/get-docker/) is the only prerequisite for the hosted setup.
 
-**1. Login to the GitHub Container Registry:**
-
-Create a GitHub [Personal Access Token](https://github.com/settings/tokens) with the `read:packages` scope, then login:
-
-```sh
-echo "<your-pat>" | docker login ghcr.io -u <github-username> --password-stdin
-```
-
-This is a one-time step per machine.
-
-**2. Clone the repository and create the environment file:**
+**1. Clone the repository and create the environment file:**
 
 ```sh
 git clone https://github.com/Payroll-Engine/PayrollEngine.git
@@ -124,13 +114,13 @@ Set-Location PayrollEngine
 
 > Use alphanumeric characters only for the password — special characters can cause misleading authentication errors.
 
-**3. Start the stack:**
+**2. Start the stack:**
 
 ```sh
 docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-**4. Access the applications:**
+**3. Access the applications:**
 
 | Service             | URL                   |
 |--------------------|----------------------|
@@ -141,15 +131,18 @@ The database is initialized automatically on first run. See [Container Setup ↗
 
 ## Docker Images
 
-Pre-built Linux images are published to the [GitHub Container Registry](https://github.com/orgs/Payroll-Engine/packages):
+Pre-built Linux images for `linux/amd64` and `linux/arm64` are published to the [GitHub Container Registry](https://github.com/orgs/Payroll-Engine/packages) (public, no login required):
 
 ```sh
 docker pull ghcr.io/payroll-engine/payrollengine.backend:latest
 docker pull ghcr.io/payroll-engine/payrollengine.webapp:latest
 docker pull ghcr.io/payroll-engine/payrollengine.payrollconsole:latest
+docker pull ghcr.io/payroll-engine/payrollengine.mcp.server:latest
 ```
 
-Pin a specific version by replacing `:latest` with the release tag (e.g. `:2.1.0`).
+Pin a specific version by replacing `:latest` with the release tag (e.g. `:1.1.0`).
+
+> The Backend image requires a database and a connection string. Use `docker-compose.ghcr.yml` for a complete setup, or see [Container Setup ↗](https://payrollengine.org/GetStarted/ContainerSetup/) to run the Backend standalone.
 
 ## .NET Integration
 

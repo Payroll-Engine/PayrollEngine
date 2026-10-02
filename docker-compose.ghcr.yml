@@ -1,10 +1,9 @@
 # PayrollEngine Docker Stack — pre-built images from GitHub Container Registry
 #
 # Prerequisites:
-#   1. Login to ghcr.io:
-#      echo "<your-pat>" | docker login ghcr.io -u <github-username> --password-stdin
-#   2. Create a .env file with:
+#   Create a .env file with:
 #      DB_PASSWORD=PayrollStrongPass789
+#   The images are public on ghcr.io — no login required.
 #
 # Usage:
 #   docker compose -f docker-compose.ghcr.yml up -d
