@@ -1,0 +1,414 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2023-12-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "JobStatusFilter.Test",
+      "culture": "de-CH",
+      "users": [
+        {
+          "identifier": "admin@jobstatusfilter.test",
+          "firstName": "Admin",
+          "lastName": "JobStatusFilter"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "JobStatusFilterDivision"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "JobStatusFilter.Test",
+          "description": "Result queries with a job status filter must match the exact job status, not a bitwise subset",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "defaultReason": "Change salary",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "CalendarPeriod"
+                }
+              ]
+            }
+          ],
+          "collectors": [
+            {
+              "name": "Gross",
+              "description": "Collects the salary and stores it as collector custom result",
+              "applyExpression": "AddCustomResult(\"Salary\", WageTypeValue); return WageTypeValue;"
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "Salary",
+              "description": "Salary, also stored as wage type custom result",
+              "valueExpression": "var salary = (decimal)CaseValue[\"Salary\"]; AddCustomResult(\"Salary\", salary); return salary;",
+              "collectors": [ "Gross" ]
+            },
+            {
+              "wageTypeNumber": 201,
+              "name": "ConsolidatedComplete",
+              "description": "GetConsolidatedWageTypeResults with job status Complete",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 202,
+              "name": "ConsolidatedRelease",
+              "description": "GetConsolidatedWageTypeResults with job status Release",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Release)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 203,
+              "name": "ConsolidatedProcess",
+              "description": "GetConsolidatedWageTypeResults with job status Process",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Process)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 204,
+              "name": "ConsolidatedDraft",
+              "description": "GetConsolidatedWageTypeResults with job status Draft",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Draft)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 205,
+              "name": "ConsolidatedForecast",
+              "description": "GetConsolidatedWageTypeResults with job status Forecast and forecast name",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Forecast) { Forecast = \"StatusCheck\" }).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 206,
+              "name": "ConsolidatedAnyStatus",
+              "description": "GetConsolidatedWageTypeResults without job status filter",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 211,
+              "name": "PeriodComplete",
+              "description": "GetWageTypeResults (previous period) with job status Complete",
+              "valueExpression": "GetPeriodWageTypeResults(new(101, 1, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 212,
+              "name": "PeriodForecast",
+              "description": "GetWageTypeResults (previous period) with job status Forecast and forecast name",
+              "valueExpression": "GetPeriodWageTypeResults(new(101, 1, PayrunJobStatus.Forecast) { Forecast = \"StatusCheck\" }).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 213,
+              "name": "PeriodAnyStatus",
+              "description": "GetWageTypeResults (previous period) without job status filter",
+              "valueExpression": "GetPeriodWageTypeResults(new(101, 1)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 221,
+              "name": "ConsolidatedCollectorComplete",
+              "description": "GetConsolidatedCollectorResults with job status Complete",
+              "valueExpression": "GetConsolidatedCollectorResults(new(\"Gross\", CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 222,
+              "name": "PeriodCollectorComplete",
+              "description": "GetCollectorResults (previous period) with job status Complete",
+              "valueExpression": "GetCollectorPeriodResults(new(\"Gross\", 1, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 231,
+              "name": "ConsolidatedWageTypeCustomComplete",
+              "description": "GetConsolidatedWageTypeCustomResults with job status Complete",
+              "valueExpression": "GetConsolidatedWageTypeCustomResults(new(101, CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 232,
+              "name": "PeriodWageTypeCustomComplete",
+              "description": "GetWageTypeCustomResults (previous period) with job status Complete",
+              "valueExpression": "GetWageTypeCustomResults(new(101, PreviousPeriod.Start, PreviousPeriod.End, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            },
+            {
+              "wageTypeNumber": 241,
+              "name": "ConsolidatedCollectorCustomComplete",
+              "description": "GetConsolidatedCollectorCustomResults with job status Complete",
+              "valueExpression": "GetConsolidatedCollectorCustomResults(new(\"Gross\", CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "lena.vogel@jobstatusfilter.test",
+          "firstName": "Lena",
+          "lastName": "Vogel",
+          "divisions": [ "JobStatusFilterDivision" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "JobStatusFilter.Test",
+          "divisionName": "JobStatusFilterDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "JobStatusFilter.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@jobstatusfilter.test",
+              "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+              "divisionName": "JobStatusFilterDivision",
+              "reason": "Jan salary for the completed job",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "1000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2023-12-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@jobstatusfilter.test",
+              "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+              "divisionName": "JobStatusFilterDivision",
+              "reason": "Jan salary for the forecast job",
+              "forecast": "StatusCheck",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "4000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-11T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@jobstatusfilter.test",
+              "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+              "divisionName": "JobStatusFilterDivision",
+              "reason": "Jan salary correction for the released job",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "9100",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@jobstatusfilter.test",
+              "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+              "divisionName": "JobStatusFilterDivision",
+              "reason": "Jan salary correction for the processed job",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "9200",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-21T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@jobstatusfilter.test",
+              "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+              "divisionName": "JobStatusFilterDivision",
+              "reason": "Jan salary correction for the draft job",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "9000",
+                    "start": "2024-01-01T00:00:00.0Z",
+                    "created": "2024-01-26T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "admin@jobstatusfilter.test",
+              "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+              "divisionName": "JobStatusFilterDivision",
+              "reason": "Feb salary for the status check job",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "2000",
+                    "start": "2024-02-01T00:00:00.0Z",
+                    "created": "2024-02-01T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "JobStatusFilter.Test",
+          "name": "JobStatusFilter.Payrun",
+          "culture": "de-CH",
+          "defaultReason": "JobStatusFilter test"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "JobStatusFilter.Jan24.Complete",
+          "payrunName": "JobStatusFilter.Payrun",
+          "payrollName": "JobStatusFilter.Test",
+          "userIdentifier": "admin@jobstatusfilter.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-10T00:00:00.0Z",
+          "reason": "Oldest Jan job: Complete, Salary=1000"
+        },
+        {
+          "name": "JobStatusFilter.Jan24.Forecast",
+          "payrunName": "JobStatusFilter.Payrun",
+          "payrollName": "JobStatusFilter.Test",
+          "userIdentifier": "admin@jobstatusfilter.test",
+          "forecast": "StatusCheck",
+          "completedJobStatus": "Forecast",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-12T00:00:00.0Z",
+          "reason": "Jan forecast job: Forecast, Salary=4000 (forecast case value)"
+        },
+        {
+          "name": "JobStatusFilter.Jan24.Release",
+          "payrunName": "JobStatusFilter.Payrun",
+          "payrollName": "JobStatusFilter.Test",
+          "userIdentifier": "admin@jobstatusfilter.test",
+          "completedJobStatus": "Release",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-20T00:00:00.0Z",
+          "reason": "Newer Jan correction job: Release, Salary=9100"
+        },
+        {
+          "name": "JobStatusFilter.Jan24.Process",
+          "payrunName": "JobStatusFilter.Payrun",
+          "payrollName": "JobStatusFilter.Test",
+          "userIdentifier": "admin@jobstatusfilter.test",
+          "completedJobStatus": "Process",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-25T00:00:00.0Z",
+          "reason": "Newer Jan correction job: Process, Salary=9200"
+        },
+        {
+          "name": "JobStatusFilter.Jan24.Draft",
+          "payrunName": "JobStatusFilter.Payrun",
+          "payrollName": "JobStatusFilter.Test",
+          "userIdentifier": "admin@jobstatusfilter.test",
+          "completedJobStatus": "Draft",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-28T00:00:00.0Z",
+          "reason": "Newest Jan correction job: Draft, Salary=9000 (open draft blocks further legal jobs)"
+        },
+        {
+          "name": "JobStatusFilter.Feb24.StatusCheck",
+          "payrunName": "JobStatusFilter.Payrun",
+          "payrollName": "JobStatusFilter.Test",
+          "userIdentifier": "admin@jobstatusfilter.test",
+          "forecast": "StatusCheck",
+          "retroPayMode": "None",
+          "completedJobStatus": "Forecast",
+          "periodStart": "2024-02-01T00:00:00.0Z",
+          "evaluationDate": "2024-02-25T00:00:00.0Z",
+          "reason": "Forecast job querying the Jan results by job status (forecast bypasses the open draft check)"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "JobStatusFilter.Jan24.Complete",
+          "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 }
+          ],
+          "collectorResults": [
+            { "collectorName": "Gross", "value": 1000 }
+          ]
+        },
+        {
+          "payrunJobName": "JobStatusFilter.Jan24.Forecast",
+          "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 4000 }
+          ],
+          "collectorResults": [
+            { "collectorName": "Gross", "value": 4000 }
+          ]
+        },
+        {
+          "payrunJobName": "JobStatusFilter.Jan24.Release",
+          "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 9100 }
+          ],
+          "collectorResults": [
+            { "collectorName": "Gross", "value": 9100 }
+          ]
+        },
+        {
+          "payrunJobName": "JobStatusFilter.Jan24.Process",
+          "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 9200 }
+          ],
+          "collectorResults": [
+            { "collectorName": "Gross", "value": 9200 }
+          ]
+        },
+        {
+          "payrunJobName": "JobStatusFilter.Jan24.Draft",
+          "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 9000 }
+          ],
+          "collectorResults": [
+            { "collectorName": "Gross", "value": 9000 }
+          ]
+        },
+        {
+          "payrunJobName": "JobStatusFilter.Feb24.StatusCheck",
+          "employeeIdentifier": "lena.vogel@jobstatusfilter.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 2000 },
+            { "wageTypeNumber": 201, "value": 1000 },
+            { "wageTypeNumber": 202, "value": 9100 },
+            { "wageTypeNumber": 203, "value": 9200 },
+            { "wageTypeNumber": 204, "value": 9000 },
+            { "wageTypeNumber": 205, "value": 4000 },
+            { "wageTypeNumber": 206, "value": 9000 },
+            { "wageTypeNumber": 211, "value": 1000 },
+            { "wageTypeNumber": 212, "value": 4000 },
+            { "wageTypeNumber": 213, "value": 28300 },
+            { "wageTypeNumber": 221, "value": 1000 },
+            { "wageTypeNumber": 222, "value": 1000 },
+            { "wageTypeNumber": 231, "value": 1000 },
+            { "wageTypeNumber": 232, "value": 1000 },
+            { "wageTypeNumber": 241, "value": 1000 }
+          ]
+        }
+      ]
+    }
+  ]
+}

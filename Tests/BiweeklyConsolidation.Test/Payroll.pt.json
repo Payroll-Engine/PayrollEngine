@@ -1,0 +1,231 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2025-12-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "BiweeklyConsolidation.Test",
+      "culture": "en-US",
+      "calendars": [
+        {
+          "name": "BiweeklyCalendar",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "BiWeek",
+          "timeMap": "Cycle"
+        }
+      ],
+      "users": [
+        {
+          "identifier": "admin@biweeklyconsolidation.test",
+          "firstName": "Admin",
+          "lastName": "BiweeklyConsolidation"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "BiweeklyConsolidation.Division",
+          "culture": "en-US",
+          "calendar": "BiweeklyCalendar"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "BiweeklyConsolidation.Test",
+          "description": "Verifies that GetConsolidatedWageTypeResults correctly accumulates all biweekly pay period results after the BiWeekPayrollPeriod.GetPayrollPeriod step-size fix (DaysInWeek→DaysInBiWeek). PayrunJob.PeriodStart is the calendar biweekly period start (e.g. Dec 28 for a Jan 1 invocation), so all six periods have distinct Start values and are correctly found by GetConsolidatedPeriodStarts. All assertions pass.",
+          "cases": [
+            {
+              "name": "BiweeklyWage",
+              "caseType": "Employee",
+              "defaultReason": "Set biweekly wage",
+              "fields": [
+                {
+                  "name": "BiweeklyWage",
+                  "valueType": "Money",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "BiweeklyWage",
+              "description": "Flat biweekly wage — 1000 per pay period",
+              "valueExpression": "CaseValue[\"BiweeklyWage\"]"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "ConsolidatedYtd",
+              "description": "YTD sum of all prior WT101 results via GetConsolidatedWageTypeResults. Each biweekly period has a distinct PayrunJob.PeriodStart (the calendar biweekly start), so all prior periods are found and summed correctly.",
+              "valueExpression": "GetConsolidatedWageTypeResults(new(101, CycleStart, PayrunJobStatus.Complete)).Sum(x => x.Value)"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "alex.taylor@biweeklyconsolidation.test",
+          "firstName": "Alex",
+          "lastName": "Taylor",
+          "divisions": [ "BiweeklyConsolidation.Division" ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "BiweeklyConsolidation.Payroll",
+          "divisionName": "BiweeklyConsolidation.Division",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "BiweeklyConsolidation.Test"
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "admin@biweeklyconsolidation.test",
+              "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+              "divisionName": "BiweeklyConsolidation.Division",
+              "case": {
+                "caseName": "BiweeklyWage",
+                "values": [
+                  {
+                    "caseFieldName": "BiweeklyWage",
+                    "value": "1000",
+                    "start": "2026-01-01T00:00:00.0Z",
+                    "created": "2025-12-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "name": "BiweeklyConsolidation.Payrun",
+          "culture": "en-US",
+          "defaultReason": "Biweekly consolidation test payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Biweekly.P1.Jan01",
+          "payrunName": "BiweeklyConsolidation.Payrun",
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "userIdentifier": "admin@biweeklyconsolidation.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-01-01T00:00:00.0Z",
+          "evaluationDate": "2026-01-10T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "P1: biweekly Jan 01-14 — WageTypeResult.Start bucket: 2026-01-01"
+        },
+        {
+          "name": "Biweekly.P2.Jan15",
+          "payrunName": "BiweeklyConsolidation.Payrun",
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "userIdentifier": "admin@biweeklyconsolidation.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-01-15T00:00:00.0Z",
+          "evaluationDate": "2026-01-24T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "P2: biweekly Jan 15-28 — WageTypeResult.Start bucket: 2026-01-01 (same as P1)"
+        },
+        {
+          "name": "Biweekly.P3.Jan29",
+          "payrunName": "BiweeklyConsolidation.Payrun",
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "userIdentifier": "admin@biweeklyconsolidation.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-01-29T00:00:00.0Z",
+          "evaluationDate": "2026-02-07T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "P3: biweekly Jan 29-Feb 11 — WageTypeResult.Start bucket: 2026-01-01 (same as P1 and P2)"
+        },
+        {
+          "name": "Biweekly.P4.Feb12",
+          "payrunName": "BiweeklyConsolidation.Payrun",
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "userIdentifier": "admin@biweeklyconsolidation.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-02-12T00:00:00.0Z",
+          "evaluationDate": "2026-02-21T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "P4: biweekly Feb 12-25 — WageTypeResult.Start bucket: 2026-02-01"
+        },
+        {
+          "name": "Biweekly.P5.Feb26",
+          "payrunName": "BiweeklyConsolidation.Payrun",
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "userIdentifier": "admin@biweeklyconsolidation.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-02-26T00:00:00.0Z",
+          "evaluationDate": "2026-03-07T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "P5: biweekly Feb 26-Mar 11 — WageTypeResult.Start bucket: 2026-02-01 (same as P4)"
+        },
+        {
+          "name": "Biweekly.P6.Mar12",
+          "payrunName": "BiweeklyConsolidation.Payrun",
+          "payrollName": "BiweeklyConsolidation.Payroll",
+          "userIdentifier": "admin@biweeklyconsolidation.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-03-12T00:00:00.0Z",
+          "evaluationDate": "2026-03-21T00:00:00.0Z",
+          "storeEmptyResults": true,
+          "reason": "P6: biweekly Mar 12-25 — WageTypeResult.Start bucket: 2026-03-01"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Biweekly.P1.Jan01",
+          "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 0 }
+          ]
+        },
+        {
+          "payrunJobName": "Biweekly.P2.Jan15",
+          "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 1000 }
+          ]
+        },
+        {
+          "payrunJobName": "Biweekly.P3.Jan29",
+          "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 2000 }
+          ]
+        },
+        {
+          "payrunJobName": "Biweekly.P4.Feb12",
+          "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 3000 }
+          ]
+        },
+        {
+          "payrunJobName": "Biweekly.P5.Feb26",
+          "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 4000 }
+          ]
+        },
+        {
+          "payrunJobName": "Biweekly.P6.Mar12",
+          "employeeIdentifier": "alex.taylor@biweeklyconsolidation.test",
+          "wageTypeResults": [
+            { "wageTypeNumber": 101, "value": 1000 },
+            { "wageTypeNumber": 102, "value": 5000 }
+          ]
+        }
+      ]
+    }
+  ]
+}

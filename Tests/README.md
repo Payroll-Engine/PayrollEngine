@@ -184,6 +184,22 @@ Both jobs use `forecast = "Forecast2022"`.
 
 ---
 
+### JobStatusFilter.Test
+**Tenant:** `JobStatusFilter.Test`  
+**What it tests:** Result queries with a `jobStatus` filter match the exact job status ([Backend #15](https://github.com/Payroll-Engine/PayrollEngine.Backend/issues/15)). Five Jan 2024 jobs (Complete, Forecast, Release, Process, Draft) with distinct salaries; a Feb forecast job queries the Jan results per status:
+
+| Query (Feb) | Status | Expected | Bitwise subset match |
+|:--|:--|--:|--:|
+| Consolidated wage type / collector / custom results | `Complete` | 1 000 | 9 000 (newer Draft) |
+| Consolidated wage type results | `Forecast` | 4 000 | 9 000 (newer Draft) |
+| Wage type / collector / custom results (previous period) | `Complete` | 1 000 | 28 300 (all legal jobs) |
+
+Covers 7 of the 9 result stored procedures (`GetCollectorCustomResults` and `GetConsolidatedPayrunResults` have no scripting query).  
+**Has own README:** `JobStatusFilter.Test/README.md`  
+**Special flags:** none
+
+---
+
 ### Lookup.Test
 **Tenant:** `Lookup.Test`  
 **What it tests:** Lookup value access — key-based lookup, range-based lookup, and edge cases (missing keys, boundary values).  

@@ -1,7 +1,7 @@
 <Project>
 
 	<PropertyGroup>
-		<PayrollEngineVersion>0.10.0-beta.dev</PayrollEngineVersion>
+		<PayrollEngineVersion>1.1.0</PayrollEngineVersion>
 	</PropertyGroup>
 
 </Project>
