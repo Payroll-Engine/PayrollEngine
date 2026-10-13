@@ -266,6 +266,87 @@ function Update-SwaggerJson {
 
 # -- 1. REST API -- swagger.json comparison ------------------------------------
 
+# Compares two schema nodes (property, parameter, items, additionalProperties)
+# and reports narrowing changes. Returns $true when a breaking change was found.
+function Compare-SchemaNode([string]$location, $base, $curr) {
+    if ($null -eq $base -or $null -eq $curr) { return $false }
+    $found = $false
+
+    $baseType = Get-SafeProperty $base 'type'
+    $currType = Get-SafeProperty $curr 'type'
+    if ($baseType -and $currType -and (@($baseType) -join ',') -ne (@($currType) -join ',')) {
+        Write-Breaking "type changed: $location ($(@($baseType) -join ',') -> $(@($currType) -join ','))"
+        $found = $true
+    }
+
+    $baseFormat = Get-SafeProperty $base 'format'
+    $currFormat = Get-SafeProperty $curr 'format'
+    if ($currFormat -and $baseFormat -ne $currFormat) {
+        Write-Breaking "format changed: $location ($baseFormat -> $currFormat)"
+        $found = $true
+    }
+
+    if ((Get-SafeProperty $base 'nullable') -eq $true -and (Get-SafeProperty $curr 'nullable') -ne $true) {
+        Write-Breaking "nullable removed: $location"
+        $found = $true
+    }
+
+    $baseRef = Get-SafeProperty $base '$ref'
+    $currRef = Get-SafeProperty $curr '$ref'
+    if ($baseRef -ne $currRef) {
+        Write-Breaking "reference changed: $location ($baseRef -> $currRef)"
+        $found = $true
+    }
+
+    foreach ($composition in @('allOf', 'oneOf', 'anyOf')) {
+        $baseComp = Get-SafeProperty $base $composition
+        $currComp = Get-SafeProperty $curr $composition
+        $baseCompJson = if ($baseComp) { $baseComp | ConvertTo-Json -Depth 10 -Compress } else { '' }
+        $currCompJson = if ($currComp) { $currComp | ConvertTo-Json -Depth 10 -Compress } else { '' }
+        if ($baseCompJson -ne $currCompJson) {
+            Write-Breaking "$composition changed: $location"
+            $found = $true
+        }
+    }
+
+    $baseEnum = Get-SafeProperty $base 'enum'
+    $currEnum = Get-SafeProperty $curr 'enum'
+    if ($baseEnum -and $currEnum) {
+        foreach ($value in @($baseEnum)) {
+            if (@($currEnum) -notcontains $value) {
+                Write-Breaking "enum value removed: $location ($value)"
+                $found = $true
+            }
+        }
+    }
+
+    $baseItems = Get-SafeProperty $base 'items'
+    $currItems = Get-SafeProperty $curr 'items'
+    if ($baseItems -and -not $currItems) {
+        Write-Breaking "items removed: $location"
+        $found = $true
+    }
+    elseif (Compare-SchemaNode "$location[]" $baseItems $currItems) {
+        $found = $true
+    }
+
+    $baseAdditional = Get-SafeProperty $base 'additionalProperties'
+    $currAdditional = Get-SafeProperty $curr 'additionalProperties'
+    if ($null -ne $baseAdditional -and $baseAdditional -isnot [bool]) {
+        if ($null -eq $currAdditional -or $currAdditional -is [bool]) {
+            if ($currAdditional -eq $false) {
+                Write-Breaking "additional properties removed: $location"
+                $found = $true
+            }
+        }
+        elseif (Compare-SchemaNode "$location{}" $baseAdditional $currAdditional) {
+            $found = $true
+        }
+    }
+
+    return $found
+}
+
 function Compare-SwaggerBreakingChanges {
     Write-Section "REST API (Provider) -- swagger.json"
 
@@ -341,6 +422,10 @@ function Compare-SwaggerBreakingChanges {
                     Write-Breaking "parameter now required: $($bp.name) in $($method.Name.ToUpper()) $path"
                     $found = $true
                 }
+                if ($match -and (Compare-SchemaNode "parameter $($bp.name) in $($method.Name.ToUpper()) $path" `
+                        (Get-SafeProperty $bp 'schema') (Get-SafeProperty @($match)[0] 'schema'))) {
+                    $found = $true
+                }
             }
 
             foreach ($cp in $currParams) {
@@ -400,6 +485,10 @@ function Compare-SwaggerBreakingChanges {
             continue
         }
 
+        if (Compare-SchemaNode "schema $name" $baseSchemas[$name] $currSchemas[$name]) {
+            $found = $true
+        }
+
         $baseProps = @{}
         $bsPropVal = Get-SafeProperty $baseSchemas[$name] 'properties'
         if ($bsPropVal) { $bsPropVal.PSObject.Properties | ForEach-Object { $baseProps[$_.Name] = $_.Value } }
@@ -412,13 +501,8 @@ function Compare-SwaggerBreakingChanges {
                 Write-Breaking "property removed: $($name).$prop"
                 $found = $true
             }
-            else {
-                $baseType = Get-SafeProperty $baseProps[$prop] 'type'
-                $currType = Get-SafeProperty $currProps[$prop] 'type'
-                if ($baseType -and $currType -and $baseType -ne $currType) {
-                    Write-Breaking "property type changed: $($name).$prop ($baseType -> $currType)"
-                    $found = $true
-                }
+            elseif (Compare-SchemaNode "$($name).$prop" $baseProps[$prop] $currProps[$prop]) {
+                $found = $true
             }
         }
 

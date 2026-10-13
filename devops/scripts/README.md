@@ -128,6 +128,22 @@ Git Changes. Only processes repositories with uncommitted changes.
 
 ---
 
+## Test
+
+| Script | README | Purpose |
+|--------|--------|---------|
+| `Test-DbProviders.ps1` | [README](Test-DbProviders.README.md) | Run the integration tests against SQL Server, MySQL and PostgreSQL (create and update scenarios) |
+
+```powershell
+# all six scenarios
+.\Test-DbProviders.ps1
+
+# one scenario with a subset of tests
+.\Test-DbProviders.ps1 -Scenario PostgresUpdate -Test 'Payrun*'
+```
+
+---
+
 ## Database
 
 Scripts for SQL Server and MySQL schema formatting, diff and version composition.

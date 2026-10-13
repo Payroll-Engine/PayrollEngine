@@ -1,0 +1,2 @@
+TenantDelete PayDate.Test /trydelete
+TenantDelete PayDate.PeriodEnd.Test /trydelete

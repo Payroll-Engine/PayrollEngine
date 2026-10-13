@@ -42,6 +42,14 @@ Data: 3 overlapping period values per field (Jan 4 / Jan 14 / Jan 24, Jan 2019).
 
 ---
 
+### BiweeklyConsolidation.Test
+**Tenant:** `BiweeklyConsolidation.Test`  
+**What it tests:** Year-to-date accumulation with `GetConsolidatedWageTypeResults` across six bi-weekly periods (en-US calendar without anchor date). The period across the year change (starting Dec 28, 2025) is part of the 2026 accumulation: WT102 (YTD of prior periods) grows from 0 to 5 000 in steps of 1 000.  
+**Has own README:** `BiweeklyConsolidation.Test/README.md`  
+**Special flags:** none
+
+---
+
 ### Calendar.Test
 **Tenant:** `Calendar.Test`  
 **What it tests:** Standard Gregorian calendar behaviour — period start/end boundaries, cycle transitions.  
@@ -225,6 +233,24 @@ Covers 7 of the 9 result stored procedures (`GetCollectorCustomResults` and `Get
 
 Both payruns use the same regulation and run the same period (Jan 2024). The division context determines which salary is resolved.  
 **Has own README:** `MultiDivision.Test/README.md`  
+**Special flags:** none
+
+---
+
+### PayDate.Test
+**Tenant:** `PayDate.Test`, `PayDate.PeriodEnd.Test`  
+**What it tests:** Payrun job pay date, calendar cycle assignment, regulation date and anchored bi-weekly periods — calendar `BiWeekAnchored` with `periodAnchorDate` 2026-01-04 and `payDateOffset` 5; the regulation `PayDate.Test.2027` (valid from 2027-01-01) overrides WT103:
+
+| Job | Period | Pay date | WT103 (regulation year) | WT110 (Salary) |
+|:----|:-------|:---------|------------------------:|---------------:|
+| `BeforeAnchor` | 2025-12-21 – 2026-01-03 | 2026-01-08 | 2026 | 1 000 |
+| `PayDateOverride` | 2026-12-06 – 2026-12-19 | **2027-01-04** (invocation) | **2027** | 1 000 |
+| `YearChange` | 2026-12-20 – 2027-01-02 | 2027-01-07 | 2027 | 1 000 |
+| `Retro` | 2027-01-03 – 2027-01-16 | 2027-01-21 | 2027 | 1 500 |
+
+The `Retro` job triggers two retro runs (salary change from 2026-12-06), which reuse the pay dates of the original jobs (2027-01-04, 2027-01-07); WT111 collects the retro delta **1 000**. The invocation period starts lie within the periods.  
+The table shows `cycleAssignment` `PayDate` (`Test.pt.json`). `PeriodEnd.pt.json` (tenant `PayDate.PeriodEnd.Test`) runs the same jobs with `cycleAssignment` `PeriodEnd`: the December period paid in January stays in the 2026 cycle and regulation. WT104–WT107 verify the cycle year, the year-to-date consolidation, the first cycle period, and the periods in the cycle for both assignments.  
+**Has own README:** `PayDate.Test/README.md`  
 **Special flags:** none
 
 ---

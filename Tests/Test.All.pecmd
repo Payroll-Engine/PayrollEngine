@@ -1,5 +1,5 @@
 Aggregation.Test/Test.pecmd
-# BiweeklyConsolidation.Test/Test.pecmd
+BiweeklyConsolidation.Test/Test.pecmd
 Calendar.Test/Test.pecmd
 Cancellation.Test/Test.pecmd
 Case.Test/Test.pecmd
@@ -16,6 +16,7 @@ JobStatusFilter.Test/Test.pecmd
 Lookup.Test/Test.pecmd
 LunisoralCalendar.Test/Test.pecmd
 MultiDivision.Test/Test.pecmd
+PayDate.Test/Test.pecmd
 Payrun.Test/Test.pecmd
 PayrunJobImport.Test/Test.pecmd
 PayrunActions.Test/Test.pecmd

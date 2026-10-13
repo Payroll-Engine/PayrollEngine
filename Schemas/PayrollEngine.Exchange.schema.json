@@ -491,6 +491,33 @@
                 }
               ]
             },
+            "periodAnchorDate": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "Anchor date of the week and bi-week periods: the periods start on the anchor date\n            and repeat every 7 or 14 days, independent of the year (default: week of year)",
+              "format": "date-time"
+            },
+            "payDateOffset": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "description": "Pay date offset in days from the period end date (default: 0)",
+              "format": "int32"
+            },
+            "cycleAssignment": {
+              "description": "Assignment of the period to the cycle and to the regulation date (default: pay date)",
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/CalendarCycleAssignment"
+                }
+              ]
+            },
             "weekMode": {
               "description": "The week mode (default: week)",
               "oneOf": [
@@ -648,6 +675,18 @@
         "Thursday",
         "Friday",
         "Saturday"
+      ]
+    },
+    "CalendarCycleAssignment": {
+      "type": "string",
+      "description": "The assignment of a payrun period to a cycle and to the regulation date",
+      "x-enumNames": [
+        "PayDate",
+        "PeriodEnd"
+      ],
+      "enum": [
+        "PayDate",
+        "PeriodEnd"
       ]
     },
     "CalendarWeekMode": {
@@ -5003,6 +5042,14 @@
               "format": "date-time",
               "minLength": 1
             },
+            "payDate": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The pay date: invocation pay date or calendar pay date of the period (immutable)",
+              "format": "date-time"
+            },
             "released": {
               "type": [
                 "null",
@@ -5299,6 +5346,14 @@
             "string"
           ],
           "description": "The evaluation date (immutable)",
+          "format": "date-time"
+        },
+        "payDate": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The pay date, overrides the calendar pay date of the period (immutable)",
           "format": "date-time"
         },
         "reason": {
@@ -5686,6 +5741,11 @@
               ],
               "description": "The parent payrun job id (denormalized, immutable)",
               "format": "int32"
+            },
+            "payDate": {
+              "type": "string",
+              "description": "The payrun job pay date (denormalized, immutable)",
+              "format": "date-time"
             }
           }
         }
@@ -5940,6 +6000,11 @@
               ],
               "description": "The parent payrun job id (denormalized, immutable)",
               "format": "int32"
+            },
+            "payDate": {
+              "type": "string",
+              "description": "The payrun job pay date (denormalized, immutable)",
+              "format": "date-time"
             }
           }
         }
@@ -6082,6 +6147,11 @@
               ],
               "description": "The parent payrun job id (denormalized, immutable)",
               "format": "int32"
+            },
+            "payDate": {
+              "type": "string",
+              "description": "The payrun job pay date (denormalized, immutable)",
+              "format": "date-time"
             }
           }
         }

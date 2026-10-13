@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Payroll Engine Backend API v1",
-    "description": "Payroll Engine API v1.0.1",
+    "description": "Payroll Engine API v1.2.0",
     "version": "1"
   },
   "paths": {
@@ -107,6 +107,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -114,6 +115,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -121,6 +123,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -128,6 +131,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -135,6 +139,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -142,6 +147,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -150,6 +156,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -157,6 +164,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -745,6 +753,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -752,6 +761,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -759,6 +769,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -766,6 +777,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -773,6 +785,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -780,6 +793,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -788,6 +802,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -795,6 +810,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1203,6 +1219,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -1210,6 +1227,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -1217,6 +1235,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -1224,6 +1243,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -1231,6 +1251,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -1238,6 +1259,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1246,6 +1268,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -1253,6 +1276,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1662,6 +1686,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -1669,6 +1694,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -1676,6 +1702,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -1683,6 +1710,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -1690,6 +1718,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -1697,6 +1726,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -1705,6 +1735,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -1712,6 +1743,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2121,6 +2153,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -2128,6 +2161,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2135,6 +2169,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2142,6 +2177,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -2149,6 +2185,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -2156,6 +2193,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2164,6 +2202,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -2171,6 +2210,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2579,6 +2619,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -2600,6 +2641,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2607,6 +2649,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2614,6 +2657,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -2621,6 +2665,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -2628,6 +2673,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2636,6 +2682,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -2643,6 +2690,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2777,6 +2825,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -2798,6 +2847,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2805,6 +2855,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2812,6 +2863,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -2819,6 +2871,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -2826,6 +2879,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2834,6 +2888,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -2841,6 +2896,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2938,6 +2994,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -2945,6 +3002,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2952,6 +3010,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -2959,6 +3018,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -2966,6 +3026,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -2973,6 +3034,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2981,6 +3043,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -2988,6 +3051,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -3139,6 +3203,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -3160,6 +3225,7 @@
           {
             "name": "divisionScope",
             "in": "query",
+            "description": "The division scope",
             "schema": {
               "$ref": "#/components/schemas/DivisionScope"
             }
@@ -3167,6 +3233,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -3174,6 +3241,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -3181,6 +3249,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -3188,6 +3257,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -3195,6 +3265,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -3203,6 +3274,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -3210,6 +3282,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -3378,6 +3451,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -3385,6 +3459,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -3392,6 +3467,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -3399,6 +3475,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -3406,6 +3483,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -3413,6 +3491,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -3421,6 +3500,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -3428,6 +3508,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -3944,6 +4025,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -3965,6 +4047,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -3972,6 +4055,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -3979,6 +4063,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -3986,6 +4071,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -3993,6 +4079,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4001,6 +4088,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -4008,6 +4096,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4168,6 +4257,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -4189,6 +4279,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4196,6 +4287,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4203,6 +4295,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -4210,6 +4303,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -4217,6 +4311,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4225,6 +4320,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -4232,6 +4328,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4347,6 +4444,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -4354,6 +4452,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4361,6 +4460,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4368,6 +4468,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -4375,6 +4476,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -4382,6 +4484,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4390,6 +4493,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -4397,6 +4501,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4574,6 +4679,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -4595,6 +4701,7 @@
           {
             "name": "divisionScope",
             "in": "query",
+            "description": "The division scope",
             "schema": {
               "$ref": "#/components/schemas/DivisionScope"
             }
@@ -4602,6 +4709,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4609,6 +4717,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4616,6 +4725,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -4623,6 +4733,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -4630,6 +4741,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4638,6 +4750,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -4645,6 +4758,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4847,6 +4961,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -4854,6 +4969,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4861,6 +4977,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -4868,6 +4985,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -4875,6 +4993,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -4882,6 +5001,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -4890,6 +5010,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -4897,6 +5018,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -5487,6 +5609,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -5508,6 +5631,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -5515,6 +5639,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -5522,6 +5647,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -5529,6 +5655,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -5536,6 +5663,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -5544,6 +5672,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -5551,6 +5680,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -5685,6 +5815,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -5706,6 +5837,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -5713,6 +5845,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -5720,6 +5853,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -5727,6 +5861,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -5734,6 +5869,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -5742,6 +5878,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -5749,6 +5886,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -5846,6 +5984,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -5853,6 +5992,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -5860,6 +6000,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -5867,6 +6008,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -5874,6 +6016,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -5881,6 +6024,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -5889,6 +6033,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -5896,6 +6041,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -6047,6 +6193,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -6068,6 +6215,7 @@
           {
             "name": "divisionScope",
             "in": "query",
+            "description": "The division scope",
             "schema": {
               "$ref": "#/components/schemas/DivisionScope"
             }
@@ -6075,6 +6223,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -6082,6 +6231,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -6089,6 +6239,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -6096,6 +6247,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -6103,6 +6255,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -6111,6 +6264,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -6118,6 +6272,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -6286,6 +6441,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -6293,6 +6449,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -6300,6 +6457,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -6307,6 +6465,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -6314,6 +6473,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -6321,6 +6481,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -6329,6 +6490,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -6336,6 +6498,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -6582,6 +6745,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -6589,6 +6753,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -6596,6 +6761,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -6603,6 +6769,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -6610,6 +6777,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -6617,6 +6785,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -6625,6 +6794,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -6632,6 +6802,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -7105,6 +7276,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -7112,6 +7284,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -7119,6 +7292,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -7126,6 +7300,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -7133,6 +7308,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -7140,6 +7316,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -7148,6 +7325,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -7155,6 +7333,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -7515,6 +7694,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -7522,6 +7702,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -7529,6 +7710,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -7536,6 +7718,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -7543,6 +7726,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -7550,6 +7734,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -7558,6 +7743,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -7565,6 +7751,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -7809,6 +7996,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -7830,6 +8018,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -7837,6 +8026,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -7844,6 +8034,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -7851,6 +8042,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -7858,6 +8050,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -7866,6 +8059,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -7873,6 +8067,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8007,6 +8202,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -8028,6 +8224,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -8035,6 +8232,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -8042,6 +8240,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -8049,6 +8248,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -8056,6 +8256,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8064,6 +8265,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -8071,6 +8273,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8168,6 +8371,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -8175,6 +8379,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -8182,6 +8387,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -8189,6 +8395,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -8196,6 +8403,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -8203,6 +8411,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8211,6 +8420,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -8218,6 +8428,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8369,6 +8580,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -8390,6 +8602,7 @@
           {
             "name": "divisionScope",
             "in": "query",
+            "description": "The division scope",
             "schema": {
               "$ref": "#/components/schemas/DivisionScope"
             }
@@ -8397,6 +8610,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -8404,6 +8618,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -8411,6 +8626,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -8418,6 +8634,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -8425,6 +8642,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8433,6 +8651,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -8440,6 +8659,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -8650,6 +8870,7 @@
           {
             "name": "jobStatus",
             "in": "query",
+            "description": "The payrun job status\r\nSupported state changes:\r\n- *: Draft | Forecast | Abort\r\n- Draft: Release | Abort\r\n- Release: Process | Abort\r\n- Process: Complete | Cancel",
             "schema": {
               "$ref": "#/components/schemas/PayrunJobStatus"
             }
@@ -8783,6 +9004,7 @@
           {
             "name": "jobStatus",
             "in": "query",
+            "description": "The payrun job status\r\nSupported state changes:\r\n- *: Draft | Forecast | Abort\r\n- Draft: Release | Abort\r\n- Release: Process | Abort\r\n- Process: Complete | Cancel",
             "schema": {
               "$ref": "#/components/schemas/PayrunJobStatus"
             }
@@ -8888,6 +9110,7 @@
           {
             "name": "jobStatus",
             "in": "query",
+            "description": "The payrun job status\r\nSupported state changes:\r\n- *: Draft | Forecast | Abort\r\n- Draft: Release | Abort\r\n- Release: Process | Abort\r\n- Process: Complete | Cancel",
             "schema": {
               "$ref": "#/components/schemas/PayrunJobStatus"
             }
@@ -9004,6 +9227,7 @@
           {
             "name": "jobStatus",
             "in": "query",
+            "description": "The payrun job status\r\nSupported state changes:\r\n- *: Draft | Forecast | Abort\r\n- Draft: Release | Abort\r\n- Release: Process | Abort\r\n- Process: Complete | Cancel",
             "schema": {
               "$ref": "#/components/schemas/PayrunJobStatus"
             }
@@ -9084,6 +9308,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -9091,6 +9316,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -9098,6 +9324,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -9105,6 +9332,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -9112,6 +9340,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -9119,6 +9348,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -9127,6 +9357,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -9134,6 +9365,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -9704,6 +9936,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -9711,6 +9944,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -9718,6 +9952,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -9725,6 +9960,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -9732,6 +9968,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -9739,6 +9976,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -9747,6 +9985,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -9754,6 +9993,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -9889,6 +10129,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -9896,6 +10137,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -9903,6 +10145,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -9910,6 +10153,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -9917,6 +10161,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -9924,6 +10169,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -9932,6 +10178,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -9939,6 +10186,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10009,6 +10257,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10016,6 +10265,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10023,6 +10273,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10030,6 +10281,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10037,6 +10289,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10044,6 +10297,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10052,6 +10306,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10059,6 +10314,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10120,6 +10376,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10127,6 +10384,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10134,6 +10392,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10141,6 +10400,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10148,6 +10408,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10155,6 +10416,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10163,6 +10425,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10170,6 +10433,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10240,6 +10504,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10247,6 +10512,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10254,6 +10520,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10261,6 +10528,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10268,6 +10536,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10275,6 +10544,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10283,6 +10553,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10290,6 +10561,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10351,6 +10623,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10358,6 +10631,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10365,6 +10639,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10372,6 +10647,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10379,6 +10655,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10386,6 +10663,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10394,6 +10672,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10401,6 +10680,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10469,6 +10749,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10476,6 +10757,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10483,6 +10765,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10490,6 +10773,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10497,6 +10781,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10504,6 +10789,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10512,6 +10798,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10519,6 +10806,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10561,6 +10849,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10568,6 +10857,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10575,6 +10865,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10582,6 +10873,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10589,6 +10881,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10596,6 +10889,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10604,6 +10898,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10611,6 +10906,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10713,6 +11009,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -10720,6 +11017,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10727,6 +11025,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -10734,6 +11033,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -10741,6 +11041,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -10748,6 +11049,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -10756,6 +11058,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -10763,6 +11066,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -11157,6 +11461,7 @@
           {
             "name": "caseType",
             "in": "query",
+            "description": "The case type",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/CaseType"
@@ -11405,6 +11710,7 @@
           {
             "name": "caseType",
             "in": "query",
+            "description": "The case type",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/CaseType"
@@ -11429,6 +11735,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -11465,6 +11772,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -11472,6 +11780,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -11487,6 +11796,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -11494,6 +11804,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -11501,6 +11812,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -11509,6 +11821,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -11516,6 +11829,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -11695,6 +12009,7 @@
           {
             "name": "caseType",
             "in": "query",
+            "description": "The case type",
             "schema": {
               "$ref": "#/components/schemas/CaseType"
             }
@@ -11992,6 +12307,7 @@
           {
             "name": "caseType",
             "in": "query",
+            "description": "The case type",
             "schema": {
               "$ref": "#/components/schemas/CaseType"
             }
@@ -12014,6 +12330,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -12200,6 +12517,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -12283,6 +12601,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -12380,6 +12699,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -12484,6 +12804,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -12570,6 +12891,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -13020,6 +13342,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -13045,6 +13368,7 @@
           {
             "name": "userType",
             "in": "query",
+            "description": "The type of the user",
             "schema": {
               "$ref": "#/components/schemas/UserType"
             }
@@ -13278,6 +13602,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -13364,6 +13689,7 @@
           {
             "name": "functionType",
             "in": "query",
+            "description": "The payroll function type",
             "schema": {
               "$ref": "#/components/schemas/FunctionType"
             }
@@ -13371,6 +13697,7 @@
           {
             "name": "overrideType",
             "in": "query",
+            "description": "Override type for derivable object",
             "schema": {
               "$ref": "#/components/schemas/OverrideType"
             }
@@ -13632,6 +13959,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -13639,6 +13967,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -13646,6 +13975,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -13653,6 +13983,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -13660,6 +13991,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -13667,6 +13999,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -13675,6 +14008,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -13682,6 +14016,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -13844,6 +14179,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -13851,6 +14187,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -13858,6 +14195,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -13865,6 +14203,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -13872,6 +14211,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -13879,6 +14219,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -13887,6 +14228,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -13894,6 +14236,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -14544,6 +14887,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -14551,6 +14895,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -14558,6 +14903,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -14565,6 +14911,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -14572,6 +14919,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -14579,6 +14927,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -14587,6 +14936,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -14594,6 +14944,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -14945,6 +15296,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -14952,6 +15304,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -14959,6 +15312,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -14966,6 +15320,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -14973,6 +15328,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -14980,6 +15336,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -14988,6 +15345,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -14995,6 +15353,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -15342,6 +15701,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -15349,6 +15709,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -15356,6 +15717,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -15363,6 +15725,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -15370,6 +15733,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -15377,6 +15741,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -15385,6 +15750,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -15392,6 +15758,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -15940,6 +16307,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -15947,6 +16315,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -15954,6 +16323,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -15961,6 +16331,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -15968,6 +16339,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -15975,6 +16347,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -15983,6 +16356,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -15990,6 +16364,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -16236,6 +16611,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -16243,6 +16619,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -16250,6 +16627,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -16257,6 +16635,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -16264,6 +16643,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -16271,6 +16651,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -16279,6 +16660,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -16286,6 +16668,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -16699,6 +17082,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -16720,6 +17104,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -16727,6 +17112,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -16734,6 +17120,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -16741,6 +17128,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -16748,6 +17136,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -16756,6 +17145,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -16763,6 +17153,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -17167,6 +17558,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -17174,6 +17566,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -17181,6 +17574,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -17188,6 +17582,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -17195,6 +17590,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -17202,6 +17598,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -17210,6 +17607,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -17217,6 +17615,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -18124,6 +18523,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -18131,6 +18531,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -18138,6 +18539,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -18145,6 +18547,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -18152,6 +18555,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -18159,6 +18563,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -18167,6 +18572,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -18174,6 +18580,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -18525,6 +18932,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -18532,6 +18940,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -18539,6 +18948,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -18546,6 +18956,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -18553,6 +18964,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -18560,6 +18972,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -18568,6 +18981,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -18575,6 +18989,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -19065,6 +19480,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -19072,6 +19488,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -19079,6 +19496,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -19086,6 +19504,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -19093,6 +19512,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -19100,6 +19520,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -19108,6 +19529,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -19115,6 +19537,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -19439,6 +19862,7 @@
           {
             "name": "functionType",
             "in": "query",
+            "description": "The payroll function type",
             "schema": {
               "$ref": "#/components/schemas/FunctionType"
             }
@@ -19480,6 +19904,7 @@
           {
             "name": "functionType",
             "in": "query",
+            "description": "The payroll function type",
             "schema": {
               "$ref": "#/components/schemas/FunctionType"
             }
@@ -19790,6 +20215,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -19797,6 +20223,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -19804,6 +20231,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -19811,6 +20239,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -19818,6 +20247,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -19825,6 +20255,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -19833,6 +20264,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -19840,6 +20272,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -20490,6 +20923,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -20497,6 +20931,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -20504,6 +20939,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -20511,6 +20947,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -20518,6 +20955,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -20525,6 +20963,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -20533,6 +20972,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -20540,6 +20980,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -20949,6 +21390,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -20956,6 +21398,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -20963,6 +21406,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -20970,6 +21414,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -20977,6 +21422,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -20984,6 +21430,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -20992,6 +21439,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -20999,6 +21447,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -21350,6 +21799,7 @@
           {
             "name": "apply",
             "in": "query",
+            "description": "The OData apply expression for aggregation and grouping (e.g. group-by, aggregate)",
             "schema": {
               "type": "string"
             }
@@ -21357,6 +21807,7 @@
           {
             "name": "filter",
             "in": "query",
+            "description": "The OData filter expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -21364,6 +21815,7 @@
           {
             "name": "orderBy",
             "in": "query",
+            "description": "The OData order-by expression (with support for attribute fields)",
             "schema": {
               "type": "string"
             }
@@ -21371,6 +21823,7 @@
           {
             "name": "result",
             "in": "query",
+            "description": "The query result type: items, count or items with count (default: result items)",
             "schema": {
               "$ref": "#/components/schemas/QueryResultType"
             }
@@ -21378,6 +21831,7 @@
           {
             "name": "select",
             "in": "query",
+            "description": "The OData field selection expression",
             "schema": {
               "type": "string"
             }
@@ -21385,6 +21839,7 @@
           {
             "name": "skip",
             "in": "query",
+            "description": "The number of items in the queried collection that are to be skipped",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -21393,6 +21848,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "The object status (default: all status)",
             "schema": {
               "$ref": "#/components/schemas/ObjectStatus"
             }
@@ -21400,6 +21856,7 @@
           {
             "name": "top",
             "in": "query",
+            "description": "The number of items in the queried collection",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -21995,7 +22452,8 @@
           "Script",
           "System"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The action source"
       },
       "Assembly": {
         "type": "object",
@@ -22334,6 +22792,19 @@
           "firstDayOfWeek": {
             "$ref": "#/components/schemas/DayOfWeek"
           },
+          "periodAnchorDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "payDateOffset": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cycleAssignment": {
+            "$ref": "#/components/schemas/CalendarCycleAssignment"
+          },
           "weekMode": {
             "$ref": "#/components/schemas/CalendarWeekMode"
           },
@@ -22368,12 +22839,21 @@
         },
         "additionalProperties": false
       },
+      "CalendarCycleAssignment": {
+        "enum": [
+          "PayDate",
+          "PeriodEnd"
+        ],
+        "type": "string",
+        "description": "The assignment of a payrun period to a cycle and to the regulation date"
+      },
       "CalendarTimeMap": {
         "enum": [
           "Period",
           "Cycle"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The calendar time map"
       },
       "CalendarTimeUnit": {
         "enum": [
@@ -22387,14 +22867,16 @@
           "BiWeek",
           "Week"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The calendar time unit"
       },
       "CalendarWeekMode": {
         "enum": [
           "Week",
           "WorkWeek"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The calendar week mode"
       },
       "CalendarWeekRule": {
         "enum": [
@@ -22402,7 +22884,8 @@
           "FirstFullWeek",
           "FirstFourDayWeek"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Defines different rules for determining the first week of the year"
       },
       "CallingConventions": {
         "enum": [
@@ -22575,7 +23058,8 @@
           "None",
           "Case"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The case cancellation type"
       },
       "CaseChange": {
         "required": [
@@ -22887,7 +23371,8 @@
           "Last",
           "First"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Aggregation type for a period case field PayrollEngine.CaseFieldTimeType.Period"
       },
       "CaseFieldCancellationMode": {
         "enum": [
@@ -22897,7 +23382,8 @@
           "Reset",
           "Invert"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The cancellation mode for a regulation case field"
       },
       "CaseFieldDateType": {
         "enum": [
@@ -22932,7 +23418,8 @@
           "CycleEnd",
           "CycleEndDate"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The case field date type"
       },
       "CaseFieldReference": {
         "type": "object",
@@ -23131,7 +23618,8 @@
           "Period",
           "CalendarPeriod"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The time period type for a regulation case field"
       },
       "CaseFieldTimeUnit": {
         "enum": [
@@ -23139,7 +23627,8 @@
           "HalfDay",
           "Month"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The date type for a regulation case field"
       },
       "CaseFieldValue": {
         "required": [
@@ -23218,7 +23707,8 @@
           "CaseValueWeekdayInvalid",
           "CaseValueMonthInvalid"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The case issue type"
       },
       "CaseRelation": {
         "required": [
@@ -23641,7 +24131,8 @@
           "Company",
           "Employee"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The case type"
       },
       "CaseValidationIssue": {
         "required": [
@@ -23897,7 +24388,8 @@
           "Always",
           "Discard"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The case value creation mode"
       },
       "CaseValueSetup": {
         "required": [
@@ -24068,7 +24560,8 @@
           "Range",
           "Count"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The collect mode"
       },
       "Collector": {
         "required": [
@@ -24234,6 +24727,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "collectorName": {
             "minLength": 1,
             "type": "string"
@@ -24342,6 +24839,10 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
           },
           "collectorId": {
             "type": "integer",
@@ -24457,6 +24958,10 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
           },
           "collectorId": {
             "type": "integer",
@@ -24748,48 +25253,59 @@
         "properties": {
           "name": {
             "type": "string",
+            "description": "Gets or sets the column name",
             "nullable": true
           },
           "expression": {
             "type": "string",
+            "description": "Column expression used to filter rows",
             "nullable": true
           },
           "valueType": {
             "type": "string",
+            "description": "Gets or sets the type of data stored in the column",
             "nullable": true
           },
           "valueBaseType": {
             "type": "string",
+            "description": "Gets or sets the base type of data stored in the column",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents a column in a DataTable"
       },
       "DataRelation": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "description": "Gets or sets the relation name",
             "nullable": true
           },
           "parentTable": {
             "type": "string",
+            "description": "Gets or sets the relation parent table name",
             "nullable": true
           },
           "parentColumn": {
             "type": "string",
+            "description": "Gets or sets the relation parent column names",
             "nullable": true
           },
           "childTable": {
             "type": "string",
+            "description": "Gets or sets the relation child table name",
             "nullable": true
           },
           "childColumn": {
             "type": "string",
+            "description": "Gets or sets the relation child column names",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents a data relation in a DataTable"
       },
       "DataRow": {
         "type": "object",
@@ -24799,16 +25315,19 @@
             "items": {
               "type": "string"
             },
+            "description": "Gets or sets the row values (JSON, type matching to the column)",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents a row of data in a table"
       },
       "DataSet": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "description": "Gets or sets the data set name",
             "nullable": true
           },
           "tables": {
@@ -24816,6 +25335,7 @@
             "items": {
               "$ref": "#/components/schemas/DataTable"
             },
+            "description": "Gets the collection of tables contained in the data set",
             "nullable": true
           },
           "relations": {
@@ -24823,16 +25343,19 @@
             "items": {
               "$ref": "#/components/schemas/DataRelation"
             },
+            "description": "Gets the collection of table relations contained in the data set",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents an in-memory cache of data in tables"
       },
       "DataTable": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "description": "Gets or sets the table name",
             "nullable": true
           },
           "columns": {
@@ -24840,6 +25363,7 @@
             "items": {
               "$ref": "#/components/schemas/DataColumn"
             },
+            "description": "Gets the collection of columns that belong to this table",
             "nullable": true
           },
           "rows": {
@@ -24847,24 +25371,29 @@
             "items": {
               "$ref": "#/components/schemas/DataRow"
             },
+            "description": "Gets the collection of rows that belong to this table",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents one table of in-memory data"
       },
       "DatePeriod": {
         "type": "object",
         "properties": {
           "start": {
             "type": "string",
+            "description": "The period start",
             "format": "date-time"
           },
           "end": {
             "type": "string",
+            "description": "The period end",
             "format": "date-time"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "A date period between the start and end date"
       },
       "DayOfWeek": {
         "enum": [
@@ -24876,7 +25405,8 @@
           "Friday",
           "Saturday"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Specifies the day of the week"
       },
       "Division": {
         "required": [
@@ -24939,7 +25469,8 @@
           "Global",
           "GlobalAndLocal"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The division scope"
       },
       "Employee": {
         "required": [
@@ -25285,7 +25816,8 @@
           "Report",
           "All"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The payroll function type"
       },
       "GenericParameterAttributes": {
         "enum": [
@@ -25380,7 +25912,8 @@
           "Error",
           "Fatal"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Specifies the meaning and relative importance of a log event"
       },
       "Lookup": {
         "required": [
@@ -25512,7 +26045,8 @@
           "Threshold",
           "Progressive"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The lookup range mode"
       },
       "LookupRangeResult": {
         "type": "object",
@@ -26215,21 +26749,24 @@
           "November",
           "December"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Enumeration with the year months"
       },
       "ObjectStatus": {
         "enum": [
           "Active",
           "Inactive"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The object status"
       },
       "OverrideType": {
         "enum": [
           "Active",
           "Inactive"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Override type for derivable object"
       },
       "ParameterAttributes": {
         "enum": [
@@ -26323,14 +26860,17 @@
         "properties": {
           "newPassword": {
             "type": "string",
+            "description": "The new password",
             "nullable": true
           },
           "existingPassword": {
             "type": "string",
+            "description": "The existing password",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Password change request\r\nUse cases:\r\n- set initial password: new=required, existing=ignored\r\n- change existing password: new=required, existing=required\r\n- reset password: new=null, existing=required"
       },
       "Payroll": {
         "required": [
@@ -26383,53 +26923,8 @@
             "type": "integer",
             "format": "int32"
           },
-          "clusterSetCase": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetCaseField": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetCollector": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetCollectorRetro": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetWageType": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetWageTypeRetro": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetCaseValue": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "clusterSetWageTypePeriod": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
+          "clusterSet": {
+            "$ref": "#/components/schemas/PayrollClusterSets"
           },
           "clusterSets": {
             "type": "array",
@@ -26443,6 +26938,52 @@
             "additionalProperties": {
               "nullable": true
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PayrollClusterSets": {
+        "type": "object",
+        "properties": {
+          "clusterSetCase": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetCaseField": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetCollector": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetCollectorRetro": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetWageType": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetWageTypeRetro": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetCaseValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetWageTypePeriod": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetWageTypeCycle": {
+            "type": "string",
+            "nullable": true
+          },
+          "clusterSetWageTypeConsolidated": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -26914,6 +27455,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "released": {
             "type": "string",
             "format": "date-time",
@@ -27104,6 +27649,11 @@
             "format": "date-time",
             "nullable": true
           },
+          "payDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "reason": {
             "minLength": 1,
             "type": "string"
@@ -27136,7 +27686,8 @@
           "Full",
           "Incremental"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The payrun job result"
       },
       "PayrunJobSet": {
         "required": [
@@ -27266,6 +27817,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "released": {
             "type": "string",
             "format": "date-time",
@@ -27368,7 +27923,8 @@
           "Abort",
           "Cancel"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The payrun job status\r\nSupported state changes:\r\n- *: Draft | Forecast | Abort\r\n- Draft: Release | Abort\r\n- Release: Process | Abort\r\n- Process: Complete | Cancel"
       },
       "PayrunParameter": {
         "required": [
@@ -27490,6 +28046,10 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
           },
           "source": {
             "minLength": 1,
@@ -27663,7 +28223,8 @@
           "Count",
           "ItemsWithCount"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The query result type"
       },
       "Regulation": {
         "required": [
@@ -27863,7 +28424,8 @@
           "Json",
           "Table"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The case result kind"
       },
       "ReportIsolation": {
         "enum": [
@@ -27873,7 +28435,8 @@
           "Division",
           "Employee"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The report data isolation level.\r\n            Controls which context data (division, employee) is automatically\r\n            injected into the report request."
       },
       "ReportLog": {
         "type": "object",
@@ -28005,7 +28568,8 @@
           "ReportId",
           "WebhookId"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The report value types"
       },
       "ReportRequest": {
         "type": "object",
@@ -28267,7 +28831,8 @@
           "ValueChange",
           "None"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The payrun retro pay mode"
       },
       "RetroPayrunJob": {
         "required": [
@@ -28525,7 +29090,8 @@
           "Read",
           "Write"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Server-wide policy controlling cross-tenant access on a backend instance.\r\n            Configured once at startup in PayrollServerConfiguration — not changeable at runtime.\r\n            Applied by TenantIsolationFilter before every request."
       },
       "Type": {
         "type": "object",
@@ -29261,6 +29827,10 @@
             "minLength": 0,
             "type": "string"
           },
+          "passwordAvailable": {
+            "type": "boolean",
+            "readOnly": true
+          },
           "firstName": {
             "maxLength": 128,
             "minLength": 0,
@@ -29297,14 +29867,16 @@
           "TenantAdministrator",
           "SystemAdministrator"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The type of the user"
       },
       "ValueScope": {
         "enum": [
           "Local",
           "Global"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The scope for a payroll value"
       },
       "ValueType": {
         "enum": [
@@ -29323,7 +29895,8 @@
           "Percent",
           "WebResource"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The payroll value types for cases"
       },
       "WageType": {
         "required": [
@@ -29484,6 +30057,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "wageTypeNumber": {
             "type": "number",
             "format": "double"
@@ -29595,6 +30172,10 @@
             "format": "int32",
             "nullable": true
           },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
+          },
           "wageTypeId": {
             "type": "integer",
             "format": "int32"
@@ -29705,6 +30286,10 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "payDate": {
+            "type": "string",
+            "format": "date-time"
           },
           "wageTypeId": {
             "type": "integer",
@@ -29826,7 +30411,8 @@
           "ReportFunctionRequest",
           "TaskChange"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "The Webhook message type"
       },
       "WebhookMessage": {
         "required": [

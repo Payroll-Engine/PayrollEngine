@@ -1,0 +1,550 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2025-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "PayDate.PeriodEnd.Test",
+      "culture": "en-US",
+      "calendar": "BiWeekAnchored",
+      "users": [
+        {
+          "identifier": "peter.schmid@foo.com",
+          "firstName": "Peter",
+          "lastName": "Schmid"
+        }
+      ],
+      "calendars": [
+        {
+          "name": "BiWeekAnchored",
+          "cycleTimeUnit": "Year",
+          "periodTimeUnit": "BiWeek",
+          "timeMap": "Cycle",
+          "periodAnchorDate": "2026-01-04T00:00:00.0Z",
+          "payDateOffset": 5,
+          "cycleAssignment": "PeriodEnd"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "PayDate.Division",
+          "culture": "en-US",
+          "calendar": "BiWeekAnchored"
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "remo.meier@foo.com",
+          "firstName": "Remo",
+          "lastName": "Meier",
+          "divisions": [
+            "PayDate.Division"
+          ]
+        }
+      ],
+      "regulations": [
+        {
+          "name": "PayDate.Test",
+          "description": "Pay date and anchored bi-weekly periods, cycle assignment by period end",
+          "cases": [
+            {
+              "name": "Salary",
+              "caseType": "Employee",
+              "fields": [
+                {
+                  "name": "Salary",
+                  "valueType": "Money",
+                  "timeType": "Period"
+                }
+              ]
+            }
+          ],
+          "wageTypes": [
+            {
+              "wageTypeNumber": 100,
+              "name": "PeriodStartDate",
+              "description": "Period start as yyyymmdd",
+              "valueExpression": "PeriodStart.Year * 10000 + PeriodStart.Month * 100 + PeriodStart.Day",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 101,
+              "name": "PeriodEndDate",
+              "description": "Period end as yyyymmdd",
+              "valueExpression": "PeriodEnd.Year * 10000 + PeriodEnd.Month * 100 + PeriodEnd.Day",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "PayDate",
+              "description": "Pay date as yyyymmdd",
+              "valueExpression": "PayDate.Year * 10000 + PayDate.Month * 100 + PayDate.Day",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "RegulationYear",
+              "description": "Regulation year of the base regulation, overridden by the regulation valid from 2027",
+              "valueExpression": "2026",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 104,
+              "name": "CycleYear",
+              "description": "Year of the payrun cycle",
+              "valueExpression": "CycleStart.Year",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 105,
+              "name": "CycleSalary",
+              "description": "Consolidated salary of the previous cycle periods",
+              "valueExpression": "GetConsolidatedWageTypeResults(new WageTypeConsolidatedResultQuery(110, CycleStart)).Sum(x => x.Value)",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 106,
+              "name": "FirstCyclePeriod",
+              "description": "1 for the first period of the cycle, otherwise 0",
+              "valueExpression": "FirstCyclePeriod ? 1 : 0",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 107,
+              "name": "PeriodsInCycle",
+              "description": "Number of periods in the cycle",
+              "valueExpression": "PeriodsInCycle",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 110,
+              "name": "Salary",
+              "valueExpression": "CaseValue[\"Salary\"]",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 111,
+              "name": "SalaryRetroDiff",
+              "valueExpression": "GetWageTypeRetroResultSum(110)",
+              "clusters": [
+                "Legal"
+              ]
+            },
+            {
+              "wageTypeNumber": 120,
+              "name": "RetroPayDate",
+              "description": "Pay date as yyyymmdd in retro runs only: retro jobs store changed results only",
+              "valueExpression": "IsRetroPayrun ? PayDate.Year * 10000 + PayDate.Month * 100 + PayDate.Day : 0",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 121,
+              "name": "RetroRegulationYear",
+              "description": "Regulation year in retro runs only, overridden by the regulation valid from 2027",
+              "valueExpression": "IsRetroPayrun ? 2026 : 0",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PayDate.Test.2027",
+          "description": "Regulation valid from 2027, selected by the regulation date",
+          "validFrom": "2027-01-01T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 103,
+              "name": "RegulationYear",
+              "description": "Regulation year of the regulation valid from 2027",
+              "valueExpression": "2027",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 121,
+              "name": "RetroRegulationYear",
+              "description": "Regulation year of the regulation valid from 2027 in retro runs only",
+              "valueExpression": "IsRetroPayrun ? 2027 : 0",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            }
+          ]
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "PayDate.Payroll",
+          "divisionName": "PayDate.Division",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "PayDate.Test"
+            },
+            {
+              "level": 2,
+              "priority": 1,
+              "regulationName": "PayDate.Test.2027"
+            }
+          ],
+          "clusterSet": {
+            "clusterSetWageType": "Legal",
+            "clusterSetWageTypeRetro": "Retro"
+          },
+          "clusterSets": [
+            {
+              "name": "Legal",
+              "includeClusters": [
+                "Legal"
+              ]
+            },
+            {
+              "name": "Retro",
+              "includeClusters": [
+                "Retro"
+              ]
+            }
+          ],
+          "cases": [
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "divisionName": "PayDate.Division",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "1000",
+                    "start": "2025-12-01T00:00:00.0Z",
+                    "created": "2025-11-15T00:00:00.0Z"
+                  }
+                ]
+              }
+            },
+            {
+              "userIdentifier": "peter.schmid@foo.com",
+              "employeeIdentifier": "remo.meier@foo.com",
+              "divisionName": "PayDate.Division",
+              "case": {
+                "caseName": "Salary",
+                "values": [
+                  {
+                    "caseFieldName": "Salary",
+                    "value": "1500",
+                    "start": "2026-12-06T00:00:00.0Z",
+                    "created": "2027-01-10T00:00:00.0Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "PayDate.Payroll",
+          "name": "PayDate.Payrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "PayDate.Payrun.BeforeAnchor",
+          "payrunName": "PayDate.Payrun",
+          "payrollName": "PayDate.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-01-01T00:00:00.0Z",
+          "evaluationDate": "2026-01-05T00:00:00.0Z",
+          "reason": "Period before the anchor date, pay date from calendar offset"
+        },
+        {
+          "name": "PayDate.Payrun.PayDateOverride",
+          "payrunName": "PayDate.Payrun",
+          "payrollName": "PayDate.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-12-10T00:00:00.0Z",
+          "evaluationDate": "2026-12-21T00:00:00.0Z",
+          "payDate": "2027-01-04T00:00:00.0Z",
+          "reason": "December period paid in January: the period end keeps the 2026 cycle and regulation"
+        },
+        {
+          "name": "PayDate.Payrun.YearChange",
+          "payrunName": "PayDate.Payrun",
+          "payrollName": "PayDate.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "completedJobStatus": "Complete",
+          "periodStart": "2026-12-25T00:00:00.0Z",
+          "evaluationDate": "2027-01-03T00:00:00.0Z",
+          "reason": "Period across the year change (ISO week 53 year)"
+        },
+        {
+          "name": "PayDate.Payrun.Retro",
+          "payrunName": "PayDate.Payrun",
+          "payrollName": "PayDate.Payroll",
+          "userIdentifier": "peter.schmid@foo.com",
+          "completedJobStatus": "Complete",
+          "periodStart": "2027-01-05T00:00:00.0Z",
+          "evaluationDate": "2027-01-17T00:00:00.0Z",
+          "reason": "Continuous period after the year change, retro salary change from 2026-12-06"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "PayDate.Payrun.BeforeAnchor",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 20251221
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 20260103
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 20260108
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 2026
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 2026
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 1
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 110,
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayDate.Payrun.PayDateOverride",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 20261206
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 20261219
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 20270104
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 2026
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 2026
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 110,
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayDate.Payrun.YearChange",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 20261220
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 20270102
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 20270107
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 2027
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 2027
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 1
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 110,
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayDate.Payrun.Retro",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 100,
+              "value": 20270103
+            },
+            {
+              "wageTypeNumber": 101,
+              "value": 20270116
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 20270121
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 2027
+            },
+            {
+              "wageTypeNumber": 104,
+              "value": 2027
+            },
+            {
+              "wageTypeNumber": 105,
+              "value": 1500
+            },
+            {
+              "wageTypeNumber": 106,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 107,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 110,
+              "value": 1500
+            },
+            {
+              "wageTypeNumber": 111,
+              "value": 1000
+            },
+            {
+              "wageTypeNumber": 120,
+              "value": 0
+            },
+            {
+              "wageTypeNumber": 121,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayDate.Payrun.Retro",
+          "retroPeriodStart": "2026-12-06T00:00:00.0Z",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 110,
+              "value": 1500
+            },
+            {
+              "wageTypeNumber": 120,
+              "value": 20270104
+            },
+            {
+              "wageTypeNumber": 121,
+              "value": 2026
+            }
+          ]
+        },
+        {
+          "payrunJobName": "PayDate.Payrun.Retro",
+          "retroPeriodStart": "2026-12-20T00:00:00.0Z",
+          "employeeIdentifier": "remo.meier@foo.com",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 110,
+              "value": 1500
+            },
+            {
+              "wageTypeNumber": 120,
+              "value": 20270107
+            },
+            {
+              "wageTypeNumber": 121,
+              "value": 2027
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
