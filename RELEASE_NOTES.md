@@ -21,6 +21,7 @@
 * **Results** — `PayDate` on wage type results, wage type custom results, collector results, collector custom results, and payrun results, including consolidated result queries
 * **Scripting** — `PayDate`, `PayDateYear`, and `GetPayDate(periodMoment)` in all payroll functions
 * **Calendar cycle assignment** — `Calendar.CycleAssignment` (`PayDate`, `PeriodEnd`; default `PayDate`). With `PayDate`, the payrun job cycle is taken from the job pay date, and the year-to-date consolidation includes the periods paid within the cycle up to the current pay date, using the pay dates of the payrun jobs (early and late payments, pay date overrides). With `PeriodEnd`, the cycle and the regulation date are taken from the period end
+* **Scripting calendar** — `CycleTimeUnit`, `PeriodTimeUnit` and `TimeMap` in all payroll functions; the `CalendarTimeUnit` value is the number of periods per year (e.g. `Week` 52, `BiWeek` 26, `SemiMonth` 24, `CalendarMonth` 12); `TimeMap` lets a regulation guard reject a calendar whose `Cycle` time map would divide calendar period case values it already annualizes
 * **Scripting cycle** — `CycleDate`, `GetCyclePeriodRange(offset)` in all payroll functions; `GetConsolidatedPeriodStarts(periodMoment)` in payrun functions. Cycle result queries (`GetWageTypeCycleResults`, `GetCollectorCycleResults`, previous cycle values) use the period range of the cycle
 * **Calendar validation** — the `PeriodAnchorDate` and the `CycleAssignment` of a calendar cannot be changed once payrun jobs exist for the calendar (division or employee calendar); the update is rejected with `400 Bad Request`
 
@@ -57,10 +58,10 @@
 * **Core** — `CalendarCycleAssignment` enum
 * **Client.Core** — `Calendar.PeriodAnchorDate`, `Calendar.PayDateOffset`, `Calendar.CycleAssignment`, `PayrunJobInvocation.PayDate`, `PayrunJob.PayDate`, and `PayDate` on wage type, collector, and payrun results
 * **Client.Core (fix)** — console error output failed with "The handle is invalid" on redirected output (CI, scripts), hiding the original error
-* **Client.Scripting** — `IPayrollRuntime.PayDate`, `GetPayDate()`, `CycleDate`, and `GetCyclePeriodStart()`; `IPayrunRuntime.GetConsolidatedPeriodStarts()`; `PayrollFunction.PayDate`, `PayDateYear`, `GetPayDate()`, `CycleDate`, and `GetCyclePeriodRange()`; `PayrunFunction.GetConsolidatedPeriodStarts()`
+* **Client.Scripting** — `IPayrollRuntime.PayDate`, `GetPayDate()`, `CycleDate`, `GetCyclePeriodStart()`, `CycleTimeUnit`, `PeriodTimeUnit`, and `TimeMap`; `IPayrunRuntime.GetConsolidatedPeriodStarts()`; `PayrollFunction.PayDate`, `PayDateYear`, `GetPayDate()`, `CycleDate`, `GetCyclePeriodRange()`, `CycleTimeUnit`, `PeriodTimeUnit`, and `TimeMap`; `PayrunFunction.GetConsolidatedPeriodStarts()`; enums `CalendarTimeUnit` and `CalendarTimeMap`
 * **Client.Scripting (fix)** — `PayrollFunction.PeriodsInCycle` returned a wrong period count (the negative start offset was subtracted)
 * **Client.Scripting** — `CycleStartOffset`, `CycleEndOffset`, `FirstCyclePeriod`, and `LastCyclePeriod` are based on the first period of the cycle according to the calendar cycle assignment
-* **Client.Services** — local script runtime calculates the pay date, the cycle date, and the cycle periods from the payroll calendar
+* **Client.Services** — local script runtime calculates the pay date, the cycle date, the cycle periods, and the calendar time units from the payroll calendar
 * **Client.Services (fix)** — `CalendarExtensions.IsWorkDay` evaluated Tuesday against the Thursday work day setting
 * **Client.Test** — payrun preview test result carries the invocation pay date
 * **Core, Serilog, Document** — version alignment

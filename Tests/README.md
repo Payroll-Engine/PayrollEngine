@@ -249,7 +249,7 @@ Both payruns use the same regulation and run the same period (Jan 2024). The div
 | `Retro` | 2027-01-03 – 2027-01-16 | 2027-01-21 | 2027 | 1 500 |
 
 The `Retro` job triggers two retro runs (salary change from 2026-12-06), which reuse the pay dates of the original jobs (2027-01-04, 2027-01-07); WT111 collects the retro delta **1 000**. The invocation period starts lie within the periods.  
-The table shows `cycleAssignment` `PayDate` (`Test.pt.json`). `PeriodEnd.pt.json` (tenant `PayDate.PeriodEnd.Test`) runs the same jobs with `cycleAssignment` `PeriodEnd`: the December period paid in January stays in the 2026 cycle and regulation. WT104–WT107 verify the cycle year, the year-to-date consolidation, the first cycle period, and the periods in the cycle for both assignments.  
+The table shows `cycleAssignment` `PayDate` (`Test.pt.json`). `PeriodEnd.pt.json` (tenant `PayDate.PeriodEnd.Test`) runs the same jobs with `cycleAssignment` `PeriodEnd`: the December period paid in January stays in the 2026 cycle and regulation. WT104–WT107 verify the cycle year, the year-to-date consolidation, the first cycle period, and the periods in the cycle for both assignments; WT108 and WT109 verify the calendar period time unit and the time map.  
 **Has own README:** `PayDate.Test/README.md`  
 **Special flags:** none
 

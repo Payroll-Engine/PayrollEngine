@@ -43,6 +43,8 @@ determines the cycle (tax year) of a period and the regulation date:
 | 105 | CycleSalary | Legal, Retro | Consolidated WT110 of the previous cycle periods (year to date) |
 | 106 | FirstCyclePeriod | Legal, Retro | `1` for the first period of the cycle, otherwise `0` |
 | 107 | PeriodsInCycle | Legal, Retro | Number of periods in the cycle |
+| 108 | PeriodTimeUnit | Legal, Retro | Calendar period time unit as number of periods per year (`26` for BiWeek) |
+| 109 | TimeMap | Legal, Retro | Calendar time map (`0` Period, `1` Cycle; `1` for `BiWeekAnchored`) |
 | 110 | Salary | Legal, Retro | `CaseValue["Salary"]` |
 | 111 | SalaryRetroDiff | Legal | Retro delta: `GetWageTypeRetroResultSum(110)` |
 | 120 | RetroPayDate | Legal, Retro | Pay date as `yyyymmdd` in retro runs, `0` in main runs |

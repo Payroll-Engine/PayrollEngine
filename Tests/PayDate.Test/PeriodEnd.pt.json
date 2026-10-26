@@ -140,6 +140,26 @@
               ]
             },
             {
+              "wageTypeNumber": 108,
+              "name": "PeriodTimeUnit",
+              "description": "Calendar period time unit: number of periods per year",
+              "valueExpression": "(int)PeriodTimeUnit",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
+              "wageTypeNumber": 109,
+              "name": "TimeMap",
+              "description": "Calendar time map: 0=Period, 1=Cycle",
+              "valueExpression": "(int)TimeMap",
+              "clusters": [
+                "Legal",
+                "Retro"
+              ]
+            },
+            {
               "wageTypeNumber": 110,
               "name": "Salary",
               "valueExpression": "CaseValue[\"Salary\"]",
@@ -363,6 +383,14 @@
               "value": 26
             },
             {
+              "wageTypeNumber": 108,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 1
+            },
+            {
               "wageTypeNumber": 110,
               "value": 1000
             }
@@ -403,6 +431,14 @@
             {
               "wageTypeNumber": 107,
               "value": 26
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 1
             },
             {
               "wageTypeNumber": 110,
@@ -447,6 +483,14 @@
               "value": 26
             },
             {
+              "wageTypeNumber": 108,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 1
+            },
+            {
               "wageTypeNumber": 110,
               "value": 1000
             }
@@ -487,6 +531,14 @@
             {
               "wageTypeNumber": 107,
               "value": 26
+            },
+            {
+              "wageTypeNumber": 108,
+              "value": 26
+            },
+            {
+              "wageTypeNumber": 109,
+              "value": 1
             },
             {
               "wageTypeNumber": 110,

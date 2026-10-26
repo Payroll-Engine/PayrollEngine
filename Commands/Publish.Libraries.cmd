@@ -13,12 +13,6 @@ echo Step 2: Clear NuGet local cache...
 dotnet nuget locals all --clear
 if %ERRORLEVEL% neq 0 goto error
 
-rem --- publish PayrollConsole (depends on NuGet libraries)
-echo.
-echo Step 3: Publish PayrollConsole...
-call Publish.Console.cmd
-if %ERRORLEVEL% neq 0 goto error
-
 echo.
 echo Libraries published successfully.
 goto exit
