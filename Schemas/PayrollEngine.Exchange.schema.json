@@ -1684,6 +1684,19 @@
                 }
               ]
             },
+            "secret": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "description": "The secret used to sign the webhook messages (write-only, never returned by the backend).\nOn update: null keeps the current secret, an empty value removes it, any other value replaces it.",
+              "maxLength": 256,
+              "minLength": 0
+            },
+            "signed": {
+              "type": "boolean",
+              "description": "Indicates whether the webhook messages are signed (read-only)"
+            },
             "attributes": {
               "type": [
                 "null",

@@ -446,6 +446,14 @@ Custom Results (sub-period audit trail) are not assertable via `payrollResults` 
 
 ---
 
+### Webhook.Test
+**Tenants:** `Webhook.Test`, `Webhook.Signed.Test`  
+**What it tests:** Synchronous scripting webhook (`InvokeWebhook<T>`): the backend posts a `CaseFunctionRequest` to a local receiver and the response becomes the wage type value (WT 101 = 2 000, WT 102 = 1 500, WT 103 = 3 500). The signed variant verifies the HMAC request signature (`X-PE-Signature`) and the response signature (`X-PE-Response-Signature`).  
+**Has own README:** `Webhook.Test/README.md`  
+**Special flags:** needs the external webhook receiver — run `dotnet run --project Receiver -- --run` in `Webhook.Test`; not part of `Test.All.pecmd`
+
+---
+
 ## Case Tests
 
 ### Case.Test

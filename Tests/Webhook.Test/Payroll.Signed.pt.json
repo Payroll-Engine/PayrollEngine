@@ -1,0 +1,126 @@
+{
+  "$schema": "../../Schemas/PayrollEngine.Exchange.schema.json",
+  "createdObjectDate": "2024-01-01T00:00:00.0Z",
+  "tenants": [
+    {
+      "identifier": "Webhook.Signed.Test",
+      "created": "2024-01-01T00:00:00.0Z",
+      "users": [
+        {
+          "identifier": "admin@webhook.signed.test",
+          "firstName": "Admin",
+          "lastName": "Webhook",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "divisions": [
+        {
+          "name": "WebhookDivision",
+          "culture": "de-CH",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "webhooks": [
+        {
+          "name": "Case function request",
+          "receiverAddress": "http://localhost:5099/CaseFunctionRequest",
+          "action": "CaseFunctionRequest",
+          "secret": "webhook-test-secret",
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "regulations": [
+        {
+          "name": "Webhook.Signed.Test",
+          "description": "Regression test: signed synchronous webhook (request signature, verified response signature)",
+          "created": "2024-01-01T00:00:00.0Z",
+          "wageTypes": [
+            {
+              "wageTypeNumber": 101,
+              "name": "MinWage",
+              "description": "Response of the receiver without request message",
+              "valueExpression": "return InvokeWebhook<decimal>(\"MinWage\")",
+              "created": "2024-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 102,
+              "name": "Double",
+              "description": "Request message is sent to the receiver and the response is used",
+              "valueExpression": "return InvokeWebhook<decimal>(\"Double\", 750M)",
+              "created": "2024-01-01T00:00:00.0Z"
+            },
+            {
+              "wageTypeNumber": 103,
+              "name": "Sum",
+              "description": "Both webhook results combined",
+              "valueExpression": "return WageType[101] + WageType[102]",
+              "created": "2024-01-01T00:00:00.0Z"
+            }
+          ]
+        }
+      ],
+      "employees": [
+        {
+          "identifier": "maja.berger@webhook.signed.test",
+          "firstName": "Maja",
+          "lastName": "Berger",
+          "divisions": [
+            "WebhookDivision"
+          ],
+          "created": "2024-01-01T00:00:00.0Z"
+        }
+      ],
+      "payrolls": [
+        {
+          "name": "Webhook.Signed.Test",
+          "divisionName": "WebhookDivision",
+          "layers": [
+            {
+              "level": 1,
+              "priority": 1,
+              "regulationName": "Webhook.Signed.Test"
+            }
+          ]
+        }
+      ],
+      "payruns": [
+        {
+          "payrollName": "Webhook.Signed.Test",
+          "name": "WebhookSignedPayrun"
+        }
+      ],
+      "payrunJobInvocations": [
+        {
+          "name": "Webhook.Signed.Test.Jan24",
+          "payrunName": "WebhookSignedPayrun",
+          "payrollName": "Webhook.Signed.Test",
+          "userIdentifier": "admin@webhook.signed.test",
+          "completedJobStatus": "Complete",
+          "periodStart": "2024-01-01T00:00:00.0Z",
+          "evaluationDate": "2024-01-31T00:00:00.0Z",
+          "reason": "Signed webhook test Jan 2024"
+        }
+      ],
+      "payrollResults": [
+        {
+          "payrunJobName": "Webhook.Signed.Test.Jan24",
+          "employeeIdentifier": "maja.berger@webhook.signed.test",
+          "wageTypeResults": [
+            {
+              "wageTypeNumber": 101,
+              "value": 2000
+            },
+            {
+              "wageTypeNumber": 102,
+              "value": 1500
+            },
+            {
+              "wageTypeNumber": 103,
+              "value": 3500
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
