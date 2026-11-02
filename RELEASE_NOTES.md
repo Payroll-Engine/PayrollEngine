@@ -33,7 +33,7 @@
 **Behavior Change**
 
 * **Webhook tracking** — the setting `PayrollServerConfiguration:WebhookTracking` (`None`, `Notification`, `All`; default `Notification`) controls tracking. Notification webhooks (case change added, payrun job process/finish, task change) are tracked as webhook messages with response status and message. Scripting webhook calls (`InvokeWebhook`) are tracked only with `All`
-* **Scripting webhook connection error** — an unreachable receiver of a scripting webhook aborts the payrun job with an exception instead of returning the error text to the script
+* **Scripting webhook connection error** — an unreachable receiver or a failed response status of a scripting webhook aborts the payrun job with an exception, instead of returning the error text or an empty value to the script
 * **Obsolete webhook actions** — `PayrunFunctionRequest` and `ReportFunctionRequest` are obsolete; script webhook calls always use `CaseFunctionRequest`
 * **Payroll validation** — the payrun validates the payroll regulations at the regulation date (period end, or pay date when it differs) instead of the period start, consistent with the payrun processing
 
