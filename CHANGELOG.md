@@ -99,7 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core: changed retro pay mode enum order
 - Backend: webhook notifications (case change, payrun job process/finish, task change) are tracked as webhook messages; configurable by `WebhookTracking` (`None`, `Notification`, `All`)
 - Backend: an unreachable receiver of a scripting webhook throws and aborts the payrun job instead of returning the error text
-- Backend: webhook dispatch loads tenant and user once per message instead of once per webhook
+- Backend: webhook dispatch loads tenant and user once per message instead of once per webhook; scripting webhook calls query the webhook once per payrun job
 - Core: `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` marked obsolete
 
 ### Fixed

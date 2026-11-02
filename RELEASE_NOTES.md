@@ -28,7 +28,7 @@
 * **Signed webhooks** — `Webhook.Secret` (write-only; on update omitted keeps, empty removes, a value replaces) and read-only `Webhook.Signed`. Request signature `v1=` + HMAC-SHA256 over `{timestamp}.{body}`; response signature for scripting webhooks over `{timestamp}.{requestSignature}.{responseBody}`. A secret that cannot be read stops the dispatch, nothing is sent unsigned. Exchange exports contain `signed`, never the secret — set the secret again after an import
 * **Webhook tracking mode** — `PayrollServerConfiguration:WebhookTracking` (`None`, `Notification`, `All`)
 * **Data protection keys** — the secret is encrypted with ASP.NET Core data protection; `PayrollServerConfiguration:DataProtectionKeyPath` sets the persistent key ring location (required for containers and multiple instances; lost keys require setting the secrets again)
-* **Webhook performance** — tenant and user are loaded once per dispatched message instead of once per webhook
+* **Webhook performance** — tenant and user are loaded once per dispatched message instead of once per webhook; scripting webhook calls (`InvokeWebhook`) query the webhook of the action once per payrun job instead of once per call
 
 **Behavior Change**
 
