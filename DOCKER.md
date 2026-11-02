@@ -66,6 +66,16 @@ To remove the database volume as well, run:
 ```sh
 docker-compose down -v
 ```
+### 5. Webhook Secrets (Key Ring)
+
+Webhook secrets are stored encrypted (ASP.NET Core data protection). The compose files keep the key
+ring in the volume `backend-keys` (`PayrollServerConfiguration__DataProtectionKeyPath=/app/keys`).
+
+- Do **not** remove the volume while webhooks with a secret exist: without the keys the stored secrets
+  cannot be read and signed webhooks fail. `docker-compose down -v` removes the volume together with the database.
+- Back up the volume together with the database.
+- When you run several backend instances, they must share the same key volume.
+- If the keys are lost, set the webhook secrets again.
 
 
  **Verification:**

@@ -8,6 +8,7 @@
 * **Regulation date by pay date** — when the pay date differs from the period end date, regulations, case fields, and lookups are resolved at the pay date; tax years that follow the pay date (e.g. a December period paid in January) are calculated with the regulation version of the pay date
 * **Calendar cycle assignment** — the calendar `CycleAssignment` selects the date that assigns a period to the cycle (tax year) and to the regulation version: `PayDate` (default, e.g. US, UK, AU — a December period paid in January belongs to the next year) or `PeriodEnd` (e.g. DE, AT, CH — the period belongs to the year of its end, regardless of the pay date). Cycle start, year-to-date consolidation, and cycle result queries follow the assignment
 * **Anchored weekly and bi-weekly periods** — the calendar `PeriodAnchorDate` produces continuous 7-day and 14-day periods across year boundaries; bi-weekly periods no longer restart at the beginning of the year or overlap in years with 53 weeks. Calendars without an anchor keep the previous week-of-year behavior
+* **Signed webhooks** — a webhook with a secret signs its requests (`X-PE-Timestamp`, `X-PE-Signature`, HMAC-SHA256); scripting webhook responses must be signed (`X-PE-Response-Signature`), otherwise the payrun job aborts. The secret is write-only and encrypted at rest
 
 ### Backend
 
@@ -24,9 +25,16 @@
 * **Scripting calendar** — `CycleTimeUnit`, `PeriodTimeUnit` and `TimeMap` in all payroll functions; the `CalendarTimeUnit` value is the number of periods per year (e.g. `Week` 52, `BiWeek` 26, `SemiMonth` 24, `CalendarMonth` 12); `TimeMap` lets a regulation guard reject a calendar whose `Cycle` time map would divide calendar period case values it already annualizes
 * **Scripting cycle** — `CycleDate`, `GetCyclePeriodRange(offset)` in all payroll functions; `GetConsolidatedPeriodStarts(periodMoment)` in payrun functions. Cycle result queries (`GetWageTypeCycleResults`, `GetCollectorCycleResults`, previous cycle values) use the period range of the cycle
 * **Calendar validation** — the `PeriodAnchorDate` and the `CycleAssignment` of a calendar cannot be changed once payrun jobs exist for the calendar (division or employee calendar); the update is rejected with `400 Bad Request`
+* **Signed webhooks** — `Webhook.Secret` (write-only; on update omitted keeps, empty removes, a value replaces) and read-only `Webhook.Signed`. Request signature `v1=` + HMAC-SHA256 over `{timestamp}.{body}`; response signature for scripting webhooks over `{timestamp}.{requestSignature}.{responseBody}`. A secret that cannot be read stops the dispatch, nothing is sent unsigned. Exchange exports contain `signed`, never the secret — set the secret again after an import
+* **Webhook tracking mode** — `PayrollServerConfiguration:WebhookTracking` (`None`, `Notification`, `All`)
+* **Data protection keys** — the secret is encrypted with ASP.NET Core data protection; `PayrollServerConfiguration:DataProtectionKeyPath` sets the persistent key ring location (required for containers and multiple instances; lost keys require setting the secrets again)
+* **Webhook performance** — tenant and user are loaded once per dispatched message instead of once per webhook
 
 **Behavior Change**
 
+* **Webhook tracking** — the setting `PayrollServerConfiguration:WebhookTracking` (`None`, `Notification`, `All`; default `Notification`) controls tracking. Notification webhooks (case change added, payrun job process/finish, task change) are tracked as webhook messages with response status and message. Scripting webhook calls (`InvokeWebhook`) are tracked only with `All`
+* **Scripting webhook connection error** — an unreachable receiver of a scripting webhook aborts the payrun job with an exception instead of returning the error text to the script
+* **Obsolete webhook actions** — `PayrunFunctionRequest` and `ReportFunctionRequest` are obsolete; script webhook calls always use `CaseFunctionRequest`
 * **Payroll validation** — the payrun validates the payroll regulations at the regulation date (period end, or pay date when it differs) instead of the period start, consistent with the payrun processing
 
 **Bug Fixes**
@@ -38,6 +46,7 @@
 **Database**
 
 * New columns: `Calendar.PeriodAnchorDate`, `Calendar.PayDateOffset`, `Calendar.CycleAssignment`, `PayrunJob.PayDate`, and `PayDate` in `WageTypeResult`, `WageTypeCustomResult`, `CollectorResult`, `CollectorCustomResult`, and `PayrunResult`
+* New column `Webhook.Secret` (encrypted secret, nullable)
 * PostgreSQL result functions return `PayDate` as the last column; the update script recreates the affected functions
 
 ### WebApp
@@ -46,7 +55,12 @@
 
 * **Calendar editor** — pay date offset, period anchor date, and cycle assignment fields; the period anchor date and the cycle assignment are read-only once payrun jobs exist for the calendar, and a hint is shown when the anchor weekday differs from the first day of week
 * **Payrun jobs** — optional pay date override when starting a payrun job; pay date column in the payrun job history
+* **Webhooks** — write-only secret field (with remove option and visibility toggle) and a `Signed` column
 * New labels in all localizations
+
+### Docker
+
+* The compose files keep the data protection keys in the volume `backend-keys`; `docker-compose down -v` removes it together with the database (see `DOCKER.md`)
 
 ### PayrollConsole
 
@@ -55,7 +69,8 @@
 
 ### Libraries
 
-* **Core** — `CalendarCycleAssignment` enum
+* **Core** — `CalendarCycleAssignment` enum; `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` obsolete
+* **Client.Core** — `Webhook.Secret` and `Webhook.Signed` (exchange schema `secret`, `signed`)
 * **Client.Core** — `Calendar.PeriodAnchorDate`, `Calendar.PayDateOffset`, `Calendar.CycleAssignment`, `PayrunJobInvocation.PayDate`, `PayrunJob.PayDate`, and `PayDate` on wage type, collector, and payrun results
 * **Client.Core (fix)** — console error output failed with "The handle is invalid" on redirected output (CI, scripts), hiding the original error
 * **Client.Scripting** — `IPayrollRuntime.PayDate`, `GetPayDate()`, `CycleDate`, `GetCyclePeriodStart()`, `CycleTimeUnit`, `PeriodTimeUnit`, and `TimeMap`; `IPayrunRuntime.GetConsolidatedPeriodStarts()`; `PayrollFunction.PayDate`, `PayDateYear`, `GetPayDate()`, `CycleDate`, `GetCyclePeriodRange()`, `CycleTimeUnit`, `PeriodTimeUnit`, and `TimeMap`; `PayrunFunction.GetConsolidatedPeriodStarts()`; enums `CalendarTimeUnit` and `CalendarTimeMap`
@@ -70,6 +85,8 @@
 
 * **Backend unit tests** — anchored weekly and bi-weekly periods (year change, before anchor, 53-week year), pay date offset, regulation date, and cycle assignment (job cycle, cycle period start, year-to-date periods with early and late payments)
 * **PayDate.Test** — payrun test for anchored bi-weekly periods, pay date offset and override, cycle assignment by pay date and by period end (cycle year, year to date, cycle periods, regulation selection across the year change), and retro jobs with the pay date of the original job
+* **Webhook unit tests** — dispatch, signature, response verification (`Domain.Application.Tests`)
+* **Webhook.Test** — receiver and runner for unsigned and signed webhooks (`Tests/Webhook.Test`, not part of `Test.All`)
 * **Test-DbProviders.ps1** — runs the platform tests and examples against SQL Server, MySQL, and PostgreSQL, for new databases and for the update from the previous release (`devops/scripts`)
 
 No breaking change — REST API and Scripting API changes are additive. The database schema update to 1.2.0 is required.

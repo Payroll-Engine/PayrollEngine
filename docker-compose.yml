@@ -48,12 +48,15 @@ services:
       ASPNETCORE_URLS: 'http://+:8080'
       ASPNETCORE_ENVIRONMENT: 'Development'
       PayrollServerConfiguration__EnableSwagger: 'true'
+      # key ring of the webhook secret encryption: must be persistent (volume backend-keys)
+      PayrollServerConfiguration__DataProtectionKeyPath: '/app/keys'
       ConnectionStrings__PayrollDatabaseConnection: 'Server=db;Database=PayrollEngine;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;'
     depends_on:
       db-init:
         condition: service_completed_successfully
     volumes:
       - ../PayrollEngine.Backend/logs:/app/logs
+      - backend-keys:/app/keys
 
   webapp:
     build:
@@ -77,3 +80,4 @@ services:
 
 volumes:
   mssql-data:
+  backend-keys:

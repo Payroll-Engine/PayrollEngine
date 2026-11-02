@@ -8,7 +8,7 @@
 # Usage:
 #   docker compose -f docker-compose.ghcr.yml up -d
 #   docker compose -f docker-compose.ghcr.yml down
-#   docker compose -f docker-compose.ghcr.yml down -v   # also removes database volume
+#   docker compose -f docker-compose.ghcr.yml down -v   # also removes the database and key volumes
 
 name: payroll-engine
 
@@ -82,6 +82,8 @@ services:
       ASPNETCORE_URLS: 'http://+:8080'
       ASPNETCORE_ENVIRONMENT: 'Development'
       PayrollServerConfiguration__EnableSwagger: 'true'
+      # key ring of the webhook secret encryption: must be persistent (volume backend-keys)
+      PayrollServerConfiguration__DataProtectionKeyPath: '/app/keys'
       ConnectionStrings__PayrollDatabaseConnection: >-
         Server=db;Database=PayrollEngine;User Id=sa;
         Password=${DB_PASSWORD};TrustServerCertificate=True;
@@ -90,6 +92,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - backend-logs:/app/logs
+      - backend-keys:/app/keys
 
   webapp:
     image: ghcr.io/payroll-engine/payrollengine.webapp:latest
@@ -110,4 +113,5 @@ volumes:
   mssql-data:
   sql-scripts:
   backend-logs:
+  backend-keys:
   webapp-logs:

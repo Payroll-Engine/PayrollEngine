@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dedicated sync workflow for selective NuGet.org publishing
 
 #### Docker
+- Volume `backend-keys` persists the data protection keys of webhook secrets (`docker-compose.yml`, `docker-compose.ghcr.yml`)
 - Automated Linux container builds for Backend, PayrollConsole, and WebApp
 - Images published to `ghcr.io/payroll-engine/*`
 - Pre-release images skip the `:latest` tag
@@ -64,13 +65,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `PayrollServerConfiguration` for centralized server settings
 - `ConsolidatedPayrunResultQuery` for consolidated payrun result queries
 - Production `UseExceptionHandler` middleware for structured JSON error responses
+- Signed webhooks: optional write-only `Webhook.Secret` (encrypted at rest, ASP.NET Core data protection) signs requests with `X-PE-Timestamp` and `X-PE-Signature` (HMAC-SHA256); scripting webhook responses must carry a valid `X-PE-Response-Signature`; read-only `Webhook.Signed`
+- Data protection key ring location (`DataProtectionKeyPath`)
+- Webhook message tracking mode (`WebhookTracking`: `None`, `Notification` default, `All`)
 
 #### Console
 - Excel-based regulation import (`RegulationExcelImport`) supporting cases, case fields, case relations, collectors, wage types, lookups, lookup values, reports, report parameters, report templates, and scripts
 - `PayrunEmployeePreviewTest` command for testing payrun preview without persisting results
 - Built-in load test commands: `LoadTestGenerate`, `LoadTestSetup`, `LoadTestSetupCases`, `PayrunLoadTest` with CSV report (client + server timing)
 
+#### Tests
+- `Webhook.Test` and `Webhook.Signed.Test` with an in-process receiver (`Tests/Webhook.Test`)
+
 #### Libraries
+- `Client.Core`: `Webhook.Secret` and `Webhook.Signed`; exchange schema `secret` and `signed`
 - `Client.Test`: `PayrunEmployeePreviewTestRunner` for preview-based payrun testing
 - `Client.Core`: `NamespaceUpdateTool` for exchange namespace handling
 - `Client.Core`: `AddCasesBulkAsync` in `IPayrollService` / `PayrollService`
@@ -89,6 +97,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core: replaced SHA1 with SHA256 in `HashSaltExtensions` with constant-time comparison to prevent timing attacks
 - Core: added regex timeout in `UserPassword.IsValid` to prevent ReDoS attacks
 - Core: changed retro pay mode enum order
+- Backend: webhook notifications (case change, payrun job process/finish, task change) are tracked as webhook messages; configurable by `WebhookTracking` (`None`, `Notification`, `All`)
+- Backend: an unreachable receiver of a scripting webhook throws and aborts the payrun job instead of returning the error text
+- Backend: webhook dispatch loads tenant and user once per message instead of once per webhook
+- Core: `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` marked obsolete
 
 ### Fixed
 
