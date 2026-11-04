@@ -61,7 +61,7 @@ The `packages` input accepts a suffix of the package name after `PayrollEngine.`
 
 | Value | Packages synced |
 |-------|-----------------|
-| `all` | All 9 packages |
+| `all` | All 10 packages |
 | `Core` | `PayrollEngine.Core` only |
 | `Serilog` | `PayrollEngine.Serilog` only |
 | `Document` | `PayrollEngine.Document` only |
@@ -70,6 +70,7 @@ The `packages` input accepts a suffix of the package name after `PayrollEngine.`
 | `Client.Scripting` | `PayrollEngine.Client.Scripting` only |
 | `Client.Test` | `PayrollEngine.Client.Test` only |
 | `Client.Services` | `PayrollEngine.Client.Services` only |
+| `Lex` | `PayrollEngine.Lex` only |
 | `Mcp.Core` | `PayrollEngine.Mcp.Core` only |
 | `Mcp.Tools` | `PayrollEngine.Mcp.Tools` only |
 

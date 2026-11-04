@@ -132,8 +132,8 @@ jobs:
 
   # ═══════════════════════════════════════════════════════
   # VERSION GUARD — always runs (dry-run and live)
-  # Live:     lib_version must be on NuGet.org (all 9 packages)
-  # Dry-run:  lib_version must be on GitHub Packages (all 9 packages)
+  # Live:     lib_version must be on NuGet.org (all 10 packages)
+  # Dry-run:  lib_version must be on GitHub Packages (all 10 packages)
   # Always:   app tags and ghcr.io images must not yet exist
   # ═══════════════════════════════════════════════════════
   version-guard:
@@ -155,7 +155,7 @@ jobs:
               'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
               'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
               'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services',
-              'PayrollEngine.Mcp.Core', 'PayrollEngine.Mcp.Tools'
+              'PayrollEngine.Lex', 'PayrollEngine.Mcp.Core', 'PayrollEngine.Mcp.Tools'
             ];
 
             // ── Lib Precondition ──────────────────────────────────
@@ -540,7 +540,7 @@ jobs:
               'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
               'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
               'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services',
-              'PayrollEngine.Mcp.Core', 'PayrollEngine.Mcp.Tools'
+              'PayrollEngine.Lex', 'PayrollEngine.Mcp.Core', 'PayrollEngine.Mcp.Tools'
             ];
             for (const lib of libs) {
               const ghUrl = `https://github.com/Payroll-Engine/${lib}/packages`;

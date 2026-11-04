@@ -5,9 +5,9 @@ dependency order. A single manual trigger dispatches builds to up to 10 reposito
 waits for each wave to publish its NuGet packages before starting the next, and
 finally creates an umbrella GitHub Release in this repository.
 
-> **Legacy fallback.** The regular release flow is `orchestrate-libs.yml` (all 9 libraries
+> **Legacy fallback.** The regular release flow is `orchestrate-libs.yml` (all 10 libraries
 > including MCP) → `sync-nuget-org.yml` → `orchestrate-apps.yml` (apps built against NuGet.org).
-> This workflow releases the 7 client libraries only (no MCP libraries) and builds the apps
+> This workflow releases the 7 client libraries and Lex only (no MCP libraries) and builds the apps
 > against GitHub Packages.
 
 ---
@@ -18,7 +18,7 @@ finally creates an umbrella GitHub Release in this repository.
 
 | Input | Required | Default | Description |
 |-------|----------|---------|-------------|
-| `lib_version` | ✅ | — | Shared version for all 7 library repos (e.g. `1.0.0`, `0.10.0-beta.1`) |
+| `lib_version` | ✅ | — | Shared version for all 8 library repos (e.g. `1.0.0`, `0.10.0-beta.1`) |
 | `backend_version` | — | _(skip)_ | Version for `PayrollEngine.Backend` — leave empty to skip |
 | `console_version` | — | _(skip)_ | Version for `PayrollEngine.PayrollConsole` — leave empty to skip |
 | `webapp_version` | — | _(skip)_ | Version for `PayrollEngine.WebApp` — leave empty to skip |
@@ -50,9 +50,10 @@ prepare
   │     wait-wave-1  ─── NuGet: Core ✓
   │
   ├── wave-2-serilog ──┐
-  ├── wave-2-document ─┼── parallel
-  ├── wave-2-client-core ─┘
-  │     wait-wave-2  ─── NuGet: Serilog, Document, Client.Core ✓
+  ├── wave-2-document ─┤
+  ├── wave-2-client-core ─┼── parallel
+  ├── wave-2-lex ──────┘
+  │     wait-wave-2  ─── NuGet: Serilog, Document, Client.Core, Lex ✓
   │
   ├── wave-3-scripting ──┐
   ├── wave-3-test ────────┘── parallel
@@ -97,7 +98,7 @@ Also prints a human-readable release plan to the log.
 Checks **all** target repos upfront before any build starts. Fails immediately if any
 version already exists, preventing a partial release that would require manual cleanup.
 
-Checks per library repo (7 repos × 3 checks):
+Checks per library repo (8 repos × 3 checks):
 - Git tag `v{lib_version}` does not exist
 - GitHub Release `v{lib_version}` does not exist
 - NuGet package `{version}` does not exist on GitHub Packages (`per_page: 100`)
@@ -156,8 +157,8 @@ Adds a 10 s propagation buffer after detection before releasing the next wave.
 ### `wave-2-*` / `wait-wave-2`
 
 Parallel dispatch to `PayrollEngine.Serilog`, `PayrollEngine.Document`,
-`PayrollEngine.Client.Core`. All three dispatches must succeed before `wait-wave-2` starts.
-`wait-wave-2` polls all three packages sequentially, each with its own 15-min timeout.
+`PayrollEngine.Client.Core` and `PayrollEngine.Lex`. All four dispatches must succeed before `wait-wave-2` starts.
+`wait-wave-2` polls all four packages sequentially, each with its own 15-min timeout.
 
 ---
 
@@ -254,7 +255,7 @@ and is safe to accumulate across repeated test runs.
 
 | Scope | Rule |
 |-------|------|
-| Libraries (7 repos) | Single shared `lib_version` for all |
+| Libraries (8 repos) | Single shared `lib_version` for all |
 | Apps (4 repos) | Independent version per app — omit input to skip that app |
 | Pre-release detection | Per component — stable libraries can coexist with pre-release apps in the same run |
 

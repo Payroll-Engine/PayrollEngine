@@ -7,7 +7,7 @@ on:
         description: 'Library version to sync (e.g. 0.10.0-beta.1)'
         required: true
       packages:
-        description: 'Packages to sync: all | Core | Serilog | Document | Client | Client.Core | Client.Scripting | Client.Test | Client.Services | Mcp.Core | Mcp.Tools | Mcp'
+        description: 'Packages to sync: all | Core | Serilog | Document | Client | Client.Core | Client.Scripting | Client.Test | Client.Services | Lex | Mcp.Core | Mcp.Tools | Mcp'
         required: false
         default: 'all'
 
@@ -60,6 +60,7 @@ jobs:
               'PayrollEngine.Client.Scripting',
               'PayrollEngine.Client.Test',
               'PayrollEngine.Client.Services',
+              'PayrollEngine.Lex',
               'PayrollEngine.Mcp.Core',
               'PayrollEngine.Mcp.Tools'
             ];

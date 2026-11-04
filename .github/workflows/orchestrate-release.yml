@@ -145,7 +145,8 @@ jobs:
             const libRepos = [
               'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
               'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
-              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services'
+              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services',
+              'PayrollEngine.Lex'
             ];
 
             console.log(`\n📦 Checking library version: ${libVersion}\n`);
@@ -353,7 +354,7 @@ jobs:
             await new Promise(r => setTimeout(r, 10000));
 
   # ═══════════════════════════════════════════════════════
-  # WAVE 2: Serilog, Document, Client.Core (parallel)
+  # WAVE 2: Serilog, Document, Client.Core, Lex (parallel)
   # ═══════════════════════════════════════════════════════
   wave-2-serilog:
     needs: [prepare, wait-wave-1]
@@ -409,13 +410,32 @@ jobs:
               "dry_run": "${{ needs.prepare.outputs.dry_run }}"
             }
 
+  wave-2-lex:
+    needs: [prepare, wait-wave-1]
+    if: always() && needs.wait-wave-1.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT_DISPATCH }}
+          repository: ${{ env.ORG }}/PayrollEngine.Lex
+          event-type: release
+          client-payload: >-
+            {
+              "version": "${{ needs.prepare.outputs.lib_version }}",
+              "wave": "2",
+              "is_prerelease": "${{ needs.prepare.outputs.lib_prerelease }}",
+              "dry_run": "${{ needs.prepare.outputs.dry_run }}"
+            }
+
   wait-wave-2:
-    needs: [prepare, wave-2-serilog, wave-2-document, wave-2-client-core]
+    needs: [prepare, wave-2-serilog, wave-2-document, wave-2-client-core, wave-2-lex]
     if: |
       always() &&
       needs.wave-2-serilog.result == 'success' &&
       needs.wave-2-document.result == 'success' &&
-      needs.wave-2-client-core.result == 'success'
+      needs.wave-2-client-core.result == 'success' &&
+      needs.wave-2-lex.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -426,7 +446,7 @@ jobs:
           script: |
             const org = '${{ env.ORG }}';
             const version = '${{ needs.prepare.outputs.lib_version }}';
-            const repos = ['PayrollEngine.Serilog', 'PayrollEngine.Document', 'PayrollEngine.Client.Core'];
+            const repos = ['PayrollEngine.Serilog', 'PayrollEngine.Document', 'PayrollEngine.Client.Core', 'PayrollEngine.Lex'];
             const maxAttempts = 60;
             const delay = 15000;
 
@@ -799,7 +819,8 @@ jobs:
             const libs = [
               'PayrollEngine.Core', 'PayrollEngine.Serilog', 'PayrollEngine.Document',
               'PayrollEngine.Client.Core', 'PayrollEngine.Client.Scripting',
-              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services'
+              'PayrollEngine.Client.Test', 'PayrollEngine.Client.Services',
+              'PayrollEngine.Lex'
             ];
             for (const lib of libs) {
               const ghUrl = `https://github.com/Payroll-Engine/${lib}/packages`;

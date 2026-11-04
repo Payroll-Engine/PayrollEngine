@@ -27,6 +27,9 @@ if %ERRORLEVEL% neq 0 goto error
 rem pack client services
 call Pack PayrollEngine.Client.Services\Client.Services\PayrollEngine.Client.Services.csproj %PackAllConfiguration%
 if %ERRORLEVEL% neq 0 goto error
+rem pack lex
+call Pack PayrollEngine.Lex\Lex\PayrollEngine.Lex.csproj %PackAllConfiguration%
+if %ERRORLEVEL% neq 0 goto error
 goto exit
 
 :error
