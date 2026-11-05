@@ -2,7 +2,7 @@
 cd /d "%~dp0"
 
 rem --- clear only PayrollEngine packages from the global NuGet cache
-rem --- (external packages like FastReport, NPOI, Roslyn are preserved)
+rem --- (external packages like FastReport, ClosedXML, Roslyn are preserved)
 echo Clearing PayrollEngine NuGet packages from global cache...
 for /d %%d in ("%userprofile%\.nuget\packages\payrollengine.*") do rd /s /q "%%d" 2>nul
 

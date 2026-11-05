@@ -58,6 +58,10 @@
 * **Webhooks** — write-only secret field (with remove option and visibility toggle) and a `Signed` column
 * New labels in all localizations
 
+**Changes**
+
+* **Excel download** — uses the Document Excel export; the direct NPOI reference is removed
+
 ### Docker
 
 * The compose files keep the data protection keys in the volume `backend-keys`; `docker-compose down -v` removes it together with the database (see `DOCKER.md`)
@@ -66,6 +70,9 @@
 
 * Load test commands (`LoadTestGenerate`, `PayrunLoadTest`) carry over the pay date of the invocation template
 * Exchange import and export include the new calendar and payrun job fields (`PayrollEngine.Exchange.schema.json` updated)
+* **Excel** — Excel imports (`RegulationExcelImport`, `CaseChangeExcelImport`) and the payrun load test Excel report are based on [ClosedXML](https://github.com/ClosedXML/ClosedXML) (MIT); NPOI is no longer used
+* **Excel import dates** — a numeric cell is read as date when its number format is a date format; rows are read up to the last used row, rows after empty rows are no longer skipped
+* **Lex commands** — `LexCheck`, `LexSnapshot` and `LexVerifySource` read spreadsheet sources with the built-in Lex reader
 
 ### Libraries
 
@@ -79,7 +86,9 @@
 * **Client.Services** — local script runtime calculates the pay date, the cycle date, the cycle periods, and the calendar time units from the payroll calendar
 * **Client.Services (fix)** — `CalendarExtensions.IsWorkDay` evaluated Tuesday against the Thursday work day setting
 * **Client.Test** — payrun preview test result carries the invocation pay date
-* **Core, Serilog, Document** — version alignment
+* **Document** — Excel export (`ExcelMergeAsync`) is based on [ClosedXML](https://github.com/ClosedXML/ClosedXML) (MIT); NPOI is no longer used. The public API exposes no Excel library types: the extension classes `CellExtensions` and `WorkbookExtensions` are removed
+* **Lex** — built-in spreadsheet reader for `.xls`, `.xlsx` and `.xlsb` source documents based on [ExcelDataReader](https://github.com/ExcelDataReader/ExcelDataReader) (MIT): one section per sheet, numbers in invariant format, dates as serial numbers, at most 5000 rows per sheet. Live sources are also detected by content type. Readers passed to `SourceDocument` and `UrlChecker` override the built-in readers
+* **Core, Serilog** — version alignment
 
 ### Tests
 
@@ -89,7 +98,7 @@
 * **Webhook.Test** — receiver and runner for unsigned and signed webhooks (`Tests/Webhook.Test`, not part of `Test.All`)
 * **Test-DbProviders.ps1** — runs the platform tests and examples against SQL Server, MySQL, and PostgreSQL, for new databases and for the update from the previous release (`devops/scripts`)
 
-No breaking change — REST API and Scripting API changes are additive. The database schema update to 1.2.0 is required.
+No breaking change — REST API and Scripting API changes are additive. The database schema update to 1.2.0 is required. The Document library removes the Excel extension classes `CellExtensions` and `WorkbookExtensions`; use `IDocumentService.ExcelMergeAsync` for Excel export.
 
 ---
 
