@@ -1716,20 +1716,16 @@
         "None",
         "CaseFunctionRequest",
         "CaseChangeAdded",
-        "PayrunFunctionRequest",
         "PayrunJobProcess",
         "PayrunJobFinish",
-        "ReportFunctionRequest",
         "TaskChange"
       ],
       "enum": [
         "None",
         "CaseFunctionRequest",
         "CaseChangeAdded",
-        "PayrunFunctionRequest",
         "PayrunJobProcess",
         "PayrunJobFinish",
-        "ReportFunctionRequest",
         "TaskChange"
       ]
     },
