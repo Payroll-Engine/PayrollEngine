@@ -34,7 +34,7 @@
 
 * **Webhook tracking** — the setting `PayrollServerConfiguration:WebhookTracking` (`None`, `Notification`, `All`; default `Notification`) controls tracking. Notification webhooks (case change added, payrun job process/finish, task change) are tracked as webhook messages with response status and message. Scripting webhook calls (`InvokeWebhook`) are tracked only with `All`
 * **Scripting webhook connection error** — an unreachable receiver or a failed response status of a scripting webhook aborts the payrun job with an exception, instead of returning the error text or an empty value to the script
-* **Obsolete webhook actions** — `PayrunFunctionRequest` and `ReportFunctionRequest` are obsolete; script webhook calls always use `CaseFunctionRequest`
+* **Removed webhook actions** — the never-triggered actions `PayrunFunctionRequest` and `ReportFunctionRequest` are removed; script webhook calls always use `CaseFunctionRequest`. The database update deletes existing webhooks with these actions; imports using them are rejected
 * **Payroll validation** — the payrun validates the payroll regulations at the regulation date (period end, or pay date when it differs) instead of the period start, consistent with the payrun processing
 
 **Bug Fixes**
@@ -47,6 +47,7 @@
 
 * New columns: `Calendar.PeriodAnchorDate`, `Calendar.PayDateOffset`, `Calendar.CycleAssignment`, `PayrunJob.PayDate`, and `PayDate` in `WageTypeResult`, `WageTypeCustomResult`, `CollectorResult`, `CollectorCustomResult`, and `PayrunResult`
 * New column `Webhook.Secret` (encrypted secret, nullable)
+* Webhooks with the removed actions `PayrunFunctionRequest` (20) and `ReportFunctionRequest` (30) are deleted
 * PostgreSQL result functions return `PayDate` as the last column; the update script recreates the affected functions
 
 ### WebApp
@@ -76,7 +77,7 @@
 
 ### Libraries
 
-* **Core** — `CalendarCycleAssignment` enum; `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` obsolete
+* **Core** — `CalendarCycleAssignment` enum; `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` removed (breaking change)
 * **Client.Core** — `Webhook.Secret` and `Webhook.Signed` (exchange schema `secret`, `signed`)
 * **Client.Core** — `Calendar.PeriodAnchorDate`, `Calendar.PayDateOffset`, `Calendar.CycleAssignment`, `PayrunJobInvocation.PayDate`, `PayrunJob.PayDate`, and `PayDate` on wage type, collector, and payrun results
 * **Client.Core (fix)** — console error output failed with "The handle is invalid" on redirected output (CI, scripts), hiding the original error

@@ -100,7 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backend: webhook notifications (case change, payrun job process/finish, task change) are tracked as webhook messages; configurable by `WebhookTracking` (`None`, `Notification`, `All`)
 - Backend: an unreachable receiver or a failed response status of a scripting webhook throws and aborts the payrun job instead of returning the error text or an empty value
 - Backend: webhook dispatch loads tenant and user once per message instead of once per webhook; scripting webhook calls query the webhook once per payrun job
-- Core: `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` marked obsolete
+- Core: never-triggered `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` removed; the database update deletes webhooks with these actions **breaking change**
 
 ### Fixed
 

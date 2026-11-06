@@ -30405,10 +30405,8 @@
           "None",
           "CaseFunctionRequest",
           "CaseChangeAdded",
-          "PayrunFunctionRequest",
           "PayrunJobProcess",
           "PayrunJobFinish",
-          "ReportFunctionRequest",
           "TaskChange"
         ],
         "type": "string",
