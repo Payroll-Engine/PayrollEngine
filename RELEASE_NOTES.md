@@ -130,6 +130,7 @@
 
 * **LexComplianceValues** — new client tutorial for `PayrollEngine.Lex`: the life cycle of a lex manifest on a fictitious data satellite — validate, add a value with source quote, verify against the local evidence, attest manually, snapshot, check, apply to the regulation lookups, release check with report, and rollover to the next cycle. Runs offline without backend
 * **WebhookConsumer** — verifies signed webhook requests (`X-PE-Timestamp`, `X-PE-Signature`, max. request age) and signs the response of function requests (`X-PE-Response-Signature`); the secret is configured with `Webhook:Secret`, without secret the receiver works unsigned
+* **PayrollConsoleExtension** — new extension layout: own extension folder with `extension.json` manifest (`Extension.cmd` builds the folder and creates the manifest with `ExtensionManifest`); references only the shared contract assembly `PayrollEngine.Client.Core`
 
 ### Tests
 
