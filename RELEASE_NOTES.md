@@ -126,6 +126,11 @@
 
 * **Third-party notices** — Backend, WebApp, PayrollConsole and MCP Server ship `THIRD-PARTY-NOTICES.md` in the build output; third-party libraries updated
 
+### Tutorials
+
+* **LexComplianceValues** — new client tutorial for `PayrollEngine.Lex`: the life cycle of a lex manifest on a fictitious data satellite — validate, add a value with source quote, verify against the local evidence, attest manually, snapshot, check, apply to the regulation lookups, release check with report, and rollover to the next cycle. Runs offline without backend
+* Tutorials updated to version 1.2.0
+
 ### Tests
 
 * **Backend unit tests** — anchored weekly and bi-weekly periods (year change, before anchor, 53-week year), pay date offset, regulation date, and cycle assignment (job cycle, cycle period start, year-to-date periods with early and late payments)
