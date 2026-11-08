@@ -155,4 +155,4 @@
 | PayrollEngine.Backend | 1.2.0 | `docker pull ghcr.io/payroll-engine/payrollengine.backend:1.2.0` |
 | PayrollEngine.PayrollConsole | 1.2.0 | `docker pull ghcr.io/payroll-engine/payrollengine.payrollconsole:1.2.0` |
 | PayrollEngine.WebApp | 1.2.0 | `docker pull ghcr.io/payroll-engine/payrollengine.webapp:1.2.0` |
-| PayrollEngine.Mcp.Server | 1.1.0 | `docker pull ghcr.io/payroll-engine/payrollengine.mcp.server:1.1.0` |
+| PayrollEngine.Mcp.Server | 1.2.0 | `docker pull ghcr.io/payroll-engine/payrollengine.mcp.server:1.2.0` |
