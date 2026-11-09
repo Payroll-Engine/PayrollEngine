@@ -1,6 +1,6 @@
 # Payroll Engine — Release Notes
 
-## v1.2.0 - Unreleased
+## v1.2.0 - Nov 2026
 
 ### Highlights
 
