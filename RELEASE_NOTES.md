@@ -110,7 +110,7 @@
 
 **Features**
 
-* **Core** — `CalendarCycleAssignment` enum; `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` removed (breaking change)
+* **Core** — `CalendarCycleAssignment` enum; `WebhookAction.PayrunFunctionRequest` and `ReportFunctionRequest` removed (**breaking change**)
 * **Client.Core** — `Calendar.PeriodAnchorDate`, `Calendar.PayDateOffset`, `Calendar.CycleAssignment`, `PayrunJobInvocation.PayDate`, `PayrunJob.PayDate`, and `PayDate` on wage type, collector, and payrun results
 * **Client.Core** — `Webhook.Secret` and `Webhook.Signed` (exchange schema `secret`, `signed`)
 * **Client.Core** — atomic command registration: `CommandManager.RegisterAssemblies(assemblies, origin)` registers all commands of an extension or none, `CommandOrigin` (core or extension), case-insensitive command names, `ExtensionApiVersion` 1.2 with `IsExtensionApiSupported`
