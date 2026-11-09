@@ -4,7 +4,7 @@
 
 ### Highlights
 
-* **Lex — source-traced compliance values** — the new library `PayrollEngine.Lex` and nine Payroll Console commands trace every statutory value of a data regulation to its official source: a `lex.json` manifest with source, location, legal reference and verification record per value, frozen evidence files with a hash snapshot, automatic verification against the source documents, manual four-eyes attestation, transfer into the regulation lookups, consistency and release gate, and the rollover to the next cycle
+* **Lex — source-traced compliance values** — the new library `PayrollEngine.Lex` and nine Payroll Console commands trace every statutory value of a data regulation to its official source: a `lex.json` manifest with source, location, legal reference and verification record per value, frozen evidence files with a hash snapshot, automatic verification against the source documents, manual four-eyes attestation, transfer into the regulation lookups, consistency and release gate, and the rollover to the next cycle. Complete tariff tables are taken from the authority text file itself (fixed columns or tab-delimited, also inside a ZIP archive) and written as compressed lookup archives
 * **Pay date** — every payrun job has a pay date: period end plus the calendar `PayDateOffset`, or an explicit override per job (e.g. early payment before a holiday). The pay date is stored on the payrun job and on all payroll results
 * **Regulation date by pay date** — when the pay date differs from the period end date, regulations, case fields, and lookups are resolved at the pay date; tax years that follow the pay date (e.g. a December period paid in January) are calculated with the regulation version of the pay date
 * **Calendar cycle assignment** — the calendar `CycleAssignment` selects the date that assigns a period to the cycle (tax year) and to the regulation version: `PayDate` (default, for tax systems taxing on receipt — a December period paid in January belongs to the next year) or `PeriodEnd` (for tax systems taxing by the period worked — the period belongs to the year of its end, regardless of the pay date). Cycle start, year-to-date consolidation, and cycle result queries follow the assignment
@@ -88,6 +88,12 @@
   * `LexCheck` — coverage, value differences (all differing properties of a structured value), traceability fields, evidence tracked in git, `validFrom`, verification records, open entries, changed sources (`/checkurls`), Markdown and CSV report, `Root`/`RepoMask` for many repositories; `/release` is the release gate: precise locations, official main sources, no weak automatic matches, every value verifiable locally or live, zero values justified, no evidence file that backs no entry
   * `LexRollover` — create the data regulation of the next cycle from the payroll calendar of a tenant, with all entries open
 * **Lex sources** — HTML, text, CSV, spreadsheets (`xls`, `xlsx`, `xlsb`, `ods`), PDF with text layer and form fields, `docx`, `odt`; several source URLs per value; language files for English, German, French, Spanish, Italian, Dutch and Portuguese in the `LexVocabulary` folder, further languages with `LexVerifySource Vocabulary:<folder>` or the environment variable `PAYROLL_ENGINE_LEX_VOCABULARY`
+* **Lex text tables** — a lex entry with `contentFile` and `contentMap` takes a complete tariff table from the authority text file (fixed columns or tab-delimited); `archive.zip!entry.txt` reads a file of a ZIP archive in place. The map selects the columns and filters the record types:
+  * `LexApply` replaces all values of the lookup when the table differs; a lookup file with lookups only is written as deterministic ZIP archive (`Regulation/Lookups.Name.json` → `Regulation/Lookups.Name.zip`), reported as `[ZIP] old -> new` with the hint to update the install files, the project file and the setup script; the summary counts the tables
+  * `LexCheck` compares the table row by row (`table <lookup> +added, -removed, ~changed`)
+  * `LexVerifySource` verifies a text table by file identity (the archive is declared with its source URLs and present in the `.lex` folder), reported as `file identity <n>`; no numbers are looked up
+  * `LexSnapshot` hashes the table and its map; `LexRollover` renames the year of the archive reference (`tariffs-2026.zip!tariff-a26.txt` → `tariffs-2027.zip!tariff-a27.txt`)
+* **LookupTextImport** — uses the text table classes of `PayrollEngine.Lex`; the mapping file accepts `filters` (line filters by column text, e.g. record types) and is validated before the import
 * **Extensions (breaking change)** — assemblies placed directly into the `extensions` folder are no longer loaded. Each extension requires the folder `extensions/<Name>/` with an `extension.json` manifest (name, version, required console version, assemblies, SHA-256 file hashes). One load context per extension; `PayrollEngine.Client.Core`, `PayrollEngine.Core` and `PayrollEngine.Lex` are shared with the console. Core commands take precedence, a duplicate command name rejects the whole extension. See the migration guide in the PayrollConsole README
 * **Extension commands** — `Extensions` lists the loaded extensions with status and commands; `ExtensionManifest` creates or updates the manifest with the hashes of all files; `Help` shows the source of a command (core or extension)
 * **Command display** — all commands show their title and parameters (display level full)
@@ -100,6 +106,7 @@
   * Source readers detect the format from the content: HTML, text, CSV, PDF via [PdfPig](https://github.com/UglyToad/PdfPig) (Apache-2.0), spreadsheets `.xls`, `.xlsx`, `.xlsb` via [ExcelDataReader](https://github.com/ExcelDataReader/ExcelDataReader) (MIT) and `.ods`, `.docx`, `.odt`; one section per sheet, page or heading; readers passed by file extension override the built-in readers
   * Language files `{language}.json` (en, de, fr, es, it, nl, pt) in the `LexVocabulary` content folder; further languages from a folder given by the caller, selected per manifest with `languages`
   * Exclusion kinds `coverage`, `orphan`, `sourceLocation`, `autoVerification`, `derived`, `notApplicable`; entry properties `sourceUrls`, `sourceQuote`, `referenceYear`, `open`; source properties `review` (`SingleAuthor`, `FourEyes`) and `official`
+  * Text tables: `TextTable` and `TextTableMap` (fixed columns and tab-delimited, line filters, implied decimals), `ContentSource` for files and ZIP archive entries, entry property `contentMap`, target kind `Table`; `RegulationReader` reads the JSON entries of `Regulation/*.zip`, the applier writes deterministic lookup archives (`ApplyResult.ReplacedFiles`), `ManifestVerifier.FileIdentityVerification`
 
 **Features**
 
@@ -118,6 +125,7 @@
 **Fixes**
 
 * **Client.Core** — console error output failed with "The handle is invalid" on redirected output (CI, scripts), hiding the original error
+* **Client.Core** — `FileReader` read a YAML entry of a ZIP archive with the archive name instead of the entry content; JSON entries were not affected
 * **Client.Scripting** — `PayrollFunction.PeriodsInCycle` returned a wrong period count (the negative start offset was subtracted)
 * **Client.Services** — `CalendarExtensions.IsWorkDay` evaluated Tuesday against the Thursday work day setting
 * **Client.Test** — company case tests without employee failed with a `NullReferenceException`
@@ -138,6 +146,8 @@
 * **PayDate.Test** — payrun test for anchored bi-weekly periods, pay date offset and override, cycle assignment by pay date and by period end (cycle year, year to date, cycle periods, regulation selection across the year change), and retro jobs with the pay date of the original job
 * **Webhook unit tests** — dispatch, signature, response verification (`Domain.Application.Tests`)
 * **Webhook.Test** — receiver and runner for unsigned and signed webhooks (`Tests/Webhook.Test`, not part of `Test.All`)
+* **Lex unit tests** — text tables: fixed and tab-delimited lines, filters, implied decimals, ZIP archive entries, snapshot and verification, table check and apply with deterministic archives, file identity, rollover of archive references
+* **Client.Core unit tests** — new test project `Client.Core.Tests`: reading JSON and YAML entries of ZIP archives with `FileReader`
 * **Test-DbProviders.ps1** — runs the platform tests and examples against SQL Server, MySQL, and PostgreSQL, for new databases and for the update from the previous release (`devops/scripts`)
 
 **Breaking changes** — REST API and Scripting API changes are additive. The database schema update to 1.2.0 is required. Breaking are:
