@@ -279,6 +279,16 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Add GitHub Packages source
+        if: needs.prepare.outputs.nuget_source == 'github'
+        shell: pwsh
+        run: |
+          dotnet nuget add source "https://nuget.pkg.github.com/${{ env.ORG }}/index.json" `
+            --name github `
+            --username github-actions `
+            --password "${{ secrets.PAT_DISPATCH }}" `
+            --store-password-in-clear-text
+
       - name: Run breaking change detection (REST API)
         shell: pwsh
         id: detect
@@ -289,6 +299,8 @@ jobs:
             -ReposRoot $reposRoot `
             -BaselineRef "HEAD~1" `
             -SkipReleaseNotes `
+            -RequireSwagger `
+            -PayrollEngineVersion "${{ needs.prepare.outputs.lib_version }}" `
             -ReportPath "breaking-changes-apps.md"
           $ec = $LASTEXITCODE
           "exit_code=$ec" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
@@ -303,7 +315,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking changes?\*\*') {
             Write-Host "::error::REST API breaking changes detected but not documented in RELEASE_NOTES.md"
             exit 1
           }

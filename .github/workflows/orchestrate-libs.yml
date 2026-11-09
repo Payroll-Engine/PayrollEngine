@@ -198,7 +198,7 @@ jobs:
             exit 1
           }
           $notes = Get-Content "RELEASE_NOTES.md" -Raw -ErrorAction SilentlyContinue
-          if (-not $notes -or $notes -notmatch '\*\*breaking change\*\*') {
+          if (-not $notes -or $notes -notmatch '\*\*breaking changes?\*\*') {
             Write-Host "::error::Breaking changes detected in Scripting/Client.Services API but not documented in RELEASE_NOTES.md"
             exit 1
           }
