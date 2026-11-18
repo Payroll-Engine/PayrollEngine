@@ -7,7 +7,7 @@ echo Clearing PayrollEngine NuGet packages from global cache...
 for /d %%d in ("%userprofile%\.nuget\packages\payrollengine.*") do rd /s /q "%%d" 2>nul
 
 rem --- reset ERRORLEVEL: rd errors (locked files) must not leak into the local section
-(exit /b 0)
+(call )
 
 rem --- clear build cache (local Packages folder)
 echo.
