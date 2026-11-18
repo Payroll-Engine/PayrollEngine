@@ -1,5 +1,61 @@
 # Payroll Engine — Release Notes
 
+## v1.3.0 - Nov 2026
+
+### Highlights
+
+* **Regulator role for MCP** — the new MCP role `Regulator` works with the provenance manifests (`lex.json`) of data regulations: list manifests, read entries, check (development and release mode, optional URL check), verify snapshots and sources, validate. The tools need no backend connection, only read files below configured workspace folders and are off by default (`McpServer:Permissions:Regulator` = `None`), so existing deployments gain no file access after an update
+* **Workspace isolation** — every path argument is resolved below the configured roots (`McpServer:Regulator:Roots`, `RepoMask`); parent segments, absolute paths outside the roots and link escapes are rejected
+* **MCP server without backend** — `PayrollEngine.Mcp.Server` starts without a backend connection when only the Regulator role is granted; a startup error names the missing setting otherwise. `get_server_info` reports the Lex library version, the regulator mode and the backend mode
+* **Lex library operations** — source verification (including the write rules for locations and automatic records), entry validation, attestation rules, snapshot, apply and rollover cycle are library operations; the console commands are thin wrappers with unchanged output and exit codes
+
+### Lex
+
+* `ManifestEditor`: update entries (content, legal reference, source URLs, quote, reference year, description, `documentRef`, `rangeValue`), add, update and remove exclusions, add, update and remove sources, remove entries; property order is kept. `RemoveVerification` removes the verification record of an entry and returns it; `EntryUpdate.InvalidatesVerification` tells whether an update requires removing the verification record
+* Workspace read model: `ILexSource` with `WorkspaceLexSource` (manifests below a root folder and repository mask) returns manifest and entry summaries with sources, review rule, matching exclusions and snapshot state; `ManifestHash` is the content hash of `lex.json`
+* Range lookups: `LexApply` sets the range value of a new row in a range lookup (`rangeMode` other than `None`): a key in the format `yyyy-MM-dd` yields the number `yyyyMMdd`, any other key needs the new entry property `rangeValue` (`PayrollEngine.Lex.schema.json`), otherwise the apply stops with `rangeValueMissing` and writes nothing. Existing rows are never recomputed. The check reports range rows without range value as `rangeValueMissing` (finding in release mode, new last CSV column)
+* `Checker.CheckSources` has the optional parameters `vocabulary` (folder of additional language files) and `sources` (local verification already computed by the caller). **Binary breaking:** assemblies built against 1.2.0 that call `CheckSources` must be rebuilt; source code compiles unchanged
+* Fix: the check of evidence tracked in git no longer hangs inside a host that communicates over stdio (for example an MCP server); the git query closes its input, reads its output concurrently and ends after 30 seconds
+* Check report: warnings are listed once with the affected satellites; a missing `git` or a folder outside a repository is a warning, never a finding
+* Extended vocabulary files
+* `CheckResult.EvidenceVersioningChecked` (new): true when the check of evidence tracked in git ran; false when it was skipped (no `git`, or a folder outside a repository), in addition to the existing warning
+* `Fetcher.FetchAsync` has a new overload with the parameter `targetGuard` (`FetchAsync(client, url, lexDirectory, fileName, overwrite, targetGuard)`, all parameters required, `targetGuard` may be null). The existing signature `FetchAsync(client, url, lexDirectory, fileName = null, overwrite = false)` stays as an overload: existing calls and assemblies built against an earlier version keep working without a rebuild (binary and source compatible)
+* `Fetcher`: the manifest (`lex.json`) and the snapshot (`snapshot.json`) are no fetch targets. `Fetcher.IsReservedFileName` tests a name (case, trailing dots and spaces ignored); `FetchAsync` refuses a reserved explicit name before the request and a reserved name derived from the URL before writing, and, in the overload with `targetGuard`, checks the full target path before anything is written
+* `Fetcher`: a reserved target is refused with the new `ReservedFileNameException`, a subclass of `ArgumentException` (parameter `fileName`, property `FileName`, message unchanged), so callers no longer depend on the message text. A target in the `.lex` folder that is a symbolic link resolving outside the real `.lex` folder, to the manifest or the snapshot, or to no existing file, is neither read nor written, with or without overwrite (`FetchTargetLinkException`, an `IOException` with the properties `FileName` and `ResolvedPath`); links in the path of the `.lex` folder itself are resolved first. Hard links are not detected
+
+### Payroll Console
+
+* Lex commands use the library operations; `LexAttest` with `ReviewedBy` records the second review (four-eyes) of existing manual records; usage texts updated
+* The cycle determination of `LexRollover` is part of the library
+* `LexFetch` refuses the manifest and the snapshot as target file name (exit code `6`, nothing is written)
+* `LexAttest`: `VerifiedBy` defaults to the environment variable `PAYROLL_ENGINE_LEX_USER`; an explicit value wins, the default is never used for a review, and the output names the origin of the person
+* `LexApply` and `LexCheck` support the range value of new range lookup rows (`rangeValue`, finding `rangeValueMissing`); the dry run of `LexApply` shows the range value per change
+* `LexCheck /release` reads additional language files from `PAYROLL_ENGINE_LEX_VOCABULARY`, as `LexVerifySource` does
+
+### MCP
+
+* `PayrollEngine.Mcp.Core`: role `Regulator`, tool base without backend client (public API of existing tools unchanged), workspace context with startup validation (`McpServer:Regulator`: `Roots`, `RepoMask`, `AgentIdentities`, `Backend` = `None` (default) or `Read`; any other `Backend` value stops the start)
+* `PayrollEngine.Mcp.Server`: the backend connection is required only for a backend role (`HR`, `Payroll`, `Report`, `System`) or `Regulator:Backend` = `Read`; `Permissions:Regulator` other than `None` requires at least one workspace root; a failed start exits with code `1`. The README documents the Regulator profile, also as container with the workspace mounted as volume
+* `PayrollEngine.Mcp.Core`: extensible role model — a server defines own roles with `McpRoleDefinition` (name, applicable isolation levels, backend requirement); tool classes reference them with `[ToolRole("<Name>")]`; `McpPermissions.FromConfiguration(configuration, roles)` reads `McpServer:Permissions:<Name>` (default `None`); `ToolRegistrar.GetPermittedTypes(assembly, permissions, level, roles)` registers them. The built-in roles and all existing signatures are unchanged; a tool class whose role the server does not define is not registered
+* `get_server_info` reports the permissions of the roles defined by the server (`customRoles`, empty without own roles)
+* **Behavior change — startup errors instead of silent fallbacks:** an `McpServer:IsolationLevel` that is not `MultiTenant`, `Tenant`, `Division` or `Employee`, and a value under `McpServer:Permissions` that is not `None`, `Read` or `Write`, now stop the server at startup with a message that names the setting, the value and the allowed values. Before, a misspelled isolation level selected `MultiTenant` and a misspelled permission selected `None` without a message. A missing or empty setting behaves as before (`MultiTenant`; `None` for a key missing in an existing `Permissions` section; defaults for a missing section). Check the configuration of existing deployments before updating
+* `McpPermissions.FromConfiguration` throws `InvalidOperationException` for an unknown permission text; the documentation of `IsolationContext.Permissions` names the actual defaults (`Read` for the backend roles, `None` for `Regulator`)
+* `PayrollEngine.Mcp.Tools`: tool group `RegulatorTools` with `lex_list_manifests`, `lex_get_entry`, `lex_check`, `lex_verify_snapshot`, `lex_verify_source`, `lex_validate`; filters `onlyProblems`, `summaryOnly`, `countsOnly`, a `sizeWarning` for results above 32,000 characters and progress notifications; `THIRD-PARTY-NOTICES.md` added
+* `PayrollEngine.AiContext`: the Regulator role and its read-only tools are described in the overview and MCP tools context
+
+### Packages
+
+All platform libraries are released as 1.3.0 (one version line).
+
+### Apps
+
+All apps are released as 1.3.0 (Backend, PayrollConsole, WebApp, Mcp.Server). Backend and WebApp contain no functional change: the REST API is unchanged, and the database schema stays at version 1.2.0 (no database update is required).
+
+**Breaking changes** — REST API, Scripting API and database schema are unchanged. Breaking are:
+
+* The MCP server stops at startup on an invalid `McpServer:IsolationLevel` or permission value instead of falling back silently (see [MCP](#mcp))
+* `PayrollEngine.Lex`: `Checker.CheckSources` gains optional parameters; assemblies built against 1.2.0 that call it must be rebuilt
+
 ## v1.2.0 - Nov 2026
 
 ### Highlights

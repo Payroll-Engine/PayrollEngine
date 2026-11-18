@@ -222,6 +222,11 @@
           "description": "Text table map (JSON, relative to the .lex folder) that converts the text file of contentFile into the values of the whole lookup (LexApply). The map holds key or keys, an optional rangeValue, value or values and optional filters. Only together with contentFile.",
           "examples": ["Tariff.map.json"]
         },
+        "rangeValue": {
+          "type": "number",
+          "description": "Technical range value of a new row in a range lookup (rangeMode other than None), written by LexApply. Without it LexApply derives the value from a key in the format yyyy-MM-dd (yyyyMMdd as number); a new row with another key and no rangeValue is an error. Not a compliance value: it does not change the verification and never replaces the range value of an existing row.",
+          "examples": [20250101]
+        },
         "documentRef": {
           "type": "string",
           "description": "Reference to a local evidence document declared in the files[] array (e.g. 'tax-rates-2026.pdf'). The referenced fileName must exist in files[]."

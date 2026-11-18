@@ -19,6 +19,7 @@ if exist ..\Packages\PayrollEngine.Client.Core.*.* del ..\Packages\PayrollEngine
 if exist ..\Packages\PayrollEngine.Client.Scripting.*.* del ..\Packages\PayrollEngine.Client.Scripting.*.* /Q
 if exist ..\Packages\PayrollEngine.Client.Test.*.* del ..\Packages\PayrollEngine.Client.Test.*.* /Q
 if exist ..\Packages\PayrollEngine.Client.Services.*.* del ..\Packages\PayrollEngine.Client.Services.*.* /Q
+if exist ..\Packages\PayrollEngine.Lex.*.* del ..\Packages\PayrollEngine.Lex.*.* /Q
 if exist ..\Packages\PayrollEngine.Mcp.Core.*.* del ..\Packages\PayrollEngine.Mcp.Core.*.* /Q
 if exist ..\Packages\PayrollEngine.Mcp.Tools.Pro.*.* del ..\Packages\PayrollEngine.Mcp.Tools.Pro.*.* /Q
 if exist ..\Packages\PayrollEngine.Mcp.Tools.*.* del ..\Packages\PayrollEngine.Mcp.Tools.*.* /Q
